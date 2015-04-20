@@ -1,7 +1,9 @@
 package com.jlj.model;
 
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -23,7 +25,7 @@ public class Signal implements java.io.Serializable {
 	// Fields
 
 	private Integer id;
-	private Set<Marker> markers = new HashSet<Marker>(0);
+	private List<Marker> markers = new ArrayList<Marker>();
 
 	// Constructors
 
@@ -32,7 +34,7 @@ public class Signal implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public Signal(Set<Marker> markers) {
+	public Signal(List<Marker> markers) {
 		this.markers = markers;
 	}
 
@@ -49,11 +51,11 @@ public class Signal implements java.io.Serializable {
 	}
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "signal")
-	public Set<Marker> getMarkers() {
+	public List<Marker> getMarkers() {
 		return this.markers;
 	}
 
-	public void setMarkers(Set<Marker> markers) {
+	public void setMarkers(List<Marker> markers) {
 		this.markers = markers;
 	}
 

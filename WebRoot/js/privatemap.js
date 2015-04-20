@@ -186,6 +186,8 @@ function MarkersInit()
 	            },   
 	            success: function(msg)
 	            { //成功
+	            		encodeURI(msg);
+	            		console.log(msg);
 	            	 	markermsg = msg;
 	            	 	for(var i=0;i<markermsg.length;i++)
 			    	    {
