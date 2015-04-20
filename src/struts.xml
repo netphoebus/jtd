@@ -87,13 +87,9 @@
     </package>  
     
     <package name="map" extends="json-default">
-		<action name="add" class="mapAction" method="add">
-
-		</action>
-		
-		<action name="load" class="mapAction" method="load">
-
-		</action>
+		<action name="add" class="mapAction" method="add"/>	
+		<action name="load" class="mapAction" method="load"/>
+		<action name="delete" class="mapAction" method="delete"/>
 	</package>
     
 	

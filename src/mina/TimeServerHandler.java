@@ -9,7 +9,7 @@ import org.apache.mina.core.session.IdleStatus;
 import org.apache.mina.core.session.IoSession;  
 
 import com.jlj.action.ClientAction;
-import com.jlj.action.RealTimeTrafficAction;
+import com.jlj.action.SignalAction;
 
   
 public class TimeServerHandler  implements IoHandler {
@@ -282,7 +282,7 @@ public class TimeServerHandler  implements IoHandler {
 //	  	  		System.out.println(" ");
 //	  	  	}
 	  	}
-	  	RealTimeTrafficAction.trafficlights = locate;
+	  	SignalAction.trafficlights = locate;
 	  }
 	  
 	  public static String bytesToHexString(byte[] src){  

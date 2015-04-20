@@ -25,6 +25,7 @@ import org.springframework.stereotype.Component;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.jlj.model.*;
+import com.jlj.service.ISignalService;
 @Component("mapAction")
 @Scope("prototype")
 public class MapAction extends ActionSupport implements RequestAware,
@@ -35,6 +36,7 @@ SessionAware,ServletResponseAware,ServletRequestAware {
 	Map<String,Object> session;
 	private javax.servlet.http.HttpServletResponse response;
 	private javax.servlet.http.HttpServletRequest req;
+	private ISignalService signService;
 	
 	
 	private List<Marker> markers = new ArrayList<Marker>();
@@ -110,8 +112,9 @@ SessionAware,ServletResponseAware,ServletRequestAware {
 	 * @return
 	 */
 	public String delete(){
-	
-		return SUCCESS;
+		long id =  Long.parseLong(req.getParameter("id"));
+		
+		return NONE;
 	}
 	/**
 	 * 修改
