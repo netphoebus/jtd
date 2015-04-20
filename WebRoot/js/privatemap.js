@@ -5,6 +5,7 @@ var mapobj = null;//地图对象
 var markerZoom = 12;//标记红绿灯地图所在级别
 var mapClickEventListener = null;
 var markers = [];
+var initMarkers = [];
 var markerId = Date.parse(new Date());//时间做唯一标示
 var markersJson = '';
 
@@ -46,7 +47,7 @@ google.maps.event.addDomListener(window, "load", initialize);
 
 function reset() {
 
-    for (var i in markers) {
+    for (var i=0;i<markers.length;i++) {
       markers[i].setMap(null);
     }
     markers = [];
@@ -156,10 +157,11 @@ function setMarkerEvents(marker)
 		 
 		 
 		});
+		/*
 	maphelper.bindInstanceEvent(marker, 'mouseout', function(event,map,marker) {
 		 	if(getMarkerWindow)
 		 	getMarkerWindow.close();
-		 });
+		 });*/
 
 	maphelper.bindInstanceEvent(marker, 'dragend', function(event,map,marker) {
 		 	console.log(event.latLng);
@@ -183,23 +185,21 @@ function MarkersInit()
 	            },   
 	            success: function(msg)
 	            { //成功
-	            	  markers = msg;
-	            		console.log(markers);
-	            		 for(var i=0;i<markers.length;i++)
+	            	 	 initMarkers = msg;
+	            		 for(var i=0;i<initMarkers.length;i++)
 			    	    {
-			    	    	console.log("进入");
 				    	     var marker =  maphelper.markerPoint({
-						  	    id:  markers[i].id,
-								lat: markers[i].lat,
-						        lng: markers[i].lng,
+						  	    id:  initMarkers[i].id,
+								lat: initMarkers[i].lat,
+						        lng: initMarkers[i].lng,
 						        title: '红绿灯',
 						        icon: "images/boot2.png"
 				
 						 	 });
 						  marker.connectSuccess = true;
 						  marker.initOver = true;
-						  marker.name = markers[i].name;
-						  marker.address = markers[i].address;
+						  marker.name = initMarkers[i].name;
+						  marker.address = initMarkers[i].address;
 						  setMarkerEvents(marker);
 			    	    } 	   
 	            }  
@@ -207,16 +207,14 @@ function MarkersInit()
 }
 
 
-
-
-
 //获得信号机基本信息
 function getMarkerContent(marker)
 {
 	return '<div  id="content"><h1 id="">当前信号机</h1><div id="bodyContent">' 
 	+ '<br><div style="margin-top:0.8px">&nbsp;ip&nbsp;地&nbsp;&nbsp;址&nbsp;&nbsp;：<input id="ip" value="'+marker.id+'" name="signal_ipaddress" type="text"  width="25px"/></div>' 
-	+ '<br><div style="margin-top:0.8px">信号机地址：<input  id="address" value="'+marker.name+'" name="signal_address" type="text"     width="25px"/></div>' 
-	+ '<br><div style="margin-top:0.8px">信号机名称：<input id="name" value="'+marker.address+'" name="signal_name" type="text"    width="25px"/></div>' 
+	+ '<br><div style="margin-top:0.8px">信号机地址：<input  id="address" value="'+marker.name+'" name="signal_address" type="text"    width="25px"/></div>' 
+	+ '<br><div style="margin-top:0.8px">信号机名称：<input id="name" value="'+marker.address+'" name="signal_name" type="text"   width="25px"/></div>' 
+	+ '<br><div class="maptip"><btn><a href="javascript:deleteMarker('+marker.id+')" target="rightFrame" ">删除</a></btn></div></div>'
 	'</div>' ;
 }
 
@@ -234,7 +232,7 @@ function setMarkerContent(marker)
 }
 
 
-//添加单个信号机
+//添加单个信号机标记
 function saveMarker(id)
 {
 	for(var i=0;i<markers.length;i++)
@@ -267,6 +265,32 @@ function saveMarker(id)
     	    markers[i].setAnimation(null);
     	    markers[i].name = name;
     	    markers[i].address = address;
+		}
+	}
+}
+
+
+//删除单个信号机标记
+function saveMarker(id)
+{
+	for(var i=0;i<markers.length;i++)
+	{
+		if(markers[i].id == id)
+		{
+			$.ajax({   
+	            url:'delete',//这里是你的action或者servlert的路径地址   
+	            type:'post', //数据发送方式     
+	 			data: { "id":id},
+	            error: function(msg)
+	            { //失败   
+	            	console.log('post失败');   
+	            },   
+	            success: function(msg)
+	            { //成功   
+	          		markers[i].setMap(null);
+	          		markers.splice(i,1);
+	            }  
+    	    });   
 		}
 	}
 }
