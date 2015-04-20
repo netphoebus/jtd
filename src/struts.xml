@@ -22,14 +22,7 @@
 	</package>
 	
 	<package name="footer" extends="struts-default">
-		<!-- 配置自定义拦截器LoginedCheckInterceptor -->
-        <interceptors>
-            <interceptor name="loginedCheck" class="com.jlj.filter.LoginedCheckInterceptor"/>
-            <interceptor-stack name="mystack">
-                <interceptor-ref name="loginedCheck" />
-                <interceptor-ref name="defaultStack" />
-            </interceptor-stack>
-        </interceptors>
+		
         
 		<global-results>
 			<result name="adminLogin">/login.jsp</result>
@@ -46,7 +39,7 @@
 			<result name="view">/footer_view.jsp</result>
 			
 			<result name="invalid.token">/op_failure.jsp</result>
-			<interceptor-ref name="mystack" />
+			
             <interceptor-ref name="token" >
             	<param name="includeMethods">add</param>
             	<param name="excludeMethods">default</param>

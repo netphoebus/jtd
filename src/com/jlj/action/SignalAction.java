@@ -17,7 +17,6 @@ import org.apache.struts2.interceptor.SessionAware;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import com.jlj.service.IClientService;
 
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -27,7 +26,6 @@ public class SignalAction extends ActionSupport implements RequestAware,
 		SessionAware, ServletResponseAware, ServletRequestAware {
 
 	private static final long serialVersionUID = 1L;
-	private IClientService clientService;
 	Map<String, Object> request;
 	Map<String, Object> session;
 	private javax.servlet.http.HttpServletResponse response;
@@ -112,14 +110,6 @@ public class SignalAction extends ActionSupport implements RequestAware,
 	}
 
 	// get、set-------------------------------------------
-	public IClientService getClientService() {
-		return clientService;
-	}
-
-	@Resource
-	public void setClientService(IClientService clientService) {
-		this.clientService = clientService;
-	}
 
 	// 获得HttpServletResponse对象
 	public void setServletResponse(HttpServletResponse response) {
