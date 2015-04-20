@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.1//EN"
+	"http://struts.apache.org/dtds/struts-2.1.dtd">
+
+<struts>
+	<constant name="struts.ui.theme" value="simple"></constant>
+	<constant name="struts.objectFactory" value="spring"></constant>
+	<constant name="struts.multipart.maxSize" value="1000000000" /> 
+	<constant name="struts.devMode" value="false"></constant>
+	<constant name="struts.multipart.saveDir" value="/tmp"></constant>
+	<constant name="struts.i18n.encoding" value="UTF-8"></constant>
+	
+	<package name="vcore" extends="struts-default">
+		<global-results>
+			<result name="input">/login.jsp</result>
+		</global-results>
+		<action name="vcoreAction" class="vcoreAction">
+			<result name="success">/op_success.jsp</result>
+			<result name="travel">/travel.jsp</result>
+		</action>
+	</package>
+	
+	<package name="footer" extends="struts-default">
+		<!-- 配置自定义拦截器LoginedCheckInterceptor -->
+        <interceptors>
+            <interceptor name="loginedCheck" class="com.jlj.filter.LoginedCheckInterceptor"/>
+            <interceptor-stack name="mystack">
+                <interceptor-ref name="loginedCheck" />
+                <interceptor-ref name="defaultStack" />
+            </interceptor-stack>
+        </interceptors>
+        
+		<global-results>
+			<result name="adminLogin">/login.jsp</result>
+			<result name="opsessiongo">/op_sessiongo.jsp</result>
+		</global-results>
+		<action name="footerAction" class="footerAction">
+			<result name="success">/op_success.jsp</result>
+			<result name="fail">/op_failure.jsp</result>
+			<result name="operror">/op_error.jsp</result>
+			
+			<result name="list">/footer_manage.jsp</result>
+			<result name="add">/footer_add.jsp</result>
+			<result name="load">/footer_update.jsp</result>
+			<result name="view">/footer_view.jsp</result>
+			
+			<result name="invalid.token">/op_failure.jsp</result>
+			<interceptor-ref name="mystack" />
+            <interceptor-ref name="token" >
+            	<param name="includeMethods">add</param>
+            	<param name="excludeMethods">default</param>
+            </interceptor-ref>
+		</action>
+	</package>
+	
+	<package name="client" extends="struts-default">
+		<global-results>
+			<result name="adminLogin">/login.jsp</result>
+			<result name="opsessiongo">/op_sessiongo.jsp</result>
+		</global-results>
+		<action name="clientAction" class="clientAction">
+			<result name="success">/op_success.jsp</result>
+			<result name="fail">/op_failure.jsp</result>
+			<result name="operror">/op_error.jsp</result>
+			
+			<result name="list">/client_manage.jsp</result>
+			<result name="add">/client_add.jsp</result>
+			<result name="load">/client_update.jsp</result>
+			<result name="view">/client_view.jsp</result>
+			
+			<result name="invalid.token">/op_failure.jsp</result>
+            <interceptor-ref name="token" >
+            	<param name="includeMethods">add</param>
+            	<param name="excludeMethods">default</param>
+            </interceptor-ref>
+		</action>
+	</package>
+	
+	
+	<package name="realtime" extends="json-default">  
+        <action name="test" class="realtimeAction" method="test">  
+            <result type="json">  
+                <param name="excludeNullProperties">true</param>  
+            </result>  
+        </action>   
+    </package>  
+    
+    <package name="map" extends="json-default">
+		<action name="add" class="mapAction" method="add">
+
+		</action>
+		
+		<action name="load" class="mapAction" method="load">
+
+		</action>
+	</package>
+    
+	
+</struts>
+

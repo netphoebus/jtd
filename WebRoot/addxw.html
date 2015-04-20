@@ -1,0 +1,142 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<link href="css/style.css" rel="stylesheet" type="text/css" />
+<link href="css/select.css" rel="stylesheet" type="text/css" />
+<link href="css/stilearn-helper.css" rel="stylesheet" type="text/css" />
+
+<script type="text/javascript" src="js/jquery.1.4.2-min.js"></script>
+
+
+<script type="text/javascript" src="js/jquery.js"></script>
+<script src="js/stilearn-base.js"></script>
+<script src="js/holder.js"></script>
+
+<script type="text/javascript" src="js/jquery.idTabs.min.js"></script>
+<script type="text/javascript" src="js/select-ui.min.js"></script>
+<script type="text/javascript" src="editor/kindeditor.js"></script>
+
+<script type="text/javascript">
+    KE.show({
+        id : 'content7',
+        cssPath : './index.css'
+    });
+  </script>
+  
+<script type="text/javascript">
+$(document).ready(function(e) {
+    $(".select1").uedSelect({
+		width : 200			  
+	});
+	$(".select2").uedSelect({
+		width : 130  
+	});
+	$(".select3").uedSelect({
+		width : 100
+	});
+});
+</script>
+<script type="text/javascript" src="js/jquery.tabso_yeso.js"></script>
+<script type="text/javascript">
+$(document).ready(function($){
+	
+	
+	
+	//默认选项卡切换
+	$("#normaltab").tabso({
+		cntSelect:"#normalcon",
+		tabEvent:"mouseover",
+		tabStyle:"normal"
+	});
+	
+});
+</script>
+
+<script>
+function change_pic()
+{
+ var imgObj = document.getElementById("hld");
+
+ if(imgObj.getAttribute("src",2)== "images/img/h01.png")
+ {imgObj.src="images/img/h01l.png";}
+ else
+ {imgObj.src="images/img/h01.png";}
+}
+</script>
+</head>
+
+<body>   
+
+     
+       <div style="width:100%; float:left;">
+       
+       <div class="xwbox" >
+        <li>
+        <div style="width:166px; height:29px; margin-top:75px; margin-left:290px;"><img src="images/img/h01.png"  id="hld" onClick="change_pic()"></div></li>
+         <li style="height:280px;">
+             <div style="height:280px; width:100%; float:left;">
+                 <div style="width:29px; height:166px; float:left; margin-top:50px; margin-left:170px;"><img src="images/img/s01.png" /></div>
+                 <div style="width:60px; height:72px; float:left; margin-top:140px; margin-left:4px;">
+                 <table width="25" border="0" cellspacing="0" cellpadding="0">
+                      <tr>
+                      <td><img src="images/img/h02.png"  /></td>
+                      </tr>
+                      <tr>
+                      <td><img src="images/img/h03l.png"  /></td>
+                      </tr>
+                      <tr>
+                      <td><img src="images/img/h04.png"  /></td>
+                      </tr>
+                      </table>
+                 </div>
+                 <div style="width:72px; height:60px; float:left; margin-top:20px; margin-left:10px;">
+                 <table width="72" border="0" cellspacing="0" cellpadding="0">
+                 <tr>
+                 <td><img src="images/img/s02l.png" /></td>
+                 <td><img src="images/img/s03.png"  /></td>
+                 <td><img src="images/img/s04.png"  /></td>
+                 </tr>
+                 </table>
+                 </div>
+                 <div style="width:72px; height:60px; float:left; margin-top:220px; margin-left:35px;">
+                 <table width="32" border="0" cellspacing="0" cellpadding="0">
+                 <tr>
+                 <td><img src="images/img/s06.png" /></td>
+                 <td><img src="images/img/s05.png"  /></td>
+                 <td><img src="images/img/s07l.png" /></td>
+                 </tr>
+                 </table>
+                 </div>
+                 <div style="width:60px; height:72px; float:left; margin-top:65px; margin-left:0px;">
+                   <table width="25" border="0" cellspacing="0" cellpadding="0">
+                     <tr>
+                       <td><img src="images/img/h07.png"  /></td>
+                     </tr>
+                     <tr>
+                       <td><img src="images/img/h06l.png" /></td>
+                     </tr>
+                     <tr>
+                       <td><img src="images/img/h05.png"  /></td>
+                     </tr>
+                   </table>
+                 </div>
+                 <div style="width:29px; height:166px; float:left; margin-top:60px; margin-left:30px;"><img src="images/img/s01.png" /></div>
+              </div>
+         
+         </li>
+         <li><div style="width:166px; height:29px; margin-top:20px; margin-left:290px;"><img src="images/img/h01.png"></div></li>
+       
+       </div>
+       </div>
+    
+       <div style="width:400px; margin-top:50px; margin-left:auto; margin-right:auto;"><div class="toolbar" > 
+       <li style="padding-left:5px; cursor: auto;">相位方案：相位方案01　　 序号：
+         <input name="input2" type="text" class="dfinput" style="width:30px;" />
+       </li>
+       <li><span><img src="images/note-2.png" alt="" /></span><a href="cssz.html">保存相位</a></li>
+       </div>
+</div>
+</body>
+</html>

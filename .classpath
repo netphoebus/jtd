@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="con" path="melibrary.com.genuitec.eclipse.j2eedt.core.MYECLIPSE_JAVAEE_5_CONTAINER"/>
+	<classpathentry exported="true" kind="lib" path="WebRoot/WEB-INF/lib/antlr-2.7.6.jar"/>
+	<classpathentry exported="true" kind="lib" path="WebRoot/WEB-INF/lib/aspectjrt.jar"/>
+	<classpathentry exported="true" kind="lib" path="WebRoot/WEB-INF/lib/aspectjweaver.jar"/>
+	<classpathentry exported="true" kind="lib" path="WebRoot/WEB-INF/lib/axis-ant.jar"/>
+	<classpathentry exported="true" kind="lib" path="WebRoot/WEB-INF/lib/axis-jaxrpc-1.4.jar"/>
+	<classpathentry exported="true" kind="lib" path="WebRoot/WEB-INF/lib/axis.jar"/>
+	<classpathentry exported="true" kind="lib" path="WebRoot/WEB-INF/lib/c3p0-0.9.1.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="WebRoot/WEB-INF/lib/cglib-nodep-2.1_3.jar"/>
+	<classpathentry exported="true" kind="lib" path="WebRoot/WEB-INF/lib/common-annotations.jar"/>
+	<classpathentry exported="true" kind="lib" path="WebRoot/WEB-INF/lib/commons-beanutils-1.7.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="WebRoot/WEB-INF/lib/commons-codec-1.3.jar"/>
+	<classpathentry exported="true" kind="lib" path="WebRoot/WEB-INF/lib/commons-collections-3.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="WebRoot/WEB-INF/lib/commons-dbcp.jar"/>
+	<classpathentry exported="true" kind="lib" path="WebRoot/WEB-INF/lib/commons-discovery-0.2.jar"/>
+	<classpathentry exported="true" kind="lib" path="WebRoot/WEB-INF/lib/commons-fileupload-1.2.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="WebRoot/WEB-INF/lib/commons-httpclient-3.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="WebRoot/WEB-INF/lib/commons-io-1.3.2.jar"/>
+	<classpathentry exported="true" kind="lib" path="WebRoot/WEB-INF/lib/commons-lang-2.6.jar"/>
+	<classpathentry exported="true" kind="lib" path="WebRoot/WEB-INF/lib/commons-logging-1.1.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="WebRoot/WEB-INF/lib/commons-net-1.4.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="WebRoot/WEB-INF/lib/commons-pool.jar"/>
+	<classpathentry exported="true" kind="lib" path="WebRoot/WEB-INF/lib/dom4j-1.6.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="WebRoot/WEB-INF/lib/ejb3-persistence.jar"/>
+	<classpathentry exported="true" kind="lib" path="WebRoot/WEB-INF/lib/ezmorph-1.0.3.jar"/>
+	<classpathentry exported="true" kind="lib" path="WebRoot/WEB-INF/lib/freemarker-2.3.13.jar"/>
+	<classpathentry exported="true" kind="lib" path="WebRoot/WEB-INF/lib/hibernate-annotations.jar"/>
+	<classpathentry exported="true" kind="lib" path="WebRoot/WEB-INF/lib/hibernate-commons-annotations.jar"/>
+	<classpathentry exported="true" kind="lib" path="WebRoot/WEB-INF/lib/hibernate3.jar"/>
+	<classpathentry exported="true" kind="lib" path="WebRoot/WEB-INF/lib/javassist-3.9.0.GA.jar"/>
+	<classpathentry exported="true" kind="lib" path="WebRoot/WEB-INF/lib/json-lib-2.4-jdk15.jar"/>
+	<classpathentry exported="true" kind="lib" path="WebRoot/WEB-INF/lib/jta-1.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="WebRoot/WEB-INF/lib/junit-4.5.jar"/>
+	<classpathentry exported="true" kind="lib" path="WebRoot/WEB-INF/lib/log4j-1.2.17.jar"/>
+	<classpathentry exported="true" kind="lib" path="WebRoot/WEB-INF/lib/ognl-2.6.11.jar"/>
+	<classpathentry exported="true" kind="lib" path="WebRoot/WEB-INF/lib/quartz-all-2.1.6.jar"/>
+	<classpathentry exported="true" kind="lib" path="WebRoot/WEB-INF/lib/saaj.jar"/>
+	<classpathentry exported="true" kind="lib" path="WebRoot/WEB-INF/lib/slf4j-api-1.6.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="WebRoot/WEB-INF/lib/slf4j-log4j12-1.7.7.jar"/>
+	<classpathentry exported="true" kind="lib" path="WebRoot/WEB-INF/lib/spring.jar"/>
+	<classpathentry exported="true" kind="lib" path="WebRoot/WEB-INF/lib/struts2-core-2.1.6.jar"/>
+	<classpathentry exported="true" kind="lib" path="WebRoot/WEB-INF/lib/struts2-spring-plugin-2.1.6.jar"/>
+	<classpathentry exported="true" kind="lib" path="WebRoot/WEB-INF/lib/xstream-1.3.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="WebRoot/WEB-INF/lib/xwork-2.1.2.jar"/>
+	<classpathentry exported="true" kind="lib" path="WebRoot/WEB-INF/lib/json_simple-1.1.jar"/>
+	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.USER_LIBRARY/cxf_rest"/>
+	<classpathentry exported="true" kind="lib" path="WebRoot/WEB-INF/lib/mysql-connector-java-5.1.31.jar"/>
+	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.USER_LIBRARY/mina"/>
+	<classpathentry kind="lib" path="D:/微云同步盘/lib/dist/mina-core-2.0.9.jar"/>
+	<classpathentry kind="lib" path="D:/微云同步盘/lib/dist/mina-integration-beans-2.0.9.jar"/>
+	<classpathentry kind="lib" path="D:/微云同步盘/lib/cxf_restful/aopalliance-1.0.jar"/>
+	<classpathentry kind="lib" path="D:/微云同步盘/lib/cxf_restful/cxf-2.4.2.jar"/>
+	<classpathentry kind="lib" path="D:/微云同步盘/lib/cxf_restful/geronimo-activation_1.1_spec-1.1.jar"/>
+	<classpathentry kind="lib" path="D:/微云同步盘/lib/cxf_restful/geronimo-annotation_1.0_spec-1.1.1.jar"/>
+	<classpathentry kind="lib" path="D:/微云同步盘/lib/cxf_restful/geronimo-javamail_1.4_spec-1.7.1.jar"/>
+	<classpathentry kind="lib" path="D:/微云同步盘/lib/cxf_restful/geronimo-jaxws_2.2_spec-1.0.jar"/>
+	<classpathentry kind="lib" path="D:/微云同步盘/lib/cxf_restful/geronimo-jms_1.1_spec-1.1.1.jar"/>
+	<classpathentry kind="lib" path="D:/微云同步盘/lib/cxf_restful/geronimo-servlet_3.0_spec-1.0.jar"/>
+	<classpathentry kind="lib" path="D:/微云同步盘/lib/cxf_restful/geronimo-stax-api_1.0_spec-1.0.1.jar"/>
+	<classpathentry kind="lib" path="D:/微云同步盘/lib/cxf_restful/geronimo-ws-metadata_2.0_spec-1.1.3.jar"/>
+	<classpathentry kind="lib" path="D:/微云同步盘/lib/cxf_restful/gson-1.6.jar"/>
+	<classpathentry kind="lib" path="D:/微云同步盘/lib/cxf_restful/jaxb-api-2.2.1.jar"/>
+	<classpathentry kind="lib" path="D:/微云同步盘/lib/cxf_restful/jaxb-impl-2.2.1.1.jar"/>
+	<classpathentry kind="lib" path="D:/微云同步盘/lib/cxf_restful/jaxb-xjc-2.2.1.1.jar"/>
+	<classpathentry kind="lib" path="D:/微云同步盘/lib/cxf_restful/jettison-1.3.jar"/>
+	<classpathentry kind="lib" path="D:/微云同步盘/lib/cxf_restful/jsr311-api-1.1.1.jar"/>
+	<classpathentry kind="lib" path="D:/微云同步盘/lib/cxf_restful/neethi-3.0.1.jar"/>
+	<classpathentry kind="lib" path="D:/微云同步盘/lib/cxf_restful/saaj-api-1.3.jar"/>
+	<classpathentry kind="lib" path="D:/微云同步盘/lib/cxf_restful/saaj-impl-1.3.2.jar"/>
+	<classpathentry kind="lib" path="D:/微云同步盘/lib/cxf_restful/stax2-api-3.1.1.jar"/>
+	<classpathentry kind="lib" path="D:/微云同步盘/lib/cxf_restful/woodstox-core-asl-4.1.1.jar"/>
+	<classpathentry kind="lib" path="D:/微云同步盘/lib/cxf_restful/wsdl4j-1.6.2.jar"/>
+	<classpathentry kind="lib" path="D:/微云同步盘/lib/cxf_restful/xml-resolver-1.2.jar"/>
+	<classpathentry kind="lib" path="D:/微云同步盘/lib/cxf_restful/xmlschema-core-2.0.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/struts2-json-plugin-2.3.8.jar"/>
+	<classpathentry kind="output" path="WebRoot/WEB-INF/classes"/>
+</classpath>

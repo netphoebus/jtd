@@ -1,0 +1,52 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<link href="css/style.css" rel="stylesheet" type="text/css" />
+<script language="JavaScript" src="js/jquery.js"></script>
+<!--[if IE 6]>
+	<script src="js/IE6PNG.js"></script>
+	<script type="text/javascript">
+		IE6PNG.fix('.png');
+	</script>
+<![endif]-->
+<script type="text/javascript">
+$(function(){	
+	//顶部导航切换
+	$(".nav li a").click(function(){
+		$(".nav li a.selected").removeClass("selected")
+		$(this).addClass("selected");
+	})	
+})	
+</script>
+
+</head>
+
+<body style="background: url(img/topbg.jpg); background-color:#DEEFFF; background-repeat: repeat-x; background-position: 500px 0px;" >
+<div class="topleft">管理控制平台</div>
+<div class="topright">    
+    <ul>
+      <li><span>欢迎您：管理系统 [ admin ]</span></li>
+      <li><span><a href="password.html" target="rightFrame">修改密码</a></span></li>
+      <li><span><a href="login.html" target="_parent">安全退出</a></span></li>
+    </ul>
+   
+    </div>
+<div class="topleftmain" >    
+    <ul class="nav">
+    <li style="width: 150px; background: none; margin-left:50px;"><a href="smanag.html" target="rightFrame"><span>[ 用户管理 ]</span></a></li>
+
+    <li><a href="left.html" target="leftFrame" class="selected">
+    <h2>设 置</h2></a></li>
+    <li><a href="left-2.html"  target="leftFrame">
+    <h2>查 看</h2></a></li>
+    <li><a href="left-3.html"  target="leftFrame">
+    <h2>控 制</h2>
+      </a></li>
+    <li><a href="left-4.html" target="leftFrame">
+    <h2>编 辑</h2></a></li>
+  </ul>
+</div>
+</body>
+</html>
