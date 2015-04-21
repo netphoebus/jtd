@@ -33,7 +33,19 @@ public class SignalAction extends ActionSupport implements RequestAware,
 
 	public static int[][] trafficlights = new int[4][5];
 	private static int[][] trafficlights_next = new int[4][5];
-
+	
+	private String test;
+	
+	public String getTest() {
+		return test;
+	}
+	public void setTest(String test) {
+		this.test = test;
+	}
+	public String test(){
+		System.out.println("=================="+test);
+		return NONE;
+	}
 	// =========后台首页类别=================================================
 	public String realTime() {
 		/**

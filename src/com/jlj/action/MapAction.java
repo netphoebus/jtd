@@ -39,7 +39,7 @@ SessionAware,ServletResponseAware,ServletRequestAware {
 	private ISignalService signService;
 	
 	
-	private List<Marker> markers = new ArrayList<Marker>();
+//	private List<Marker> markers = new ArrayList<Marker>();
 	
 	/**
 	 * load加载地图
@@ -48,7 +48,7 @@ SessionAware,ServletResponseAware,ServletRequestAware {
 	 */
 	public String load() throws Exception{
 		
-		
+		/*
 		Marker marker = new Marker();
 		marker.setId(1429345746000l);//id有问题？
 		marker.setAddress("123");
@@ -57,9 +57,9 @@ SessionAware,ServletResponseAware,ServletRequestAware {
 		marker.setLng("119.69741821289062");
 		
 		markers.add(marker);
-		
+		*/
 		//JSONObject jsonObject = JSONObject.fromObject(markers);
-		
+		/*
 		JSONArray jsonArr= JSONArray.fromObject(markers);
 		
 		System.out.print(jsonArr);
@@ -75,7 +75,7 @@ SessionAware,ServletResponseAware,ServletRequestAware {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+		*/
 		
 		return NONE;
 	}
@@ -95,7 +95,7 @@ SessionAware,ServletResponseAware,ServletRequestAware {
 		String name = req.getParameter("name");
 		String lng = req.getParameter("lng");
 		String lat = req.getParameter("lat");
-		
+		/*
 		Marker marker = new Marker();
 		marker.setId(id);
 		marker.setIp(ip);
@@ -104,7 +104,7 @@ SessionAware,ServletResponseAware,ServletRequestAware {
 		marker.setLat(lat);
 		marker.setLng(lng);
 		System.out.println(marker);
-
+		*/
 		return NONE;
 	}
 	/**
@@ -159,12 +159,12 @@ SessionAware,ServletResponseAware,ServletRequestAware {
 	public void setSession(Map<String, Object> session) {
 		this.session = session;
 	}
-	public List<Marker> getMarkers() {
-		return markers;
-	}
-	public void setMarkers(List<Marker> markers) {
-		this.markers = markers;
-	}
+//	public List<Marker> getMarkers() {
+//		return markers;
+//	}
+//	public void setMarkers(List<Marker> markers) {
+//		this.markers = markers;
+//	}
     
 	
 

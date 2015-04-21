@@ -21,55 +21,30 @@
 		</action>
 	</package>
 	
-	<package name="footer" extends="struts-default">
-		
-        
+	
+	<package name="signal" extends="struts-default">
 		<global-results>
 			<result name="adminLogin">/login.jsp</result>
 			<result name="opsessiongo">/op_sessiongo.jsp</result>
 		</global-results>
-		<action name="footerAction" class="footerAction">
+		<action name="signalAction" class="signalAction">
 			<result name="success">/op_success.jsp</result>
 			<result name="fail">/op_failure.jsp</result>
 			<result name="operror">/op_error.jsp</result>
 			
-			<result name="list">/footer_manage.jsp</result>
-			<result name="add">/footer_add.jsp</result>
-			<result name="load">/footer_update.jsp</result>
-			<result name="view">/footer_view.jsp</result>
+			<result name="list">/signal_manage.jsp</result>
+			<result name="add">/signal_add.jsp</result>
+			<result name="load">/signal_update.jsp</result>
+			<result name="view">/signal_view.jsp</result>
 			
 			<result name="invalid.token">/op_failure.jsp</result>
-			
+			<interceptor-ref name="defaultStack" />
             <interceptor-ref name="token" >
             	<param name="includeMethods">add</param>
             	<param name="excludeMethods">default</param>
             </interceptor-ref>
 		</action>
 	</package>
-	
-	<package name="client" extends="struts-default">
-		<global-results>
-			<result name="adminLogin">/login.jsp</result>
-			<result name="opsessiongo">/op_sessiongo.jsp</result>
-		</global-results>
-		<action name="clientAction" class="clientAction">
-			<result name="success">/op_success.jsp</result>
-			<result name="fail">/op_failure.jsp</result>
-			<result name="operror">/op_error.jsp</result>
-			
-			<result name="list">/client_manage.jsp</result>
-			<result name="add">/client_add.jsp</result>
-			<result name="load">/client_update.jsp</result>
-			<result name="view">/client_view.jsp</result>
-			
-			<result name="invalid.token">/op_failure.jsp</result>
-            <interceptor-ref name="token" >
-            	<param name="includeMethods">add</param>
-            	<param name="excludeMethods">default</param>
-            </interceptor-ref>
-		</action>
-	</package>
-	
 	
 	<package name="realtime" extends="json-default">  
         <action name="test" class="realtimeAction" method="test">  
