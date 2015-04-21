@@ -6,6 +6,7 @@ var markerZoom = 12;//标记红绿灯地图所在级别
 var mapClickEventListener = null;
 var markers = [];
 var initMarkers = [];
+var markermsg = [];
 var markerId = Date.parse(new Date());//时间做唯一标示
 var markersJson = '';
 
@@ -39,7 +40,7 @@ google.maps.event.addDomListener(window, "load", initialize);
 		
 	MarkersInit();
 
-	google.maps.event.addListener(mapobj, "rightclick", reset);
+	//google.maps.event.addListener(mapobj, "rightclick", reset);
 
     addClickEventListener();
 
@@ -77,7 +78,7 @@ function addClickEventListener() {
 		  marker.name = '';
 		  marker.address = '';
 		  initSignal(marker);  
-		  markers.push(marker);
+		  initMarkers.push(marker);
 	}
 
 	//初始化信号机
@@ -123,7 +124,7 @@ function removeClickListener() {
 //设置信号机标示的事件
 function setMarkerEvents(marker)
 {
-	var getMarkerWindow = new google.maps.InfoWindow({  content: getMarkerContent(marker) });
+
 
 	maphelper.bindInstanceEvent(marker, 'dblclick', function(event,map,marker) {
 					location.href = "traffic.jsp";
@@ -134,7 +135,7 @@ function setMarkerEvents(marker)
 			//if(marker.isConnect&&!marker.isInitMarker)
 			if(marker.initOver)
 			{
-				getMarkerWindow = new google.maps.InfoWindow({  content: getMarkerContent(marker) });
+			var  	getMarkerWindow = new google.maps.InfoWindow({  content: getMarkerContent(marker) });
 				getMarkerWindow.open(map, marker);
 			}
 			else
@@ -172,38 +173,42 @@ function setMarkerEvents(marker)
 	
 }
 
-//初始化标志
+//初始化地图所有标志
 function MarkersInit()
 {
 		$.ajax({   
 	            url:'load',//这里是你的action或者servlert的路径地址   
 	            type:'post', //数据发送方式   
-	            dataType:'json',  
+	            dataType:'json', 
 	            error: function(msg)
 	            { //失败   
 	            	console.log('post失败');   
 	            },   
 	            success: function(msg)
 	            { //成功
-	            	 	 initMarkers = msg;
-	            		 for(var i=0;i<initMarkers.length;i++)
+	            		encodeURI(msg);
+	            		console.log(msg);
+	            	 	markermsg = msg;
+	            	 	for(var i=0;i<markermsg.length;i++)
 			    	    {
 				    	     var marker =  maphelper.markerPoint({
-						  	    id:  initMarkers[i].id,
-								lat: initMarkers[i].lat,
-						        lng: initMarkers[i].lng,
+						  	    id:  markermsg[i].id,
+								lat: markermsg[i].lat,
+						        lng: markermsg[i].lng,
 						        title: '红绿灯',
 						        icon: "images/boot2.png"
 				
 						 	 });
 						  marker.connectSuccess = true;
 						  marker.initOver = true;
-						  marker.name = initMarkers[i].name;
-						  marker.address = initMarkers[i].address;
+						  marker.name = markermsg[i].name;
+						  marker.address = markermsg[i].address;
 						  setMarkerEvents(marker);
+						  initMarkers.push(marker);
 			    	    } 	   
 	            }  
-    	    });   
+    	    });  
+    	    
 }
 
 
@@ -235,15 +240,15 @@ function setMarkerContent(marker)
 //添加单个信号机标记
 function saveMarker(id)
 {
-	for(var i=0;i<markers.length;i++)
+	for(var i=0;i<initMarkers.length;i++)
 	{
-		if(markers[i].id == id)
+		if(initMarkers[i].id == id)
 		{
 			var ip = $('#ip').val();
 			var address = $('#address').val();
 			var name = $('#name').val();
-			var lat = markers[i].getPosition().jb;
-			var lng = markers[i].getPosition().kb;
+			var lat = initMarkers[i].getPosition().jb;
+			var lng = initMarkers[i].getPosition().kb;
 			
 
 			$.ajax({   
@@ -261,21 +266,22 @@ function saveMarker(id)
 	            }  
     	    });   
     	    
-    	    markers[i].initOver = true;
-    	    markers[i].setAnimation(null);
-    	    markers[i].name = name;
-    	    markers[i].address = address;
+    	    initMarkers[i].initOver = true;
+    	    initMarkers[i].setAnimation(null);
+    	    initMarkers[i].name = name;
+    	    initMarkers[i].address = address;
 		}
 	}
 }
 
 
 //删除单个信号机标记
-function saveMarker(id)
+function deleteMarker(id)
 {
-	for(var i=0;i<markers.length;i++)
+	for(var i=0;i<initMarkers.length;i++)
 	{
-		if(markers[i].id == id)
+	
+		if(initMarkers[i].id == id)
 		{
 			$.ajax({   
 	            url:'delete',//这里是你的action或者servlert的路径地址   
@@ -287,10 +293,11 @@ function saveMarker(id)
 	            },   
 	            success: function(msg)
 	            { //成功   
-	          		markers[i].setMap(null);
-	          		markers.splice(i,1);
+	            	console.log('delete成功');   
 	            }  
     	    });   
+    	   	 initMarkers[i].setMap(null);
+	         initMarkers.splice(i,1);
 		}
 	}
 }
@@ -298,29 +305,10 @@ function saveMarker(id)
 function getMarkersJson(markers)
 {
 	
-	for(var marker in markers)
-	{
-		marker.getPosition();
-	}
+
 }
 
 function saveMarkers()
 {
-	var json_data = JSON.stringify(markers[0]); 
-	console.log(json_data);
-	$.ajax({   
-            url:'add',//这里是你的action或者servlert的路径地址   
-            type:'post', //数据发送方式     
- 			data: { "markersJsonMsg": 123123},
-            error: function(msg)
-            { //失败   
-            	console.log('Error loading document');   
-            },   
-            success: function(msg)
-            { //成功   
-            	
-	           	 
-            }  
-    });     
 
 }
