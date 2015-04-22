@@ -78,5 +78,4 @@ public class SigServiceImp implements ISigService  {
 		queryString += " order by mo.id desc ";
 		return sigDao.pageList(queryString,p,page,size);
 	}
-	
 }

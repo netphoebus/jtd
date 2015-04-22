@@ -1,12 +1,9 @@
 package com.jlj.action;
 
 import java.io.IOException;
-
 import java.io.PrintWriter;
-
 import java.util.Map;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -17,7 +14,7 @@ import org.apache.struts2.interceptor.SessionAware;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-
+import com.jlj.model.Sig;
 import com.opensymphony.xwork2.ActionSupport;
 
 @Component("signalAction")
@@ -33,21 +30,15 @@ public class SignalAction extends ActionSupport implements RequestAware,
 
 	public static int[][] trafficlights = new int[4][5];
 	private static int[][] trafficlights_next = new int[4][5];
+	private Sig sig;
+	private int id;
 	
-	private String test;
 	
-	public String getTest() {
-		return test;
-	}
-	public void setTest(String test) {
-		this.test = test;
-	}
-	public String test(){
-		System.out.println("=================="+test);
-		return NONE;
-	}
 	// =========后台首页类别=================================================
 	public String realTime() {
+		
+		 
+		
 		/**
 		 * trafficLigths[0-3]:表示一个红绿灯的各个方向依次为：0:东,1:南,2:西,3:北
 		 * trafficLigths[0-3][0-4]：表示一个方向的5具体的灯： 0:左转灯,1: 直行灯 ,2:右转灯 ,3:人行道
@@ -148,4 +139,22 @@ public class SignalAction extends ActionSupport implements RequestAware,
 		this.session = session;
 	}
 
+	public Sig getSig() {
+		return sig;
+	}
+
+	public void setSig(Sig sig) {
+		this.sig = sig;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+	
+	
+	
 }

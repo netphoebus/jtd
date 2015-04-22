@@ -9,13 +9,13 @@ var initMarkers = [];
 var markermsg = [];
 var markerId = Date.parse(new Date());//时间做唯一标示
 var markersJson = '';
+var user=null;
 
 google.maps.event.addDomListener(window, "load", initialize);
 
  function initialize() {
 
 	   var mapCanvas = document.getElementById("map_canvas");
-
 		var myOptions = {
 		zoom: markerZoom,   
 		center: new Array(119.69663500785828, 31.369760901943426),  
@@ -127,6 +127,8 @@ function setMarkerEvents(marker)
 
 
 	maphelper.bindInstanceEvent(marker, 'dblclick', function(event,map,marker) {
+	
+				
 					location.href = "traffic.jsp";
 	        });
 
@@ -257,12 +259,13 @@ function saveMarker(id)
 	 			data: { "id":id,"ip":ip,"address":address,"name":name,"lat":lat,"lng":lng},
 	            error: function(msg)
 	            { //失败   
-	            	console.log('post失败');   
+	            	alert('信号机增加失败');   
 	            },   
 	            success: function(msg)
 	            { //成功   
 	          		if(infowindow)
 					infowindow.close();
+					alert('信号机绑定成功');   
 	            }  
     	    });   
     	    
@@ -289,11 +292,11 @@ function deleteMarker(id)
 	 			data: { "id":id},
 	            error: function(msg)
 	            { //失败   
-	            	console.log('post失败');   
+	            	alert('信号机删除失败');   
 	            },   
 	            success: function(msg)
 	            { //成功   
-	            	console.log('delete成功');   
+	            	alert('信号机删除成功');   
 	            }  
     	    });   
     	   	 initMarkers[i].setMap(null);

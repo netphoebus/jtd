@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
 
 import org.apache.struts2.interceptor.RequestAware;
 import org.apache.struts2.interceptor.ServletRequestAware;
@@ -20,10 +19,10 @@ import org.apache.struts2.interceptor.SessionAware;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import com.opensymphony.xwork2.ActionSupport;
-import com.jlj.model.*;
+import com.jlj.model.Sig;
 import com.jlj.service.ISigService;
 import com.jlj.vo.MarkerVO;
+import com.opensymphony.xwork2.ActionSupport;
 
 @Component("mapAction")
 @Scope("prototype")
@@ -40,6 +39,7 @@ public class MapAction extends ActionSupport implements RequestAware,
 
 	private List<MarkerVO> initMarkers = new ArrayList<MarkerVO>();
 	private List<Sig> sigs = new ArrayList<Sig>();
+	private Sig sig;
 
 	/**
 	 * load加载地图
@@ -47,17 +47,14 @@ public class MapAction extends ActionSupport implements RequestAware,
 	 * @return
 	 * @throws Exception
 	 */
-
-		
-
 	public String load() throws Exception {
 
-		sigs = sigService.list();
+		sigs = sigService.getSigs();
 		if(sigs!=null&&sigs.size()>0)
 		{
 			for (Sig sig : sigs) {
 				MarkerVO markervo = new MarkerVO();
-				//markervo.setId(sig.getId());
+				markervo.setId(sig.getMkid());
 				markervo.setAddress(sig.getAddress());
 				markervo.setIp(sig.getIp());
 				markervo.setLat(sig.getLat());
@@ -79,8 +76,6 @@ public class MapAction extends ActionSupport implements RequestAware,
 				e.printStackTrace();
 			}
 		}
-		
-
 		return NONE;
 	}
 
@@ -92,21 +87,21 @@ public class MapAction extends ActionSupport implements RequestAware,
 	 */
 	public String add() throws Exception {
 		
-		long id = Long.parseLong(req.getParameter("id"));
+		long mkid = Long.parseLong(req.getParameter("id"));
 		String ip = req.getParameter("ip");
 		String address = req.getParameter("address");
 		String name = req.getParameter("name");
 		String lng = req.getParameter("lng");
 		String lat = req.getParameter("lat");
 
-//		List<Marker> markers = new ArrayList<Marker>();
-//		markers.add(marker);
-//		Signal signal = new Signal();
-//		signal.setMarkers(markers);
-//
-//		System.out.println(signal.getMarkers().get(0).getAddress());
-//		signalService.save(signal);
-
+		Sig sig = new Sig();
+		sig.setMkid(mkid);
+		sig.setIp(ip);
+		sig.setAddress(address);
+		sig.setName(name);
+		sig.setLat(lat);
+		sig.setLng(lng);
+		sigService.add(sig);
 		return NONE;
 	}
 
@@ -116,11 +111,22 @@ public class MapAction extends ActionSupport implements RequestAware,
 	 * @return
 	 */
 	public String delete() {
-		long id = Long.parseLong(req.getParameter("id"));
-
+		long mkid = Long.parseLong(req.getParameter("id"));
+		sigs = sigService.getSigs();
+		if(sigs!=null&&sigs.size()>0)
+		{
+			for (Sig sigobj : sigs) {
+				if(sigobj.getMkid()==mkid)
+				{
+					sig = sigobj;
+					sigService.delete(sig);
+					break;
+				}
+			}
+		}
 		return NONE;
 	}
-
+	
 	/**
 	 * 修改
 	 * 
@@ -140,7 +146,7 @@ public class MapAction extends ActionSupport implements RequestAware,
 	}
 
 	/**
-	 * 跳转到修改页面
+	 * 跳转到实时页面
 	 * 
 	 * @return
 	 */
@@ -194,6 +200,14 @@ public class MapAction extends ActionSupport implements RequestAware,
 
 	public void setInitMarkers(List<MarkerVO> initMarkers) {
 		this.initMarkers = initMarkers;
+	}
+
+	public Sig getSig() {
+		return sig;
+	}
+
+	public void setSig(Sig sig) {
+		this.sig = sig;
 	}
 
 }
