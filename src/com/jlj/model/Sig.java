@@ -32,6 +32,7 @@ public class Sig implements java.io.Serializable {
 	private String lat;
 	private String lng;
 	private String ip;
+	private Long mkid;
 	private List<Devlog> devlogs = new ArrayList<Devlog>(0);
 
 	// Constructors
@@ -42,13 +43,14 @@ public class Sig implements java.io.Serializable {
 
 	/** full constructor */
 	public Sig(Userarea userarea, String name, String address, String lat,
-			String lng, String ip, List<Devlog> devlogs) {
+			String lng, String ip,Long mkid, List<Devlog> devlogs) {
 		this.userarea = userarea;
 		this.name = name;
 		this.address = address;
 		this.lat = lat;
 		this.lng = lng;
 		this.ip = ip;
+		this.mkid = mkid;
 		this.devlogs = devlogs;
 	}
 
@@ -117,6 +119,15 @@ public class Sig implements java.io.Serializable {
 
 	public void setIp(String ip) {
 		this.ip = ip;
+	}
+
+	@Column(name = "mkid")
+	public Long getMkid() {
+		return mkid;
+	}
+
+	public void setMkid(Long mkid) {
+		this.mkid = mkid;
 	}
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "sig")
