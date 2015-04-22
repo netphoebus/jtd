@@ -47,63 +47,40 @@ public class MapAction extends ActionSupport implements RequestAware,
 	 * @return
 	 * @throws Exception
 	 */
-	public String load() throws Exception{
+
 		
-		/*
-		Marker marker = new Marker();
-		marker.setId(1429345746000l);//id有问题？
-		marker.setAddress("123");
-		marker.setName("123");
-		marker.setLat("31.371519712131036");
-		marker.setLng("119.69741821289062");
-		
-		markers.add(marker);
-		*/
-		//JSONObject jsonObject = JSONObject.fromObject(markers);
-		/*
-		JSONArray jsonArr= JSONArray.fromObject(markers);
-		
-=======
+
 	public String load() throws Exception {
 
-		signals = signalService.list();
-		for (int i = 0; i < signals.size(); i++) {
-			Marker marker = signals.get(i).getMarkers().get(0);
-			MarkerVO markervo = new MarkerVO();
-			markervo.setId(marker.getId());
-			markervo.setAddress(marker.getAddress());
-			markervo.setIp(marker.getIp());
-			markervo.setLat(marker.getLat());
-			markervo.setLng(marker.getLng());
-			markervo.setName(marker.getName());
-			initMarkers.add(markervo);
+		sigs = sigService.list();
+		if(sigs!=null&&sigs.size()>0)
+		{
+			for (Sig sig : sigs) {
+				MarkerVO markervo = new MarkerVO();
+				//markervo.setId(sig.getId());
+				markervo.setAddress(sig.getAddress());
+				markervo.setIp(sig.getIp());
+				markervo.setLat(sig.getLat());
+				markervo.setLng(sig.getLng());
+				markervo.setName(sig.getName());
+				initMarkers.add(markervo);
+			}
+
+			JSONArray jsonArr = JSONArray.fromObject(initMarkers);
+
+			PrintWriter out;
+			try {
+				response.setContentType("text/html;charset=UTF-8");
+				out = response.getWriter();
+				out.print(jsonArr.toString());
+				out.flush();
+				out.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
-		// JSONObject jsonObject = JSONObject.fromObject(markers);
-
-		JSONArray jsonArr = JSONArray.fromObject(initMarkers);
-
->>>>>>> origin/master
-		System.out.print(jsonArr);
-
-		String jsonString = jsonArr.toString();
-
-		PrintWriter out;
-		try {
-			response.setContentType("text/html;charset=UTF-8");
-			out = response.getWriter();
-			out.print(jsonString);
-			out.flush();
-			out.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-<<<<<<< HEAD
 		
-		
-=======
 
->>>>>>> origin/master
-*/
 		return NONE;
 	}
 
