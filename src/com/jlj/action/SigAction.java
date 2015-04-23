@@ -36,7 +36,7 @@ public class SigAction extends ActionSupport implements RequestAware,
 	private ISigService sigService;
 	private Sig sig;
 	private int id;
-	private String ip;
+	private static String ip;
 	
 	
 	public String toTraffic()
@@ -52,10 +52,7 @@ public class SigAction extends ActionSupport implements RequestAware,
 	
 	
 	// =========后台首页类别=================================================
-	public String realTime() {
-		
-		 
-		
+	public String realtime() {
 		/**
 		 * trafficLigths[0-3]:表示一个红绿灯的各个方向依次为：0:东,1:南,2:西,3:北
 		 * trafficLigths[0-3][0-4]：表示一个方向的5具体的灯： 0:左转灯,1: 直行灯 ,2:右转灯 ,3:人行道
@@ -63,7 +60,6 @@ public class SigAction extends ActionSupport implements RequestAware,
 		 * 
 		 * 
 		 */
-
 		if (trafficlights != trafficlights_next) {
 			trafficlights_next = trafficlights;
 			String jsonString = "{\"success\":\"true\"" + ",\"h01\":\""
@@ -183,7 +179,7 @@ public class SigAction extends ActionSupport implements RequestAware,
 	}
 
 
-	public String getIp() {
+	public static String getIp() {
 		return ip;
 	}
 

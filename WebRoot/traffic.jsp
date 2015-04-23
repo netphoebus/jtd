@@ -30,7 +30,7 @@ request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+pa
 				function ShowLights(){
 				console.log("进入方法.开始直行.....");
 				  $.ajax({   
-				            url:'test',//这里是你的action或者servlert的路径地址   
+				            url:'realtime',//这里是你的action或者servlert的路径地址   
 				            type:'get', //数据发送方式   
 				            dataType:'json', //接受数据格式 (这里有很多,常用的有html,xml,js,json)   
 				            error: function(msg)

@@ -4,6 +4,8 @@ import org.apache.mina.core.service.IoHandler;
 import org.apache.mina.core.session.IdleStatus;
 import org.apache.mina.core.session.IoSession;
 
+import com.jlj.action.SigAction;
+
 
   
 public class TimeServerHandler  implements IoHandler {
@@ -41,9 +43,9 @@ public class TimeServerHandler  implements IoHandler {
 
 			
 			
-			System.out.println(">>>>>>>>recv" +m_oData);
+			//System.out.println(">>>>>>>>recv" +m_oData);
 			data = bytesToHexString(m_oData);
-			AnalysisData(data);
+			AnalysisData(data, session);
 			//AnalysisData_Sensor(data);
 			
 			
@@ -158,7 +160,7 @@ public class TimeServerHandler  implements IoHandler {
 	  		System.out.print("the num of sensor is"+sensorNum+"the temperature is"+sensorTemp);
 	  	}
 	}
-	public static void AnalysisData(String data){
+	public static void AnalysisData(String data,IoSession session){
 	   	boolean started = false;
 	  	String XHJ_address;
 	  	String ZXJ_address;
@@ -276,7 +278,15 @@ public class TimeServerHandler  implements IoHandler {
 //	  	  		System.out.println(" ");
 //	  	  	}
 	  	}
-	  	//SignalAction.trafficlights = locate;
+	  	
+	  	System.out.println("the address is "+session.getRemoteAddress().toString()+"the select address is "+SigAction.getIp());
+	  	if(SigAction.getIp() !=  null)
+	  	if(session.getRemoteAddress().toString().contains(SigAction.getIp() )){
+	  		System.out.println("enter !!!");
+	  		SigAction.trafficlights = locate;
+	  	}
+	  	
+	  	//
 	  }
 	  
 	  public static String bytesToHexString(byte[] src){  
@@ -292,7 +302,7 @@ public class TimeServerHandler  implements IoHandler {
 	          }  
 	          stringBuilder.append(hv);  
 	      }  
-	      System.out.println("---"+stringBuilder.toString()+"---");
+	     // System.out.println("---"+stringBuilder.toString()+"---");
 	      
 	      return stringBuilder.toString();  
 	  }  
