@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Map;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -15,11 +16,13 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.jlj.model.Sig;
+import com.jlj.service.ISigService;
+import com.jlj.service.imp.SigServiceImp;
 import com.opensymphony.xwork2.ActionSupport;
 
-@Component("signalAction")
+@Component("sigAction")
 @Scope("prototype")
-public class SignalAction extends ActionSupport implements RequestAware,
+public class SigAction extends ActionSupport implements RequestAware,
 		SessionAware, ServletResponseAware, ServletRequestAware {
 
 	private static final long serialVersionUID = 1L;
@@ -30,8 +33,22 @@ public class SignalAction extends ActionSupport implements RequestAware,
 
 	public static int[][] trafficlights = new int[4][5];
 	private static int[][] trafficlights_next = new int[4][5];
+	private ISigService sigService;
 	private Sig sig;
 	private int id;
+	private String ip;
+	
+	
+	public String toTraffic()
+	{
+		long mkid = Long.parseLong(req.getParameter("mkid"));
+		sig = sigService.loadByMkid(mkid);
+		if(sig!=null)
+		{
+			ip = sig.getIp();
+		}
+		return "traffic";
+	}
 	
 	
 	// =========后台首页类别=================================================
@@ -153,6 +170,26 @@ public class SignalAction extends ActionSupport implements RequestAware,
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+
+	public ISigService getSigService() {
+		return sigService;
+	}
+
+	@Resource
+	public void setSigService(ISigService sigService) {
+		this.sigService = sigService;
+	}
+
+
+	public String getIp() {
+		return ip;
+	}
+
+
+	public void setIp(String ip) {
+		this.ip = ip;
 	}
 	
 	

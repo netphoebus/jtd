@@ -34,5 +34,7 @@ public interface ISigService {
 	public abstract List<Sig> queryList(int con, String convalue, int page,
 			int size);
 
+	public abstract Sig loadByMkid(long mkid);
+
 
 }

@@ -172,6 +172,19 @@ public class SigDaoImp implements ISigDao {
 		//返回受影响的行数
 		return query.executeUpdate();
 	}
+	public Sig loadByMkid(String queryString) {
+		// TODO Auto-generated method stub
+		Session session=this.hibernateTemplate.getSessionFactory().getCurrentSession();
+		Query query= session.createQuery(queryString);
+		List sigs = query.list();
+		System.out.println(sigs);
+		if(sigs!=null&&sigs.size()>0)
+		{
+			return (Sig) sigs.get(0);
+		}
+		return null;
+	}
+	
 
 
 }

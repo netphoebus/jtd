@@ -127,9 +127,7 @@ function setMarkerEvents(marker)
 
 
 	maphelper.bindInstanceEvent(marker, 'dblclick', function(event,map,marker) {
-	
-				
-					location.href = "traffic.jsp";
+					location.href = "sigAction!toTraffic?mkid="+marker.id;
 	        });
 
 	maphelper.bindInstanceEvent(marker, 'mouseover', function(event,map,marker) {
@@ -203,6 +201,7 @@ function MarkersInit()
 						 	 });
 						  marker.connectSuccess = true;
 						  marker.initOver = true;
+						  marker.ip = markermsg[i].ip;
 						  marker.name = markermsg[i].name;
 						  marker.address = markermsg[i].address;
 						  setMarkerEvents(marker);
@@ -218,7 +217,7 @@ function MarkersInit()
 function getMarkerContent(marker)
 {
 	return '<div  id="content"><h1 id="">当前信号机</h1><div id="bodyContent">' 
-	+ '<br><div style="margin-top:0.8px">&nbsp;ip&nbsp;地&nbsp;&nbsp;址&nbsp;&nbsp;：<input id="ip" value="'+marker.id+'" name="signal_ipaddress" type="text"  width="25px"/></div>' 
+	+ '<br><div style="margin-top:0.8px">&nbsp;ip&nbsp;地&nbsp;&nbsp;址&nbsp;&nbsp;：<input id="ip" value="'+marker.ip+'" name="signal_ipaddress" type="text"  width="25px"/></div>' 
 	+ '<br><div style="margin-top:0.8px">信号机地址：<input  id="address" value="'+marker.name+'" name="signal_address" type="text"    width="25px"/></div>' 
 	+ '<br><div style="margin-top:0.8px">信号机名称：<input id="name" value="'+marker.address+'" name="signal_name" type="text"   width="25px"/></div>' 
 	+ '<br><div class="maptip"><btn><a href="javascript:deleteMarker('+marker.id+')" target="rightFrame" ">删除</a></btn></div></div>'
@@ -273,6 +272,7 @@ function saveMarker(id)
     	    initMarkers[i].setAnimation(null);
     	    initMarkers[i].name = name;
     	    initMarkers[i].address = address;
+    	    initMarkers[i].ip = ip;
 		}
 	}
 }

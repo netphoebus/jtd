@@ -78,4 +78,12 @@ public class SigServiceImp implements ISigService  {
 		queryString += " order by mo.id desc ";
 		return sigDao.pageList(queryString,p,page,size);
 	}
+	public Sig loadByMkid(long mkid) {
+		// TODO Auto-generated method stub
+		
+		String queryString = "from Sig mo where 1=1 and mo.mkid="+mkid;
+		
+		
+		return sigDao.loadByMkid(queryString);
+	}
 }

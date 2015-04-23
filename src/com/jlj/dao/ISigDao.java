@@ -65,4 +65,6 @@ public interface ISigDao {
 	//根据hql批量修改
 	public abstract int updateSigByhql(String queryString, Object[] p);
 
+	public abstract Sig loadByMkid(String queryString);
+
 }
