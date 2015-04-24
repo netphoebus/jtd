@@ -176,7 +176,7 @@ function change_pic()
 {
  var imgObj = document.getElementById("h01");
 
- if(imgObj.getAttribute("src",2)== "images/img/h01h.png")
+ if(imgObj.getAttribute("src",2)== "images/img/h010.png")
  {imgObj.src="images/img/h010.png";}
  else
  {imgObj.src="images/img/h010.png";}
