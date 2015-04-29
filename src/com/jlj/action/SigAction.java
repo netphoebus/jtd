@@ -54,7 +54,7 @@ public class SigAction extends ActionSupport implements RequestAware,
 	// =========后台首页类别=================================================
 	public String realtime() {
 		/**
-		 * trafficLigths[0-3]:表示一个红绿灯的各个方向依次为：0:东,1:南,2:西,3:北
+		 * trafficLigths[0-3]:表示一个红绿灯的各个方向依次为：0:东-》西,1:南-》北,2:西-》东,3:北-》南
 		 * trafficLigths[0-3][0-4]：表示一个方向的5具体的灯： 0:左转灯,1: 直行灯 ,2:右转灯 ,3:人行道
 		 * ,4:人行道 表示一个具体的灯： 3：红 2：黄 1：绿 0：灭 null：未知
 		 * 
@@ -62,26 +62,26 @@ public class SigAction extends ActionSupport implements RequestAware,
 		 */
 		if (trafficlights != trafficlights_next) {
 			trafficlights_next = trafficlights;
-			String jsonString = "{\"success\":\"true\"" + ",\"h01\":\""
-					+ trafficlights_next[0][3] + "\"" + // 东西方向人行道灯(表示两个)
+			String jsonString = "{\"success\":\"true\"" + ",\"l03\":\""
+					+ trafficlights_next[1][3] + "\"" + // 东西方向人行道灯(表示两个)
+					
+					",\"l20\":\"" + trafficlights_next[2][0] + "\"" + // 西边左转灯
+					",\"l21\":\"" + trafficlights_next[2][1] + "\"" + // 西边直行灯
+					",\"l22\":\"" + trafficlights_next[2][2] + "\"" + // 西边右转灯
 
-					",\"h02\":\"" + trafficlights_next[2][0] + "\"" + // 西边左转灯
-					",\"h03\":\"" + trafficlights_next[2][1] + "\"" + // 西边直行灯
-					",\"h04\":\"" + trafficlights_next[2][2] + "\"" + // 西边右转灯
+					",\"l00\":\"" + trafficlights_next[0][0] + "\"" + // 东边左转灯
+					",\"l01\":\"" + trafficlights_next[0][1] + "\"" + // 东边直行灯
+					",\"l02\":\"" + trafficlights_next[0][2] + "\"" + // 东边右转灯
 
-					",\"h05\":\"" + trafficlights_next[0][0] + "\"" + // 东边左转灯
-					",\"h06\":\"" + trafficlights_next[0][1] + "\"" + // 东边直行灯
-					",\"h07\":\"" + trafficlights_next[0][2] + "\"" + // 东边右转灯
+					",\"l13\":\"" + trafficlights_next[0][3] + "\"" + // 南北方向人行道(表示两个)
 
-					",\"s01\":\"" + trafficlights_next[1][3] + "\"" + // 南北方向人行道(表示两个)
+					",\"l32\":\"" + trafficlights_next[3][2] + "\"" + // 北边右转灯
+					",\"l31\":\"" + trafficlights_next[3][1] + "\"" + // 北边直行灯
+					",\"l30\":\"" + trafficlights_next[3][0] + "\"" + // 北边左转灯
 
-					",\"s02\":\"" + trafficlights_next[3][2] + "\"" + // 北边右转灯
-					",\"s03\":\"" + trafficlights_next[3][1] + "\"" + // 北边直行灯
-					",\"s04\":\"" + trafficlights_next[3][0] + "\"" + // 北边左转灯
-
-					",\"s05\":\"" + trafficlights_next[1][1] + "\"" + // 南边直行灯
-					",\"s06\":\"" + trafficlights_next[1][0] + "\"" + // 南边左转灯
-					",\"s07\":\"" + trafficlights_next[1][2] + "\"" + // 南边右转灯
+					",\"l11\":\"" + trafficlights_next[1][1] + "\"" + // 南边直行灯
+					",\"l10\":\"" + trafficlights_next[1][0] + "\"" + // 南边左转灯
+					",\"l12\":\"" + trafficlights_next[1][2] + "\"" + // 南边右转灯
 					"}";
 			PrintWriter out;
 			try {
