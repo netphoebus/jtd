@@ -14,3 +14,10 @@ function executeCommand(id)
             }  
    	    });   
 }
+
+function test()
+{
+	console.log("coming");
+	executeCommand(5);
+	location.href = "cssz-cz.html";
+}

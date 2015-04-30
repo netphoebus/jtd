@@ -60,7 +60,7 @@ public static int str2hexfun(String str){
 	          }  
 	          stringBuilder.append(hv);  
 	      }  
-	     // System.out.println("---"+stringBuilder.toString()+"---");
+	  //    System.out.println("---"+stringBuilder.toString()+"---");
 	      
 	      return stringBuilder.toString();  
 	  } 

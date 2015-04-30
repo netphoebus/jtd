@@ -175,23 +175,6 @@ public class CmdFactoryBase implements ICmdParser {
 	public CmdFactoryBase(byte[] data)
 	{
 		m_oData = data;
-		
-		MONITOR_CMD_TYPE eCmdType = getCommandType(data);
-	
-			if (data != null && data.length >= 32) {
-				byte[] serial_num = new byte[16];
-				
-				System.arraycopy(data, 16, serial_num, 0, 16);
-				if (null == getSerialNum()) {
-					setSerialNum(serial_num);
-				}
-				
-				
-				String sKey = DataConvertor.toHexString(serial_num);
-				//m_ctxCache = DataCacheFactory.getCacheContext(sKey);
-			}
-			
-		
 	}
 	
 	protected byte[] m_oData = null;

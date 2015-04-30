@@ -23,7 +23,12 @@ request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+pa
 <script type="text/javascript" src="editor/kindeditor.js"></script>
 <script type="text/javascript" src="js/privatesig.js"></script>
 <script type="text/javascript">
-
+function test()
+{
+	console.log("coming");
+	executeCommand(5);
+	location.href = "cssz-cs.html";
+}
 		$(function(){
 				setInterval("ShowLights()",250);
 				});
@@ -271,7 +276,7 @@ var btn=document.getElementById('show_btn');
          </ul>
          <ul class="toolbar1">
            
-       <li onclick="javascript:location.href='cssz-cs.html'">设置参数</li>
+       <li onclick="test()">设置参数</li>
 
          </ul>
          

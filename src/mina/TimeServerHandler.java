@@ -22,7 +22,7 @@ public class TimeServerHandler  implements IoHandler {
 	
 	final static String cmd_test = "74 65 73 74 73 65 6E 64";
 	
-	private  int locate[][] = new int[4][5];
+	
 	public void exceptionCaught(IoSession arg0, Throwable arg1)
 			throws Exception {
 		// TODO Auto-generated method stub
@@ -37,23 +37,24 @@ public class TimeServerHandler  implements IoHandler {
 	protected byte[] m_oData = null;
 	
 	public void messageReceived(IoSession session, Object msg) throws Exception {
-		CmdFactoryBase cmdFactory = (CmdFactoryBase)session.getAttribute(CmdFactoryBase.SESSION_PARAM_CMD_FACTORY);
-		if(null == cmdFactory){
-			cmdFactory = CmdFactoryBase.SelectCmdFactory(session, msg);
-			session.setAttribute(CmdFactoryBase.SESSION_PARAM_CMD_FACTORY, cmdFactory);
-		}
-		else {
-			
-		}
-			//m_oData = DataConvertor.toByteArray(msg);
-			//String data = bytesToHexString(m_oData);
-			//AnalysisData(data, session);
-			if(cmdFactory != null){
-				CommandBase cmd = cmdFactory.CreateCommand(session, msg);
-				if(null != cmd){
-					cmdFactory.Process(session, cmd);
-				}
-			}
+//		CmdFactoryBase cmdFactory = (CmdFactoryBase)session.getAttribute(CmdFactoryBase.SESSION_PARAM_CMD_FACTORY);
+//		if(null == cmdFactory){
+//			cmdFactory = CmdFactoryBase.SelectCmdFactory(session, msg);
+//			session.setAttribute(CmdFactoryBase.SESSION_PARAM_CMD_FACTORY, cmdFactory);
+//		}
+//		else {
+//			
+//		}
+		//System.out.println("ente messageReceived"+bytesToHexString(DataConvertor.toByteArray(msg)));
+			byte[] m_oData = DataConvertor.toByteArray(msg);
+			String data = bytesToHexString(m_oData);
+			AnalysisData(data, session);
+//			if(cmdFactory != null){
+//				CommandBase cmd = cmdFactory.CreateCommand(session, msg);
+//				if(null != cmd){
+//					cmdFactory.Process(session, cmd);
+//				}
+//			}
 			
 	}
 	
@@ -89,17 +90,17 @@ public class TimeServerHandler  implements IoHandler {
 	public void sessionOpened(IoSession session) throws Exception {
 		// TODO Auto-generated method stub
 		System.out.println( "opened " );  
-//			String[] cmds = cmd_diaoyue1.split(" ");
-//	        byte[] aaa = new byte[cmds.length];
-//	        int i = 0;
-//	        for (String b : cmds) {
-//	            if (b.equals("FF")) {
-//	                aaa[i++] = -1;
-//	            } else {
-//	                aaa[i++] = Integer.valueOf(b, 16).byteValue();;
-//	            }
-//	        }
-//	        session.write(IoBuffer.wrap(aaa));
+			String[] cmds = cmd_diaoyue1.split(" ");
+	        byte[] aaa = new byte[cmds.length];
+	        int i = 0;
+	        for (String b : cmds) {
+	            if (b.equals("FF")) {
+	                aaa[i++] = -1;
+	            } else {
+	                aaa[i++] = Integer.valueOf(b, 16).byteValue();;
+	            }
+	        }
+	        session.write(IoBuffer.wrap(aaa));
 	        
 	}
 	
@@ -137,12 +138,13 @@ public class TimeServerHandler  implements IoHandler {
 	  		ZXJ_address = data.substring(10,12);
 	  		Comm0 		= data.substring(12,14);
 	  		Comm1		= data.substring(14,16);
-	  		System.out.println("the comm0 is"+str2hex(Comm0));
+	  		//System.out.println("the comm0 is"+str2hex(Comm0));
 	  		switch(str2hex(Comm0)){
 	  			case 0: //调阅实时状态
-	  				//upload_RealTimeStatus(data,session);
+	  				upload_RealTimeStatus(data,session);
 	  				break;
 	  			case 1:
+	  				
 	  				if(str2hex(Comm1)==1){
 	  					//上传本地时间
 	  					
@@ -152,7 +154,17 @@ public class TimeServerHandler  implements IoHandler {
 	  				
 	  				break;
 	  			case 2:  //上传基本参数
+	  				if(str2hex(Comm1)==1){
+	  					//上传公共参数
+	  					upload_CommonPara(data,session);
+	  				}
+	  				break;
+	  			case 3:
 	  				
+	  				break;
+	  			case 4:
+	  				break;
+	  			case 5:
 	  				break;
 	  			default:
 	  				break;
@@ -164,9 +176,9 @@ public class TimeServerHandler  implements IoHandler {
 	  }
 	  
 	
-	  public void upload_RealTimeStatus(String data,IoSession session){
+	  public static void upload_RealTimeStatus(String data,IoSession session){
 		  String temp[] = new String[8];
-	  		
+		  int locate[][] = new int[4][5];
 	  		for(int i=0;i<8;i++){
 	  			temp[i] = data.substring(20+i*2, 22+i*2);;
 	  		}
@@ -231,6 +243,35 @@ public class TimeServerHandler  implements IoHandler {
 	  	//
 	  }
 	
+	  public static void upload_CommonPara(String data,IoSession session){
+		  System.out.println(data);
+		  String time_qingchanghongdeng	 = data.substring(18,20);
+		  String time_huangshan 		 = data.substring(20,22) ;
+		  String tongxuncanshu 			= data.substring(26,28);
+		  String liuliangjiance			= data.substring(28,30);
+		  String neibubiaozhi			;
+		  String gongzuorishezhi		= data.substring(32,34);
+		  String zhourishezhi			= data.substring(34,36);
+		  String year;
+		  String month;
+		  String day;
+		  String hour;
+		  String minite;
+		  String second;
+		  String G_min 					= data.substring(48,50);
+		  String G_max					= data.substring(50,52);
+		  String G_step					= data.substring(52,54);
+		  
+		  String xingren				= data.substring(80,82);
+		  String zhouqi					= data.substring(82,84);
+		  String enable					= data.substring(84,86);
+		  String[] mdata = new String[48];
+		  for(int i=0;i<48;i++)
+			  mdata[i] = data.substring(112+i*2,114+i*2);
+		  
+		  //System.out.println(time_qingchanghongdeng+time_huangshan+tongxuncanshu+liuliangjiance+gongzuorishezhi+zhourishezhi+G_min+G_max);
+	  }
+	  
 	  public static String bytesToHexString(byte[] src){  
 	      StringBuilder stringBuilder = new StringBuilder("");  
 	      if (src == null || src.length <= 0) {  
@@ -244,7 +285,7 @@ public class TimeServerHandler  implements IoHandler {
 	          }  
 	          stringBuilder.append(hv);  
 	      }  
-	      System.out.println("---"+stringBuilder.toString()+"---");
+	    //  System.out.println("---"+stringBuilder.toString()+"---");
 	      
 	      return stringBuilder.toString();  
 	  }  

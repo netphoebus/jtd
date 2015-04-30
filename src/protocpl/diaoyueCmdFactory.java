@@ -23,6 +23,7 @@ public class diaoyueCmdFactory extends CmdFactoryBase implements ICmdParser{
 	
 	@Override
 	public void Process(IoSession session, CommandBase cmd){
+		//System.out.println("cmd.getCmdType() is "+cmd.getCmdType() +"this.expected_cmd is "+this.expected_cmd);
 		if(cmd.getCmdType() == this.expected_cmd)
 		{
 
