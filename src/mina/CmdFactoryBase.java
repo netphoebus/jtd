@@ -115,7 +115,6 @@ public class CmdFactoryBase implements ICmdParser {
 	{
 		CmdFactoryBase factory = null;
 		byte[] data = DataConvertor.toByteArray(message);
-		System.out.println(">>>>>>>>recv"+data);
 		MONITOR_CMD_TYPE eCmdType = getCommandType(data);
 		if(MONITOR_CMD_TYPE.UNKNOWN_CMD == eCmdType){
 			

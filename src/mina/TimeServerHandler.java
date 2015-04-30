@@ -37,24 +37,24 @@ public class TimeServerHandler  implements IoHandler {
 	protected byte[] m_oData = null;
 	
 	public void messageReceived(IoSession session, Object msg) throws Exception {
-//		CmdFactoryBase cmdFactory = (CmdFactoryBase)session.getAttribute(CmdFactoryBase.SESSION_PARAM_CMD_FACTORY);
-//		if(null == cmdFactory){
-//			cmdFactory = CmdFactoryBase.SelectCmdFactory(session, msg);
+		//CmdFactoryBase cmdFactory = (CmdFactoryBase)session.getAttribute(CmdFactoryBase.SESSION_PARAM_CMD_FACTORY);
+		//if(null == cmdFactory){
+		CmdFactoryBase cmdFactory = CmdFactoryBase.SelectCmdFactory(session, msg);
 //			session.setAttribute(CmdFactoryBase.SESSION_PARAM_CMD_FACTORY, cmdFactory);
 //		}
 //		else {
 //			
 //		}
 		//System.out.println("ente messageReceived"+bytesToHexString(DataConvertor.toByteArray(msg)));
-			byte[] m_oData = DataConvertor.toByteArray(msg);
-			String data = bytesToHexString(m_oData);
-			AnalysisData(data, session);
-//			if(cmdFactory != null){
-//				CommandBase cmd = cmdFactory.CreateCommand(session, msg);
-//				if(null != cmd){
-//					cmdFactory.Process(session, cmd);
-//				}
-//			}
+//			byte[] m_oData = DataConvertor.toByteArray(msg);
+//			String data = bytesToHexString(m_oData);
+//			AnalysisData(data, session);
+			if(cmdFactory != null){
+				CommandBase cmd = cmdFactory.CreateCommand(session, msg);
+				if(null != cmd){
+					cmdFactory.Process(session, cmd);
+				}
+			}
 			
 	}
 	
