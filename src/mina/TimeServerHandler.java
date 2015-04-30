@@ -249,7 +249,7 @@ public class TimeServerHandler  implements IoHandler {
 		  String time_huangshan 		 = data.substring(20,22) ;
 		  String tongxuncanshu 			= data.substring(26,28);
 		  String liuliangjiance			= data.substring(28,30);
-		  String neibubiaozhi			;
+		  String neibubiaozhi;
 		  String gongzuorishezhi		= data.substring(32,34);
 		  String zhourishezhi			= data.substring(34,36);
 		  String year;

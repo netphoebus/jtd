@@ -29,6 +29,7 @@
 		</global-results>
 		<action name="sigAction" class="sigAction">
 			<result name="traffic">/traffic.jsp</result>
+			<result name="cssz-cs">/cssz-cs.jsp</result>
 		</action>
 	</package>
 	

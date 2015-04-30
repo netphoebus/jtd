@@ -173,13 +173,11 @@ var btn=document.getElementById('show_btn');
 	if(obj.style.display=='none'){
 		obj.style.display='block';
 		btn.innerHTML='自　动';
-		console.log("手动化#####");
 		
 		
 	}else{
 		obj.style.display='none';
 		btn.innerHTML='手　动';
-		console.log("自动化#####");
 		executeCommand(33);
 	}
 }
@@ -276,7 +274,7 @@ var btn=document.getElementById('show_btn');
          </ul>
          <ul class="toolbar1">
            
-       <li onclick="test()">设置参数</li>
+       <li onclick="setParameters()">设置参数</li>
 
          </ul>
          

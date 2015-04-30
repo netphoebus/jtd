@@ -42,6 +42,7 @@ public class SigAction extends ActionSupport implements RequestAware,
 	public static String curruntSigIp;
 	
 	
+	
 	public String toTraffic()
 	{
 		long mkid = Long.parseLong(req.getParameter("mkid"));
@@ -52,6 +53,14 @@ public class SigAction extends ActionSupport implements RequestAware,
 		}
 		return "traffic";
 	}
+	
+	public String toSetParameters()
+	{
+		
+		return "cssz-cs";
+	}
+	
+	
 	
 	//发送简单命令
 	public String doCommand()

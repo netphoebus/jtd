@@ -1,3 +1,4 @@
+var commandSuccess = false;
 function executeCommand(id)
 {
 	$.ajax({   
@@ -10,14 +11,13 @@ function executeCommand(id)
             },   
             success: function(msg)
             { //成功   
-				alert('发送命令成功');   
+				//alert('发送命令成功');   
             }  
    	    });   
 }
 
-function test()
+function setParameters()
 {
-	console.log("coming");
 	executeCommand(5);
-	location.href = "cssz-cz.html";
+	location.href = "sigAction!toSetParameters";
 }
