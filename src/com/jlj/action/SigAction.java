@@ -53,6 +53,7 @@ public class SigAction extends ActionSupport implements RequestAware,
 		return "traffic";
 	}
 	
+	//发送简单命令
 	public String doCommand()
 	{
 		String commandIdStr = req.getParameter("commandId");
@@ -64,19 +65,15 @@ public class SigAction extends ActionSupport implements RequestAware,
 				Commands.executeCommand(commandId,curruntSigIp,TimeServerHandler.iosessions);
 			}
 		}
-		
 		return null;
 	}
 	
-	
-	// =========后台首页类别=================================================
+	//获得状态
 	public String realtime() {
 		/**
 		 * trafficLigths[0-3]:表示一个红绿灯的各个方向依次为：0:东-》西,1:南-》北,2:西-》东,3:北-》南
 		 * trafficLigths[0-3][0-4]：表示一个方向的5具体的灯： 0:左转灯,1: 直行灯 ,2:右转灯 ,3:人行道
 		 * ,4:人行道 表示一个具体的灯： 3：红 2：黄 1：绿 0：灭 null：未知
-		 * 
-		 * 
 		 */
 		if (trafficlights != trafficlights_next) {
 			trafficlights_next = trafficlights;

@@ -1,13 +1,10 @@
 package com.jlj.util;
 
 import java.util.List;
-
-import mina.TimeServerHandler;
-
 import org.apache.mina.core.buffer.IoBuffer;
 import org.apache.mina.core.session.IoSession;
 
-import com.jlj.action.SigAction;
+
 
 public class Commands {
 	
@@ -44,7 +41,7 @@ public class Commands {
 	public final static String cmd_gd     = "FF FF FF FF 01 F0 A2 0B 00 08 01 A6"; //发送手动关灯命令   命令编号 30
 	public final static String cmd_qh     = "FF FF FF FF 01 F0 A2 0C 00 08 01 A7"; //发送手动全红命令	 命令编号 31
 	public final static String cmd_sdhxw  = "FF FF FF FF 01 F0 A2 0D 00 08 01 A8"; //发送手动换相位命令  命令编号 32
-	public final static String cmd_hfkz   = "FF FF FF FF 01 F0 A2 0E 00 08 01 A9"; //发送恢复信号机控制命令	  命令编号 33
+	public final static String cmd_hfkz   = "FF FF FF FF 01 F0 A2 0E 00 08 01 A9"; //发送恢复信号机控制命令	  命令编号 33 自动
 	public final static String cmd_qcll   = "FF FF FF FF 01 F0 A2 0F 00 08 01 AA"; //发送清除累计流量命令  命令编号 34
 	
 	public static String getCommandStr(int i)
