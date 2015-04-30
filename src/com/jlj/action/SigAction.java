@@ -8,6 +8,9 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import mina.TimeServerHandler;
+
+import org.apache.mina.core.buffer.IoBuffer;
 import org.apache.struts2.interceptor.RequestAware;
 import org.apache.struts2.interceptor.ServletRequestAware;
 import org.apache.struts2.interceptor.ServletResponseAware;
@@ -17,7 +20,7 @@ import org.springframework.stereotype.Component;
 
 import com.jlj.model.Sig;
 import com.jlj.service.ISigService;
-import com.jlj.service.imp.SigServiceImp;
+import com.jlj.util.Commands;
 import com.opensymphony.xwork2.ActionSupport;
 
 @Component("sigAction")
@@ -36,7 +39,7 @@ public class SigAction extends ActionSupport implements RequestAware,
 	private ISigService sigService;
 	private Sig sig;
 	private int id;
-	private static String ip;
+	public static String curruntSigIp;
 	
 	
 	public String toTraffic()
@@ -45,9 +48,24 @@ public class SigAction extends ActionSupport implements RequestAware,
 		sig = sigService.loadByMkid(mkid);
 		if(sig!=null)
 		{
-			ip = sig.getIp();
+			curruntSigIp = sig.getIp();
 		}
 		return "traffic";
+	}
+	
+	public String doCommand()
+	{
+		String commandIdStr = req.getParameter("commandId");
+		if(commandIdStr!=null)
+		{
+			int commandId = Integer.parseInt(commandIdStr);
+			if(curruntSigIp!=null&&TimeServerHandler.iosessions!=null&&TimeServerHandler.iosessions.size()>0)
+			{
+				Commands.executeCommand(commandId,curruntSigIp,TimeServerHandler.iosessions);
+			}
+		}
+		
+		return null;
 	}
 	
 	
@@ -178,15 +196,6 @@ public class SigAction extends ActionSupport implements RequestAware,
 		this.sigService = sigService;
 	}
 
-
-	public static String getIp() {
-		return ip;
-	}
-
-
-	public void setIp(String ip) {
-		this.ip = ip;
-	}
 	
 	
 	

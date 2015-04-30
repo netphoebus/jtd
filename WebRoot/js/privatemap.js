@@ -127,7 +127,8 @@ function setMarkerEvents(marker)
 
 
 	maphelper.bindInstanceEvent(marker, 'dblclick', function(event,map,marker) {
-					location.href = "sigAction!toTraffic?mkid="+marker.id;
+					
+					window.open("sigAction!toTraffic?mkid="+marker.id,"rightFrame")
 	        });
 
 	maphelper.bindInstanceEvent(marker, 'mouseover', function(event,map,marker) {
@@ -305,13 +306,5 @@ function deleteMarker(id)
 	}
 }
 
-function getMarkersJson(markers)
-{
-	
 
-}
 
-function saveMarkers()
-{
-
-}

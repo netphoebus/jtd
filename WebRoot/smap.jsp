@@ -15,7 +15,7 @@ request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+pa
 
    <frameset cols="*,187" frameborder="no" border="0" framespacing="0" name="pageframe" >
   
-    <frame src="map.jsp" name="mapFrame" id="mapFrame" title="mapFrame" />
+      <frame src="map.jsp" name="mapFrame" id="mapFrame" title="mapFrame" />
       <frame src="zzt.html" name="zztFrame"  noresize="noresize" id="zztFrame" title="zztFrame" />
      
    </frameset>

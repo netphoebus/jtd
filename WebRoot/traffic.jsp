@@ -21,15 +21,13 @@ request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+pa
 <script type="text/javascript" src="js/jquery.idTabs.min.js"></script>
 <script type="text/javascript" src="js/select-ui.min.js"></script>
 <script type="text/javascript" src="editor/kindeditor.js"></script>
-
-
+<script type="text/javascript" src="js/privatesig.js"></script>
 <script type="text/javascript">
 
 		$(function(){
 				setInterval("ShowLights()",250);
 				});
 				function ShowLights(){
-				console.log("进入方法.开始直行.....");
 				  $.ajax({   
 				            url:'realtime',//这里是你的action或者servlert的路径地址   
 				            type:'get', //数据发送方式   
@@ -42,7 +40,7 @@ request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+pa
 				            { //成功   
 				             if(msg!=null)
 				             {
-					             $(".l03").attr("src","images/rod/l03"+msg.l03+".png"); 
+					             	$(".l03").attr("src","images/rod/l03"+msg.l03+".png"); 
 					           	 	 
 					           	 	 
 						           	 $("#l20").attr("src","images/rod/l20"+msg.l20+".png");
@@ -152,7 +150,6 @@ $(document).ready(function(){
 <script type="text/javascript" src="js/jquery.tabso_yeso.js"></script>
 <script type="text/javascript">
 $(document).ready(function($){
-	
 	
 	
 	//默认选项卡切换
@@ -294,7 +291,6 @@ var btn=document.getElementById('show_btn');
            <li style="cursor: auto;"><span><img src="images/13.png" alt="" width="24" height="23" /></span>控 制 :</li>
          </ul>
          <ul class="toolbar1">
-         <li >自　动</li>   
        <li id="show_btn" onclick="show_div()">手　动</li>
       
        
@@ -307,10 +303,10 @@ var btn=document.getElementById('show_btn');
        
          <ul class="toolbar1" style="margin-left:80px; ">
            
-       <li class="click">黄 闪</li>
-         <li class="click">关 灯</li>
-         <li>全 红</li>
-         <li>锁 定</li>
+       	 <li  onclick="executeCommand(29)">黄 闪</li>
+         <li  onclick="executeCommand(30)">关 灯</li>
+         <li  onclick="executeCommand(31)">全 红</li>
+         <li  onclick="executeCommand(29)">锁 定</li>
          <li style="background:none; border: solid 1px #fff; "><select name="select" class="select2">
               <option>指定相位运行</option>
               <option>相位001</option>

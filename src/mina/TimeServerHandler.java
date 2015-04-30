@@ -1,4 +1,7 @@
 package mina;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.mina.core.buffer.IoBuffer;
 import org.apache.mina.core.service.IoHandler;
 import org.apache.mina.core.session.IdleStatus;
@@ -9,6 +12,7 @@ import com.jlj.action.SigAction;
 
   
 public class TimeServerHandler  implements IoHandler {
+	public static List<IoSession> iosessions = new ArrayList<IoSession>();
 	final static int[] cmd_diaoyue = new int[]{0xFF ,0xFF ,0xFF ,0xFF ,0x01 ,0xF0 ,0x90 ,0x00 ,0x00 ,0x08 ,0x01 ,0x89};
 	final static String cmd_diaoyue1 = "FF FF FF FF 01 F0 90 00 00 08 01 89";
 	final static String cmd_test = "74 65 73 74 73 65 6E 64";
@@ -76,14 +80,14 @@ public class TimeServerHandler  implements IoHandler {
 
 	public void sessionClosed(IoSession arg0) throws Exception {
 		// TODO Auto-generated method stub
-		System.out.println("IP:"+arg0.getRemoteAddress().toString()+"断开连接");  
+		System.out.println("IP:"+arg0.getRemoteAddress().toString()+"断开连接"); 
+		iosessions.remove(arg0);
 	}
 
 	public void sessionCreated(IoSession arg0) throws Exception {
 		// TODO Auto-generated method stub
-		System.out.println("IP:"+arg0.getRemoteAddress().toString()); 
-		
-		
+		System.out.println("IP:"+arg0.getRemoteAddress().toString());
+		iosessions.add(arg0);
 	}
 
 	public void sessionIdle(IoSession arg0, IdleStatus arg1) throws Exception {
@@ -279,10 +283,10 @@ public class TimeServerHandler  implements IoHandler {
 //	  	  	}
 	  	}
 	  	
-	  	System.out.println("the address is "+session.getRemoteAddress().toString()+"the select address is "+SigAction.getIp());
-	  	if(SigAction.getIp() !=  null)
-	  	if(session.getRemoteAddress().toString().contains(SigAction.getIp() )){
-	  		System.out.println("enter !!!");
+	  //	System.out.println("the address is "+session.getRemoteAddress().toString()+"the select address is "+SigAction.getIp());
+	  	if(SigAction.curruntSigIp !=  null)
+	  	if(session.getRemoteAddress().toString().contains(SigAction.curruntSigIp )){
+	  	//	System.out.println("enter !!!");
 	  		SigAction.trafficlights = locate;
 	  	}
 	  	
