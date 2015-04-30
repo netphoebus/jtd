@@ -16,6 +16,55 @@ public class DataConvertor {
        
     }
 	
+public static int str2hexfun(String str){
+	  	
+	  	if(str.equals("a")){
+	  		return 10;
+	  	}else if(str.equals("b"))
+	  		return 11;
+	  	else if(str.equals("c"))
+	  		return 12;
+	  	else if(str.equals("d"))
+	  		return 13;
+	  	else if(str.equals("e"))
+	  		return 14;
+	  	else if(str.equals("f"))
+	  		return 15;
+	  	else{
+	  		int i = Integer.valueOf(str).intValue();
+	  	return i;
+	  	}
+	  }
+	
+	  public static int str2hex(String str){
+		  	String temp = str.substring(0, 1);
+		    String temp2= str.substring(1, 2);
+			int l = str2hexfun(temp);
+		    int m = str2hexfun(temp2);
+		    int sum = (l<<4)+m;
+		      
+				return sum;
+		  	
+		  }
+	
+	 public static String bytesToHexString(byte[] src){  
+	      StringBuilder stringBuilder = new StringBuilder("");  
+	      if (src == null || src.length <= 0) {  
+	          return null;  
+	      }  
+	      for (int i = 0; i < src.length; i++) {  
+	          int v = src[i] & 0xFF;  
+	          String hv = Integer.toHexString(v);  
+	          if (hv.length() < 2) {  
+	              stringBuilder.append(0);  
+	          }  
+	          stringBuilder.append(hv);  
+	      }  
+	     // System.out.println("---"+stringBuilder.toString()+"---");
+	      
+	      return stringBuilder.toString();  
+	  } 
+	
 	public static byte[] toByteArray(int iValue, boolean bLittleEndian)
 	{
 		byte[] data = new byte[4];

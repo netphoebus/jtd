@@ -57,6 +57,7 @@ public class SigAction extends ActionSupport implements RequestAware,
 	public String doCommand()
 	{
 		String commandIdStr = req.getParameter("commandId");
+		System.out.println(commandIdStr+"   "+TimeServerHandler.iosessions);
 		if(commandIdStr!=null)
 		{
 			int commandId = Integer.parseInt(commandIdStr);

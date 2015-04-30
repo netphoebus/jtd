@@ -1,5 +1,11 @@
 package mina;
 
+import org.apache.mina.core.session.IoSession;
+
+import mina.CmdFactoryBase.MONITOR_CMD_TYPE;
+
+
+
 
 
 
@@ -43,5 +49,17 @@ public class CommandBase {
 	{
 		m_iDir_Up_Down = CMD_DIR_DOWN;
 		m_oParser = parser;
+	}
+	
+	protected MONITOR_CMD_TYPE m_eCmdType;
+	public MONITOR_CMD_TYPE getCmdType()
+	{
+		return m_eCmdType;
+	}
+	
+	public boolean Parse(IoSession session, Object message){
+		
+
+		return true;
 	}
 }
