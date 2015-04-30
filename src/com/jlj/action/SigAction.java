@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import mina.TimeServerHandler;
 
-import org.apache.mina.core.buffer.IoBuffer;
 import org.apache.struts2.interceptor.RequestAware;
 import org.apache.struts2.interceptor.ServletRequestAware;
 import org.apache.struts2.interceptor.ServletResponseAware;
@@ -18,7 +17,10 @@ import org.apache.struts2.interceptor.SessionAware;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import protocpl.ParametersCmdFactory;
+
 import com.jlj.model.Sig;
+import com.jlj.model.SigPara;
 import com.jlj.service.ISigService;
 import com.jlj.util.Commands;
 import com.opensymphony.xwork2.ActionSupport;
@@ -40,45 +42,56 @@ public class SigAction extends ActionSupport implements RequestAware,
 	private Sig sig;
 	private int id;
 	public static String curruntSigIp;
-	
-	
-	
-	public String toTraffic()
-	{
+	private SigPara sigParas;
+
+	public String toTraffic() {
 		long mkid = Long.parseLong(req.getParameter("mkid"));
 		sig = sigService.loadByMkid(mkid);
-		if(sig!=null)
-		{
+		if (sig != null) {
 			curruntSigIp = sig.getIp();
 		}
 		return "traffic";
 	}
-	
-	public String toSetParameters()
-	{
+
+	public String toSetParameters() {
 		
+		sigParas = new SigPara();
+		while(true)
+		{
+			if(ParametersCmdFactory.setSuccess)
+				break;
+		}
+		String data = ParametersCmdFactory.datas;
+		System.out.println("toSetParameters:  "+data);
+		
+		sigParas.setTime_qingchanghongdeng(data.substring(18, 20));
+		sigParas.setTime_huangshan(data.substring(20, 22));
+		sigParas.setGongzuorishezhi(data.substring(32, 34));
+		sigParas.setG_min(data.substring(48, 50));
+		sigParas.setG_max(data.substring(50, 52));
+		sigParas.setG_step(data.substring(52, 54));
+		sigParas.setXingren(data.substring(80, 82));
+		sigParas.setZhouqi(data.substring(82, 84));
+
 		return "cssz-cs";
 	}
-	
-	
-	
-	//发送简单命令
-	public String doCommand()
-	{
+
+	// 发送简单命令
+	public String doCommand() {
 		String commandIdStr = req.getParameter("commandId");
-		System.out.println(commandIdStr+"   "+TimeServerHandler.iosessions);
-		if(commandIdStr!=null)
-		{
+		System.out.println("直行命令编号："+commandIdStr + "   " + TimeServerHandler.iosessions);
+		if (commandIdStr != null) {
 			int commandId = Integer.parseInt(commandIdStr);
-			if(curruntSigIp!=null&&TimeServerHandler.iosessions!=null&&TimeServerHandler.iosessions.size()>0)
-			{
-				Commands.executeCommand(commandId,curruntSigIp,TimeServerHandler.iosessions);
+			if (curruntSigIp != null && TimeServerHandler.iosessions != null
+					&& TimeServerHandler.iosessions.size() > 0) {
+				Commands.executeCommand(commandId, curruntSigIp,
+						TimeServerHandler.iosessions);
 			}
 		}
 		return null;
 	}
-	
-	//获得状态
+
+	// 获得状态
 	public String realtime() {
 		/**
 		 * trafficLigths[0-3]:表示一个红绿灯的各个方向依次为：0:东-》西,1:南-》北,2:西-》东,3:北-》南
@@ -89,7 +102,7 @@ public class SigAction extends ActionSupport implements RequestAware,
 			trafficlights_next = trafficlights;
 			String jsonString = "{\"success\":\"true\"" + ",\"l03\":\""
 					+ trafficlights_next[1][3] + "\"" + // 东西方向人行道灯(表示两个)
-					
+
 					",\"l20\":\"" + trafficlights_next[2][0] + "\"" + // 西边左转灯
 					",\"l21\":\"" + trafficlights_next[2][1] + "\"" + // 西边直行灯
 					",\"l22\":\"" + trafficlights_next[2][2] + "\"" + // 西边右转灯
@@ -193,7 +206,6 @@ public class SigAction extends ActionSupport implements RequestAware,
 		this.id = id;
 	}
 
-
 	public ISigService getSigService() {
 		return sigService;
 	}
@@ -203,7 +215,12 @@ public class SigAction extends ActionSupport implements RequestAware,
 		this.sigService = sigService;
 	}
 
-	
-	
-	
+	public SigPara getSigParas() {
+		return sigParas;
+	}
+
+	public void setSigParas(SigPara sigParas) {
+		this.sigParas = sigParas;
+	}
+
 }

@@ -1,4 +1,7 @@
-<%@ page language="java" import="java.util.*" pageEncoding="utf-8"%> <%
+<%@ page language="java" import="java.util.*" pageEncoding="utf-8"%> 
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="/struts-tags" prefix="s" %>
+<%
 String path = request.getContextPath(); String basePath =
 request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
@@ -84,21 +87,36 @@ $(document).ready(function(e) {
     <div style="width:30%; padding-top:15px; padding-bottom:15px; float:left;">
     
     <div class="csbox">开机黄闪：
+    <!-- 
       <input type="text" class="dfinput"   style="width:150px;" value="开机黄闪的国标定义和时间范围"  onclick="JavaScript:this.value=''"/> 
+       -->
+       <s:textfield name="sigParas.time_huangshan" cssClass="dfinput"   cssStyle="width:150px;"></s:textfield>
     秒</div>
 
     <div class="csbox">清场红灯： 
+     <!-- 
       <input type="text" class="dfinput"   style="width:150px;"/> 
+       -->
+        <s:textfield name="sigParas.time_qingchanghongdeng" cssClass="dfinput"   cssStyle="width:150px;"></s:textfield>
     秒</div>
     
     <div class="csbox">最短绿灯：
+    <!-- 
       <input type="text" class="dfinput"   style="width:150px;"/> 
+      -->
+      <s:textfield name="sigParas.G_min" cssClass="dfinput"   cssStyle="width:150px;"></s:textfield>
     秒</div>
     <div class="csbox">最长绿灯：
+    <!-- 
       <input type="text" class="dfinput"   style="width:150px;"/> 
+      -->
+       <s:textfield name="sigParas.G_max" cssClass="dfinput"   cssStyle="width:150px;"></s:textfield>
     秒</div>
     <div class="csbox">步长时间：
+       <!-- 
       <input type="text" class="dfinput"   style="width:150px;"/> 
+        -->
+        <s:textfield name="sigParas.G_step" cssClass="dfinput"   cssStyle="width:150px;"></s:textfield>
     秒</div>
     <div style="height:50px;"></div>
     <div>
