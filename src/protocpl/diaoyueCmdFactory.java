@@ -1,5 +1,7 @@
 package protocpl;
 
+import java.net.InetSocketAddress;
+
 import org.apache.mina.core.session.IoSession;
 
 import com.jlj.action.SigAction;
@@ -122,8 +124,9 @@ public class diaoyueCmdFactory extends CmdFactoryBase implements ICmdParser{
 	  	
 	  	
 	  //	System.out.println("the address is "+session.getRemoteAddress().toString()+"the select address is "+SigAction.getIp());
+	  	String clientIP = ((InetSocketAddress)session.getRemoteAddress()).getAddress().getHostAddress();
 	  	if(SigAction.curruntSigIp !=  null)
-	  	if(session.getRemoteAddress().toString().contains(SigAction.curruntSigIp )){
+	  	if(clientIP.equals(SigAction.curruntSigIp )){
 	  	//	System.out.println("enter !!!");
 	  		SigAction.trafficlights = locate;
 	  	}
