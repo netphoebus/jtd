@@ -6,13 +6,18 @@ import mina.DataConvertor;
 import mina.ICmdParser;
 
 import org.apache.mina.core.session.IoSession;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import com.jlj.action.SigAction;
 
 
 
 public class ParametersCmdFactory extends CmdFactoryBase implements ICmdParser{
 
-	public static String datas;
 	public static boolean setSuccess;
+	public final static ApplicationContext ac=new ClassPathXmlApplicationContext("beans.xml");
+	public final static SigAction sigAction = (SigAction)ac.getBean("sigAction");
 	public ParametersCmdFactory(byte[] data){
 		super(data);
 		this.expected_cmd = MONITOR_CMD_TYPE.MONITOR_CMD_COMMON_PARAMETERS;
@@ -36,17 +41,11 @@ public class ParametersCmdFactory extends CmdFactoryBase implements ICmdParser{
 		return 0;
 	}
 	
-	  public  void  setData(String data){
-		  datas = data;
-		  setSuccess = true;
-		  //System.out.println(time_qingchanghongdeng+time_huangshan+tongxuncanshu+liuliangjiance+gongzuorishezhi+zhourishezhi+G_min+G_max);
-	  }
 	public boolean OnAfter_Ack(IoSession session, CommandBase cmd) {
 		// TODO Auto-generated method stub
 		//this.m_oData
 		String data = DataConvertor.bytesToHexString(this.m_oData);
-		System.out.println("the data is "+data);
-		setData(data);
+		sigAction.setParameters(data);
 		return false;
 	}
 

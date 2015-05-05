@@ -277,7 +277,7 @@ var btn=document.getElementById('show_btn');
          </ul>
          <ul class="toolbar1">
            
-       <li onclick="setParameters()">设置参数</li>
+       <li onclick="executeCommand(5)">设置参数</li>
 
          </ul>
          

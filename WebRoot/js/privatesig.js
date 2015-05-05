@@ -15,9 +15,3 @@ function executeCommand(id)
             }  
    	    });   
 }
-
-function setParameters()
-{
-	executeCommand(5);
-	location.href = "sigAction!toSetParameters";
-}
