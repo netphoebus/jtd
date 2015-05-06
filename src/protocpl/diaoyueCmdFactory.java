@@ -41,13 +41,8 @@ public class diaoyueCmdFactory extends CmdFactoryBase implements ICmdParser{
 	}
 
 	public boolean OnAfter_Ack(IoSession session, CommandBase cmd) {
-		// TODO Auto-generated method stub
-		//this.m_oData
-		
-		
-		String data = DataConvertor.bytesToHexString(this.m_oData);
-		
-		upload_RealTimeStatus(data,session);
+		// TODO Auto-generated method stub		
+		upload_RealTimeStatus(this.m_oData,session);
 		return false;
 	}
 
@@ -66,55 +61,51 @@ public class diaoyueCmdFactory extends CmdFactoryBase implements ICmdParser{
 		
 	}
 	
-	 public void upload_RealTimeStatus(String data,IoSession session){
-		  String temp[] = new String[8];
-	  		
-	  		for(int i=0;i<8;i++){
-	  			temp[i] = data.substring(20+i*2, 22+i*2);;
-	  		}
+	 public void upload_RealTimeStatus(byte[] data,IoSession session){
+		 
 	  		
 	  		for(int i=0;i<4;i++){
-	  		if((DataConvertor.str2hex(temp[i*2])&0x80)>0){
+	  		if((data[i*2+8]&0x80)>0){
 	  			locate[i][0] = 3;              
-	  		}else if((DataConvertor.str2hex(temp[i*2])&0x40)>0){
+	  		}else if((data[i*2+8]&0x40)>0){
 	  			locate[i][0] = 2;
-	  		}else if((DataConvertor.str2hex(temp[i*2])&0x20)>0){
+	  		}else if((data[i*2+8]&0x20)>0){
 	  			locate[i][0] = 1;
 	  		}else{
 	  			locate[i][0] = 0;
 	  		}
 	  		
-	  		if((DataConvertor.str2hex(temp[i*2])&0x10)>0){
+	  		if((data[i*2+8]&0x10)>0){
 	  			locate[i][1] = 3;
-	  		}else if((DataConvertor.str2hex(temp[i*2])&0x08)>0){
+	  		}else if((data[i*2+8]&0x08)>0){
 	  			locate[i][1] = 2;
-	  		}else if((DataConvertor.str2hex(temp[i*2])&0x04)>0){
+	  		}else if((data[i*2+8]&0x04)>0){
 	  			locate[i][1] = 1;
 	  		}else{
 	  			locate[i][1] = 0;
 	  		}
 	  		
-	  		if((DataConvertor.str2hex(temp[i*2+1])&0x80)>0){
+	  		if((data[i*2+9]&0x80)>0){
 	  			locate[i][2] = 3;
-	  		}else if((DataConvertor.str2hex(temp[i*2+1])&0x40)>0){
+	  		}else if((data[i*2+9]&0x40)>0){
 	  			locate[i][2] = 2;
-	  		}else if((DataConvertor.str2hex(temp[i*2+1])&0x20)>0){
+	  		}else if((data[i*2+9]&0x20)>0){
 	  			locate[i][2] = 1;
 	  		}else{
 	  			locate[i][2] = 0;
 	  		}
 	  		
-	  		if((DataConvertor.str2hex(temp[i*2+1])&0x10)>0){
+	  		if((data[i*2+9]&0x10)>0){
 	  			locate[i][3] = 3;
-	  		}else if((DataConvertor.str2hex(temp[i*2+1])&0x08)>0){
+	  		}else if((data[i*2+9]&0x08)>0){
 	  			locate[i][3] = 1;
 	  		}else{
 	  			locate[i][3] = 0;
 	  		}
 	  		
-	  		if((DataConvertor.str2hex(temp[i*2+1])&0x04)>0){
+	  		if((data[i*2+9]&0x04)>0){
 	  			locate[i][4] = 3;
-	  		}else if((DataConvertor.str2hex(temp[i*2+1])&0x02)>0){
+	  		}else if((data[i*2+9]&0x02)>0){
 	  			locate[i][4] = 1;
 	  		}else{
 	  			locate[i][4] = 0;
@@ -123,15 +114,12 @@ public class diaoyueCmdFactory extends CmdFactoryBase implements ICmdParser{
 
 	  	
 	  	
-	  //	System.out.println("the address is "+session.getRemoteAddress().toString()+"the select address is "+SigAction.getIp());
 	  	String clientIP = ((InetSocketAddress)session.getRemoteAddress()).getAddress().getHostAddress();
 	  	if(SigAction.curruntSigIp !=  null)
 	  	if(clientIP.equals(SigAction.curruntSigIp )){
-	  	//	System.out.println("enter !!!");
 	  		SigAction.trafficlights = locate;
 	  	}
 	  	
-	  	//
 	  }
 	
 }
