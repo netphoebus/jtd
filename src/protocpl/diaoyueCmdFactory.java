@@ -15,12 +15,13 @@ import mina.CmdFactoryBase.MONITOR_CMD_TYPE;
 public class diaoyueCmdFactory extends CmdFactoryBase implements ICmdParser{
 
 	private int locate[][];
-	
+	private int Countdown[];
 	public diaoyueCmdFactory(byte[] data) {
 		super(data);
 		// TODO Auto-generated constructor stub
 		this.expected_cmd = MONITOR_CMD_TYPE.MONITOR_CMD_DIAOYUE;
 		locate = new int[4][5];
+		Countdown = new int[4];
 	}
 	
 	@Override
@@ -111,7 +112,10 @@ public class diaoyueCmdFactory extends CmdFactoryBase implements ICmdParser{
 	  			locate[i][4] = 0;
 	  		}
 	  	}
-
+	  		
+	  		for(int j=0;j<4;j++)
+	  			Countdown[j]=data[27+8+j];
+	  		
 	  	
 	  	
 	  	String clientIP = ((InetSocketAddress)session.getRemoteAddress()).getAddress().getHostAddress();
