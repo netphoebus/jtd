@@ -48,7 +48,7 @@ function test()
 				            { //成功   
 				             if(msg!=null)
 				             {
-					             	$(".l03").attr("src","images/rod/l03"+msg.l03+".png"); 
+					             	 $(".l03").attr("src","images/rod/l03"+msg.l03+".png"); 
 					           	 	 
 					           	 	 
 						           	 $("#l20").attr("src","images/rod/l20"+msg.l20+".png");
@@ -68,6 +68,11 @@ function test()
 						           	 $("#l11").attr("src","images/rod/l11"+msg.l11+".png"); 
 						           	 $("#l10").attr("src","images/rod/l10"+msg.l10+".png");
 						           	 $("#l12").attr("src","images/rod/l12"+msg.l12+".png");
+						           	 
+						           	 $("#dd").val(msg.dd);
+						           	 $("#xd").val(msg.xd);
+						           	 $("#nd").val(msg.nd);
+						           	 $("#bd").val(msg.bd);
 				             }
 				           	 	 
 					        
@@ -211,7 +216,7 @@ var btn=document.getElementById('show_btn');
                      <td height="8"> </td>
                    </tr>
                    <tr>
-                     <td height="25" align="center"><span style="font-family: Adobe 黑体 Std R; font-size: 18px; color: #FFF;">01</span></td>
+                     <td height="25" align="center"><span id="dd" style="font-family: Adobe 黑体 Std R; font-size: 18px; color: #FFF;"></span></td>
                    </tr>
                    <tr>
                      <td height="28" align="center"><img id="l02" src="images/rod/l020.png" alt="东向西右拐" width="25" height="25" /></td>
@@ -227,7 +232,7 @@ var btn=document.getElementById('show_btn');
                 <div style="width: 126px; height: 33px; float: left; margin-top: 230px; margin-left: 10px; background: url(images/rod/trabg2.png) no-repeat;">
                  <table width="126" border="0" cellspacing="0" cellpadding="0">
                    <tr>
-                   	 <td width="30" align="center"><span style="font-family: Adobe 黑体 Std R; font-size: 18px; color: #FFF; line-height: 33px;">01</span></td>
+                   	 <td width="30" align="center"><span id="bd" style="font-family: Adobe 黑体 Std R; font-size: 18px; color: #FFF; line-height: 33px;"></span></td>
                      <td width="28" align="center"><img id="l32" src="images/rod/l320.png" alt="北向南右拐" width="25" height="25" /></td>
                      <td width="28" align="center"><img  id="l31" src="images/rod/l310.png" alt="北向南直行" width="25" height="25" /></td>
                      <td width="30" align="center"><img  id="l30" src="images/rod/l300.png" alt="北向南左拐" width="25" height="25" /></td>
@@ -242,7 +247,7 @@ var btn=document.getElementById('show_btn');
                      <td width="28" align="center"><img id="l10" src="images/rod/l100.png" alt="南向北左拐" width="25" height="25" /></td>
                      <td width="28" align="center"><img id="l11" src="images/rod/l110.png" alt="南向北直行" width="25" height="25" /></td>
                      <td width="30" align="center"><img id="l12" src="images/rod/l120.png" alt="南向北右拐" width="25" height="25" /></td>
-                      <td width="30" align="center"><span style="font-family: Adobe 黑体 Std R; font-size: 18px; color: #FFF; line-height: 33px;">01</span></td>
+                      <td width="30" align="center"><span id="nd" style="font-family: Adobe 黑体 Std R; font-size: 18px; color: #FFF; line-height: 33px;"></span></td>
                    </tr>
                  </table>
                </div>
@@ -261,7 +266,7 @@ var btn=document.getElementById('show_btn');
                      <td height="27" align="center"><img id="l22" src="images/rod/l220.png" alt="西向东右拐" width="25" height="25" /></td>
                    </tr>
                    <tr>
-                     <td height="25" align="center"><span style="font-family: Adobe 黑体 Std R; font-size: 18px; color: #FFF;">01</span></td>
+                     <td height="25" align="center"><span id="xd" style="font-family: Adobe 黑体 Std R; font-size: 18px; color: #FFF;"></span></td>
                    </tr>
                  </table>
                </div>

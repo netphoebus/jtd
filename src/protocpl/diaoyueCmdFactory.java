@@ -122,6 +122,7 @@ public class diaoyueCmdFactory extends CmdFactoryBase implements ICmdParser{
 	  	if(SigAction.curruntSigIp !=  null)
 	  	if(clientIP.equals(SigAction.curruntSigIp )){
 	  		SigAction.trafficlights = locate;
+	  		SigAction.Countdown = Countdown;
 	  	}
 	  	
 	  }

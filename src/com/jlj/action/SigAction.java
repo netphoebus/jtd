@@ -38,6 +38,7 @@ public class SigAction extends ActionSupport implements RequestAware,
 
 	public static int[][] trafficlights = new int[4][5];
 	private static int[][] trafficlights_next = new int[4][5];
+	public static int[] Countdown = new int[4];
 	private ISigService sigService;
 	private Sig sig;
 	private int id;
@@ -160,6 +161,12 @@ public class SigAction extends ActionSupport implements RequestAware,
 					",\"l11\":\"" + trafficlights_next[1][1] + "\"" + // 南边直行灯
 					",\"l10\":\"" + trafficlights_next[1][0] + "\"" + // 南边左转灯
 					",\"l12\":\"" + trafficlights_next[1][2] + "\"" + // 南边右转灯
+					
+					",\"dd\":\"" + trafficlights_next[0] + "\"" + // 东边倒计时
+					",\"nd\":\"" + trafficlights_next[1] + "\"" + // 南边倒计时
+					",\"xd\":\"" + trafficlights_next[2] + "\"" + // 西边倒计时
+					",\"bd\":\"" + trafficlights_next[3] + "\"" + // 北边倒计时
+					
 					"}";
 			PrintWriter out;
 			try {
