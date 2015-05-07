@@ -250,7 +250,7 @@ $(document).ready(function(e) {
 										序号01
 									</h1>
 									<btn>清 空</btn>
-									<btn>保 存</btn>
+									<btn>全 红</btn>
 								</li>
 								<!--单个相位图li结束 -->
 								<ul>
@@ -407,7 +407,7 @@ $(document).ready(function(e) {
 										序号02
 									</h1>
 									<btn>清 空</btn>
-									<btn>保 存</btn>
+									<btn>全 红</btn>
 								</li>
 									<!--单个相位图li开始 -->
 								<li>
@@ -562,7 +562,7 @@ $(document).ready(function(e) {
 										序号03
 									</h1>
 									<btn>清 空</btn>
-									<btn>保 存</btn>
+									<btn>全 红</btn>
 								</li>
 									<!--单个相位图li开始 -->
 								<li>
@@ -717,7 +717,7 @@ $(document).ready(function(e) {
 										序号04
 									</h1>
 									<btn>清 空</btn>
-									<btn>保 存</btn>
+									<btn>全 红</btn>
 								</li>
 									<!--单个相位图li开始 -->
 								<li>
@@ -872,7 +872,7 @@ $(document).ready(function(e) {
 										序号05
 									</h1>
 									<btn>清 空</btn>
-									<btn>保 存</btn>
+									<btn>全 红</btn>
 								</li>
 									<!--单个相位图li开始 -->
 								<li>
@@ -1027,7 +1027,7 @@ $(document).ready(function(e) {
 										序号06
 									</h1>
 									<btn>清 空</btn>
-									<btn>保 存</btn>
+									<btn>全 红</btn>
 								</li>
 									<!--单个相位图li开始 -->
 								<li>
@@ -1182,7 +1182,7 @@ $(document).ready(function(e) {
 										序号07
 									</h1>
 									<btn>清 空</btn>
-									<btn>保 存</btn>
+									<btn>全 红</btn>
 								</li>
 									<!--单个相位图li开始 -->
 								<li>
@@ -1337,7 +1337,7 @@ $(document).ready(function(e) {
 										序号08
 									</h1>
 									<btn>清 空</btn>
-									<btn>保 存</btn>
+									<btn>全 红</btn>
 								</li>
 									<!--单个相位图li开始 -->
 								<li>
@@ -1492,7 +1492,7 @@ $(document).ready(function(e) {
 										序号09
 									</h1>
 									<btn>清 空</btn>
-									<btn>保 存</btn>
+									<btn>全 红</btn>
 								</li>
 									<!--单个相位图li开始 -->
 								<li>
@@ -1647,7 +1647,7 @@ $(document).ready(function(e) {
 										序号10
 									</h1>
 									<btn>清 空</btn>
-									<btn>保 存</btn>
+									<btn>全 红</btn>
 								</li>
 									<!--单个相位图li开始 -->
 								<li>
@@ -1802,7 +1802,7 @@ $(document).ready(function(e) {
 										序号11
 									</h1>
 									<btn>清 空</btn>
-									<btn>保 存</btn>
+									<btn>全 红</btn>
 								</li>
 									<!--单个相位图li开始 -->
 								<li>
@@ -1957,7 +1957,7 @@ $(document).ready(function(e) {
 										序号12
 									</h1>
 									<btn>清 空</btn>
-									<btn>保 存</btn>
+									<btn>全 红</btn>
 								</li>
 									<!--单个相位图li开始 -->
 								<li>
@@ -2112,7 +2112,7 @@ $(document).ready(function(e) {
 										序号13
 									</h1>
 									<btn>清 空</btn>
-									<btn>保 存</btn>
+									<btn>全 红</btn>
 								</li>
 									<!--单个相位图li开始 -->
 								<li>
@@ -2267,7 +2267,7 @@ $(document).ready(function(e) {
 										序号14
 									</h1>
 									<btn>清 空</btn>
-									<btn>保 存</btn>
+									<btn>全 红</btn>
 								</li>
 									<!--单个相位图li开始 -->
 								<li>
@@ -2422,7 +2422,7 @@ $(document).ready(function(e) {
 										序号15
 									</h1>
 									<btn>清 空</btn>
-									<btn>保 存</btn>
+									<btn>全 红</btn>
 								</li>
 									<!--单个相位图li开始 -->
 								<li>
@@ -2577,7 +2577,7 @@ $(document).ready(function(e) {
 										序号16
 									</h1>
 									<btn>清 空</btn>
-									<btn>保 存</btn>
+									<btn>全 红</btn>
 								</li>
 									<!--单个相位图li开始 -->
 								<li>
@@ -2732,7 +2732,7 @@ $(document).ready(function(e) {
 										序号17
 									</h1>
 									<btn>清 空</btn>
-									<btn>保 存</btn>
+									<btn>全 红</btn>
 								</li>
 									<!--单个相位图li开始 -->
 								<li>
@@ -2887,7 +2887,7 @@ $(document).ready(function(e) {
 										序号18
 									</h1>
 									<btn>清 空</btn>
-									<btn>保 存</btn>
+									<btn>全 红</btn>
 								</li>
 									<!--单个相位图li开始 -->
 								<li>
@@ -3042,7 +3042,7 @@ $(document).ready(function(e) {
 										序号19
 									</h1>
 									<btn>清 空</btn>
-									<btn>保 存</btn>
+									<btn>全 红</btn>
 								</li>
 									<!--单个相位图li开始 -->
 								<li>
@@ -3197,7 +3197,7 @@ $(document).ready(function(e) {
 										序号20
 									</h1>
 									<btn>清 空</btn>
-									<btn>保 存</btn>
+									<btn>全 红</btn>
 								</li>
 									<!--单个相位图li开始 -->
 								<li>
@@ -3352,7 +3352,7 @@ $(document).ready(function(e) {
 										序号21
 									</h1>
 									<btn>清 空</btn>
-									<btn>保 存</btn>
+									<btn>全 红</btn>
 								</li>
 									<!--单个相位图li开始 -->
 								<li>
@@ -3507,7 +3507,7 @@ $(document).ready(function(e) {
 										序号22
 									</h1>
 									<btn>清 空</btn>
-									<btn>保 存</btn>
+									<btn>全 红</btn>
 								</li>
 									<!--单个相位图li开始 -->
 								<li>
@@ -3662,7 +3662,7 @@ $(document).ready(function(e) {
 										序号23
 									</h1>
 									<btn>清 空</btn>
-									<btn>保 存</btn>
+									<btn>全 红</btn>
 								</li>
 									<!--单个相位图li开始 -->
 								<li>
@@ -3817,7 +3817,7 @@ $(document).ready(function(e) {
 										序号24
 									</h1>
 									<btn>清 空</btn>
-									<btn>保 存</btn>
+									<btn>全 红</btn>
 								</li>
 									<!--单个相位图li开始 -->
 								<li>
@@ -3972,7 +3972,7 @@ $(document).ready(function(e) {
 										序号25
 									</h1>
 									<btn>清 空</btn>
-									<btn>保 存</btn>
+									<btn>全 红</btn>
 								</li>
 									<!--单个相位图li开始 -->
 								<li>
@@ -4127,7 +4127,7 @@ $(document).ready(function(e) {
 										序号26
 									</h1>
 									<btn>清 空</btn>
-									<btn>保 存</btn>
+									<btn>全 红</btn>
 								</li>
 									<!--单个相位图li开始 -->
 								<li>
@@ -4282,7 +4282,7 @@ $(document).ready(function(e) {
 										序号27
 									</h1>
 									<btn>清 空</btn>
-									<btn>保 存</btn>
+									<btn>全 红</btn>
 								</li>
 									<!--单个相位图li开始 -->
 								<li>
@@ -4437,7 +4437,7 @@ $(document).ready(function(e) {
 										序号28
 									</h1>
 									<btn>清 空</btn>
-									<btn>保 存</btn>
+									<btn>全 红</btn>
 								</li>
 									<!--单个相位图li开始 -->
 								<li>
@@ -4592,7 +4592,7 @@ $(document).ready(function(e) {
 										序号29
 									</h1>
 									<btn>清 空</btn>
-									<btn>保 存</btn>
+									<btn>全 红</btn>
 								</li>
 									<!--单个相位图li开始 -->
 								<li>
@@ -4747,7 +4747,7 @@ $(document).ready(function(e) {
 										序号30
 									</h1>
 									<btn>清 空</btn>
-									<btn>保 存</btn>
+									<btn>全 红</btn>
 								</li>
 									<!--单个相位图li开始 -->
 								<li>
@@ -4902,7 +4902,7 @@ $(document).ready(function(e) {
 										序号31
 									</h1>
 									<btn>清 空</btn>
-									<btn>保 存</btn>
+									<btn>全 红</btn>
 								</li>
 									<!--单个相位图li开始 -->
 								<li>
@@ -5057,7 +5057,7 @@ $(document).ready(function(e) {
 										序号32
 									</h1>
 									<btn>清 空</btn>
-									<btn>保 存</btn>
+									<btn>全 红</btn>
 								</li>
 								</ul>
 							</div>
