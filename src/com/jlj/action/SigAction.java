@@ -54,7 +54,7 @@ public class SigAction extends ActionSupport implements RequestAware,
 		return "traffic";
 	}
 
-	public void setParameters(String datas)
+	/*public void setParameters(String datas)
 	{
 		switch (curruntCommandId) {
 			case 0:
@@ -109,11 +109,10 @@ public class SigAction extends ActionSupport implements RequestAware,
 				break;
 		}
 	
-	}
+	}*/
 	
 	//跳转 一般参数页面  
 	public String toSetParameters() {
-		
 		return "cssz-cs";
 	}
 

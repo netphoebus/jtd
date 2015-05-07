@@ -16,8 +16,6 @@ import com.jlj.action.SigAction;
 public class ParametersCmdFactory extends CmdFactoryBase implements ICmdParser{
 
 	public static boolean setSuccess;
-	public final static ApplicationContext ac=new ClassPathXmlApplicationContext("beans.xml");
-	public final static SigAction sigAction = (SigAction)ac.getBean("sigAction");
 	public ParametersCmdFactory(byte[] data){
 		super(data);
 		this.expected_cmd = MONITOR_CMD_TYPE.MONITOR_CMD_COMMON_PARAMETERS;
@@ -45,7 +43,6 @@ public class ParametersCmdFactory extends CmdFactoryBase implements ICmdParser{
 		// TODO Auto-generated method stub
 		//this.m_oData
 		String data = DataConvertor.bytesToHexString(this.m_oData);
-		sigAction.setParameters(data);
 		return false;
 	}
 

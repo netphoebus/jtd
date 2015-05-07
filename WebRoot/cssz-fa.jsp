@@ -57,14 +57,14 @@ $(document).ready(function(e) {
 				<div class="itab">
 					<ul>
 						<li>
-							<a href="cssz-cs.html">一般参数</a>
+							<a href="cssz-cs.jsp">一般参数</a>
 						</li>
 
 						<li>
 							<a href="#tab3" class="selected">相位方案</a>
 						</li>
 						<li>
-							<a href="cssz-time.html">时间段参数</a>
+							<a href="cssz-time.jsp">时间段参数</a>
 						</li>
 					</ul>
 				</div>

@@ -60,8 +60,8 @@ $(document).ready(function(e) {
     <div class="itab">
   	<ul> 
     <li><a href="#tab1" class="selected" >一般参数</a></li> 
-    <li><a href="cssz-fa.html"  >相位方案</a></li> 
-    <li><a href="cssz-time.html" >时间段参数</a></li> 
+    <li><a href="cssz-fa.jsp"  >相位方案</a></li> 
+    <li><a href="cssz-time.jsp" >时间段参数</a></li> 
   	</ul>
     </div> 
     

@@ -205,10 +205,13 @@ var btn=document.getElementById('show_btn');
            </li>
            <li style="height: 270px;">
              <div style="height: 270px; width: 100%; float: left;">
-               <div style="width: 33px; height: 96px; float: left; margin-top: 25px; margin-left: 205px; overflow: hidden; background: url(images/rod/trabg1.png ) no-repeat center;">
+               <div style="width: 33px; height: 126px; float: left; margin-top: 25px; margin-left: 205px; overflow: hidden; background: url(images/rod/trabg1.png ) no-repeat center;">
                  <table width="33" border="0" cellspacing="0" cellpadding="0">
                    <tr>
                      <td height="8"> </td>
+                   </tr>
+                   <tr>
+                     <td height="25" align="center"><span style="font-family: Adobe 黑体 Std R; font-size: 18px; color: #FFF;">01</span></td>
                    </tr>
                    <tr>
                      <td height="28" align="center"><img id="l02" src="images/rod/l020.png" alt="东向西右拐" width="25" height="25" /></td>
@@ -221,27 +224,29 @@ var btn=document.getElementById('show_btn');
                    </tr>
                  </table>
                </div>
-               <div style="width: 96px; height: 33px; float: left; margin-top: 230px; margin-left: 10px; background: url(images/rod/trabg2.png) no-repeat;">
-                 <table width="96" border="0" cellspacing="0" cellpadding="0">
+                <div style="width: 126px; height: 33px; float: left; margin-top: 230px; margin-left: 10px; background: url(images/rod/trabg2.png) no-repeat;">
+                 <table width="126" border="0" cellspacing="0" cellpadding="0">
                    <tr>
-                   <td width="4" height="33"></td>
+                   	 <td width="30" align="center"><span style="font-family: Adobe 黑体 Std R; font-size: 18px; color: #FFF; line-height: 33px;">01</span></td>
                      <td width="28" align="center"><img id="l32" src="images/rod/l320.png" alt="北向南右拐" width="25" height="25" /></td>
                      <td width="28" align="center"><img  id="l31" src="images/rod/l310.png" alt="北向南直行" width="25" height="25" /></td>
                      <td width="30" align="center"><img  id="l30" src="images/rod/l300.png" alt="北向南左拐" width="25" height="25" /></td>
+                   	 <td width="4" height="33"></td>
                    </tr>
                  </table>
                </div>
-               <div style="width: 96px; height: 33px; float: left; margin-top: 0px; margin-left: 60px; background: url(images/rod/trabg2.png) no-repeat;">
-                 <table width="96" border="0" cellspacing="0" cellpadding="0">
+              <div style="width: 126px; height: 33px; float: left; margin-top: 0px; margin-left: 0px; background: url(images/rod/trabg2.png) no-repeat;">
+                 <table width="126" border="0" cellspacing="0" cellpadding="0">
                    <tr>
                      <td width="4" height="33"></td>
                      <td width="28" align="center"><img id="l10" src="images/rod/l100.png" alt="南向北左拐" width="25" height="25" /></td>
                      <td width="28" align="center"><img id="l11" src="images/rod/l110.png" alt="南向北直行" width="25" height="25" /></td>
                      <td width="30" align="center"><img id="l12" src="images/rod/l120.png" alt="南向北右拐" width="25" height="25" /></td>
+                      <td width="30" align="center"><span style="font-family: Adobe 黑体 Std R; font-size: 18px; color: #FFF; line-height: 33px;">01</span></td>
                    </tr>
                  </table>
                </div>
-               <div style="width: 33px; height: 96px; float: left; margin-top: 160px; margin-left: 10px; overflow: hidden; background: url(images/rod/trabg1.png ) no-repeat center;">
+               <div style="width: 33px; height: 126px; float: left; margin-top: 130px; margin-left: 10px; overflow: hidden; background: url(images/rod/trabg1.png ) no-repeat center;">
                  <table width="33" border="0" cellspacing="0" cellpadding="0">
                    <tr>
                      <td height="8"></td>
@@ -254,6 +259,9 @@ var btn=document.getElementById('show_btn');
                    </tr>
                    <tr>
                      <td height="27" align="center"><img id="l22" src="images/rod/l220.png" alt="西向东右拐" width="25" height="25" /></td>
+                   </tr>
+                   <tr>
+                     <td height="25" align="center"><span style="font-family: Adobe 黑体 Std R; font-size: 18px; color: #FFF;">01</span></td>
                    </tr>
                  </table>
                </div>
@@ -277,7 +285,7 @@ var btn=document.getElementById('show_btn');
          </ul>
          <ul class="toolbar1">
            
-       <li onclick="executeCommand(5)">设置参数</li>
+       <li onclick="javascript:location.href='sigAction!toSetParameters'">设置参数</li>
 
          </ul>
          
