@@ -120,50 +120,52 @@ $(document).ready(function(e) {
     秒</div>
     <div style="height:50px;"></div>
     <div>
-    <div class="csbox"><input name="" class="checkinput" type="checkbox" value="" />
-             <txt> 　行人触发功能使用　</txt></div>
+    <div class="csbox">
+    		 <s:checkbox name="" cssClass="checkinput"></s:checkbox>
+             <txt> 　行人触发功能使用　</txt>
+             </div>
      <div class="csbox">行人请求：
-       <input type="text" class="dfinput"   style="width:150px;"/> 
+         <s:textfield name="sigParas.time_huangshan" cssClass="dfinput"   cssStyle="width:150px;"></s:textfield>
     秒</div>
      <div class="csbox">请求周期：
-       <input type="text" class="dfinput"   style="width:125px;"/> 
+         <s:textfield name="sigParas.time_huangshan" cssClass="dfinput"   cssStyle="width:150px;"></s:textfield>
     ×10秒</div>
     </div>
     </div>
     <div style="width:70%;  padding-top:15px; padding-bottom:15px; float:left;">
     <div>
       <span class="csbox">
-            <input name="input2" class="checkinput" type="checkbox" value="" />
+           <s:checkbox name="" cssClass="checkinput"></s:checkbox>
       周　日</span></div>
-    <div id="zr" style="display:none">
+    <div id="zr" style="">
       <table  width="90%" border="0" cellspacing="0" cellpadding="0">
         <tr>
           <td><span class="csbox">
-            <input name="input" class="checkinput" type="checkbox" value="" readonly="readonly" />
-            
+            <s:checkbox name="" value="" cssClass="checkinput"></s:checkbox>
             星期一</span></td>
           <td><span class="csbox">
-            <input name="input2" class="checkinput" type="checkbox" value="" />
+            <s:checkbox name="" value="" cssClass="checkinput"></s:checkbox>
             
             星期二</span></td>
           <td><span class="csbox">
-            <input name="input2" class="checkinput" type="checkbox" value="" />
+           <s:checkbox name="" value="" cssClass="checkinput"></s:checkbox>
             
             星期三</span></td>
           <td><span class="csbox">
-            <input name="input2" class="checkinput" type="checkbox" value="" />
+           <s:checkbox name="" value="" cssClass="checkinput"></s:checkbox>
             
             星期四</span></td>
           <td><span class="csbox">
-            <input name="input2" class="checkinput" type="checkbox" value="" />
+           <s:checkbox name="" value="" cssClass="checkinput"></s:checkbox>
             
             星期五</span></td>
           <td><span class="csbox">
-          <input name="input3" class="checkinput" type="checkbox" value="" />
-星期六</span></td>
+           <s:checkbox name="" value="" cssClass="checkinput"></s:checkbox>
+			星期六</span></td>
           <td><span class="csbox">
-          <input name="input4" class="checkinput" type="checkbox" value="" />
-星期天</span></td>
+          <s:checkbox name="" value="" cssClass="checkinput"></s:checkbox>
+			星期天</span></td>
+						
         </tr>
         <tr>
           <td>&nbsp;</td>
