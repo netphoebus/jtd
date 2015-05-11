@@ -44,13 +44,14 @@
         <property name="maxActive" value="${jdbc.maxActive}" />
         <property name="maxIdle" value="${jdbc.maxIdle}" />
 		<property name="minEvictableIdleTimeMillis" value="${jdbc.minEvictableIdleTimeMillis}"/> 
+		<!-- 
 		<property name="validationQuery" value="${jdbc.validationQuery}" />
 		<property name="testWhileIdle" value="${jdbc.testWhileIdle}" />
 		<property name="timeBetweenEvictionRunsMillis" value="${jdbc.timeBetweenEvictionRunsMillis}" />
 		<property name="numTestsPerEvictionRun" value="${jdbc.numTestsPerEvictionRun}" />
 		<property name="removeAbandoned" value="${jdbc.removeAbandoned}" />
         <property name="removeAbandonedTimeout" value="${jdbc.removeAbandonedTimeout}" />
-		
+		 -->
 	</bean>
 	
 	
@@ -67,10 +68,10 @@
 		<property name="hibernateProperties">
 			<props>
 				<prop key="hibernate.dialect">
-					org.hibernate.dialect.MySQLDialect
+					org.hibernate.dialect.SQLServerDialect
 				</prop>
-				<prop key="hibernate.show_sql">false</prop>
-				<prop key="hibernate.format_sql">false</prop>
+				<prop key="hibernate.show_sql">ture</prop>
+				<prop key="hibernate.format_sql">ture</prop>
 			</props>
 		</property>
 	</bean>

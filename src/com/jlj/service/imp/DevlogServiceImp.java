@@ -85,7 +85,7 @@ public class DevlogServiceImp implements IDevlogService  {
 			}
 			p = new Object[]{'%'+convalue+'%'};
 		}
-		queryString += " order by mo.id desc ";
+//		queryString += " order by mo.id desc ";
 		return devlogDao.getUniqueResult(queryString,p);
 	}
 	//后台管理-获取符合条件的记录
@@ -102,7 +102,7 @@ public class DevlogServiceImp implements IDevlogService  {
 			}
 			p = new Object[]{'%'+convalue+'%'};
 		}
-		queryString += " order by mo.id desc ";
+//		queryString += " order by mo.id desc ";
 		return devlogDao.pageList(queryString,p,page,size);
 	}
 	

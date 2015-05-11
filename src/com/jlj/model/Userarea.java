@@ -19,13 +19,13 @@ import javax.persistence.Table;
  * @author MyEclipse Persistence Tools
  */
 @Entity
-@Table(name = "userarea", catalog = "jtd")
+@Table(name = "userarea", schema = "dbo", catalog = "jtd")
 public class Userarea implements java.io.Serializable {
 
 	// Fields
 
 	private Integer id;
-	private User user;
+	private Usero user;
 	private String uareaname;
 	private String lat;
 	private String lng;
@@ -39,7 +39,7 @@ public class Userarea implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public Userarea(User user, String uareaname, String lat, String lng,
+	public Userarea(Usero user, String uareaname, String lat, String lng,
 			Integer size, Set<Sig> sigs) {
 		this.user = user;
 		this.uareaname = uareaname;
@@ -63,11 +63,11 @@ public class Userarea implements java.io.Serializable {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "uid")
-	public User getUser() {
+	public Usero getUser() {
 		return this.user;
 	}
 
-	public void setUser(User user) {
+	public void setUser(Usero user) {
 		this.user = user;
 	}
 

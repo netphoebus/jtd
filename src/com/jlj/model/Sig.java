@@ -1,8 +1,7 @@
 package com.jlj.model;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -20,7 +19,7 @@ import javax.persistence.Table;
  * @author MyEclipse Persistence Tools
  */
 @Entity
-@Table(name = "sig", catalog = "jtd")
+@Table(name = "sig", schema = "dbo", catalog = "jtd")
 public class Sig implements java.io.Serializable {
 
 	// Fields
@@ -33,7 +32,12 @@ public class Sig implements java.io.Serializable {
 	private String lng;
 	private String ip;
 	private Long mkid;
-	private List<Devlog> devlogs = new ArrayList<Devlog>(0);
+	private Set<Commontime> commontimes = new HashSet<Commontime>(0);
+	private Set<Phase> phases = new HashSet<Phase>(0);
+	private Set<Signpublicparam> signpublicparams = new HashSet<Signpublicparam>(
+			0);
+	private Set<Devlog> devlogs = new HashSet<Devlog>(0);
+	private Set<Sigsystime> sigsystimes = new HashSet<Sigsystime>(0);
 
 	// Constructors
 
@@ -43,7 +47,9 @@ public class Sig implements java.io.Serializable {
 
 	/** full constructor */
 	public Sig(Userarea userarea, String name, String address, String lat,
-			String lng, String ip,Long mkid, List<Devlog> devlogs) {
+			String lng, String ip, Long mkid, Set<Commontime> commontimes,
+			Set<Phase> phases, Set<Signpublicparam> signpublicparams,
+			Set<Devlog> devlogs, Set<Sigsystime> sigsystimes) {
 		this.userarea = userarea;
 		this.name = name;
 		this.address = address;
@@ -51,7 +57,11 @@ public class Sig implements java.io.Serializable {
 		this.lng = lng;
 		this.ip = ip;
 		this.mkid = mkid;
+		this.commontimes = commontimes;
+		this.phases = phases;
+		this.signpublicparams = signpublicparams;
 		this.devlogs = devlogs;
+		this.sigsystimes = sigsystimes;
 	}
 
 	// Property accessors
@@ -123,7 +133,7 @@ public class Sig implements java.io.Serializable {
 
 	@Column(name = "mkid")
 	public Long getMkid() {
-		return mkid;
+		return this.mkid;
 	}
 
 	public void setMkid(Long mkid) {
@@ -131,12 +141,48 @@ public class Sig implements java.io.Serializable {
 	}
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "sig")
-	public List<Devlog> getDevlogs() {
+	public Set<Commontime> getCommontimes() {
+		return this.commontimes;
+	}
+
+	public void setCommontimes(Set<Commontime> commontimes) {
+		this.commontimes = commontimes;
+	}
+
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "sig")
+	public Set<Phase> getPhases() {
+		return this.phases;
+	}
+
+	public void setPhases(Set<Phase> phases) {
+		this.phases = phases;
+	}
+
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "sig")
+	public Set<Signpublicparam> getSignpublicparams() {
+		return this.signpublicparams;
+	}
+
+	public void setSignpublicparams(Set<Signpublicparam> signpublicparams) {
+		this.signpublicparams = signpublicparams;
+	}
+
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "sig")
+	public Set<Devlog> getDevlogs() {
 		return this.devlogs;
 	}
 
-	public void setDevlogs(List<Devlog> devlogs) {
+	public void setDevlogs(Set<Devlog> devlogs) {
 		this.devlogs = devlogs;
+	}
+
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "sig")
+	public Set<Sigsystime> getSigsystimes() {
+		return this.sigsystimes;
+	}
+
+	public void setSigsystimes(Set<Sigsystime> sigsystimes) {
+		this.sigsystimes = sigsystimes;
 	}
 
 }

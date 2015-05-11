@@ -12,10 +12,10 @@ import org.springframework.orm.hibernate3.HibernateCallback;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.stereotype.Component;
 
-import com.jlj.dao.IUserDao;
-import com.jlj.model.User;
-@Component("userDao")
-public class UserDaoImp implements IUserDao  {
+import com.jlj.dao.IUseroDao;
+import com.jlj.model.Usero;
+@Component("useroDao")
+public class UseroDaoImp implements IUseroDao  {
 	private HibernateTemplate hibernateTemplate;
 	
 	public HibernateTemplate getHibernateTemplate() {
@@ -30,24 +30,24 @@ public class UserDaoImp implements IUserDao  {
 	/* (non-Javadoc)
 	 * @see com.jlj.dao.imp.IUserDao#save(com.jlj.model.User)
 	 */
-	public void save(User user) {
-		this.hibernateTemplate.save(user);
+	public void save(Usero usero) {
+		this.hibernateTemplate.save(usero);
 	}
 	
 	//保存一条记录
 	/* (non-Javadoc)
 	 * @see com.jlj.dao.imp.IUserDao#savereturn(com.jlj.model.User)
 	 */
-	public Integer savereturn(User user) {
-		return (Integer) this.hibernateTemplate.save(user);
+	public Integer savereturn(Usero usero) {
+		return (Integer) this.hibernateTemplate.save(usero);
 	}
 	
 	//删除一条记录
 	/* (non-Javadoc)
 	 * @see com.jlj.dao.imp.IUserDao#delete(com.jlj.model.User)
 	 */
-	public void delete(User user) {
-		this.hibernateTemplate.delete(user);
+	public void delete(Usero usero) {
+		this.hibernateTemplate.delete(usero);
 	}
 	//根据ID删除一条记录
 	/* (non-Javadoc)
@@ -61,8 +61,8 @@ public class UserDaoImp implements IUserDao  {
 	/* (non-Javadoc)
 	 * @see com.jlj.dao.imp.IUserDao#update(com.jlj.model.User)
 	 */
-	public void update(User user) {
-		this.hibernateTemplate.update(user);
+	public void update(Usero usero) {
+		this.hibernateTemplate.update(usero);
 	}
 	
 	//根据hql语句、条件、条件值修改某些记录
@@ -89,15 +89,15 @@ public class UserDaoImp implements IUserDao  {
 	/* (non-Javadoc)
 	 * @see com.jlj.dao.imp.IUserDao#getUsers()
 	 */
-	public List<User> getUsers() {
-		return this.hibernateTemplate.loadAll(User.class);
+	public List<Usero> getUsers() {
+		return this.hibernateTemplate.loadAll(Usero.class);
 	}
 	
 	//根据hql语句来查询所有记录
 	/* (non-Javadoc)
 	 * @see com.jlj.dao.imp.IUserDao#queryList(java.lang.String)
 	 */
-	public List<User> queryList(String queryString) {
+	public List<Usero> queryList(String queryString) {
 		return this.hibernateTemplate.find(queryString);
 	}
 	
@@ -105,7 +105,7 @@ public class UserDaoImp implements IUserDao  {
 	/* (non-Javadoc)
 	 * @see com.jlj.dao.imp.IUserDao#getObjectsByCondition(java.lang.String, java.lang.Object[])
 	 */
-	public List<User> getObjectsByCondition(String queryString, Object[] p) {
+	public List<Usero> getObjectsByCondition(String queryString, Object[] p) {
 		return this.hibernateTemplate.find(queryString,p);
 	}
 	
@@ -113,7 +113,7 @@ public class UserDaoImp implements IUserDao  {
 	/* (non-Javadoc)
 	 * @see com.jlj.dao.imp.IUserDao#queryList(java.lang.String, java.lang.String[], java.lang.Object[])
 	 */
-	public List<User> queryList(String queryString, String[] paramNames,
+	public List<Usero> queryList(String queryString, String[] paramNames,
 			Object[] values)
 	{
 		List list =  this.hibernateTemplate.findByNamedParam(queryString, paramNames, values);
@@ -125,7 +125,7 @@ public class UserDaoImp implements IUserDao  {
 	/* (non-Javadoc)
 	 * @see com.jlj.dao.imp.IUserDao#getObjectsByIdList(java.lang.String, java.util.List)
 	 */
-	public List<User> getObjectsByIdList(final String hql,final List<Integer> idList) {
+	public List<Usero> getObjectsByIdList(final String hql,final List<Integer> idList) {
 		return this.hibernateTemplate.executeFind(new HibernateCallback(){
 
 			public Object doInHibernate(Session session)
@@ -142,7 +142,7 @@ public class UserDaoImp implements IUserDao  {
 	/* (non-Javadoc)
 	 * @see com.jlj.dao.imp.IUserDao#pageList(java.lang.String, java.lang.Object[], java.lang.Integer, java.lang.Integer)
 	 */
-	public List<User> pageList(final String queryString,final Object[] p,final Integer page,
+	public List<Usero> pageList(final String queryString,final Object[] p,final Integer page,
 			final Integer size) {
 		return this.hibernateTemplate.executeFind(new HibernateCallback(){
 
@@ -186,18 +186,18 @@ public class UserDaoImp implements IUserDao  {
 	/* (non-Javadoc)
 	 * @see com.jlj.dao.imp.IUserDao#loadById(int)
 	 */
-	public User loadById(int id) {
-		return (User) this.hibernateTemplate.load(User.class, id);
+	public Usero loadById(int id) {
+		return (Usero) this.hibernateTemplate.load(Usero.class, id);
 	}
 	
 	//根据hql语句、条件、值来查询一条记录
 	/* (non-Javadoc)
 	 * @see com.jlj.dao.imp.IUserDao#queryByNamedParam(java.lang.String, java.lang.String[], java.lang.Object[])
 	 */
-	public User queryByNamedParam(String queryString, String[] paramNames,
+	public Usero queryByNamedParam(String queryString, String[] paramNames,
 			Object[] values) {
 		List list=this.hibernateTemplate.findByNamedParam(queryString, paramNames, values);
-		return list.size()>0?(User)list.get(0):null;
+		return list.size()>0?(Usero)list.get(0):null;
 	}
 	
 	//根据hql语句、条件值来查询是否存在该记录

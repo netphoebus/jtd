@@ -1,8 +1,7 @@
 package com.jlj.model;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,8 +17,8 @@ import javax.persistence.Table;
  * @author MyEclipse Persistence Tools
  */
 @Entity
-@Table(name = "user", catalog = "jtd")
-public class User implements java.io.Serializable {
+@Table(name = "usero", schema = "dbo", catalog = "jtd")
+public class Usero implements java.io.Serializable {
 
 	// Fields
 
@@ -28,24 +27,24 @@ public class User implements java.io.Serializable {
 	private String password;
 	private String uip;
 	private Integer ulimit;
-	private List<Oplog> oplogs = new ArrayList<Oplog>(0);
-	private List<Userarea> userareas = new ArrayList<Userarea>(0);
+	private Set<Userarea> userareas = new HashSet<Userarea>(0);
+	private Set<Oplog> oplogs = new HashSet<Oplog>(0);
 
 	// Constructors
 
 	/** default constructor */
-	public User() {
+	public Usero() {
 	}
 
 	/** full constructor */
-	public User(String username, String password, String uip, Integer ulimit,
-			List<Oplog> oplogs, List<Userarea> userareas) {
+	public Usero(String username, String password, String uip, Integer ulimit,
+			Set<Userarea> userareas, Set<Oplog> oplogs) {
 		this.username = username;
 		this.password = password;
 		this.uip = uip;
 		this.ulimit = ulimit;
-		this.oplogs = oplogs;
 		this.userareas = userareas;
+		this.oplogs = oplogs;
 	}
 
 	// Property accessors
@@ -97,21 +96,21 @@ public class User implements java.io.Serializable {
 	}
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
-	public List<Oplog> getOplogs() {
-		return this.oplogs;
-	}
-
-	public void setOplogs(List<Oplog> oplogs) {
-		this.oplogs = oplogs;
-	}
-
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
-	public List<Userarea> getUserareas() {
+	public Set<Userarea> getUserareas() {
 		return this.userareas;
 	}
 
-	public void setUserareas(List<Userarea> userareas) {
+	public void setUserareas(Set<Userarea> userareas) {
 		this.userareas = userareas;
+	}
+
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
+	public Set<Oplog> getOplogs() {
+		return this.oplogs;
+	}
+
+	public void setOplogs(Set<Oplog> oplogs) {
+		this.oplogs = oplogs;
 	}
 
 }

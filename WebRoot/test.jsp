@@ -1,6 +1,4 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="/struts-tags" prefix="s" %>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
@@ -11,7 +9,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <head>
     <base href="<%=basePath%>">
     
-    <title>用户信息管理</title>
+    <title>test</title>
+    
 	<meta http-equiv="pragma" content="no-cache">
 	<meta http-equiv="cache-control" content="no-cache">
 	<meta http-equiv="expires" content="0">    
@@ -20,25 +19,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<!--
 	<link rel="stylesheet" type="text/css" href="styles.css">
 	-->
+
   </head>
   
   <body>
-    <h2>用户信息管理</h2>
-    <table width="50%" border="1">
-    	<tr>
-    		<td>编号</td>
-    		<td>用户名</td>
-    		<td>密码</td>
-    		<td>权限</td>
-    	</tr>
-    	<s:iterator value="clients" var="client">
-    	<tr>
-    		<td><s:property value="id"/></td>
-    		<td><s:property value="username"/></td>
-    		<td><s:property value="password"/></td>
-    		<td><s:property value="limits"/></td>
-    	</tr>
-    	</s:iterator>
-    </table>
+    测试<a href="useroAction!list">用户查询</a>
   </body>
 </html>

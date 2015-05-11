@@ -85,7 +85,7 @@ public class UserareaServiceImp implements IUserareaService  {
 			}
 			p = new Object[]{'%'+convalue+'%'};
 		}
-		queryString += " order by mo.id desc ";
+//		queryString += " order by mo.id desc ";
 		return userareaDao.getUniqueResult(queryString,p);
 	}
 	//后台管理-获取符合条件的记录
@@ -102,7 +102,7 @@ public class UserareaServiceImp implements IUserareaService  {
 			}
 			p = new Object[]{'%'+convalue+'%'};
 		}
-		queryString += " order by mo.id desc ";
+//		queryString += " order by mo.id desc ";
 		return userareaDao.pageList(queryString,p,page,size);
 	}
 	

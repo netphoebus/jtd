@@ -18,13 +18,13 @@ import javax.persistence.TemporalType;
  * @author MyEclipse Persistence Tools
  */
 @Entity
-@Table(name = "oplog", catalog = "jtd")
+@Table(name = "oplog", schema = "dbo", catalog = "jtd")
 public class Oplog implements java.io.Serializable {
 
 	// Fields
 
 	private Integer id;
-	private User user;
+	private Usero user;
 	private String opevent;
 	private String loginip;
 	private Integer iptype;
@@ -37,7 +37,7 @@ public class Oplog implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public Oplog(User user, String opevent, String loginip, Integer iptype,
+	public Oplog(Usero user, String opevent, String loginip, Integer iptype,
 			Date optime) {
 		this.user = user;
 		this.opevent = opevent;
@@ -60,11 +60,11 @@ public class Oplog implements java.io.Serializable {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "uid")
-	public User getUser() {
+	public Usero getUser() {
 		return this.user;
 	}
 
-	public void setUser(User user) {
+	public void setUser(Usero user) {
 		this.user = user;
 	}
 
@@ -96,7 +96,7 @@ public class Oplog implements java.io.Serializable {
 	}
 
 	@Temporal(TemporalType.DATE)
-	@Column(name = "optime", length = 19)
+	@Column(name = "optime", length = 23)
 	public Date getOptime() {
 		return this.optime;
 	}

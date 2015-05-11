@@ -61,7 +61,7 @@ public class SigServiceImp implements ISigService  {
 			}
 			p = new Object[]{'%'+convalue+'%'};
 		}
-		queryString += " order by mo.id desc ";
+//		queryString += " order by mo.id desc ";
 		return sigDao.getUniqueResult(queryString,p);
 	}
 	//后台管理-获取符合条件的记录
@@ -75,7 +75,7 @@ public class SigServiceImp implements ISigService  {
 			}
 			p = new Object[]{'%'+convalue+'%'};
 		}
-		queryString += " order by mo.id desc ";
+//		queryString += " order by mo.id desc ";
 		return sigDao.pageList(queryString,p,page,size);
 	}
 	public Sig loadByMkid(long mkid) {
