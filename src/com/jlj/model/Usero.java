@@ -12,7 +12,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
- * User entity.
+ * Usero entity.
  * 
  * @author MyEclipse Persistence Tools
  */
@@ -95,7 +95,7 @@ public class Usero implements java.io.Serializable {
 		this.ulimit = ulimit;
 	}
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "usero")
 	public Set<Userarea> getUserareas() {
 		return this.userareas;
 	}
@@ -104,7 +104,7 @@ public class Usero implements java.io.Serializable {
 		this.userareas = userareas;
 	}
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "usero")
 	public Set<Oplog> getOplogs() {
 		return this.oplogs;
 	}

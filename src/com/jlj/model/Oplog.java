@@ -24,7 +24,7 @@ public class Oplog implements java.io.Serializable {
 	// Fields
 
 	private Integer id;
-	private Usero user;
+	private Usero usero;
 	private String opevent;
 	private String loginip;
 	private Integer iptype;
@@ -37,9 +37,9 @@ public class Oplog implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public Oplog(Usero user, String opevent, String loginip, Integer iptype,
+	public Oplog(Usero usero, String opevent, String loginip, Integer iptype,
 			Date optime) {
-		this.user = user;
+		this.usero = usero;
 		this.opevent = opevent;
 		this.loginip = loginip;
 		this.iptype = iptype;
@@ -60,12 +60,12 @@ public class Oplog implements java.io.Serializable {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "uid")
-	public Usero getUser() {
-		return this.user;
+	public Usero getUsero() {
+		return this.usero;
 	}
 
-	public void setUser(Usero user) {
-		this.user = user;
+	public void setUsero(Usero usero) {
+		this.usero = usero;
 	}
 
 	@Column(name = "opevent", length = 100)

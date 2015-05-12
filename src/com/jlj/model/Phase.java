@@ -25,8 +25,9 @@ public class Phase implements java.io.Serializable {
 	// Fields
 
 	private Integer id;
-	private Sig sig;
+	private Solution solution;
 	private String phasename;
+	private Integer seconds;
 	private Set<Step> steps = new HashSet<Step>(0);
 
 	// Constructors
@@ -36,9 +37,11 @@ public class Phase implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public Phase(Sig sig, String phasename, Set<Step> steps) {
-		this.sig = sig;
+	public Phase(Solution solution, String phasename, Integer seconds,
+			Set<Step> steps) {
+		this.solution = solution;
 		this.phasename = phasename;
+		this.seconds = seconds;
 		this.steps = steps;
 	}
 
@@ -55,13 +58,13 @@ public class Phase implements java.io.Serializable {
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "signid")
-	public Sig getSig() {
-		return this.sig;
+	@JoinColumn(name = "soluid")
+	public Solution getSolution() {
+		return this.solution;
 	}
 
-	public void setSig(Sig sig) {
-		this.sig = sig;
+	public void setSolution(Solution solution) {
+		this.solution = solution;
 	}
 
 	@Column(name = "phasename", length = 30)
@@ -71,6 +74,15 @@ public class Phase implements java.io.Serializable {
 
 	public void setPhasename(String phasename) {
 		this.phasename = phasename;
+	}
+
+	@Column(name = "seconds")
+	public Integer getSeconds() {
+		return this.seconds;
+	}
+
+	public void setSeconds(Integer seconds) {
+		this.seconds = seconds;
 	}
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "phase")

@@ -25,7 +25,7 @@ public class Userarea implements java.io.Serializable {
 	// Fields
 
 	private Integer id;
-	private Usero user;
+	private Usero usero;
 	private String uareaname;
 	private String lat;
 	private String lng;
@@ -39,9 +39,9 @@ public class Userarea implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public Userarea(Usero user, String uareaname, String lat, String lng,
+	public Userarea(Usero usero, String uareaname, String lat, String lng,
 			Integer size, Set<Sig> sigs) {
-		this.user = user;
+		this.usero = usero;
 		this.uareaname = uareaname;
 		this.lat = lat;
 		this.lng = lng;
@@ -63,12 +63,12 @@ public class Userarea implements java.io.Serializable {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "uid")
-	public Usero getUser() {
-		return this.user;
+	public Usero getUsero() {
+		return this.usero;
 	}
 
-	public void setUser(Usero user) {
-		this.user = user;
+	public void setUsero(Usero usero) {
+		this.usero = usero;
 	}
 
 	@Column(name = "uareaname", length = 30)
