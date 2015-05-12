@@ -197,7 +197,7 @@ var btn=document.getElementById('show_btn');
 <body>   
 <div class="formbody" >
 
-     <div class="tabson" style="margin-top:0px;" ><ul class="toolbar" style="width:100%; margin-bottom:10px;"><li style="padding-left:5px;">信号机基本信息 |　IP:192.168.1.27　地址:人民中路十字路口　名称:人民路信号灯　</li></ul>
+     <div class="tabson" style="margin-top:0px;" ><ul class="toolbar" style="width:100%; margin-bottom:10px;"><li style="padding-left:5px;">信号机基本信息 |　IP:<s:textfield name="sig.ip" id="sip" />地址:<s:textfield name="sig.address" id="saddressname" />　名称:<s:textfield name="sig.name" id="sname" />　</li></ul>
        <div style="width:100%; float:left;">
          <div class="xwbox" >
          <li style=" margin-top: 60px; height:29px;">

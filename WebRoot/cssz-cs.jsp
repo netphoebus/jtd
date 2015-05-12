@@ -182,132 +182,132 @@ $(document).ready(function(e) {
   <tr>
     <td><span class="csbox">
     01、
-        <input type="text" class="dfinput"   style="width:30px;" />
+      <s:textfield name="" cssClass="dfinput"   cssStyle="width:30px;"></s:textfield>
 月
-<input type="text" class="dfinput"   style="width:30px;"/>
+      <s:textfield name="" cssClass="dfinput"   cssStyle="width:30px;"></s:textfield>
 日</span></td>
     <td><span class="csbox"> 02、
-        <input type="text" class="dfinput"   style="width:30px;"/>
+              <s:textfield name="" cssClass="dfinput"   cssStyle="width:30px;"></s:textfield>
 月
-<input type="text" class="dfinput"   style="width:30px;"/>
+      <s:textfield name="" cssClass="dfinput"   cssStyle="width:30px;"></s:textfield>
 日</span></td>
     <td><span class="csbox"> 03、
-        <input type="text" class="dfinput"   style="width:30px;"/>
+      <s:textfield name="" cssClass="dfinput"   cssStyle="width:30px;"></s:textfield>
 月
-<input type="text" class="dfinput"   style="width:30px;"/>
+      <s:textfield name="" cssClass="dfinput"   cssStyle="width:30px;"></s:textfield>
 日</span></td>
     <td><span class="csbox"> 04、
-        <input type="text" class="dfinput"   style="width:30px;"/>
+           <s:textfield name="" cssClass="dfinput"   cssStyle="width:30px;"></s:textfield>
 月
-<input type="text" class="dfinput"   style="width:30px;"/>
+      <s:textfield name="" cssClass="dfinput"   cssStyle="width:30px;"></s:textfield>
 日</span></td>
     <td><span class="csbox"> 05、
-        <input type="text" class="dfinput"   style="width:30px;"/>
+        <s:textfield name="" cssClass="dfinput"   cssStyle="width:30px;"></s:textfield>
       月
-  <input type="text" class="dfinput"   style="width:30px;"/>
+      <s:textfield name="" cssClass="dfinput"   cssStyle="width:30px;"></s:textfield>
       日</span></td>
     </tr>
   <tr>
     <td><span class="csbox"> 06、
-        <input type="text" class="dfinput"   style="width:30px;"/>
+       <s:textfield name="" cssClass="dfinput"   cssStyle="width:30px;"></s:textfield>
 月
-<input type="text" class="dfinput"   style="width:30px;"/>
+      <s:textfield name="" cssClass="dfinput"   cssStyle="width:30px;"></s:textfield>
 日</span></td>
     <td><span class="csbox"> 07、
-        <input type="text" class="dfinput"   style="width:30px;"/>
+            <s:textfield name="" cssClass="dfinput"   cssStyle="width:30px;"></s:textfield>
 月
-<input type="text" class="dfinput"   style="width:30px;"/>
+      <s:textfield name="" cssClass="dfinput"   cssStyle="width:30px;"></s:textfield>
 日</span></td>
     <td><span class="csbox"> 08、
-        <input type="text" class="dfinput"   style="width:30px;"/>
+            <s:textfield name="" cssClass="dfinput"   cssStyle="width:30px;"></s:textfield>
 月
-<input type="text" class="dfinput"   style="width:30px;"/>
+      <s:textfield name="" cssClass="dfinput"   cssStyle="width:30px;"></s:textfield>
 日</span></td>
     <td><span class="csbox"> 09、
-        <input type="text" class="dfinput"   style="width:30px;"/>
+         <s:textfield name="" cssClass="dfinput"   cssStyle="width:30px;"></s:textfield>
 月
-<input type="text" class="dfinput"   style="width:30px;"/>
+      <s:textfield name="" cssClass="dfinput"   cssStyle="width:30px;"></s:textfield>
 日</span></td>
     <td><span class="csbox"> <label>10、</label>
-      <input type="text" class="dfinput"   style="width:30px;"/>
+      <s:textfield name="" cssClass="dfinput"   cssStyle="width:30px;"></s:textfield>
       月
-  <input type="text" class="dfinput"   style="width:30px;"/>
+      <s:textfield name="" cssClass="dfinput"   cssStyle="width:30px;"></s:textfield>
       日</span></td>
     </tr>
   <tr>
     <td><span class="csbox"> 11、
-        <input type="text" class="dfinput"   style="width:30px;"/>
+            <s:textfield name="" cssClass="dfinput"   cssStyle="width:30px;"></s:textfield>
 月
-<input type="text" class="dfinput"   style="width:30px;"/>
+      <s:textfield name="" cssClass="dfinput"   cssStyle="width:30px;"></s:textfield>
 日</span></td>
     <td><span class="csbox"> 12、
-        <input type="text" class="dfinput"   style="width:30px;"/>
+      <s:textfield name="" cssClass="dfinput"   cssStyle="width:30px;"></s:textfield>
 月
-<input type="text" class="dfinput"   style="width:30px;"/>
+      <s:textfield name="" cssClass="dfinput"   cssStyle="width:30px;"></s:textfield>
 日</span></td>
     <td><span class="csbox"> 13、
-        <input type="text" class="dfinput"   style="width:30px;"/>
+            <s:textfield name="" cssClass="dfinput"   cssStyle="width:30px;"></s:textfield>
 月
-<input type="text" class="dfinput"   style="width:30px;"/>
+      <s:textfield name="" cssClass="dfinput"   cssStyle="width:30px;"></s:textfield>
 日</span></td>
     <td><span class="csbox"> 14、
-        <input type="text" class="dfinput"   style="width:30px;"/>
+           <s:textfield name="" cssClass="dfinput"   cssStyle="width:30px;"></s:textfield>
 月
-<input type="text" class="dfinput"   style="width:30px;"/>
+      <s:textfield name="" cssClass="dfinput"   cssStyle="width:30px;"></s:textfield>
 日</span></td>
     <td><span class="csbox"> 15、
-        <input type="text" class="dfinput"   style="width:30px;"/>
+             <s:textfield name="" cssClass="dfinput"   cssStyle="width:30px;"></s:textfield>
       月
-  <input type="text" class="dfinput"   style="width:30px;"/>
+       <s:textfield name="" cssClass="dfinput"   cssStyle="width:30px;"></s:textfield>
       日</span></td>
     </tr>
   <tr>
     <td><span class="csbox"> 16、
-        <input type="text" class="dfinput"   style="width:30px;"/>
+          <s:textfield name="" cssClass="dfinput"   cssStyle="width:30px;"></s:textfield>
 月
-<input type="text" class="dfinput"   style="width:30px;"/>
+      <s:textfield name="" cssClass="dfinput"   cssStyle="width:30px;"></s:textfield>
 日</span></td>
     <td><span class="csbox"> 17、
-        <input type="text" class="dfinput"   style="width:30px;"/>
+           <s:textfield name="" cssClass="dfinput"   cssStyle="width:30px;"></s:textfield>
 月
-<input type="text" class="dfinput"   style="width:30px;"/>
+      <s:textfield name="" cssClass="dfinput"   cssStyle="width:30px;"></s:textfield>
 日</span></td>
     <td><span class="csbox"> 18、
-        <input type="text" class="dfinput"   style="width:30px;"/>
+          <s:textfield name="" cssClass="dfinput"   cssStyle="width:30px;"></s:textfield>
 月
-<input type="text" class="dfinput"   style="width:30px;"/>
+      <s:textfield name="" cssClass="dfinput"   cssStyle="width:30px;"></s:textfield>
 日</span></td>
     <td><span class="csbox"> 19、
-        <input type="text" class="dfinput"   style="width:30px;"/>
+        <s:textfield name="" cssClass="dfinput"   cssStyle="width:30px;"></s:textfield>>
 月
-<input type="text" class="dfinput"   style="width:30px;"/>
+      <s:textfield name="" cssClass="dfinput"   cssStyle="width:30px;"></s:textfield>
 日</span></td>
     <td><span class="csbox"> 20、
-        <input type="text" class="dfinput"   style="width:30px;"/>
+           <s:textfield name="" cssClass="dfinput"   cssStyle="width:30px;"></s:textfield>
       月
-  <input type="text" class="dfinput"   style="width:30px;"/>
+      <s:textfield name="" cssClass="dfinput"   cssStyle="width:30px;"></s:textfield>
       日</span></td>
     </tr>
   <tr>
     <td><span class="csbox"> 21、
-        <input type="text" class="dfinput"   style="width:30px;"/>
+           <s:textfield name="" cssClass="dfinput"   cssStyle="width:30px;"></s:textfield>
 月
-<input type="text" class="dfinput"   style="width:30px;"/>
+      <s:textfield name="" cssClass="dfinput"   cssStyle="width:30px;"></s:textfield>
 日</span></td>
     <td><span class="csbox"> 22、
-        <input type="text" class="dfinput"   style="width:30px;"/>
+        <s:textfield name="" cssClass="dfinput"   cssStyle="width:30px;"></s:textfield>
 月
-<input type="text" class="dfinput"   style="width:30px;"/>
+      <s:textfield name="" cssClass="dfinput"   cssStyle="width:30px;"></s:textfield>
 日</span></td>
     <td><span class="csbox"> 23、
-        <input type="text" class="dfinput"   style="width:30px;"/>
+          <s:textfield name="" cssClass="dfinput"   cssStyle="width:30px;"></s:textfield>
 月
-<input type="text" class="dfinput"   style="width:30px;"/>
+      <s:textfield name="" cssClass="dfinput"   cssStyle="width:30px;"></s:textfield>
 日</span></td>
     <td><span class="csbox"> 24、
-        <input type="text" class="dfinput"   style="width:30px;"/>
+          <s:textfield name="" cssClass="dfinput"   cssStyle="width:30px;"></s:textfield>
 月
-<input type="text" class="dfinput"   style="width:30px;"/>
+      <s:textfield name="" cssClass="dfinput"   cssStyle="width:30px;"></s:textfield>
 日</span></td>
     <td>&nbsp;</td>
   </tr>

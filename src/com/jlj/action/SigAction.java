@@ -120,7 +120,7 @@ public class SigAction extends ActionSupport implements RequestAware,
 	// 发送简单命令
 	public String doCommand() {
 		String commandIdStr = req.getParameter("commandId");
-		System.out.println("直行命令编号："+commandIdStr + "   " + TimeServerHandler.iosessions);
+		System.out.println("执行命令编号："+commandIdStr + "   " + "信号机链接对象："+TimeServerHandler.iosessions);
 		if (commandIdStr != null) {
 			curruntCommandId = Integer.parseInt(commandIdStr);
 			if (curruntSigIp != null && TimeServerHandler.iosessions != null

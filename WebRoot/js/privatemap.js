@@ -42,7 +42,6 @@ google.maps.event.addDomListener(window, "load", initialize);
 
 	//google.maps.event.addListener(mapobj, "rightclick", reset);
 
-    addClickEventListener();
 
 }
 
@@ -54,7 +53,9 @@ function reset() {
     markers = [];
  }
 
-
+function ClearPoly() {
+	maphelper.clearInstanceEvent(mapobj, 'click');//删除实例其所有事件侦听器或指定侦听器.
+}
 
 function addClickEventListener() {
         if (!mapClickEventListener) {
