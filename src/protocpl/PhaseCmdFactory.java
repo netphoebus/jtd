@@ -62,6 +62,9 @@ public class PhaseCmdFactory extends CmdFactoryBase implements ICmdParser{
 	
 	private void Upload_parameters(IoSession session,byte[] data){
 		
+		
+		
+		
 	}
 	
 	private void Upload_fault(IoSession session,byte[] data){

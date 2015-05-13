@@ -1,6 +1,11 @@
 package protocpl;
 
+import java.util.ArrayList;
+
 import org.apache.mina.core.session.IoSession;
+
+import com.jlj.model.Commontime;
+import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
 
 import mina.CmdFactoryBase;
 import mina.CommandBase;
@@ -45,12 +50,49 @@ public class CommonTimeCmdFactory extends CmdFactoryBase implements ICmdParser{
 
 	private void Upload_CommonTimeTail(IoSession session, byte[] data) {
 		// TODO Auto-generated method stub
+		ArrayList<Commontime> commtimelist = new ArrayList<Commontime>();
 		
+		for(int i = 0;i<8;i++){
+			Commontime commontime = new Commontime();
+			commontime.setHour((int)data[10+i*40]);
+			commontime.setMinute((int)data[11+i*40]);		
+			commontime.setSeconds((int)data[12+i*40]);;
+			commontime.setWorkingway((int)data[13+i*40]);
+			commontime.setWorkingprogram((int)data[14+i*40]);
+			commontime.setLstime((int)data[15+i*40]);
+			commontime.setHdtime((int)data[16+i*40]);
+			commontime.setQchdtime((int)data[17+i*40]) ;
+			int worktime[] = new int[32];
+			for(int j=0;j<32;j++){
+				worktime[j] = data[18+j+i*40];
+			}
+			//commontime.setWorktime(worktime);
+		//	commontime.setSolutions(solutions)
+			commtimelist.add(commontime);
+		}
 	}
 
 	private void Upload_CommonTimeHead(IoSession session, byte[] data) {
 		// TODO Auto-generated method stub
+		ArrayList<Commontime> commtimelist = new ArrayList<Commontime>();
 		
+		for(int i = 0;i<8;i++){
+			Commontime commontime = new Commontime();
+			commontime.setHour((int)data[10+i*40]);
+			commontime.setMinute((int)data[11+i*40]);		
+			commontime.setSeconds((int)data[12+i*40]);;
+			commontime.setWorkingway((int)data[13+i*40]);
+			commontime.setWorkingprogram((int)data[14+i*40]);
+			commontime.setLstime((int)data[15+i*40]);
+			commontime.setHdtime((int)data[16+i*40]);
+			commontime.setQchdtime((int)data[17+i*40]) ;
+			int worktime[] = new int[32];
+			for(int j=0;j<32;j++){
+				worktime[j] = data[18+j+i*40];
+			}
+			//commontime.setWorktime(worktime);
+			commtimelist.add(commontime);
+		}
 	}
 
 	public void UpdatePushTask() {
@@ -67,7 +109,6 @@ public class CommonTimeCmdFactory extends CmdFactoryBase implements ICmdParser{
 		// TODO Auto-generated method stub
 		
 	}
-	
-	
-	
 }
+	
+
