@@ -26,6 +26,7 @@ public class Sigordinarytime implements java.io.Serializable {
 
 	private Integer id;
 	private Signpublicparam signpublicparam;
+	private Integer orderid;
 	private Set<Commontime> commontimes = new HashSet<Commontime>(0);
 
 	// Constructors
@@ -72,4 +73,14 @@ public class Sigordinarytime implements java.io.Serializable {
 		this.commontimes = commontimes;
 	}
 
+	@Column(name = "orderid")
+	public Integer getOrderid() {
+		return orderid;
+	}
+
+	public void setOrderid(Integer orderid) {
+		this.orderid = orderid;
+	}
+
+	
 }
