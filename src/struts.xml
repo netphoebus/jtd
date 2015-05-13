@@ -52,6 +52,17 @@
 		</action>
 	</package>
 	
+	<package name="solutionAction" extends="struts-default">
+		<global-results>
+			<result name="adminLogin">/login.jsp</result>
+			<result name="opsessiongo">/op_sessiongo.jsp</result>
+		</global-results>
+		<action name="solutionAction" class="solutionAction">
+			
+			<result name="success">/cssz-fa.jsp</result>
+		</action>
+	</package>
+	
 	<package name="realtime" extends="json-default">  
         <action name="realtime" class="sigAction" method="realtime">  
             <result type="json">  

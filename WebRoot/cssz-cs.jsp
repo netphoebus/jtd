@@ -69,7 +69,7 @@ $(document).ready(function(e) {
 					<div class="itab">
 						<ul>
 							<li>
-								<a href="#tab1" class="selected">一般参数</a>
+								<a href="sigpublicparamAction!publicParam?id=<s:property value="sigpubparam.sig.id"/>" class="selected">一般参数</a>
 							</li>
 							<li>
 								<a href="cssz-fa.jsp">相位方案</a>

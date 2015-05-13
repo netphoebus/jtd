@@ -46,14 +46,8 @@ $(document).ready(function(e) {
 	</head>
 
 	<body>
-
-
-
 		<div class="formbody">
-
-
 			<div id="usual1" class="usual">
-
 				<div class="itab">
 					<ul>
 						<li>
