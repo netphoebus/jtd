@@ -7,7 +7,7 @@
 	<constant name="struts.ui.theme" value="simple"></constant>
 	<constant name="struts.objectFactory" value="spring"></constant>
 	<constant name="struts.multipart.maxSize" value="1000000000" /> 
-	<constant name="struts.devMode" value="false"></constant>
+	<constant name="struts.devMode" value="true"></constant>
 	<constant name="struts.multipart.saveDir" value="/tmp"></constant>
 	<constant name="struts.i18n.encoding" value="UTF-8"></constant>
 	
@@ -69,6 +69,7 @@
 		</global-results>
 		<action name="sigpublicparamAction" class="sigpublicparamAction">
 			<result name="cssz-cs">/cssz-cs.jsp</result>
+			<result name="success">/smap.jsp</result>
 		</action>
 	</package>
 	
