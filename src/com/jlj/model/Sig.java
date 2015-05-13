@@ -1,7 +1,7 @@
 package com.jlj.model;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -35,9 +35,8 @@ public class Sig implements java.io.Serializable {
 	private String ip;
 	private Long mkid;
 	private Signpublicparam signpublicparam;
+	private Set<Devlog> devlogs = new HashSet<Devlog>(0);
 	private Sigsystime sigsystime;
-	private List<Devlog> devlogs = new ArrayList<Devlog>();
-	
 
 	// Constructors
 
@@ -48,7 +47,7 @@ public class Sig implements java.io.Serializable {
 	/** full constructor */
 	public Sig(Userarea userarea, String name, String address, String lat,
 			String lng, String ip, Long mkid,
-			Signpublicparam signpublicparam, List<Devlog> devlogs,
+			Signpublicparam signpublicparam, Set<Devlog> devlogs,
 			Sigsystime sigsystime) {
 		this.userarea = userarea;
 		this.name = name;
@@ -138,52 +137,31 @@ public class Sig implements java.io.Serializable {
 		this.mkid = mkid;
 	}
 
-	
-
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "sig")
-	public List<Devlog> getDevlogs() {
-		return this.devlogs;
-	}
-
-	public void setDevlogs(List<Devlog> devlogs) {
-		this.devlogs = devlogs;
-	}
-
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "sig")
 	public Signpublicparam getSignpublicparam() {
-		return signpublicparam;
+		return this.signpublicparam;
 	}
 
 	public void setSignpublicparam(Signpublicparam signpublicparam) {
 		this.signpublicparam = signpublicparam;
 	}
 
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "sig")
+	public Set<Devlog> getDevlogs() {
+		return this.devlogs;
+	}
+
+	public void setDevlogs(Set<Devlog> devlogs) {
+		this.devlogs = devlogs;
+	}
+
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "sig")
 	public Sigsystime getSigsystime() {
-		return sigsystime;
+		return this.sigsystime;
 	}
 
 	public void setSigsystime(Sigsystime sigsystime) {
 		this.sigsystime = sigsystime;
 	}
 
-//	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "sig")
-//	public Set<Signpublicparam> getSignpublicparams() {
-//		return this.signpublicparams;
-//	}
-//
-//	public void setSignpublicparams(Set<Signpublicparam> signpublicparams) {
-//		this.signpublicparams = signpublicparams;
-//	}
-//	
-//	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "sig")
-//	public Set<Sigsystime> getSigsystimes() {
-//		return this.sigsystimes;
-//	}
-//
-//	public void setSigsystimes(Set<Sigsystime> sigsystimes) {
-//		this.sigsystimes = sigsystimes;
-//	}
-
-	
 }

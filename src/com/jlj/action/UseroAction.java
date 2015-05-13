@@ -77,7 +77,7 @@ SessionAware,ServletResponseAware,ServletRequestAware {
 		}
 	}
 	/**
-	 * 公众号管理
+	 * 用户管理
 	 */
 	public String list() throws Exception{
 		if(convalue!=null&&!convalue.equals("")){
@@ -86,47 +86,38 @@ SessionAware,ServletResponseAware,ServletRequestAware {
 		if(page<1){
 			page=1;
 		}
+		//总记录数
+		totalCount=useroService.getTotalCount(convalue);
 		//总页数
-		pageCount=useroService.getPageCount(con,convalue,size);
-		if(page>pageCount&&pageCount!=0){
+		pageCount=useroService.getPageCount(totalCount,size);
+		if(pageCount!=0&&page>pageCount){
 			page=pageCount;
 		}
 		//所有当前页记录对象
-		useros=useroService.queryList(con,convalue,page,size);
-		//总记录数
-		totalCount=useroService.getTotalCount(con,convalue);
+		useros=useroService.queryList(convalue,page,size);
 		return "list";
 	}
-	/**
-	 * 跳转到添加页面
-	 * @return
-	 */
-	public String goToAdd(){
-		return "add";
-	}
+	
 	/**
 	 * 添加
 	 * @return
 	 * @throws Exception
 	 */
+	private String outinfo;
 	public String add() throws Exception{
 		useroService.add(usero);
-		
-		arg[0]="useroAction!list";
-		arg[1]="公众号管理";
-		return SUCCESS;
+		outinfo="恭喜您，添加用户成功！";
+		return this.list();
 	}
 	/**
 	 * 删除
 	 * @return
+	 * @throws Exception 
 	 */
-	public String delete(){
-		Usero usero=useroService.loadById(id);
-		useroService.delete(usero);
-		
-		arg[0]="useroAction!list";
-		arg[1]="公众号管理";
-		return SUCCESS;
+	public String delete() throws Exception{
+		useroService.deleteById(id);
+		outinfo="恭喜您，删除用户成功！";
+		return this.list();
 	}
 	/**
 	 * 修改
@@ -134,26 +125,10 @@ SessionAware,ServletResponseAware,ServletRequestAware {
 	 */
 	public String update() throws Exception{
 		useroService.update(usero);
-		arg[0]="useroAction!list";
-		arg[1]="公众号管理";
-		return SUCCESS;
+		outinfo="恭喜您，修改用户成功！";
+		return this.list();
 	}
-	/**
-	 * 查看信息
-	 * @return
-	 */
-	public String view(){
-		usero=useroService.loadById(id);
-		return "view";
-	}
-	/**
-	 * 查看个人信息
-	 * @return
-	 */
-	public String clientview(){
-		usero=useroService.loadById(id);
-		return "clientview";
-	}
+	
 	/**
 	 * 跳转到修改页面
 	 * @return
@@ -163,31 +138,28 @@ SessionAware,ServletResponseAware,ServletRequestAware {
 		return "load";
 	}
 	
-	private String newpwd;//新密码
-	private String againpwd;//再次输入新密码
-	private String oldpwd;//旧密码
+	
 	/**
 	 * 修改个人密码
 	 * @return
 	 */
-	public String upMyPwd(){
-		Usero usero=useroService.userlogin(username,oldpwd);
-		String errorInfo=null;
+	private String newpwd;//新密码
+	private String againpwd;//再次输入新密码
+	private String oldpwd;//旧密码
+	public String updatepwd(){
+		Usero usero=(Usero)session.get("usero");
 		if(usero==null){
-			errorInfo="原密码输入有误";
-			request.put("errorInfo", errorInfo);
-			return "operror";
+			outinfo="抱歉，会话失效了，请重新登录！";
+			return "updatepwd";
 		}else{
 			if(newpwd!=null&&!newpwd.equals("")&&againpwd!=null&&!againpwd.equals("")&&againpwd.equals(newpwd)){
 				useroService.updatePwd(newpwd,usero.getId());
 				
-				arg[0]="main.jsp";
-				arg[1]="主页";
-				return SUCCESS;
+				outinfo="恭喜您，修改密码成功！";
+				return "updatepwd";
 			}else{
-				errorInfo="两次密码输入不一致";
-				request.put("errorInfo", errorInfo);
-				return "operror";
+				outinfo="抱歉，两次密码输入不一致！";
+				return "updatepwd";
 			}
 		}
 	}
@@ -340,6 +312,12 @@ SessionAware,ServletResponseAware,ServletRequestAware {
 	}
 	public void setUseros(List<Usero> useros) {
 		this.useros = useros;
+	}
+	public String getOutinfo() {
+		return outinfo;
+	}
+	public void setOutinfo(String outinfo) {
+		this.outinfo = outinfo;
 	}
 	
 	

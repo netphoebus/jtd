@@ -1,7 +1,7 @@
 package com.jlj.model;
 
-import java.util.HashSet;
 import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,7 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
@@ -36,7 +36,7 @@ public class Commontime implements java.io.Serializable {
 	private Integer lstime;
 	private Integer hdtime;
 	private Integer qchdtime;
-	private Set<Solution> solutions = new HashSet<Solution>(0);
+	private Solution solution;
 
 	// Constructors
 
@@ -49,7 +49,7 @@ public class Commontime implements java.io.Serializable {
 			Sigspecialtime sigspecialtime, Integer hour, Integer minute,
 			Integer seconds, Integer workingway, Integer workingprogram,
 			Integer lstime, Integer hdtime, Integer qchdtime,
-			Set<Solution> solutions) {
+			Solution solution) {
 		this.sigordinarytime = sigordinarytime;
 		this.sigsuntime = sigsuntime;
 		this.sigspecialtime = sigspecialtime;
@@ -61,7 +61,7 @@ public class Commontime implements java.io.Serializable {
 		this.lstime = lstime;
 		this.hdtime = hdtime;
 		this.qchdtime = qchdtime;
-		this.solutions = solutions;
+		this.solution = solution;
 	}
 
 	// Property accessors
@@ -178,13 +178,13 @@ public class Commontime implements java.io.Serializable {
 		this.qchdtime = qchdtime;
 	}
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "commontime")
-	public Set<Solution> getSolutions() {
-		return this.solutions;
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "commontime")
+	public Solution getSolution() {
+		return this.solution;
 	}
 
-	public void setSolutions(Set<Solution> solutions) {
-		this.solutions = solutions;
+	public void setSolution(Solution solution) {
+		this.solution = solution;
 	}
 
 }

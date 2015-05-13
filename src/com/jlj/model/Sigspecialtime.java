@@ -28,6 +28,7 @@ public class Sigspecialtime implements java.io.Serializable {
 	private Signpublicparam signpublicparam;
 	private Integer specialmonth;
 	private Integer specialday;
+	private Integer orderid;
 	private Set<Commontime> commontimes = new HashSet<Commontime>(0);
 
 	// Constructors
@@ -38,11 +39,12 @@ public class Sigspecialtime implements java.io.Serializable {
 
 	/** full constructor */
 	public Sigspecialtime(Signpublicparam signpublicparam,
-			Integer specialmonth, Integer specialday,
+			Integer specialmonth, Integer specialday, Integer orderid,
 			Set<Commontime> commontimes) {
 		this.signpublicparam = signpublicparam;
 		this.specialmonth = specialmonth;
 		this.specialday = specialday;
+		this.orderid = orderid;
 		this.commontimes = commontimes;
 	}
 
@@ -84,6 +86,15 @@ public class Sigspecialtime implements java.io.Serializable {
 
 	public void setSpecialday(Integer specialday) {
 		this.specialday = specialday;
+	}
+
+	@Column(name = "orderid")
+	public Integer getOrderid() {
+		return this.orderid;
+	}
+
+	public void setOrderid(Integer orderid) {
+		this.orderid = orderid;
 	}
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "sigspecialtime")

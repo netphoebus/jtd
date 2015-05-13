@@ -67,22 +67,19 @@ public class UseroServiceImp implements IUseroService  {
 	/* (non-Javadoc)
 	 * @see com.jlj.service.imp.IUserService#getPageCount(int, java.lang.String, int)
 	 */
-	public int getPageCount(int con, String convalue,int size) {
-		int totalCount=this.getTotalCount(con, convalue);
+	public int getPageCount(int totalCount,int size) {
 		return totalCount%size==0?totalCount/size:(totalCount/size+1);
 	}
 	//后台管理-获取总记录数
 	/* (non-Javadoc)
 	 * @see com.jlj.service.imp.IUserService#getTotalCount(int, java.lang.String)
 	 */
-	public int getTotalCount(int con, String convalue) {
+	public int getTotalCount(String convalue) {
 		String queryString = "select count(*) from Usero mo where 1=1 ";
 		Object[] p = null;
-		if(con!=0&&convalue!=null&&!convalue.equals("")){
-			//线路名称
-			if(con==1){
-				queryString += "and mo.name like ? "; 
-			}
+		if(convalue!=null&&!convalue.trim().equals("")){
+			//用户姓名
+			queryString += "and mo.username like ? "; 
 			p = new Object[]{'%'+convalue+'%'};
 		}
 //		queryString += " order by mo.id desc ";
@@ -92,14 +89,12 @@ public class UseroServiceImp implements IUseroService  {
 	/* (non-Javadoc)
 	 * @see com.jlj.service.imp.IUserService#queryList(int, java.lang.String, int, int)
 	 */
-	public List<Usero> queryList(int con, String convalue, int page, int size) {
+	public List<Usero> queryList(String convalue, int page, int size) {
 		String queryString = "from Usero mo where 1=1 ";
 		Object[] p = null;
-		if(con!=0&&convalue!=null&&!convalue.equals("")){
-			//线路名称
-			if(con==1){
-				queryString += "and mo.name like ? "; 
-			}
+		if(convalue!=null&&!convalue.trim().equals("")){
+			//用户姓名
+			queryString += "and mo.username like ? "; 
 			p = new Object[]{'%'+convalue+'%'};
 		}
 //		queryString += " order by mo.id desc ";

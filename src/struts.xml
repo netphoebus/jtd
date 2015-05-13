@@ -11,35 +11,18 @@
 	<constant name="struts.multipart.saveDir" value="/tmp"></constant>
 	<constant name="struts.i18n.encoding" value="UTF-8"></constant>
 	
-	<package name="vcore" extends="struts-default">
-		<global-results>
-			<result name="input">/login.jsp</result>
-		</global-results>
-		<action name="vcoreAction" class="vcoreAction">
-			<result name="success">/op_success.jsp</result>
-			<result name="travel">/travel.jsp</result>
-		</action>
-	</package>
-	
 	<package name="usero" extends="struts-default">
 		<global-results>
 			<result name="adminLogin">/login.jsp</result>
-			<result name="opsessiongo">/op_sessiongo.jsp</result>
 		</global-results>
 		<action name="toolkitAction" class="toolkitAction">
 		</action>
 		<action name="useroAction" class="useroAction">
-			<result name="sessiongo">/front_sessiongo.jsp</result>
 			<result name="loginSucc">/index.jsp</result>
 		
-			<result name="success">/op_success.jsp</result>
-			<result name="fail">/op_failure.jsp</result>
-			<result name="operror">/op_error.jsp</result>
-			
 			<result name="list">/usero_manage.jsp</result>
-			<result name="add">/usero_add.jsp</result>
 			<result name="load">/usero_update.jsp</result>
-			<result name="view">/usero_view.jsp</result>
+			<result name="updatepwd">/usero_update_password.jsp</result>
 			
 			<result name="invalid.token">/op_failure.jsp</result>
 			<interceptor-ref name="defaultStack" />
@@ -52,10 +35,6 @@
 	
 	
 	<package name="sig" extends="struts-default">
-		<global-results>
-			<result name="adminLogin">/login.jsp</result>
-			<result name="opsessiongo">/op_sessiongo.jsp</result>
-		</global-results>
 		<action name="sigAction" class="sigAction">
 			<result name="traffic">/traffic.jsp</result>
 		</action>

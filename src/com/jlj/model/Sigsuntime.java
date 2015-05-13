@@ -27,6 +27,7 @@ public class Sigsuntime implements java.io.Serializable {
 	private Integer id;
 	private Signpublicparam signpublicparam;
 	private String week;
+	private Integer orderid;
 	private Set<Commontime> commontimes = new HashSet<Commontime>(0);
 
 	// Constructors
@@ -37,9 +38,10 @@ public class Sigsuntime implements java.io.Serializable {
 
 	/** full constructor */
 	public Sigsuntime(Signpublicparam signpublicparam, String week,
-			Set<Commontime> commontimes) {
+			Integer orderid, Set<Commontime> commontimes) {
 		this.signpublicparam = signpublicparam;
 		this.week = week;
+		this.orderid = orderid;
 		this.commontimes = commontimes;
 	}
 
@@ -72,6 +74,15 @@ public class Sigsuntime implements java.io.Serializable {
 
 	public void setWeek(String week) {
 		this.week = week;
+	}
+
+	@Column(name = "orderid")
+	public Integer getOrderid() {
+		return this.orderid;
+	}
+
+	public void setOrderid(Integer orderid) {
+		this.orderid = orderid;
 	}
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "sigsuntime")
