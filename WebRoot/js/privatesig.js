@@ -1,4 +1,3 @@
-var commandSuccess = false;
 function executeCommand(id)
 {
 	$.ajax({   
@@ -14,4 +13,15 @@ function executeCommand(id)
 				//alert('发送命令成功');   
             }  
    	    });   
+}
+
+function autojs()
+{
+	if($("#zdjs").val()=="一天")
+	{
+		setInterval("executeCommand(28)",60*1000*60*24);
+	}else if($("#zdjs").val()=="一周")
+	{
+		setInterval("executeCommand(28)",60*1000*60*24*7);
+	}
 }
