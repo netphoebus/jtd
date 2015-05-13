@@ -37,6 +37,7 @@
 	<package name="sig" extends="struts-default">
 		<action name="sigAction" class="sigAction">
 			<result name="traffic">/traffic.jsp</result>
+			<result name="error">/error.html</result>
 		</action>
 	</package>
 	
@@ -49,6 +50,7 @@
 		<action name="sigpublicparamAction" class="sigpublicparamAction">
 			<result name="cssz-cs">/cssz-cs.jsp</result>
 			<result name="success">/smap.jsp</result>
+			<result name="error">/error.html</result>
 		</action>
 	</package>
 	
@@ -58,8 +60,8 @@
 			<result name="opsessiongo">/op_sessiongo.jsp</result>
 		</global-results>
 		<action name="solutionAction" class="solutionAction">
-			
-			<result name="success">/cssz-fa.jsp</result>
+			<result name="solutions">/cssz-fa.jsp</result>
+			<result name="error">/error.html</result>
 		</action>
 	</package>
 	

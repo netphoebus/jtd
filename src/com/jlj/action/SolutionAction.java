@@ -55,13 +55,13 @@ public class SolutionAction extends ActionSupport implements RequestAware,
 			return "error";//预留没有查询到相应公共参数时跳转的提示页面
 		}
 	}
+	
 	/**
 	 * 添加
 	 * 
 	 * @return
 	 * @throws Exception
 	 */
-
 	public String add() throws Exception {
 		return SUCCESS;
 	}

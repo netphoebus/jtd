@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import org.apache.mina.core.session.IoSession;
 
 import com.jlj.model.Commontime;
-import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
 
 import mina.CmdFactoryBase;
 import mina.CommandBase;
