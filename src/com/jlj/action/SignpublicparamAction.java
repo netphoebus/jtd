@@ -40,32 +40,115 @@ public class SignpublicparamAction extends ActionSupport implements RequestAware
 	private Sig sig;
 	
 	
-	private boolean resxyxr;//响应行人请求
-
+	private Integer spetimeable;
+	private Integer suntimeable;
+	
 	//跳转 一般参数页面  
 	public String publicParam() {
 		sigpubparam = sigpubparamService.loadById(id);
 		if(sigpubparam!=null)
 		{
-			setPublicParamJSP(sigpubparam);
+			initPublicParamJSP(sigpubparam);
 			return "cssz-cs";
 		}else
 		{
 			return "error";//预留没有查询到相应公共参数时跳转的提示页面
 		}
 	}
+	
+	private void initPublicParamJSP(Signpublicparam sigpubparam)
+	{
+		//工作日设置处理
+		switch(sigpubparam.getWorkingset())
+		{
+			case 0:
+				spetimeable = 0;
+				suntimeable = 0;
+				break;
+			case 1:
+				spetimeable = 1;
+				suntimeable = 0;
+				break;
+			case 2:
+				spetimeable = 0;
+				suntimeable = 1;
+				break;
+			case 3:
+				spetimeable = 1;
+				suntimeable = 1;
+				break;
+		}
+		
+	}
 
 	
 	
 	//处理一般参数jsp显示
-	private void setPublicParamJSP(Signpublicparam sigpubparam)
+	private void setPublicParamJSP()
 	{
-		if(sigpubparam.getXyxr()==1)
+		//行人请求处理
+		if(sigpubparam.getXyxr()==null)
 		{
-			resxyxr = true;
+			sigpubparam.setXyxr(0);
+		}
+		//工作日设置处理
+		if(spetimeable==null)
+		{
+			spetimeable = 0;
+		}
+		if(suntimeable==null)
+		{
+			suntimeable = 0;
+		}
+		if(spetimeable==1&&suntimeable==1)
+		{
+			sigpubparam.setWorkingset(3);
+		}
+		if(spetimeable==1&&suntimeable!=1)
+		{
+			sigpubparam.setWorkingset(2);
+		}
+		if(spetimeable!=1&&suntimeable==1)
+		{
+			sigpubparam.setWorkingset(1);
+		}
+		if(spetimeable!=1&&suntimeable!=1)
+		{
+			sigpubparam.setWorkingset(0);
+		}
+		
+		//周日 处理
+		if(sigpubparam.getMon()==null)
+		{
+			sigpubparam.setMon(0);
+		}
+		if(sigpubparam.getTue()==null)
+		{
+			sigpubparam.setTue(0);
+		}
+		if(sigpubparam.getWes()==null)
+		{
+			sigpubparam.setWes(0);
+		}
+		if(sigpubparam.getThir()==null)
+		{
+			sigpubparam.setThir(0);
+		}
+		if(sigpubparam.getFra()==null)
+		{
+			sigpubparam.setFra(0);
+		}
+		if(sigpubparam.getSata()==null)
+		{
+			sigpubparam.setSata(0);
+		}
+		if(sigpubparam.getSun()==null)
+		{
+			sigpubparam.setSun(0);
 		}
 	}
-
+	
+	
 	/**
 	 * 添加
 	 * 
@@ -92,8 +175,14 @@ public class SignpublicparamAction extends ActionSupport implements RequestAware
 	 * @return
 	 */
 	public String update() throws Exception {
+		System.out.println(suntimeable);
+		System.out.println(spetimeable);
+		setPublicParamJSP();
 		return SUCCESS;
 	}
+	
+	
+	
 
 	// get、set-------------------------------------------
 
@@ -167,16 +256,21 @@ public class SignpublicparamAction extends ActionSupport implements RequestAware
 		this.sigpubparam = sigpubparam;
 	}
 
-
-	public boolean isResxyxr() {
-		return resxyxr;
+	public int getSpetimeable() {
+		return spetimeable;
 	}
 
-
-	public void setResxyxr(boolean resxyxr) {
-		this.resxyxr = resxyxr;
+	public void setSpetimeable(int spetimeable) {
+		this.spetimeable = spetimeable;
 	}
-	
-	
+
+	public int getSuntimeable() {
+		return suntimeable;
+	}
+
+	public void setSuntimeable(int suntimeable) {
+		this.suntimeable = suntimeable;
+	}
+
 
 }
