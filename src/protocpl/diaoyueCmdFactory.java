@@ -12,11 +12,11 @@ import mina.DataConvertor;
 import mina.ICmdParser;
 import mina.CmdFactoryBase.MONITOR_CMD_TYPE;
 
-public class diaoyueCmdFactory extends CmdFactoryBase implements ICmdParser{
+public class DiaoYueCmdFactory extends CmdFactoryBase implements ICmdParser{
 
 	private int locate[][];
 	private int Countdown[];
-	public diaoyueCmdFactory(byte[] data) {
+	public DiaoYueCmdFactory(byte[] data) {
 		super(data);
 		// TODO Auto-generated constructor stub
 		this.expected_cmd = MONITOR_CMD_TYPE.MONITOR_CMD_DIAOYUE;

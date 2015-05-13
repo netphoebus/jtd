@@ -8,8 +8,17 @@ import org.slf4j.LoggerFactory;
 
 import protocpl.CommandDiaoyue;
 import protocpl.CommandParam;
+import protocpl.CommandPhase;
+import protocpl.CommandSpecialTime;
+import protocpl.CommandSunTime;
+import protocpl.CommandUpLoad;
+import protocpl.CommonTimeCmdFactory;
 import protocpl.ParametersCmdFactory;
-import protocpl.diaoyueCmdFactory;
+import protocpl.DiaoYueCmdFactory;
+import protocpl.PhaseCmdFactory;
+import protocpl.SpecialTimeFactory;
+import protocpl.SunTimeCmdFactory;
+import protocpl.UploadCmdFactory;
 
 import mina.ICmdParser;
 
@@ -24,21 +33,11 @@ public class CmdFactoryBase implements ICmdParser {
 		MONITOR_CMD_DIAOYUE(0),
 		MONITOR_CMD_UPLOAD(1),
 		MONITOR_CMD_COMMON_PARAMETERS(2),
-		MONITOR_CMD_HEART_BEAT(3),
-		MONITOR_CMD_SWITCH_INFO(4),
+		MONITOR_CMD_COMMON_TIME(3),
+		MONITOR_CMD_SUN_TIME(4),
+		MONITOR_CMD_SPECIAL_TIME(5),
+		MONITOR_CMD_PHASE(6);
 
-		MONITOR_CMD_MSG_PUSH_TEXT(6),
-		MONITOR_CMD_MSG_PUSH_TEXT_REPORT(7),
-		MONITOR_CMD_IMG_UPLOAD(8),
-		MONITOR_CMD_SYN_PARAM(9),
-		
-		FIRMWARE_UPDATE_NOTIFY(10),
-		FIRMWARE_UPDATE_REQ(11),
-		FIRMWARE_UPDATE_TRANS(12),
-		
-		WEB_FIRMWARE_UPDATE_NOTIFY(64),
-		
-		MONITOR_CMD_BYE(255);
 		
 		
 		private final int _val;
@@ -64,27 +63,14 @@ public class CmdFactoryBase implements ICmdParser {
 			case 2:
 				return MONITOR_CMD_COMMON_PARAMETERS;
 			case 3:
-				return MONITOR_CMD_HEART_BEAT;
+				return MONITOR_CMD_COMMON_TIME;
 			case 4:
-				return MONITOR_CMD_SWITCH_INFO;
+				return MONITOR_CMD_SUN_TIME;
+			case 5:
+				return MONITOR_CMD_SPECIAL_TIME;
 			case 6:
-				return MONITOR_CMD_MSG_PUSH_TEXT;
-			case 7:
-				return MONITOR_CMD_MSG_PUSH_TEXT_REPORT;
-			case 8:
-				return MONITOR_CMD_IMG_UPLOAD;
-			case 9:
-				return MONITOR_CMD_SYN_PARAM;
-			case 10:
-				return FIRMWARE_UPDATE_NOTIFY;
-			case 11:
-				return FIRMWARE_UPDATE_REQ;
-			case 12:
-				return FIRMWARE_UPDATE_TRANS;
-			case 64:
-				return WEB_FIRMWARE_UPDATE_NOTIFY;
-			case 255:
-				return MONITOR_CMD_BYE;
+				return MONITOR_CMD_PHASE;
+
 			default:
 				return UNKNOWN_CMD;
 				
@@ -124,46 +110,35 @@ public class CmdFactoryBase implements ICmdParser {
 		switch(eCmdType){
 		case MONITOR_CMD_DIAOYUE:
 			//log.debug("login factory");
-			factory = new diaoyueCmdFactory(data); 
+			factory = new DiaoYueCmdFactory(data); 
 			break;	
 		case MONITOR_CMD_UPLOAD:
+			factory = new UploadCmdFactory(data);
 			break;
 			
 		case 	MONITOR_CMD_COMMON_PARAMETERS:
 			factory = new ParametersCmdFactory(data); 
 			break;
-		case MONITOR_CMD_SWITCH_INFO:
+		case MONITOR_CMD_COMMON_TIME:
 			//log.debug("switch factory");
-			//factory = new SwitchCmdFactory(data);
+			factory = new CommonTimeCmdFactory(data);
 			break;
 			
-		case MONITOR_CMD_HEART_BEAT:
+		case MONITOR_CMD_SUN_TIME:
 			//log.debug("heart beat factory");
-			//factory = new HeartBeatCmdFactory(data);
+			factory = new SunTimeCmdFactory(data);
 			break;
 			
-		case MONITOR_CMD_MSG_PUSH_TEXT_REPORT:
+		case MONITOR_CMD_SPECIAL_TIME:
 			//log.debug("msg push ack factory");
-			//factory = new MsgPushReportFactory(data);
+			factory = new SpecialTimeFactory(data);
 			break;
 			
-		case MONITOR_CMD_IMG_UPLOAD:
+		case MONITOR_CMD_PHASE:
 			//log.debug("img upload factory");
-			//factory = new ImgUploadFactory(data);
+			factory = new PhaseCmdFactory(data);
 			break;
-			
-		case MONITOR_CMD_SYN_PARAM:
-			//log.debug("Syn Param cmd factory");
-			//factory = new SynParamCmdFactory(data);
-			break;
-		case WEB_FIRMWARE_UPDATE_NOTIFY:
-			//log.debug("rpc FmUpdate Notify factory");
-			//factory = new Rpc_FmUpdateNotifyFactory(data);
-			break;
-		case FIRMWARE_UPDATE_REQ:
-			//log.debug("firmware update trans factory");
-			//factory = new FirmwareUpdateFactory(data);
-			break;
+
 		}
 
 		
@@ -198,10 +173,22 @@ public class CmdFactoryBase implements ICmdParser {
 				break;	
 			case MONITOR_CMD_UPLOAD:
 				log.debug("CMD_BYE");
-				//cmd = new CommandBye(this, m_oData);
+				cmd = new CommandUpLoad(this, m_oData);
 				break;	
 			case MONITOR_CMD_COMMON_PARAMETERS:
 				cmd = new CommandParam(this, m_oData);
+				break;
+			case MONITOR_CMD_COMMON_TIME:
+				
+				break;
+			case MONITOR_CMD_SUN_TIME:
+				cmd = new CommandSunTime(this, m_oData);
+				break;
+			case MONITOR_CMD_SPECIAL_TIME:
+				cmd = new CommandSpecialTime(this, m_oData);
+				break;
+			case 	MONITOR_CMD_PHASE:
+				cmd = new CommandPhase(this, m_oData);
 				break;
 			}
 		return cmd;
