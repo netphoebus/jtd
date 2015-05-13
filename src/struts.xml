@@ -58,6 +58,16 @@
 		</global-results>
 		<action name="sigAction" class="sigAction">
 			<result name="traffic">/traffic.jsp</result>
+		</action>
+	</package>
+	
+	
+	<package name="sigpublicparam" extends="struts-default">
+		<global-results>
+			<result name="adminLogin">/login.jsp</result>
+			<result name="opsessiongo">/op_sessiongo.jsp</result>
+		</global-results>
+		<action name="sigpublicparamAction" class="sigpublicparamAction">
 			<result name="cssz-cs">/cssz-cs.jsp</result>
 		</action>
 	</package>

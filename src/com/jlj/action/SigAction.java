@@ -112,10 +112,6 @@ public class SigAction extends ActionSupport implements RequestAware,
 	
 	}*/
 	
-	//跳转 一般参数页面  
-	public String toSetParameters() {
-		return "cssz-cs";
-	}
 
 	// 发送简单命令
 	public String doCommand() {

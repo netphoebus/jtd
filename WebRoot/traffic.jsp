@@ -197,7 +197,7 @@ var btn=document.getElementById('show_btn');
 <body>   
 <div class="formbody" >
 
-     <div class="tabson" style="margin-top:0px;" ><ul class="toolbar" style="width:100%; margin-bottom:10px;"><li style="padding-left:5px;">信号机基本信息 |　IP:<s:textfield name="sig.ip" id="sip" />地址:<s:textfield name="sig.address" id="saddressname" />　名称:<s:textfield name="sig.name" id="sname" />　</li></ul>
+     <div class="tabson" style="margin-top:0px;" ><ul class="toolbar" style="width:100%; margin-bottom:10px;"><li style="padding-left:5px;">信号机基本信息 |　IP:<s:property value="sig.ip"/>&nbsp;&nbsp;&nbsp;地址:<s:property value="sig.address"/>&nbsp;&nbsp;&nbsp;名称:<s:property value="sig.name" />　</li></ul>
        <div style="width:100%; float:left;">
          <div class="xwbox" >
          <li style=" margin-top: 60px; height:29px;">
@@ -290,8 +290,9 @@ var btn=document.getElementById('show_btn');
          </ul>
          <ul class="toolbar1">
            
-       <li onclick="javascript:location.href='sigAction!toSetParameters'">设置参数</li>
+       <li onclick="javascript:location.href='sigpublicparamAction!publicParam?id=<s:property value="sig.id"/>'">设置参数</li>
 		  <li  onclick="executeCommand(2)">执行命令</li>
+
          </ul>
          
        </div>
