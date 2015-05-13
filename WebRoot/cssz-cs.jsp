@@ -90,58 +90,58 @@ $(document).ready(function(e) {
     <!-- 
       <input type="text" class="dfinput"   style="width:150px;" value="开机黄闪的国标定义和时间范围"  onclick="JavaScript:this.value=''"/> 
        -->
-       <s:textfield name="sigParas.time_huangshan" cssClass="dfinput"   cssStyle="width:150px;"></s:textfield>
+       <s:textfield name="sigpubparam.kjhstime" cssClass="dfinput"   cssStyle="width:150px;"></s:textfield>
     秒</div>
 
     <div class="csbox">清场红灯： 
      <!-- 
       <input type="text" class="dfinput"   style="width:150px;"/> 
        -->
-        <s:textfield name="sigParas.time_qingchanghongdeng" cssClass="dfinput"   cssStyle="width:150px;"></s:textfield>
+        <s:textfield name="sigpubparam.qchdtime" cssClass="dfinput"   cssStyle="width:150px;"></s:textfield>
     秒</div>
     
     <div class="csbox">最短绿灯：
     <!-- 
       <input type="text" class="dfinput"   style="width:150px;"/> 
       -->
-      <s:textfield name="sigParas.G_min" cssClass="dfinput"   cssStyle="width:150px;"></s:textfield>
+      <s:textfield name="sigpubparam.gmintime" cssClass="dfinput"   cssStyle="width:150px;"></s:textfield>
     秒</div>
     <div class="csbox">最长绿灯：
     <!-- 
       <input type="text" class="dfinput"   style="width:150px;"/> 
       -->
-       <s:textfield name="sigParas.G_max" cssClass="dfinput"   cssStyle="width:150px;"></s:textfield>
+       <s:textfield name="sigpubparam.gmaxtime" cssClass="dfinput"   cssStyle="width:150px;"></s:textfield>
     秒</div>
     <div class="csbox">步长时间：
        <!-- 
       <input type="text" class="dfinput"   style="width:150px;"/> 
         -->
-        <s:textfield name="sigParas.G_step" cssClass="dfinput"   cssStyle="width:150px;"></s:textfield>
+        <s:textfield name="sigpubparam.zdbctime" cssClass="dfinput"   cssStyle="width:150px;"></s:textfield>
     秒</div>
     <div style="height:50px;"></div>
     <div>
     <div class="csbox">
-    		 <s:checkbox name="" cssClass="checkinput"></s:checkbox>
+    		 <s:checkbox name="sigpubparam.xyxr" value="true" cssClass="checkinput"></s:checkbox>
              <txt> 　行人触发功能使用　</txt>
              </div>
      <div class="csbox">行人请求：
-         <s:textfield name="sigParas.time_huangshan" cssClass="dfinput"   cssStyle="width:150px;"></s:textfield>
+         <s:textfield name="sigpubparam.xrfxtime" cssClass="dfinput"   cssStyle="width:150px;"></s:textfield>
     秒</div>
      <div class="csbox">请求周期：
-         <s:textfield name="sigParas.time_huangshan" cssClass="dfinput"   cssStyle="width:150px;"></s:textfield>
+         <s:textfield name="sigpubparam.cycle" cssClass="dfinput"   cssStyle="width:150px;"></s:textfield>
     ×10秒</div>
     </div>
     </div>
     <div style="width:70%;  padding-top:15px; padding-bottom:15px; float:left;">
     <div>
       <span class="csbox">
-           <s:checkbox name="" cssClass="checkinput"></s:checkbox>
+           <s:checkbox id="" name="" cssClass="checkinput" ></s:checkbox>
       周　日</span></div>
     <div id="zr" style="">
       <table  width="90%" border="0" cellspacing="0" cellpadding="0">
         <tr>
           <td><span class="csbox">
-            <s:checkbox name="" value="" cssClass="checkinput"></s:checkbox>
+            <s:checkbox name=""  cssClass="checkinput"></s:checkbox>
             星期一</span></td>
           <td><span class="csbox">
             <s:checkbox name="" value="" cssClass="checkinput"></s:checkbox>
@@ -163,7 +163,7 @@ $(document).ready(function(e) {
            <s:checkbox name="" value="" cssClass="checkinput"></s:checkbox>
 			星期六</span></td>
           <td><span class="csbox">
-          <s:checkbox name="" value="" cssClass="checkinput"></s:checkbox>
+          <s:checkbox name="" fieldValue="1" value="true" cssClass="checkinput"></s:checkbox>
 			星期天</span></td>
 						
         </tr>
@@ -278,7 +278,7 @@ $(document).ready(function(e) {
       <s:textfield name="" cssClass="dfinput"   cssStyle="width:30px;"></s:textfield>
 日</span></td>
     <td><span class="csbox"> 19、
-        <s:textfield name="" cssClass="dfinput"   cssStyle="width:30px;"></s:textfield>>
+        <s:textfield name="" cssClass="dfinput"   cssStyle="width:30px;"></s:textfield>
 月
       <s:textfield name="" cssClass="dfinput"   cssStyle="width:30px;"></s:textfield>
 日</span></td>
