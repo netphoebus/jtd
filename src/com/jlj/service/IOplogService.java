@@ -25,13 +25,20 @@ public interface IOplogService {
 	public abstract Oplog loadById(int id);
 
 	//后台管理-页数获取
-	public abstract int getPageCount(int con, String convalue, int size);
+	public abstract int getPageCount(int totalCount, int size);
 
 	//后台管理-获取总记录数
-	public abstract int getTotalCount(int con, String convalue);
+	public abstract int getConditionTotalCount(int uid, int logtype, String startdate, String enddate);
 
 	//后台管理-获取符合条件的记录
-	public abstract List<Oplog> queryList(int con, String convalue, int page,
+	public abstract List<Oplog> queryConditionList(int uid, int logtype, String startdate, String enddate, int page,
+			int size);
+	
+	//后台管理-获取总记录数
+	public abstract int getTotalCount();
+
+	//后台管理-获取符合条件的记录
+	public abstract List<Oplog> queryList(int page,
 			int size);
 
 }

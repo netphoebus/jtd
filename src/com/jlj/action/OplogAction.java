@@ -1,7 +1,6 @@
 package com.jlj.action;
 
 import java.net.URLDecoder;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -16,26 +15,26 @@ import org.apache.struts2.interceptor.SessionAware;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import com.jlj.model.Usero;
-import com.jlj.service.IUseroService;
+import com.jlj.model.Oplog;
+import com.jlj.service.IOplogService;
 import com.opensymphony.xwork2.ActionSupport;
 
-@Component("useroAction")
+@Component("oplogAction")
 @Scope("prototype")
 public class OplogAction extends ActionSupport implements RequestAware,
 SessionAware,ServletResponseAware,ServletRequestAware {
 	
 	private static final long serialVersionUID = 1L;
-	private IUseroService useroService;
+	private IOplogService oplogService;
 	Map<String,Object> request;
 	Map<String,Object> session;
 	private javax.servlet.http.HttpServletResponse response;
 	private javax.servlet.http.HttpServletRequest req;
 	private int id;
-	private Usero usero;
+	private Oplog oplog;
 	//分页显示
 	private String[] arg=new String[2];
-	private List<Usero> useros;
+	private List<Oplog> oplogs;
 	private int page;
 	private final int size=10;
 	private int pageCount;
@@ -46,26 +45,38 @@ SessionAware,ServletResponseAware,ServletRequestAware {
 	private int con;
 	private String convalue;
 	
-	
+	private int uid;
+	private int logtype;
+	private String startdate;
+	private String enddate;
 	/**
-	 * 用户管理
+	 * 日志管理
 	 */
 	public String list() throws Exception{
-		if(convalue!=null&&!convalue.equals("")){
-			convalue=URLDecoder.decode(convalue, "utf-8");
-		}
 		if(page<1){
 			page=1;
 		}
 		//总记录数
-		totalCount=useroService.getTotalCount(convalue);
-		//总页数
-		pageCount=useroService.getPageCount(totalCount,size);
-		if(pageCount!=0&&page>pageCount){
-			page=pageCount;
+		if(uid!=0||logtype!=0||(startdate!=null&&!startdate.trim().equals(""))||(enddate!=null&&!enddate.trim().equals(""))){
+			totalCount=oplogService.getConditionTotalCount(uid,logtype,startdate,enddate);
+			//总页数
+			pageCount=oplogService.getPageCount(totalCount,size);
+			if(pageCount!=0&&page>pageCount){
+				page=pageCount;
+			}
+			//所有当前页记录对象
+			oplogs=oplogService.queryConditionList(uid,logtype,startdate,enddate,page,size);
+		}else{
+			totalCount=oplogService.getTotalCount();
+			//总页数
+			pageCount=oplogService.getPageCount(totalCount,size);
+			if(pageCount!=0&&page>pageCount){
+				page=pageCount;
+			}
+			//所有当前页记录对象
+			oplogs=oplogService.queryList(page,size);
 		}
-		//所有当前页记录对象
-		useros=useroService.queryList(convalue,page,size);
+		
 		return "list";
 	}
 	
@@ -76,7 +87,7 @@ SessionAware,ServletResponseAware,ServletRequestAware {
 	 */
 	private String outinfo;
 	public String add() throws Exception{
-		useroService.add(usero);
+		oplogService.add(oplog);
 		outinfo="恭喜您，添加用户成功！";
 		return this.list();
 	}
@@ -86,7 +97,7 @@ SessionAware,ServletResponseAware,ServletRequestAware {
 	 * @throws Exception 
 	 */
 	public String delete() throws Exception{
-		useroService.deleteById(id);
+		oplogService.deleteById(id);
 		outinfo="恭喜您，删除用户成功！";
 		return this.list();
 	}
@@ -95,7 +106,7 @@ SessionAware,ServletResponseAware,ServletRequestAware {
 	 * @return
 	 */
 	public String update() throws Exception{
-		useroService.update(usero);
+		oplogService.update(oplog);
 		outinfo="恭喜您，修改用户成功！";
 		return this.list();
 	}
@@ -105,7 +116,7 @@ SessionAware,ServletResponseAware,ServletRequestAware {
 	 * @return
 	 */
 	public String load() throws Exception{
-		usero=useroService.loadById(id);
+		oplog=oplogService.loadById(id);
 		return "load";
 	}
 		
@@ -191,31 +202,55 @@ SessionAware,ServletResponseAware,ServletRequestAware {
 	
 	//get、set-------------------------------------------
 	
-	public IUseroService getUseroService() {
-		return useroService;
+	public IOplogService getOplogService() {
+		return oplogService;
 	}
 	
 	@Resource
-	public void setUseroService(IUseroService useroService) {
-		this.useroService = useroService;
+	public void setOplogService(IOplogService oplogService) {
+		this.oplogService = oplogService;
 	}
-	public Usero getUsero() {
-		return usero;
+	public Oplog getOplog() {
+		return oplog;
 	}
-	public void setUsero(Usero usero) {
-		this.usero = usero;
+	public void setOplog(Oplog oplog) {
+		this.oplog = oplog;
 	}
-	public List<Usero> getUseros() {
-		return useros;
+	public List<Oplog> getOplogs() {
+		return oplogs;
 	}
-	public void setUseros(List<Usero> useros) {
-		this.useros = useros;
+	public void setOplogs(List<Oplog> oplogs) {
+		this.oplogs = oplogs;
 	}
 	public String getOutinfo() {
 		return outinfo;
 	}
 	public void setOutinfo(String outinfo) {
 		this.outinfo = outinfo;
+	}
+	public int getUid() {
+		return uid;
+	}
+	public void setUid(int uid) {
+		this.uid = uid;
+	}
+	public int getLogtype() {
+		return logtype;
+	}
+	public void setLogtype(int logtype) {
+		this.logtype = logtype;
+	}
+	public String getStartdate() {
+		return startdate;
+	}
+	public void setStartdate(String startdate) {
+		this.startdate = startdate;
+	}
+	public String getEnddate() {
+		return enddate;
+	}
+	public void setEnddate(String enddate) {
+		this.enddate = enddate;
 	}
 	
 	

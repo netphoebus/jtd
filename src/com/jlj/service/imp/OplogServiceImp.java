@@ -67,23 +67,21 @@ public class OplogServiceImp implements IOplogService {
 	/* (non-Javadoc)
 	 * @see com.jlj.service.imp.IOplogService#getPageCount(int, java.lang.String, int)
 	 */
-	public int getPageCount(int con, String convalue,int size) {
-		int totalCount=this.getTotalCount(con, convalue);
+	public int getPageCount(int totalCount,int size) {
 		return totalCount%size==0?totalCount/size:(totalCount/size+1);
 	}
 	//后台管理-获取总记录数
 	/* (non-Javadoc)
 	 * @see com.jlj.service.imp.IOplogService#getTotalCount(int, java.lang.String)
 	 */
-	public int getTotalCount(int con, String convalue) {
-		String queryString = "select count(*) from Oplog mo where 1=1 ";
-		Object[] p = null;
-		if(con!=0&&convalue!=null&&!convalue.equals("")){
-			//线路名称
-			if(con==1){
-				queryString += "and mo.name like ? "; 
-			}
-			p = new Object[]{'%'+convalue+'%'};
+	public int getConditionTotalCount(int uid, int logtype, String startdate, String enddate) {
+		String queryString = "select count(*) from Oplog mo where mo.usero.id=? and mo.iptype=? ";
+		Object[] p = new Object[]{uid,logtype};
+		if(startdate!=null&&!startdate.trim().equals("")){
+			queryString += "and mo.optime >='"+startdate+"'"; 
+		}
+		if(enddate!=null&&!enddate.trim().equals("")){
+			queryString += "and mo.optime <='"+enddate+"'"; 
 		}
 //		queryString += " order by mo.id desc ";
 		return oplogDao.getUniqueResult(queryString,p);
@@ -92,18 +90,38 @@ public class OplogServiceImp implements IOplogService {
 	/* (non-Javadoc)
 	 * @see com.jlj.service.imp.IOplogService#queryList(int, java.lang.String, int, int)
 	 */
-	public List<Oplog> queryList(int con, String convalue, int page, int size) {
-		String queryString = "from Oplog mo where 1=1 ";
-		Object[] p = null;
-		if(con!=0&&convalue!=null&&!convalue.equals("")){
-			//线路名称
-			if(con==1){
-				queryString += "and mo.name like ? "; 
-			}
-			p = new Object[]{'%'+convalue+'%'};
+	public List<Oplog> queryConditionList(int uid, int logtype, String startdate, String enddate, int page, int size) {
+		String queryString = "from Oplog mo where mo.usero.id=? and mo.iptype=? ";
+		Object[] p = new Object[]{uid,logtype};
+		if(startdate!=null&&!startdate.trim().equals("")){
+			queryString += "and mo.optime >='"+startdate+"'"; 
+		}
+		if(enddate!=null&&!enddate.trim().equals("")){
+			queryString += "and mo.optime <='"+enddate+"'"; 
 		}
 //		queryString += " order by mo.id desc ";
 		return oplogDao.pageList(queryString,p,page,size);
 	}
 	
+	
+	//后台管理-获取总记录数-不带条件
+	/* (non-Javadoc)
+	 * @see com.jlj.service.imp.IOplogService#getTotalCount(int, java.lang.String)
+	 */
+	public int getTotalCount() {
+		String queryString = "select count(*) from Oplog mo ";
+		Object[] p = null;
+//		queryString += " order by mo.id desc ";
+		return oplogDao.getUniqueResult(queryString,p);
+	}
+	//后台管理-获取符合条件的记录-不带条件
+	/* (non-Javadoc)
+	 * @see com.jlj.service.imp.IOplogService#queryList(int, java.lang.String, int, int)
+	 */
+	public List<Oplog> queryList(int page, int size) {
+		String queryString = "from Oplog mo ";
+		Object[] p = null;
+//		queryString += " order by mo.id desc ";
+		return oplogDao.pageList(queryString,p,page,size);
+	}
 }
