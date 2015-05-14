@@ -73,17 +73,8 @@ $(document).ready(function(e) {
 										选择相位方案：
 									</label>
 									<div class="vocation">
-										<select name="select2" class="select1">
-											<option>
-												相位方案0
-											</option>
-											<option>
-												相位方案1
-											</option>
-											<option>
-												相位方案2
-											</option>
-										</select>
+										<s:select list="solutions"  id="solutions"
+							listKey="id" listValue="name" onchange="changeLine()"></s:select>
 									</div>
 									<b>*</b>
 								</div>

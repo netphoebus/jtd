@@ -72,7 +72,7 @@ $(document).ready(function(e) {
 								<a href="sigpublicparamAction!publicParam?id=<s:property value="sigpubparam.sig.id"/>" class="selected">一般参数</a>
 							</li>
 							<li>
-								<a href="cssz-fa.jsp">相位方案</a>
+								<a href="solutionAction!solutions">相位方案</a>
 							</li>
 							<li>
 								<a href="cssz-time.jsp">时间段参数</a>
