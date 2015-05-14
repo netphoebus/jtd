@@ -17,7 +17,7 @@ public class UploadCmdFactory extends CmdFactoryBase implements ICmdParser{
 	}
 
 	@Override
-	public void Process(IoSession session, CommandBase cmd) {
+	public void Process(IoSession session, CommandBase cmd) throws Exception {
 		// TODO Auto-generated method stub
 		super.Process(session, cmd);
 		if(cmd.getCmdType() == this.expected_cmd)

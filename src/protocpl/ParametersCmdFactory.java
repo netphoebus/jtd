@@ -91,7 +91,7 @@ public class ParametersCmdFactory extends CmdFactoryBase implements ICmdParser{
 		int gmintime 				= data[26];
 		int gmaxtime 				= data[27];
 		int zdbctime 				= data[28];
-		
+		int countdownmode			= data[29];
 		int xrfxtime 				= data[42];
 		int cycle 					= data[43];			
 		int  xyxr 					= data[44];
@@ -126,7 +126,7 @@ public class ParametersCmdFactory extends CmdFactoryBase implements ICmdParser{
 			signpublicparam.setGmintime(gmintime);
 			signpublicparam.setGmaxtime(gmaxtime);
 			signpublicparam.setZdbctime(zdbctime);
-			signpublicparam.setCountdownmode(0);//未插入
+			signpublicparam.setCountdownmode(countdownmode);//未插入
 			signpublicparam.setXrfxtime(xrfxtime);
 			signpublicparam.setCycle(cycle);
 			signpublicparam.setXyxr(xyxr);
