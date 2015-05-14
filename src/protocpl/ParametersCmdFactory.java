@@ -11,6 +11,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import com.jlj.model.Signpublicparam;
 import com.jlj.model.Sigordinarytime;
 import com.jlj.model.Sigsuntime;
+import com.jlj.service.ISignpublicparamService;
 import com.jlj.service.ISigordinarytimeService;
 
 
@@ -19,7 +20,8 @@ public class ParametersCmdFactory extends CmdFactoryBase implements ICmdParser{
 
 	public static boolean setSuccess;
 	final static ApplicationContext ac=new ClassPathXmlApplicationContext("beans.xml");
-	final static ISigordinarytimeService sigordinarytimeService = (ISigordinarytimeService)ac.getBean("sigordinarytimeService");
+	final static ISignpublicparamService signpublicparamService = (ISignpublicparamService)ac.getBean("signpublicparamService");
+//	final static ISigordinarytimeService sigordinarytimeService = (ISigordinarytimeService)ac.getBean("sigordinarytimeService");
 	public ParametersCmdFactory(byte[] data){
 		super(data);
 		this.expected_cmd = MONITOR_CMD_TYPE.MONITOR_CMD_COMMON_PARAMETERS;
@@ -100,7 +102,6 @@ public class ParametersCmdFactory extends CmdFactoryBase implements ICmdParser{
 			SigSpecialTime[j][0] 	= data[58+j*2] ;
 			SigSpecialTime[j][1] 	= data[58+j*2+1] ;
 		}
-			Sigordinarytime sigordinarytime = new Sigordinarytime();
 			Signpublicparam signpublicparam = new Signpublicparam();
 			signpublicparam.setQchdtime(Red_Clearance_Time);//清场红灯
 			signpublicparam.setKjhstime(Yellow_Flash_Time);//开机黄闪
@@ -178,8 +179,7 @@ public class ParametersCmdFactory extends CmdFactoryBase implements ICmdParser{
 			signpublicparam.setSpecialday22(SigSpecialTime[22][1]);
 			signpublicparam.setSpecialmonth23(SigSpecialTime[23][0]);
 			signpublicparam.setSpecialday23(SigSpecialTime[23][1]);
-			sigordinarytime.setSignpublicparam(signpublicparam);
-			sigordinarytimeService.add(sigordinarytime);
+			signpublicparamService.add(signpublicparam);//保存公共参数
 		
 		
 	}
