@@ -66,8 +66,6 @@ public class CommonTimeCmdFactory extends CmdFactoryBase implements ICmdParser{
 			for(int j=0;j<32;j++){
 				worktime[j] = data[18+j+i*40];
 			}
-			//commontime.setWorktime(worktime);
-		//	commontime.setSolutions(solutions)
 			commtimelist.add(commontime);
 		}
 	}
@@ -90,7 +88,6 @@ public class CommonTimeCmdFactory extends CmdFactoryBase implements ICmdParser{
 			for(int j=0;j<32;j++){
 				worktime[j] = data[18+j+i*40];
 			}
-			//commontime.setWorktime(worktime);
 			commtimelist.add(commontime);
 		}
 	}

@@ -66,47 +66,47 @@ public class DiaoYueCmdFactory extends CmdFactoryBase implements ICmdParser{
 		 
 	  		
 	  		for(int i=0;i<4;i++){
-	  		if((data[i*2+8]&0x80)>0){
+	  		if((data[i*2+10]&0x80)>0){
 	  			locate[i][0] = 3;              
-	  		}else if((data[i*2+8]&0x40)>0){
+	  		}else if((data[i*2+10]&0x40)>0){
 	  			locate[i][0] = 2;
-	  		}else if((data[i*2+8]&0x20)>0){
+	  		}else if((data[i*2+10]&0x20)>0){
 	  			locate[i][0] = 1;
 	  		}else{
 	  			locate[i][0] = 0;
 	  		}
 	  		
-	  		if((data[i*2+8]&0x10)>0){
+	  		if((data[i*2+10]&0x10)>0){
 	  			locate[i][1] = 3;
-	  		}else if((data[i*2+8]&0x08)>0){
+	  		}else if((data[i*2+10]&0x08)>0){
 	  			locate[i][1] = 2;
-	  		}else if((data[i*2+8]&0x04)>0){
+	  		}else if((data[i*2+10]&0x04)>0){
 	  			locate[i][1] = 1;
 	  		}else{
 	  			locate[i][1] = 0;
 	  		}
 	  		
-	  		if((data[i*2+9]&0x80)>0){
+	  		if((data[i*2+11]&0x80)>0){
 	  			locate[i][2] = 3;
-	  		}else if((data[i*2+9]&0x40)>0){
+	  		}else if((data[i*2+11]&0x40)>0){
 	  			locate[i][2] = 2;
-	  		}else if((data[i*2+9]&0x20)>0){
+	  		}else if((data[i*2+11]&0x20)>0){
 	  			locate[i][2] = 1;
 	  		}else{
 	  			locate[i][2] = 0;
 	  		}
 	  		
-	  		if((data[i*2+9]&0x10)>0){
+	  		if((data[i*2+11]&0x10)>0){
 	  			locate[i][3] = 3;
-	  		}else if((data[i*2+9]&0x08)>0){
+	  		}else if((data[i*2+11]&0x08)>0){
 	  			locate[i][3] = 1;
 	  		}else{
 	  			locate[i][3] = 0;
 	  		}
 	  		
-	  		if((data[i*2+9]&0x04)>0){
+	  		if((data[i*2+11]&0x04)>0){
 	  			locate[i][4] = 3;
-	  		}else if((data[i*2+9]&0x02)>0){
+	  		}else if((data[i*2+11]&0x02)>0){
 	  			locate[i][4] = 1;
 	  		}else{
 	  			locate[i][4] = 0;
