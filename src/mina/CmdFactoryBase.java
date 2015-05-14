@@ -154,7 +154,7 @@ public class CmdFactoryBase implements ICmdParser {
 	protected byte[] m_oData = null;
 	protected MONITOR_CMD_TYPE expected_cmd;
 	
-	public void Process(IoSession session, CommandBase cmd){
+	public void Process(IoSession session, CommandBase cmd) throws Exception{
 //		cmd.Parse(session, m_oData);
 	}
 	
@@ -199,7 +199,7 @@ public class CmdFactoryBase implements ICmdParser {
 		return 0;
 	}
 
-	public boolean OnAfter_Ack(IoSession session, CommandBase cmd) {
+	public boolean OnAfter_Ack(IoSession session, CommandBase cmd) throws Exception {
 		// TODO Auto-generated method stub
 		return false;
 	}

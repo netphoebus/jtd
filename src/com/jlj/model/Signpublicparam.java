@@ -31,7 +31,7 @@ public class Signpublicparam implements java.io.Serializable {
 	private Integer id;
 	private Sig sig;
 	private Integer qchdtime;
-	private String kjhstime;
+	private Integer kjhstime;
 	private String number;
 	private String comparam;
 	private Integer checkflow;
@@ -120,7 +120,7 @@ public class Signpublicparam implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public Signpublicparam(Sig sig, Integer qchdtime, String kjhstime,
+	public Signpublicparam(Sig sig, Integer qchdtime, Integer kjhstime,
 			String number, String comparam, Integer checkflow,
 			String innermark, Integer workingset, Integer mon, Integer tue,
 			Integer wes, Integer thir, Integer fra, Integer sata, Integer sun,
@@ -265,12 +265,12 @@ public class Signpublicparam implements java.io.Serializable {
 		this.qchdtime = qchdtime;
 	}
 
-	@Column(name = "kjhstime", length = 20)
-	public String getKjhstime() {
+	@Column(name = "kjhstime")
+	public Integer getKjhstime() {
 		return this.kjhstime;
 	}
 
-	public void setKjhstime(String kjhstime) {
+	public void setKjhstime(Integer kjhstime) {
 		this.kjhstime = kjhstime;
 	}
 
