@@ -69,7 +69,7 @@ $(document).ready(function(e) {
 					<div class="itab">
 						<ul>
 							<li>
-								<a href="sigpublicparamAction!publicParam?id=<s:property value="sigpubparam.sig.id"/>" class="selected">一般参数</a>
+								<a href="sigpublicparamAction!publicParam?id=<s:property value="#session.id"/>" class="selected">一般参数</a>
 							</li>
 							<li>
 								<a href="solutionAction!solutions">相位方案</a>

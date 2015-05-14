@@ -1,4 +1,7 @@
-<%@ page language="java" import="java.util.*" pageEncoding="utf-8"%> <%
+<%@ page language="java" import="java.util.*" pageEncoding="utf-8"%> 
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="/struts-tags" prefix="s"%>
+<%
 String path = request.getContextPath(); String basePath =
 request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
@@ -18,7 +21,7 @@ request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+pa
 		<script type="text/javascript" src="js/jquery.idTabs.min.js"></script>
 		<script type="text/javascript" src="js/select-ui.min.js"></script>
 		<script type="text/javascript" src="editor/kindeditor.js"></script>
-
+		<script type="text/javascript" src="js/privatecssz.js"></script>
 		<script type="text/javascript">
     KE.show({
         id : 'content7',
@@ -51,11 +54,11 @@ $(document).ready(function(e) {
 				<div class="itab">
 					<ul>
 						<li>
-							<a href="cssz-cs.jsp">一般参数</a>
+							<a href="sigpublicparamAction!publicParam?id=<s:property value="#session.id"/>">一般参数</a>
 						</li>
 
 						<li>
-							<a href="#tab3" class="selected">相位方案</a>
+							<a href="solutionAction!solutions" class="selected">相位方案</a>
 						</li>
 						<li>
 							<a href="cssz-time.jsp">时间段参数</a>
@@ -73,8 +76,8 @@ $(document).ready(function(e) {
 										选择相位方案：
 									</label>
 									<div class="vocation">
-										<s:select list="solutions"  id="solutions"
-							listKey="id" listValue="name" onchange="changeLine()"></s:select>
+										<s:select list="solutions" name="solution.id"  id="solutions"
+							listKey="id" listValue="soluname" value="solution.id" onchange="changeSolution()" cssClass="select1"></s:select>
 									</div>
 									<b>*</b>
 								</div>
@@ -88,26 +91,42 @@ $(document).ready(function(e) {
 									<div class="picbox">
 										<div style="width: 100%; float: left; height: ">
 											<div class="xhu">
-												<img alt="东西方向人行道" class="l03" src="images/rod/l030.png" width="15" />
+												
+												<img alt="东西方向人行道西面上边" class="l03" src="images/rod/l030.png" width="15" onclick="changColor();"/>
+												 <s:hidden id="" name="" value="1"></s:hidden>
 											</div>
+											
 											<div class="xhu" style="margin-left: 135px;">
-												<img alt="东西方向人行道" class="l03" src="images/rod/l030.png" width="15" />
+											
+												<img alt="东西方向人行道东面上边" class="l03" src="images/rod/l030.png" width="15" />
+											
 											</div>
 										</div>
 										<div style="width: 100%; float: left; height: ">
 											<div class="xhu" style="margin-top: 0px;">
+											<!--  
 												<img alt="东西方向人行道" class="l03" src="images/rod/l030_2.png" width="15" />
+												-->
 											</div>
 											<div class="xhu" style="margin-left: 135px; margin-top: 0px;">
-												<img alt="东西方向人行道" class="l03" src="images/rod/l030.png" width="15" />
+											<!-- 
+												<img alt="东西方向人行道" class="l03" src="images/rod/l030_2.png" width="15" />
+												-->
 											</div>
 										</div>
 										<div style="width: 100%; float: left; height: ">
 											<div class="xhup">
-												<img alt="东西方向人行道" class="l03" src="images/rod/l030.png" width="15" /><img class="l03" src="images/rod/l030_2.png" width="15" />
+												<img alt="南北方向人行道北面左边" class="l13" src="images/rod/l130.png" width="15" />
+												<!-- 
+												<img class="l03" src="images/rod/l030_2.png" width="15" />
+											-->
 											</div>
 											<div class="xhup" style="margin-left: 155px;">
-												<img alt="东西方向人行道" class="l03" src="images/rod/l030.png" width="15" /><img  class="l03" src="images/rod/l030_2.png" width="15" />
+											
+												<img alt="南北方向人行道北面右边" class="l13" src="images/rod/l130.png" width="15" />
+													<!-- 
+												<img  class="l03" src="images/rod/l030_2.png" width="15" />
+											-->
 											</div>
 										</div>
 										
@@ -207,26 +226,42 @@ $(document).ready(function(e) {
 										</div>
 										<div style="width: 100%; float: left; height: ">
 											<div class="xhup">
-												<img class="l13" src="images/rod/l030.png" alt="南北人行道" width="15" /><img class="l13" src="images/rod/l030.png" alt="南北人行道" width="15" />
+											
+												<img class="l13" src="images/rod/l130.png" alt="南北方向南面左边" width="15" />
+												<!-- 
+												<img class="l13" src="images/rod/l130_2.png" alt="南北人行道" width="15" />
+												-->
 											</div>
 											<div class="xhup" style="margin-left: 155px;">
-												<img class="l13" src="images/rod/l030.png" alt="南北人行道" width="15" /><img class="l13" src="images/rod/l030.png" alt="南北人行道" width="15" />
+											
+												<img class="l13" src="images/rod/l130.png" alt="南北方向南面右边" width="15" />
+												<!--  
+												<img class="l13" src="images/rod/l130_2.png" alt="南北人行道" width="15" />
+													-->
 											</div>
 										</div>
 										<div style="width: 100%; float: left; height: ">
 											<div class="xhu" style="margin-top: 0px;">
-												<img class="l13" src="images/rod/l030.png" alt="南北人行道" width="15" />
+												
+												<img class="l03" src="images/rod/l030.png" alt="东西方向西面下边" width="15" />
+											
 											</div>
 											<div class="xhu" style="margin-left: 135px; margin-top: 0px;">
-												<img class="l13" src="images/rod/l030.png" alt="南北人行道" width="15" />
+											
+												<img class="l03" src="images/rod/l030.png" alt="东西方向东面下边" width="15" />
+											
 											</div>
 										</div>
 										<div style="width: 100%; float: left; height: ">
 											<div class="xhu" style="margin-top: 0px;">
+											 <!--  
 												<img class="l13" src="images/rod/l030_2.png" alt="南北人行道" width="15" />
+													-->
 											</div>
 											<div class="xhu" style="margin-left: 135px; margin-top: 0px;">
+											<!--
 												<img class="l13" src="images/rod/l030_2.png" alt="南北人行道" width="15" />
+												-->
 											</div>
 										</div>
 									</div>
@@ -238,14 +273,14 @@ $(document).ready(function(e) {
 									<btn>全 红</btn>
 								</li>
 								<!--单个相位图li结束 -->
-								<ul>
 									<!--单个相位图li开始 -->
 								<li>
 									<!--相位图开始 -->
 									<div class="picbox">
 										<div style="width: 100%; float: left; height: ">
 											<div class="xhu">
-												<img alt="东西方向人行道" class="l03" src="images/rod/l030.png" width="15" />
+												<img alt="东西方向人行道"   class="l03" src="images/rod/l030.png" width="15" />
+												<s:hidden name=""></s:hidden>
 											</div>
 											<div class="xhu" style="margin-left: 135px;">
 												<img alt="东西方向人行道" class="l03" src="images/rod/l030.png" width="15" />
@@ -5044,7 +5079,6 @@ $(document).ready(function(e) {
 									<btn>清 空</btn>
 									<btn>全 红</btn>
 								</li>
-								</ul>
 							</div>
 
 

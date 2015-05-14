@@ -11,6 +11,7 @@ import org.apache.struts2.interceptor.RequestAware;
 import org.apache.struts2.interceptor.ServletRequestAware;
 import org.apache.struts2.interceptor.ServletResponseAware;
 import org.apache.struts2.interceptor.SessionAware;
+import org.hibernate.dialect.IngresDialect;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -45,15 +46,16 @@ public class SignpublicparamAction extends ActionSupport implements RequestAware
 	
 	//跳转 一般参数页面  
 	public String publicParam() {
-		sigpubparam = sigpubparamService.loadById(id);
-		if(sigpubparam!=null)
-		{
-			initPublicParamJSP(sigpubparam);
-			return "cssz-cs";
-		}else
-		{
-			return "error";//预留没有查询到相应公共参数时跳转的提示页面
-		}
+			sigpubparam = sigpubparamService.loadById(id);
+			if(sigpubparam!=null)
+			{
+				session.put("id", id);//从地图中进入信号机，将信号机id传入session
+				initPublicParamJSP(sigpubparam);
+				return "cssz-cs";
+			}else
+			{
+				return "error";//预留没有查询到相应公共参数时跳转的提示页面
+			}
 	}
 	
 	private void initPublicParamJSP(Signpublicparam sigpubparam)
@@ -218,6 +220,8 @@ public class SignpublicparamAction extends ActionSupport implements RequestAware
 	public void setSig(Sig sig) {
 		this.sig = sig;
 	}
+	
+	
 
 	public int getId() {
 		return id;

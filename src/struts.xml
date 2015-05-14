@@ -75,7 +75,7 @@
 			<result name="opsessiongo">/op_sessiongo.jsp</result>
 		</global-results>
 		<action name="solutionAction" class="solutionAction">
-			<result name="solutions">/cssz-fa.jsp</result>
+			<result name="cssz-fa">/cssz-fa.jsp</result>
 			<result name="error">/error.html</result>
 		</action>
 	</package>

@@ -14,9 +14,11 @@ import org.apache.struts2.interceptor.SessionAware;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import com.jlj.model.Phase;
 import com.jlj.model.Sig;
 import com.jlj.model.Signpublicparam;
 import com.jlj.model.Solution;
+import com.jlj.service.IPhaseService;
 import com.jlj.service.ISigService;
 import com.jlj.service.ISignpublicparamService;
 import com.jlj.service.ISolutionService;
@@ -36,17 +38,26 @@ public class SolutionAction extends ActionSupport implements RequestAware,
 	private ISigService sigService;
 	private ISignpublicparamService sigpubparamService;
 	private ISolutionService solutionService;
+	private IPhaseService phaseService;
 	
 	private Solution solution;
 	private List<Solution> solutions;
+	private List<Phase> phases;
 	private Signpublicparam sigpubparam;
-	private int id;
+	private int soid;
 	private Sig sig;
 	
 	
 	public String solutions()
 	{
 		solutions = solutionService.getSolutions();
+		if(soid==0)
+		{
+			soid = 1;
+		}
+		req.setAttribute("soid", soid);
+		solution = solutionService.loadById(soid);
+		phases = phaseService.loadBySoId(soid);
 		if(solutions!=null)
 		{
 			return "cssz-fa";
@@ -122,12 +133,13 @@ public class SolutionAction extends ActionSupport implements RequestAware,
 		this.sig = sig;
 	}
 
-	public int getId() {
-		return id;
+	
+	public int getSoid() {
+		return soid;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public void setSoid(int soid) {
+		this.soid = soid;
 	}
 
 	public ISigService getSigService() {
@@ -179,6 +191,22 @@ public class SolutionAction extends ActionSupport implements RequestAware,
 	}
 	public void setSolutions(List<Solution> solutions) {
 		this.solutions = solutions;
+	}
+
+	public IPhaseService getPhaseService() {
+		return phaseService;
+	}
+	@Resource
+	public void setPhaseService(IPhaseService phaseService) {
+		this.phaseService = phaseService;
+	}
+
+	public List<Phase> getPhases() {
+		return phases;
+	}
+
+	public void setPhases(List<Phase> phases) {
+		this.phases = phases;
 	}
 
 	
