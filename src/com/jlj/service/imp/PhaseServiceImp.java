@@ -116,4 +116,8 @@ public class PhaseServiceImp implements IPhaseService  {
 		
 		return phaseDao.loadByMkid(queryString);
 	}
+	public List<Phase> loadBySoId(int soid) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

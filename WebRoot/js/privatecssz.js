@@ -80,3 +80,17 @@ function cleanAll()
 	 .not(':button, :submit, :reset, :hidden')  
 	 .val('')  
 }
+
+function changeSolution()
+{
+	$("#solutions").val();
+	console.log($("#solutions").val());
+	window.open("solutionAction!solutions?soid="+$("#solutions").val(),"rightFrame");
+}
+
+function changColor()
+{
+	$(".l03").attr("src","images/rod/l13"+msg.l13+".png");
+	
+	
+}

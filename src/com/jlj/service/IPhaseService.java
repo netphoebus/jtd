@@ -36,4 +36,6 @@ public interface IPhaseService {
 
 	public abstract Phase loadByMkid(long mkid);
 
+	public abstract List<Phase> loadBySoId(int soid);
+
 }
