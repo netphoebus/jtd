@@ -291,7 +291,7 @@ var btn=document.getElementById('show_btn');
          <ul class="toolbar1">
            
        <li onclick="javascript:location.href='sigpublicparamAction!publicParam?id=<s:property value="sig.id"/>'">设置参数</li>
-		  <li  onclick="executeCommand(2)">执行命令</li>
+		  <li  onclick="executeCommand(5)">执行命令</li>
 
          </ul>
          
