@@ -36,6 +36,20 @@ console.log("userManage----------------");
 	window.location=url;
 }
 
+//分页显示用户管理
+function jumpOplogPage(url,page,uid,logtype,startdate,enddate){
+	var page=page;
+	if(isNaN(page)){
+		var page2=document.getElementById(page).value;
+		page=parseInt(page2);
+	}
+	
+	var url=url+'?page='+page+'&uid='+uid+'&logtype='+logtype+'&startdate='+startdate+'&enddate='+enddate;
+	url=encodeURI(url);
+	url=encodeURI(url);
+	window.location=url;
+}
+
 
 function deleteBatch(url){
 				var aa=document.all.chek;

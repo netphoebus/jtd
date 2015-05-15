@@ -1,6 +1,5 @@
 package com.jlj.action;
 
-import java.net.URLDecoder;
 import java.util.List;
 import java.util.Map;
 
@@ -16,7 +15,9 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.jlj.model.Oplog;
+import com.jlj.model.Usero;
 import com.jlj.service.IOplogService;
+import com.jlj.service.IUseroService;
 import com.opensymphony.xwork2.ActionSupport;
 
 @Component("oplogAction")
@@ -26,6 +27,7 @@ SessionAware,ServletResponseAware,ServletRequestAware {
 	
 	private static final long serialVersionUID = 1L;
 	private IOplogService oplogService;
+	private IUseroService useroService;
 	Map<String,Object> request;
 	Map<String,Object> session;
 	private javax.servlet.http.HttpServletResponse response;
@@ -49,15 +51,18 @@ SessionAware,ServletResponseAware,ServletRequestAware {
 	private int logtype;
 	private String startdate;
 	private String enddate;
+	private List<Usero> useros;
 	/**
 	 * 日志管理
 	 */
 	public String list() throws Exception{
+		useros=useroService.getUsers();
 		if(page<1){
 			page=1;
 		}
 		//总记录数
 		if(uid!=0||logtype!=0||(startdate!=null&&!startdate.trim().equals(""))||(enddate!=null&&!enddate.trim().equals(""))){
+			
 			totalCount=oplogService.getConditionTotalCount(uid,logtype,startdate,enddate);
 			//总页数
 			pageCount=oplogService.getPageCount(totalCount,size);
@@ -251,6 +256,19 @@ SessionAware,ServletResponseAware,ServletRequestAware {
 	}
 	public void setEnddate(String enddate) {
 		this.enddate = enddate;
+	}
+	public IUseroService getUseroService() {
+		return useroService;
+	}
+	@Resource
+	public void setUseroService(IUseroService useroService) {
+		this.useroService = useroService;
+	}
+	public List<Usero> getUseros() {
+		return useros;
+	}
+	public void setUseros(List<Usero> useros) {
+		this.useros = useros;
 	}
 	
 	

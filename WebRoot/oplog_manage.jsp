@@ -43,6 +43,7 @@ $(document).ready(function(e) {
 	});
 });
 </script>
+	<script type="text/javascript" src="js/pageKit.js"></script>
 	</head>
 
 	<body>
@@ -79,7 +80,7 @@ $(document).ready(function(e) {
 									用户名：
 								</label>
 								<div class="vocation">
-									<s:select list="#{0:'未选择',1:'登陆',2:'操作信号机'}" name="uid" cssClass="select1" listKey="key" listValue="value"></s:select>
+									<s:select list="useros" name="uid" cssClass="select1" listKey="id" listValue="username"></s:select>
 								</div>
 								<b>*</b>
 							</div>
@@ -90,7 +91,7 @@ $(document).ready(function(e) {
 									操作类型：
 								</label>
 								<div class="vocation">
-									<s:select list="#{0:'未选择',1:'登陆',2:'操作信号机'}" name="iptype" cssClass="select1" listKey="key" listValue="value"></s:select>
+									<s:select list="#{0:'未选择',1:'登陆',2:'操作信号机'}" name="logtype" cssClass="select1" listKey="key" listValue="value"></s:select>
 								</div>
 								<b>*</b>
 							</div>
@@ -149,31 +150,30 @@ $(document).ready(function(e) {
 							</tr>
 						</thead>
 						<tbody>
-							<s:iterator value="oplogs" var="oplog"></s:iterator>
+							<s:iterator value="oplogs" var="oplog">
 							<tr>
 								<td>
 									<input name="input" type="checkbox" value="" />
 								</td>
 								<td>
-									2015-12-12 10:12:08
+									<s:date name="optime" format="yyyy-MM-dd HH:mm:ss"/>
 								</td>
 								<td>
-									192.168.1.43
+									<s:property value="loginip"/>
 								</td>
 								<td>
-									<div id="u5" jquery171015793810490029025="20">
-										<div id="u6" jquery171015793810490029025="21">
-											<p>
-												用户登录
-											</p>
-										</div>
-									</div>
+									<s:if test="iptype==1">
+										登陆
+									</s:if>
+									<s:else>
+										其他
+									</s:else>
 								</td>
 								<td>
-									admin
+									<s:property value="usero.username"/>
 								</td>
 							</tr>
-							
+							</s:iterator>
 						</tbody>
 					</table>
 					<ul class="forminfo" style="line-height: 40px; font-size: 14px;">
@@ -184,25 +184,30 @@ $(document).ready(function(e) {
 									&nbsp;
 								</td>
 								<td height="34" colspan="6" align="center" bgcolor="#FFFFFF">
-									记录数：3&nbsp;&nbsp;&nbsp;
-									<a href="javascript:jumpPage(1)" target="main">首页</a>&nbsp;&nbsp;
-									<a href="javascript:jumpPage(2)" target="main">上一页</a>&nbsp;&nbsp;&nbsp;
-									<a href="javascript:jumpPage(4)" target="main">下一页</a>&nbsp;&nbsp;&nbsp;
-									<a href="javascript:jumpPage(5)" target="main">尾页</a>&nbsp;&nbsp;&nbsp;
-									<input type='button' class="exit" onclick="" value='转到' />
-									&nbsp;
-									<!-- 
-            <select size="1" name="page">
-              <option selected="selected">第1页</option>
-              <option>第2页</option>
-              <option>第3页</option>
-              </select>
-            -->
-									当前页：
+									记录数：<s:property value="totalCount" />&nbsp;&nbsp;&nbsp;
+									<a
+										href="javascript:jumpOplogPage('oplogAction!list',<s:property value="1"/>,<s:property value="uid"/>,<s:property value="logtype"/>,'<s:property value="startdate"/>','<s:property value="enddate"/>');"
+										target="main">首页</a>&nbsp;&nbsp;
+									<a
+										href="javascript:jumpOplogPage('oplogAction!list',<s:property value="page-1"/>,<s:property value="uid"/>,<s:property value="logtype"/>,'<s:property value="startdate"/>','<s:property value="enddate"/>');"
+										target="main">上一页</a>&nbsp;&nbsp;&nbsp;
+									<a
+										href="javascript:jumpOplogPage('oplogAction!list',<s:property value="page+1"/>,<s:property value="uid"/>,<s:property value="logtype"/>,'<s:property value="startdate"/>','<s:property value="enddate"/>');"
+										target="main">下一页</a>&nbsp;&nbsp;&nbsp;
+									<a
+										href="javascript:jumpOplogPage('oplogAction!list',<s:property value="pageCount"/>,<s:property value="uid"/>,<s:property value="logtype"/>,'<s:property value="startdate"/>','<s:property value="enddate"/>');"
+										target="main">尾页</a>&nbsp;&nbsp;&nbsp;
+									<input type='button' class="exit"
+										onclick="jumpPage('oplogAction!list',document.getElementById('page').value,<s:property value="uid"/>,<s:property value="logtype"/>,'<s:property value="startdate"/>','<s:property value="enddate"/>');"
+										value='转到' />
+									&nbsp; 当前页：
 									<input onpaste="return false" onkeypress="checkPage();"
-										id="page" type="text" name="page" value="3" size="2"
+										id="page" type="text" name="page"
+										value="<s:property value="page"/>" size="2"
 										style="width: 25px; height: 20px; line-height: 18px; BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; FONT-SIZE: 13px; BORDER-LEFT: #cccccc 1px solid; COLOR: #000000; BORDER-BOTTOM: #cccccc 1px solid; FONT-FAMILY: 宋体; BACKGROUND-COLOR: #ffffff;" />
-									/共5页
+									/共
+									<s:property value="pageCount" />
+									页
 								</td>
 							</tr>
 						</table>
