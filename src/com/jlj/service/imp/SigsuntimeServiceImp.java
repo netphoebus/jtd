@@ -116,4 +116,10 @@ public class SigsuntimeServiceImp implements ISigsuntimeService {
 		
 		return sigsuntimeDao.loadByMkid(queryString);
 	}
+	public void updateWeekBysigsunid(String week, Integer sigsunid) {
+		String queryString = "update Sigsuntime mo set mo.week=:week where mo.id = :sigsunid";
+		String[] paramNames = new String[] {"week", "sigsunid" };
+		Object[] values = new Object[] {week, sigsunid };
+		sigsuntimeDao.updateByHql(queryString, paramNames, values);
+	}
 }

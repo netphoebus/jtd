@@ -1,5 +1,8 @@
 package protocpl;
 
+import java.net.InetSocketAddress;
+import java.util.Set;
+
 import mina.CmdFactoryBase;
 import mina.CommandBase;
 import mina.ICmdParser;
@@ -9,10 +12,9 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.jlj.model.Signpublicparam;
-import com.jlj.model.Sigordinarytime;
 import com.jlj.model.Sigsuntime;
 import com.jlj.service.ISignpublicparamService;
-import com.jlj.service.ISigordinarytimeService;
+import com.jlj.service.ISigsuntimeService;
 
 
 
@@ -21,6 +23,7 @@ public class ParametersCmdFactory extends CmdFactoryBase implements ICmdParser{
 	public static boolean setSuccess;
 	final static ApplicationContext ac=new ClassPathXmlApplicationContext("beans.xml");
 	final static ISignpublicparamService signpublicparamService = (ISignpublicparamService)ac.getBean("signpublicparamService");
+	final static ISigsuntimeService sigsuntimeService = (ISigsuntimeService)ac.getBean("sigsuntimeService");
 //	final static ISigordinarytimeService sigordinarytimeService = (ISigordinarytimeService)ac.getBean("sigordinarytimeService");
 	public ParametersCmdFactory(byte[] data){
 		super(data);
@@ -77,7 +80,9 @@ public class ParametersCmdFactory extends CmdFactoryBase implements ICmdParser{
 	}
 	
 	private void Upload_parameters(IoSession session,byte[] data) throws Exception{
-		
+		//获取session中的IP
+		String clientIP = ((InetSocketAddress)session.getRemoteAddress()).getAddress().getHostAddress();
+		//获取信号机中的数据
 		int Red_Clearance_Time	 	= data[11];
 		int Yellow_Flash_Time 		= data[12];
 		int number 					= data[13];
@@ -102,7 +107,12 @@ public class ParametersCmdFactory extends CmdFactoryBase implements ICmdParser{
 			SigSpecialTime[j][0] 	= data[58+j*2] ;
 			SigSpecialTime[j][1] 	= data[58+j*2+1] ;
 		}
-			Signpublicparam signpublicparam = new Signpublicparam();
+		//-----------------------数据库---------------------------
+		//检查公共参数表是否有该ip地址：若无，插入新数据；若有，修改原数据
+		Signpublicparam signpublicparam = signpublicparamService.getPublicparamByIp(clientIP);
+		if(signpublicparam==null){
+			System.out.println("-------------------------------signpublicparam add");
+			signpublicparam = new Signpublicparam();
 			signpublicparam.setQchdtime(Red_Clearance_Time);//清场红灯
 			signpublicparam.setKjhstime(Yellow_Flash_Time);//开机黄闪
 			signpublicparam.setNumber(String.valueOf(number));
@@ -117,13 +127,6 @@ public class ParametersCmdFactory extends CmdFactoryBase implements ICmdParser{
 			signpublicparam.setFra(SigSunTime[4]);
 			signpublicparam.setSata(SigSunTime[5]);
 			signpublicparam.setSun(SigSunTime[6]);
-			for (int i = 0; i < SigSunTime.length; i++) {
-				if(SigSunTime[i]==1){
-					Sigsuntime sigsuntime = new Sigsuntime();
-					sigsuntime.setOrderid(i+1);//序号
-					sigsuntime.setWeek(String.valueOf(SigSunTime[i]));
-				}
-			}
 			signpublicparam.setGmintime(gmintime);
 			signpublicparam.setGmaxtime(gmaxtime);
 			signpublicparam.setZdbctime(zdbctime);
@@ -180,7 +183,46 @@ public class ParametersCmdFactory extends CmdFactoryBase implements ICmdParser{
 			signpublicparam.setSpecialmonth23(SigSpecialTime[23][0]);
 			signpublicparam.setSpecialday23(SigSpecialTime[23][1]);
 			signpublicparamService.add(signpublicparam);//保存公共参数
-		
+			//保存公共参数底下的周日参数设置
+			for (int i = 0; i < SigSunTime.length; i++) {
+				if(SigSunTime[i]==1){
+					System.out.println("-------------------------------sigsuntime add");
+					Sigsuntime sigsuntime = new Sigsuntime();
+					sigsuntime.setOrderid(i+1);//序号
+					sigsuntime.setWeek(String.valueOf(SigSunTime[i]));
+					sigsuntime.setSignpublicparam(signpublicparam);
+					sigsuntimeService.add(sigsuntime);
+				}
+			}
+		}else{
+			System.out.println("-------------------------------signpublicparam update");
+			signpublicparamService.updateByPublicid(Red_Clearance_Time,Yellow_Flash_Time,String.valueOf(number),
+					String.valueOf(comparam),checkflow,innermark,Workingset,
+					SigSunTime[0],SigSunTime[1],SigSunTime[2],SigSunTime[3],SigSunTime[4],SigSunTime[5],SigSunTime[6],
+					gmintime,gmaxtime,zdbctime,countdownmode,xrfxtime,cycle,xyxr,
+					SigSpecialTime[0][0],SigSpecialTime[0][1],SigSpecialTime[1][0],SigSpecialTime[1][1],
+					SigSpecialTime[2][0],SigSpecialTime[2][1],SigSpecialTime[3][0],SigSpecialTime[3][1],
+					SigSpecialTime[4][0],SigSpecialTime[4][1],SigSpecialTime[5][0],SigSpecialTime[5][1],
+					SigSpecialTime[6][0],SigSpecialTime[6][1],SigSpecialTime[7][0],SigSpecialTime[7][1],
+					SigSpecialTime[8][0],SigSpecialTime[8][1],SigSpecialTime[9][0],SigSpecialTime[9][1],
+					SigSpecialTime[10][0],SigSpecialTime[10][1],SigSpecialTime[11][0],SigSpecialTime[11][1],
+					SigSpecialTime[12][0],SigSpecialTime[12][1],SigSpecialTime[13][0],SigSpecialTime[13][1],
+					SigSpecialTime[14][0],SigSpecialTime[14][1],SigSpecialTime[15][0],SigSpecialTime[15][1],
+					SigSpecialTime[16][0],SigSpecialTime[16][1],SigSpecialTime[17][0],SigSpecialTime[17][1],
+					SigSpecialTime[18][0],SigSpecialTime[18][1],SigSpecialTime[19][0],SigSpecialTime[19][1],
+					SigSpecialTime[20][0],SigSpecialTime[20][1],SigSpecialTime[21][0],SigSpecialTime[21][1],
+					SigSpecialTime[22][0],SigSpecialTime[22][1],SigSpecialTime[23][0],SigSpecialTime[23][1],signpublicparam.getId());
+			//修改公共参数底下的周日参数设置
+			Set<Sigsuntime> sigsuntimes = signpublicparam.getSigsuntimes();
+			for (Sigsuntime sigsuntime2 : sigsuntimes) {
+						for (int i = 0; i < SigSunTime.length; i++) {
+							if(sigsuntime2.getOrderid()==i+1){
+								sigsuntimeService.updateWeekBysigsunid(String.valueOf(SigSunTime[i]),sigsuntime2.getId());
+							}
+						}
+			}
+					
+		}
 		
 	}
 	
