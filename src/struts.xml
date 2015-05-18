@@ -48,6 +48,20 @@
 		</action>
 	</package>
 	
+	<package name="devlog" extends="struts-default">
+		<action name="devlogAction" class="devlogAction">
+		
+			<result name="list">/devlog_manage.jsp</result>
+			<result name="load">/devlog_update.jsp</result>
+			
+			<result name="invalid.token">/op_failure.jsp</result>
+			<interceptor-ref name="defaultStack" />
+            <interceptor-ref name="token" >
+            	<param name="includeMethods">add</param>
+            	<param name="excludeMethods">default</param>
+            </interceptor-ref>
+		</action>
+	</package>
 	
 	<package name="sig" extends="struts-default">
 		<action name="sigAction" class="sigAction">

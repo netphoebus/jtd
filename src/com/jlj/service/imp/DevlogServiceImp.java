@@ -67,24 +67,16 @@ public class DevlogServiceImp implements IDevlogService  {
 	/* (non-Javadoc)
 	 * @see com.jlj.service.imp.IDevlogService#getPageCount(int, java.lang.String, int)
 	 */
-	public int getPageCount(int con, String convalue,int size) {
-		int totalCount=this.getTotalCount(con, convalue);
+	public int getPageCount(int totalCount,int size) {
 		return totalCount%size==0?totalCount/size:(totalCount/size+1);
 	}
 	//后台管理-获取总记录数
 	/* (non-Javadoc)
 	 * @see com.jlj.service.imp.IDevlogService#getTotalCount(int, java.lang.String)
 	 */
-	public int getTotalCount(int con, String convalue) {
-		String queryString = "select count(*) from Devlog mo where 1=1 ";
+	public int getTotalCount() {
+		String queryString = "select count(*) from Devlog mo ";
 		Object[] p = null;
-		if(con!=0&&convalue!=null&&!convalue.equals("")){
-			//线路名称
-			if(con==1){
-				queryString += "and mo.name like ? "; 
-			}
-			p = new Object[]{'%'+convalue+'%'};
-		}
 //		queryString += " order by mo.id desc ";
 		return devlogDao.getUniqueResult(queryString,p);
 	}
@@ -92,18 +84,35 @@ public class DevlogServiceImp implements IDevlogService  {
 	/* (non-Javadoc)
 	 * @see com.jlj.service.imp.IDevlogService#queryList(int, java.lang.String, int, int)
 	 */
-	public List<Devlog> queryList(int con, String convalue, int page, int size) {
-		String queryString = "from Devlog mo where 1=1 ";
+	public List<Devlog> queryList(int page, int size) {
+		String queryString = "from Devlog mo ";
 		Object[] p = null;
-		if(con!=0&&convalue!=null&&!convalue.equals("")){
-			//线路名称
-			if(con==1){
-				queryString += "and mo.name like ? "; 
-			}
-			p = new Object[]{'%'+convalue+'%'};
-		}
 //		queryString += " order by mo.id desc ";
 		return devlogDao.pageList(queryString,p,page,size);
+	}
+	public int getConditionTotalCount(int sigid, String devevent,
+			String startdate, String enddate) {
+		String queryString = "select count(*) from Devlog mo where mo.sig.id=? and mo.devevent= '"+devevent+"'";
+		Object[] p = new Object[]{sigid};
+		if(startdate!=null&&!startdate.trim().equals("")){
+			queryString += "and mo.devtime >='"+startdate+"'"; 
+		}
+		if(enddate!=null&&!enddate.trim().equals("")){
+			queryString += "and mo.devtime <='"+enddate+"'"; 
+		}
+		return devlogDao.getUniqueResult(queryString, p);
+	}
+	public List<Devlog> queryConditionList(int sigid, String devevent,
+			String startdate, String enddate, int page, int size) {
+		String queryString = "from Devlog mo where mo.sig.id=? and mo.devevent= '"+devevent+"'";
+		Object[] p = new Object[]{sigid};
+		if(startdate!=null&&!startdate.trim().equals("")){
+			queryString += "and mo.devtime >='"+startdate+"'"; 
+		}
+		if(enddate!=null&&!enddate.trim().equals("")){
+			queryString += "and mo.devtime <='"+enddate+"'"; 
+		}
+		return devlogDao.pageList(queryString, p, page, size);
 	}
 	
 }

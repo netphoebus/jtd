@@ -14,150 +14,94 @@ import org.apache.struts2.interceptor.SessionAware;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import com.jlj.model.Oplog;
+import com.jlj.model.Devlog;
 import com.jlj.model.Sig;
-import com.jlj.model.Usero;
-import com.jlj.service.IOplogService;
+import com.jlj.service.IDevlogService;
 import com.jlj.service.ISigService;
 import com.jlj.service.IUseroService;
 import com.opensymphony.xwork2.ActionSupport;
 
-@Component("oplogAction")
+@Component("devlogAction")
 @Scope("prototype")
-public class OplogAction extends ActionSupport implements RequestAware,
+public class DevlogAction extends ActionSupport implements RequestAware,
 SessionAware,ServletResponseAware,ServletRequestAware {
 	
 	private static final long serialVersionUID = 1L;
-	private IOplogService oplogService;
+	private IDevlogService devlogService;
 	private IUseroService useroService;
 	Map<String,Object> request;
 	Map<String,Object> session;
 	private javax.servlet.http.HttpServletResponse response;
 	private javax.servlet.http.HttpServletRequest req;
 	private int id;
-	private Oplog oplog;
+	private Devlog devlog;
 	//分页显示
-	private String[] arg=new String[2];
-	private List<Oplog> oplogs;
+	private List<Devlog> devlogs;
 	private int page;
 	private final int size=10;
 	private int pageCount;
 	private int totalCount;
-	private int status;//按状态
-	private int pid;//按用户id
 	//条件
-	private int con;
-	private String convalue;
 	
-	private int uid;
-	private int logtype;
 	private String startdate;
 	private String enddate;
-	private List<Usero> useros;
-	
-	
 	private ISigService sigService;
 	private int sigid;
 	private String devevent;
-	private String startdate2;
-	private String enddate2;
 	private List<Sig> sigs;
 	/**
 	 * 日志管理
 	 */
 	public String list() throws Exception{
-		//----------------------------------查询用户日志-------------------------------------
-		useros=useroService.getUsers();
+		//----------------------------------查询设备日志-------------------------------------
+		sigs = sigService.getSigs();
 		if(page<1){
 			page=1;
 		}
 		//总记录数
-		if(uid!=0||logtype!=0||(startdate!=null&&!startdate.trim().equals(""))||(enddate!=null&&!enddate.trim().equals(""))){
+		if(sigid!=0||(devevent!=null&&!devevent.trim().equals(""))||(startdate!=null&&!startdate.trim().equals(""))||(enddate!=null&&!enddate.trim().equals(""))){
 			
-			totalCount=oplogService.getConditionTotalCount(uid,logtype,startdate,enddate);
+			totalCount=devlogService.getConditionTotalCount(sigid,devevent,startdate,enddate);
 			//总页数
-			pageCount=oplogService.getPageCount(totalCount,size);
+			pageCount=devlogService.getPageCount(totalCount,size);
 			if(pageCount!=0&&page>pageCount){
 				page=pageCount;
 			}
 			//所有当前页记录对象
-			oplogs=oplogService.queryConditionList(uid,logtype,startdate,enddate,page,size);
+			devlogs=devlogService.queryConditionList(sigid,devevent,startdate,enddate,page,size);
 		}else{
-			totalCount=oplogService.getTotalCount();
+			totalCount=devlogService.getTotalCount();
 			//总页数
-			pageCount=oplogService.getPageCount(totalCount,size);
+			pageCount=devlogService.getPageCount(totalCount,size);
 			if(pageCount!=0&&page>pageCount){
 				page=pageCount;
 			}
 			//所有当前页记录对象
-			oplogs=oplogService.queryList(page,size);
+			devlogs=devlogService.queryList(page,size);
 		}
-		//----------------------------------查询设备日志-------------------------------------
-//		sigs = sigService.getSigs();
-//		if(page<1){
-//			page=1;
-//		}
-//		//总记录数
-//		if(sigid!=0||(devevent!=null&&!devevent.trim().equals(""))||(startdate2!=null&&!startdate2.trim().equals(""))||(enddate2!=null&&!enddate2.trim().equals(""))){
-//			
-//			totalCount2=devlogService.getConditionTotalCount(sigid,devevent,startdate2,enddate2);
-//			//总页数
-//			pageCount2=devlogService.getPageCount(totalCount2,size);
-//			if(pageCount2!=0&&page2>pageCount2){
-//				page2=pageCount2;
-//			}
-//			//所有当前页记录对象
-//			devlogs=devlogService.queryConditionList(sigid,devevent,startdate2,enddate2,page2,size);
-//		}else{
-//			totalCount2=devlogService.getTotalCount();
-//			//总页数
-//			pageCount2=devlogService.getPageCount(totalCount2,size);
-//			if(pageCount2!=0&&page2>pageCount2){
-//				page2=pageCount2;
-//			}
-//			//所有当前页记录对象
-//			devlogs=devlogService.queryList(page2,size);
-//		}
 		return "list";
 	}
 	
-	/**
-	 * 添加
-	 * @return
-	 * @throws Exception
-	 */
 	private String outinfo;
-	public String add() throws Exception{
-		oplogService.add(oplog);
-		outinfo="恭喜您，添加用户成功！";
-		return this.list();
-	}
+	
 	/**
 	 * 删除
 	 * @return
 	 * @throws Exception 
 	 */
 	public String delete() throws Exception{
-		oplogService.deleteById(id);
+		devlogService.deleteById(id);
 		outinfo="恭喜您，删除用户成功！";
 		return this.list();
 	}
-	/**
-	 * 修改
-	 * @return
-	 */
-	public String update() throws Exception{
-		oplogService.update(oplog);
-		outinfo="恭喜您，修改用户成功！";
-		return this.list();
-	}
+	
 	
 	/**
 	 * 跳转到修改页面
 	 * @return
 	 */
 	public String load() throws Exception{
-		oplog=oplogService.loadById(id);
+		devlog=devlogService.loadById(id);
 		return "load";
 	}
 		
@@ -208,60 +152,29 @@ SessionAware,ServletResponseAware,ServletRequestAware {
 	public void setTotalCount(int totalCount) {
 		this.totalCount = totalCount;
 	}
-	public int getCon() {
-		return con;
-	}
-	public void setCon(int con) {
-		this.con = con;
-	}
-	public String getConvalue() {
-		return convalue;
-	}
-	public void setConvalue(String convalue) {
-		this.convalue = convalue;
-	}
-	public int getStatus() {
-		return status;
-	}
-	public void setStatus(int status) {
-		this.status = status;
-	}
-	public int getPid() {
-		return pid;
-	}
-	public void setPid(int pid) {
-		this.pid = pid;
-	}
-	public String[] getArg() {
-		return arg;
-	}
-	public void setArg(String[] arg) {
-		this.arg = arg;
-	}
-	
 
 	
 	//get、set-------------------------------------------
 	
-	public IOplogService getOplogService() {
-		return oplogService;
+	public IDevlogService getDevlogService() {
+		return devlogService;
 	}
 	
 	@Resource
-	public void setOplogService(IOplogService oplogService) {
-		this.oplogService = oplogService;
+	public void setDevlogService(IDevlogService devlogService) {
+		this.devlogService = devlogService;
 	}
-	public Oplog getOplog() {
-		return oplog;
+	public Devlog getDevlog() {
+		return devlog;
 	}
-	public void setOplog(Oplog oplog) {
-		this.oplog = oplog;
+	public void setDevlog(Devlog devlog) {
+		this.devlog = devlog;
 	}
-	public List<Oplog> getOplogs() {
-		return oplogs;
+	public List<Devlog> getDevlogs() {
+		return devlogs;
 	}
-	public void setOplogs(List<Oplog> oplogs) {
-		this.oplogs = oplogs;
+	public void setDevlogs(List<Devlog> devlogs) {
+		this.devlogs = devlogs;
 	}
 	public String getOutinfo() {
 		return outinfo;
@@ -269,18 +182,7 @@ SessionAware,ServletResponseAware,ServletRequestAware {
 	public void setOutinfo(String outinfo) {
 		this.outinfo = outinfo;
 	}
-	public int getUid() {
-		return uid;
-	}
-	public void setUid(int uid) {
-		this.uid = uid;
-	}
-	public int getLogtype() {
-		return logtype;
-	}
-	public void setLogtype(int logtype) {
-		this.logtype = logtype;
-	}
+	
 	public String getStartdate() {
 		return startdate;
 	}
@@ -300,12 +202,7 @@ SessionAware,ServletResponseAware,ServletRequestAware {
 	public void setUseroService(IUseroService useroService) {
 		this.useroService = useroService;
 	}
-	public List<Usero> getUseros() {
-		return useros;
-	}
-	public void setUseros(List<Usero> useros) {
-		this.useros = useros;
-	}
+	
 	public List<Sig> getSigs() {
 		return sigs;
 	}
@@ -318,6 +215,18 @@ SessionAware,ServletResponseAware,ServletRequestAware {
 	@Resource
 	public void setSigService(ISigService sigService) {
 		this.sigService = sigService;
+	}
+	public int getSigid() {
+		return sigid;
+	}
+	public void setSigid(int sigid) {
+		this.sigid = sigid;
+	}
+	public String getDevevent() {
+		return devevent;
+	}
+	public void setDevevent(String devevent) {
+		this.devevent = devevent;
 	}
 	
 	
