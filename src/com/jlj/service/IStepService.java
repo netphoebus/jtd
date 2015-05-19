@@ -36,4 +36,6 @@ public interface IStepService {
 
 	public abstract Step loadByMkid(long mkid);
 
+	public abstract List<Step> loadBySoId(int soid);
+
 }

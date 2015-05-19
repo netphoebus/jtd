@@ -84,19 +84,18 @@ $(document).ready(function(e) {
 						</ul>
 						<div>
 							<div class="xwlb">
-							<s:iterator value="phases" var="phase" status="status">
+							<s:iterator value="steps" var="step" status="status">
 									<!--单个相位图li开始 -->
 								<li>
 									<!--相位图开始 -->
 									<div class="picbox">
 										<div style="width: 100%; float: left; height: ">
 											<div class="xhu">
-												<img class="${phase.id}23" alt="东西方向人行道西面上边" class="l23" src="images/rod/l230.png" width="15" />
+												<img class="${step.id}23" alt="东西方向人行道西面上边" class="l23" src="images/rod/l230.png" width="15" />
 											</div>
-											
 											<div class="xhu" style="margin-left: 135px;">
 											
-												<img class="${phase.id}03" alt="东西方向人行道东面上边" class="l03" src="images/rod/l030.png" width="15" />
+												<img class="${step.id}03" alt="东西方向人行道东面上边" class="l03" src="images/rod/l030.png" width="15" />
 											
 											</div>
 										</div>
@@ -114,14 +113,14 @@ $(document).ready(function(e) {
 										</div>
 										<div style="width: 100%; float: left; height: ">
 											<div class="xhup">
-												<img  id="${phase.id}33" alt="南北方向人行道北面左边" class="l33" src="images/rod/l330.png" width="15" />
+												<img  id="${step.id}33" alt="南北方向人行道北面左边" class="l33" src="images/rod/l330.png" width="15" />
 												<!-- 
 												<img class="l03" src="images/rod/l030_2.png" width="15" />
 											-->
 											</div>
 											<div class="xhup" style="margin-left: 155px;">
 											
-												<img id="${phase.id}33" alt="南北方向人行道北面右边" class="l33" src="images/rod/l330.png" width="15" />
+												<img id="${step.id}33" alt="南北方向人行道北面右边" class="l33" src="images/rod/l330.png" width="15" />
 													<!-- 
 												<img  class="l03" src="images/rod/l030_2.png" width="15" />
 											-->
@@ -137,19 +136,19 @@ $(document).ready(function(e) {
 													</tr>
 													<tr>
 														<td align="center">
-															<img id="${phase.id}02"  src="images/rod/l020.png" alt="东向西右拐"
+															<img id="${step.id}02"  src="images/rod/l020.png" alt="东向西右拐"
 																width="15" height="15" />
 														</td>
 													</tr>
 													<tr>
 														<td align="center">
-															<img id="${phase.id}01"  src="images/rod/l010.png" alt="东向西直行"
+															<img id="${step.id}01"  src="images/rod/l010.png" alt="东向西直行"
 																width="15" height="15" />
 														</td>
 													</tr>
 													<tr>
 														<td align="center">
-															<img id="${phase.id}00"   src="images/rod/l000.png" alt="东向西左拐"
+															<img id="${step.id}00"   src="images/rod/l000.png" alt="东向西左拐"
 																width="15" height="15" />
 														</td>
 													</tr>
@@ -161,15 +160,15 @@ $(document).ready(function(e) {
 													<tr>
 														<td width="2" height="18"></td>
 														<td>
-															<img id="${phase.id}32"  src="images/rod/l320.png" alt="北向南右拐" width="15"
+															<img id="${step.id}32"  src="images/rod/l320.png" alt="北向南右拐" width="15"
 																height="15" />
 														</td>
 														<td>
-															<img id="${phase.id}31"  src="images/rod/l310.png" alt="北向南直行" width="15"
+															<img id="${step.id}31"  src="images/rod/l310.png" alt="北向南直行" width="15"
 																height="15" />
 														</td>
 														<td>
-															<img  id="${phase.id}30"  src="images/rod/l300.png" alt="北向南左拐" width="15"
+															<img  id="${step.id}30"  src="images/rod/l300.png" alt="北向南左拐" width="15"
 																height="15" />
 														</td>
 													</tr>
@@ -181,15 +180,15 @@ $(document).ready(function(e) {
 													<tr>
 														<td width="2" height="18"></td>
 														<td>
-															<img id="${phase.id}10"  src="images/rod/l100.png" alt="南向北左拐" width="15"
+															<img id="${step.id}10"  src="images/rod/l100.png" alt="南向北左拐" width="15"
 																height="15" />
 														</td>
 														<td>
-															<img id="${phase.id}11"  src="images/rod/l110.png" alt="南向北直行" width="15"
+															<img id="${step.id}11"  src="images/rod/l110.png" alt="南向北直行" width="15"
 																height="15" />
 														</td>
 														<td>
-															<img id="${phase.id}12"  src="images/rod/l120.png" alt="南向北右拐" width="15"
+															<img id="${step.id}12"  src="images/rod/l120.png" alt="南向北右拐" width="15"
 																height="15" />
 														</td>
 													</tr>
@@ -203,19 +202,19 @@ $(document).ready(function(e) {
 													</tr>
 													<tr>
 														<td align="center">
-															<img  id="${phase.id}20"  src="images/rod/l200.png" alt="西向东左拐" width="15"
+															<img  id="${step.id}20"  src="images/rod/l200.png" alt="西向东左拐" width="15"
 																height="15" />
 														</td>
 													</tr>
 													<tr>
 														<td align="center">
-															<img id="${phase.id}21"  src="images/rod/l210.png" alt="西向东直行"  width="15"
+															<img id="${step.id}21"  src="images/rod/l210.png" alt="西向东直行"  width="15"
 																height="15" />
 														</td>
 													</tr>
 													<tr>
 														<td align="center">
-															<img id="${phase.id}22"  src="images/rod/l220.png" alt="西向东右拐" width="15"
+															<img id="${step.id}22"  src="images/rod/l220.png" alt="西向东右拐" width="15"
 																height="15" />
 														</td>
 													</tr>
@@ -225,14 +224,14 @@ $(document).ready(function(e) {
 										<div style="width: 100%; float: left; height: ">
 											<div class="xhup">
 											
-												<img class="${phase.id}13"  src="images/rod/l130.png" alt="南北方向人行道南面左边" width="15" />
+												<img class="${step.id}13"  src="images/rod/l130.png" alt="南北方向人行道南面左边" width="15" />
 												<!-- 
 												<img class="l13" src="images/rod/l130_2.png" alt="南北人行道" width="15" />
 												-->
 											</div>
 											<div class="xhup" style="margin-left: 155px;">
 											
-												<img class="${phase.id}13"  src="images/rod/l130.png" alt="南北方向人行道南面右边" width="15" />
+												<img class="${step.id}13"  src="images/rod/l130.png" alt="南北方向人行道南面右边" width="15" />
 												<!--  
 												<img class="l13" src="images/rod/l130_2.png" alt="南北人行道" width="15" />
 													-->
@@ -241,12 +240,12 @@ $(document).ready(function(e) {
 										<div style="width: 100%; float: left; height: ">
 											<div class="xhu" style="margin-top: 0px;">
 												
-												<img  class="${phase.id}23"  src="images/rod/l230.png" alt="东西方向人行道西面下边" width="15" />
+												<img  class="${step.id}23"  src="images/rod/l230.png" alt="东西方向人行道西面下边" width="15" />
 											
 											</div>
 											<div class="xhu" style="margin-left: 135px; margin-top: 0px;">
 											
-												<img class="${phase.id}03"  src="images/rod/l030.png" alt="东西方向人行道东面下边" width="15" />
+												<img class="${step.id}03"  src="images/rod/l030.png" alt="东西方向人行道东面下边" width="15" />
 											
 											</div>
 										</div>
@@ -271,203 +270,6 @@ $(document).ready(function(e) {
 									<btn>全 红</btn>
 								</li>
 							</s:iterator>
-							
-							
-							
-							
-							
-							
-								<!--单个相位图li开始 -->
-								<li>
-									<!--相位图开始 -->
-									<div class="picbox">
-										<div style="width: 100%; float: left; height: ">
-											<div class="xhu">
-												
-												<img alt="东西方向人行道西面上边" class="l03" src="images/rod/l030.png" width="15" "/>
-												 <s:hidden id="" name="" value="1"></s:hidden>
-											</div>
-											
-											<div class="xhu" style="margin-left: 135px;">
-											
-												<img alt="东西方向人行道东面上边" class="l03" src="images/rod/l030.png" width="15" />
-											
-											</div>
-										</div>
-										<div style="width: 100%; float: left; height: ">
-											<div class="xhu" style="margin-top: 0px;">
-											<!--  
-												<img alt="东西方向人行道" class="l03" src="images/rod/l030_2.png" width="15" />
-												-->
-											</div>
-											<div class="xhu" style="margin-left: 135px; margin-top: 0px;">
-											<!-- 
-												<img alt="东西方向人行道" class="l03" src="images/rod/l030_2.png" width="15" />
-												-->
-											</div>
-										</div>
-										<div style="width: 100%; float: left; height: ">
-											<div class="xhup">
-												<img alt="南北方向人行道北面左边" class="l13" src="images/rod/l130.png" width="15" />
-												<!-- 
-												<img class="l03" src="images/rod/l030_2.png" width="15" />
-											-->
-											</div>
-											<div class="xhup" style="margin-left: 155px;">
-											
-												<img alt="南北方向人行道北面右边" class="l13" src="images/rod/l130.png" width="15" />
-													<!-- 
-												<img  class="l03" src="images/rod/l030_2.png" width="15" />
-											-->
-											</div>
-										</div>
-										
-										<div style="height: 110px; width: 100%; float: left;">
-											<div class="xleftdown">
-												<table width="18" border="0" align="center" cellpadding="0"
-													cellspacing="0">
-													<tr>
-														<td height="2"></td>
-													</tr>
-													<tr>
-														<td align="center">
-															<img id="l02" src="images/rod/l020.png" alt="东向西右拐"
-																width="15" height="15" />
-														</td>
-													</tr>
-													<tr>
-														<td align="center">
-															<img id="l01" src="images/rod/l010.png" alt="东向西直行"
-																width="15" height="15" />
-														</td>
-													</tr>
-													<tr>
-														<td align="center">
-															<img id="l00" src="images/rod/l000.png" alt="东向西左拐"
-																width="15" height="15" />
-														</td>
-													</tr>
-												</table>
-											</div>
-											<div class="xrightdown">
-												<table width="50" height="18" border="0" cellspacing="0"
-													cellpadding="0">
-													<tr>
-														<td width="2" height="18"></td>
-														<td>
-															<img id="l32" src="images/rod/l320.png" alt="北向南右拐" width="15"
-																height="15" />
-														</td>
-														<td>
-															<img id="l31" src="images/rod/l310.png" alt="北向南直行" width="15"
-																height="15" />
-														</td>
-														<td>
-															<img id="l30" src="images/rod/l300.png" alt="北向南左拐" width="15"
-																height="15" />
-														</td>
-													</tr>
-												</table>
-											</div>
-											<div class="xleftup">
-												<table width="50" height="18" border="0" cellspacing="0"
-													cellpadding="0">
-													<tr>
-														<td width="2" height="18"></td>
-														<td>
-															<img id="l10" src="images/rod/l100.png" alt="南向北左拐" width="15"
-																height="15" />
-														</td>
-														<td>
-															<img id="l11" src="images/rod/l110.png" alt="南向北直行" width="15"
-																height="15" />
-														</td>
-														<td>
-															<img id="l12" src="images/rod/l120.png" alt="南向北右拐" width="15"
-																height="15" />
-														</td>
-													</tr>
-												</table>
-											</div>
-											<div class="xrightup">
-												<table width="18" border="0" align="center" cellpadding="0"
-													cellspacing="0">
-													<tr>
-														<td height="2"></td>
-													</tr>
-													<tr>
-														<td align="center">
-															<img  id="l20" src="images/rod/l200.png" alt="西向东左拐" width="15"
-																height="15" />
-														</td>
-													</tr>
-													<tr>
-														<td align="center">
-															<img id="l21" src="images/rod/l210.png" alt="西向东直行"  width="15"
-																height="15" />
-														</td>
-													</tr>
-													<tr>
-														<td align="center">
-															<img id="l22" src="images/rod/l220.png" alt="西向东右拐" width="15"
-																height="15" />
-														</td>
-													</tr>
-												</table>
-											</div>
-										</div>
-										<div style="width: 100%; float: left; height: ">
-											<div class="xhup">
-											
-												<img class="l13" src="images/rod/l130.png" alt="南北方向南面左边" width="15" />
-												<!-- 
-												<img class="l13" src="images/rod/l130_2.png" alt="南北人行道" width="15" />
-												-->
-											</div>
-											<div class="xhup" style="margin-left: 155px;">
-											
-												<img class="l13" src="images/rod/l130.png" alt="南北方向南面右边" width="15" />
-												<!--  
-												<img class="l13" src="images/rod/l130_2.png" alt="南北人行道" width="15" />
-													-->
-											</div>
-										</div>
-										<div style="width: 100%; float: left; height: ">
-											<div class="xhu" style="margin-top: 0px;">
-												
-												<img class="l03" src="images/rod/l030.png" alt="东西方向西面下边" width="15" />
-											
-											</div>
-											<div class="xhu" style="margin-left: 135px; margin-top: 0px;">
-											
-												<img class="l03" src="images/rod/l030.png" alt="东西方向东面下边" width="15" />
-											
-											</div>
-										</div>
-										<div style="width: 100%; float: left; height: ">
-											<div class="xhu" style="margin-top: 0px;">
-											 <!--  
-												<img class="l13" src="images/rod/l030_2.png" alt="南北人行道" width="15" />
-													-->
-											</div>
-											<div class="xhu" style="margin-left: 135px; margin-top: 0px;">
-											<!--
-												<img class="l13" src="images/rod/l030_2.png" alt="南北人行道" width="15" />
-												-->
-											</div>
-										</div>
-									</div>
-									<!--相位图结束 -->
-									<h1>
-										序号01
-									</h1>
-									<btn>清 空</btn>
-									<btn>全 红</btn>
-								</li>
-								<!--单个相位图li结束 -->
-									<!--单个相位图li开始 -->
-									
-									
 
 							<div class="xwbtn" >
 								<ul class="toolbar">

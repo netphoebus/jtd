@@ -1,6 +1,6 @@
 package com.jlj.model;
 
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -33,7 +33,7 @@ public class Solution implements java.io.Serializable {
 	private String soluname;
 	private Integer orderid;
 
-	private Set<Step> steps = new HashSet<Step>(0);
+	private List<Step> steps = new ArrayList<Step>(0);
 
 
 	// Constructors
@@ -45,7 +45,7 @@ public class Solution implements java.io.Serializable {
 	/** full constructor */
 	public Solution(Signpublicparam signpublicparam, Commontime commontime,
 
-			String soluname, Integer orderid, Set<Step> steps) {
+			String soluname, Integer orderid, List<Step> steps) {
 
 		this.signpublicparam = signpublicparam;
 		this.commontime = commontime;
@@ -105,11 +105,11 @@ public class Solution implements java.io.Serializable {
 	}
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "solution")
-	public Set<Step> getSteps() {
+	public List<Step> getSteps() {
 		return steps;
 	}
 
-	public void setSteps(Set<Step> steps) {
+	public void setSteps(List<Step> steps) {
 		this.steps = steps;
 
 	}

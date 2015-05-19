@@ -57,7 +57,8 @@ public class SolutionAction extends ActionSupport implements RequestAware,
 		}
 		req.setAttribute("soid", soid);
 		solution = solutionService.loadById(soid);
-//		phases = phaseService.loadBySoId(soid);
+		steps = stepService.loadBySoId(soid);//获得相位方案的相位（相位为步序是偶数位的步序,service层已做处理）
+		
 		if(solutions!=null)
 		{
 			return "cssz-fa";
@@ -95,9 +96,6 @@ public class SolutionAction extends ActionSupport implements RequestAware,
 		return SUCCESS;
 	}
 	
-	
-	
-
 	// get、set-------------------------------------------
 
 	// 获得HttpServletResponse对象

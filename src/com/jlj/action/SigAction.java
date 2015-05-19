@@ -48,9 +48,7 @@ public class SigAction extends ActionSupport implements RequestAware,
 
 	public String toTraffic() {
 		long mkid = Long.parseLong(req.getParameter("mkid"));
-		
 		sig = sigService.loadByMkid(mkid);
-		
 		if (sig != null) {
 			curruntSigIp = sig.getIp();
 		}

@@ -91,9 +91,48 @@ function changeSolution()
 $(document).ready(function(){
 
 	$("div img").click(function(event) {
-		var img = $(event.target);
-		console.log($(event.target));
-		console.log(img[0].src);
-		console.log(img[0].id);
+	
+			var start = "";
+			var end = "";
+			
+			var imgsrc_new = "";
+			
+			var img = $(event.target);
+			
+			console.log(img[0].src);
+			
+			var imgsrc = img[0].src;
+			
+			end = imgsrc.indexOf(".png")-38;
+			
+			if(img[0].id==null||img[0].id =="")
+			{
+				var imgclass= img[0].classList[0];
+				
+				start = imgclass.substr(imgclass.length-2,imgclass.length);
+				
+			}else
+			{
+				var imgid = img[0].id;
+				start = imgid.substr(imgid.length-2,imgid.length);
+			}
+			start = imgsrc.indexOf(start);
+			
+			imgsrc_new = imgsrc.substr(start,end);
+			console.log(imgsrc_new);
+			var headnumber = imgsrc_new.substr(0,imgsrc_new.length-1);
+			var lastnumber = imgsrc_new.substr(imgsrc_new.length-1,imgsrc_new.length);
+			console.log(headnumber);
+			console.log(lastnumber);
+			if(lastnumber<3)
+			{
+				lastnumber = parseInt(lastnumber)+1;
+				imgsrc_new = "images/rod/l"+headnumber+lastnumber+".png";
+			}else
+			{
+				imgsrc_new = "images/rod/l"+headnumber+"0"+".png";
+			}
+			
+			img.attr("src",imgsrc_new);
 		});
 });
