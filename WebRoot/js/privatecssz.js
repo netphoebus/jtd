@@ -88,9 +88,12 @@ function changeSolution()
 	window.open("solutionAction!solutions?soid="+$("#solutions").val(),"rightFrame");
 }
 
-function changColor()
-{
-	$(".l03").attr("src","images/rod/l13"+msg.l13+".png");
-	
-	
-}
+$(document).ready(function(){
+
+	$("div img").click(function(event) {
+		var img = $(event.target);
+		console.log($(event.target));
+		console.log(img[0].src);
+		console.log(img[0].id);
+		});
+});

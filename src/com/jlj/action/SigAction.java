@@ -48,7 +48,9 @@ public class SigAction extends ActionSupport implements RequestAware,
 
 	public String toTraffic() {
 		long mkid = Long.parseLong(req.getParameter("mkid"));
+		
 		sig = sigService.loadByMkid(mkid);
+		
 		if (sig != null) {
 			curruntSigIp = sig.getIp();
 		}
@@ -137,8 +139,9 @@ public class SigAction extends ActionSupport implements RequestAware,
 		 */
 		if (trafficlights != trafficlights_next) {
 			trafficlights_next = trafficlights;
-			String jsonString = "{\"success\":\"true\"" + ",\"l03\":\""
-					+ trafficlights_next[1][3] + "\"" + // 东西方向人行道灯(表示两个)
+			String jsonString = "{\"success\":\"true\"" + 
+					",\"l03\":\"" + trafficlights_next[0][3] + "\"" + // 东西方向人行道灯
+					",\"l23\":\"" + trafficlights_next[2][3] + "\"" + // 东西方向人行道灯
 
 					",\"l20\":\"" + trafficlights_next[2][0] + "\"" + // 西边左转灯
 					",\"l21\":\"" + trafficlights_next[2][1] + "\"" + // 西边直行灯
@@ -148,7 +151,8 @@ public class SigAction extends ActionSupport implements RequestAware,
 					",\"l01\":\"" + trafficlights_next[0][1] + "\"" + // 东边直行灯
 					",\"l02\":\"" + trafficlights_next[0][2] + "\"" + // 东边右转灯
 
-					",\"l13\":\"" + trafficlights_next[0][3] + "\"" + // 南北方向人行道(表示两个)
+					",\"l13\":\"" + trafficlights_next[1][3] + "\"" + // 南北方向人行道
+					",\"l33\":\"" + trafficlights_next[3][3] + "\"" + // 南北方向人行道
 
 					",\"l32\":\"" + trafficlights_next[3][2] + "\"" + // 北边右转灯
 					",\"l31\":\"" + trafficlights_next[3][1] + "\"" + // 北边直行灯

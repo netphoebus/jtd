@@ -1,7 +1,7 @@
 package com.jlj.model;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -31,7 +31,7 @@ public class Solution implements java.io.Serializable {
 	private Commontime commontime;
 	private String soluname;
 	private Integer orderid;
-	private Set<Phase> phases = new HashSet<Phase>(0);
+	private List<Phase> phases = new ArrayList<Phase>(0);
 
 	// Constructors
 
@@ -41,7 +41,7 @@ public class Solution implements java.io.Serializable {
 
 	/** full constructor */
 	public Solution(Signpublicparam signpublicparam, Commontime commontime,
-			String soluname, Integer orderid, Set<Phase> phases) {
+			String soluname, Integer orderid, List<Phase> phases) {
 		this.signpublicparam = signpublicparam;
 		this.commontime = commontime;
 		this.soluname = soluname;
@@ -100,11 +100,11 @@ public class Solution implements java.io.Serializable {
 	}
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "solution")
-	public Set<Phase> getPhases() {
+	public List<Phase> getPhases() {
 		return this.phases;
 	}
 
-	public void setPhases(Set<Phase> phases) {
+	public void setPhases(List<Phase> phases) {
 		this.phases = phases;
 	}
 

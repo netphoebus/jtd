@@ -118,6 +118,7 @@ public class PhaseServiceImp implements IPhaseService  {
 	}
 	public List<Phase> loadBySoId(int soid) {
 		// TODO Auto-generated method stub
-		return null;
+		String queryString = "from Phase mo where 1=1 and mo.solution.id="+soid;
+		return phaseDao.queryList(queryString);
 	}
 }
