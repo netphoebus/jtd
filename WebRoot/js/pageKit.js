@@ -36,7 +36,33 @@ console.log("userManage----------------");
 	window.location=url;
 }
 
+//分页显示操作日志管理
+function jumpOplogPage(url,page,uid,logtype,startdate,enddate){
+	var page=page;
+	if(isNaN(page)){
+		var page2=document.getElementById(page).value;
+		page=parseInt(page2);
+	}
+	
+	var url=url+'?page='+page+'&uid='+uid+'&logtype='+logtype+'&startdate='+startdate+'&enddate='+enddate;
+	url=encodeURI(url);
+	url=encodeURI(url);
+	window.location=url;
+}
 
+//分页显示设备日志管理
+function jumpDevlogPage(url,page,sigid,devevent,startdate,enddate){
+	var page=page;
+	if(isNaN(page)){
+		var page2=document.getElementById(page).value;
+		page=parseInt(page2);
+	}
+	
+	var url=url+'?page='+page+'&sigid='+sigid+'&devevent='+devevent+'&startdate='+startdate+'&enddate='+enddate;
+	url=encodeURI(url);
+	url=encodeURI(url);
+	window.location=url;
+}
 function deleteBatch(url){
 				var aa=document.all.chek;
 				var loc=url+"!deleteBatch?ids=0";

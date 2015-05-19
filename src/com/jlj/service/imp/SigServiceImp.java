@@ -79,11 +79,13 @@ public class SigServiceImp implements ISigService  {
 		return sigDao.pageList(queryString,p,page,size);
 	}
 	public Sig loadByMkid(long mkid) {
-		// TODO Auto-generated method stub
-		
 		String queryString = "from Sig mo where 1=1 and mo.mkid="+mkid;
-		
-		
 		return sigDao.loadByMkid(queryString);
+	}
+	public Sig querySigByIpAddress(String ipAddress) {
+		String queryString = "from Sig mo where mo.ip = :ipAddress";
+		String[] paramNames = new String[] { "ip" };
+		Object[] values = new Object[] { ipAddress };
+		return sigDao.queryByNamedParam(queryString, paramNames, values);
 	}
 }

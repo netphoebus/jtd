@@ -59,54 +59,51 @@ $(document).ready(function(e) {
 					<ul>
 
 						<li>
-							<a href="#tab3" class="selected">用户日志管理</a>
+							<a href="oplogAction!list">用户日志管理</a>
 						</li>
 						<li>
-							<a href="devlogAction!list">设备状态日志</a>
+							<a href="#tab4" class="selected">设备状态日志</a>
 						</li>
 					</ul>
 				</div>
 
-
-
-
-
 				<div id="tab3" class="tabson">
-					<form action="oplogAction!list" method="post">
+				</div>
+
+				<div id="tab4" class="tabson">
+				<form action="devlogAction!list" method="post">
 					<ul class="forminfo">
 						<li>
 							<div style="float: left; line-height: 35px;">
 								<label>
-									用户名：
+									选择设备：
 								</label>
 								<div class="vocation">
-									<s:select list="useros" name="uid" cssClass="select1" listKey="id" listValue="username"></s:select>
+									<s:select list="sigs" name="sigid" cssClass="select1" listKey="id" listValue="name"></s:select>
 								</div>
-								<b>*</b>
 							</div>
 						</li>
 						<li>
 							<div style="float: left; line-height: 35px;">
 								<label>
-									操作类型：
+									选择事件：
 								</label>
 								<div class="vocation">
-									<s:select list="#{0:'未选择',1:'登陆',2:'操作信号机'}" name="logtype" cssClass="select1" listKey="key" listValue="value"></s:select>
+									<s:textfield name="devevent" cssClass="dfinput" cssStyle="width:150px;"/>
 								</div>
-								<b>*</b>
 							</div>
 						</li>
-
 						<li>
 							<div style="float: left; line-height: 35px;">
 								<label>
-									操作时间：
+									起始时间：
 								</label>
 								<div class="vocation">
 									<s:textfield name="startdate" cssStyle="width: 150px;" cssClass="Wdate" onClick="WdatePicker()"></s:textfield>
 									<strong>到</strong>
 									<s:textfield name="enddate" cssStyle="width: 150px;" cssClass="Wdate" onClick="WdatePicker()"></s:textfield>
 								</div>
+							</div>
 						</li>
 						<li>
 							<table width="100%" border="0" cellspacing="0" cellpadding="0">
@@ -126,51 +123,39 @@ $(document).ready(function(e) {
 						</li>
 
 					</ul>
-					</form>
 					<table class="tablelist">
 						<thead>
 							<tr>
 								<th width="5%">
 									<input name="input" type="checkbox" value="" checked="checked" />
 								</th>
-								<th width="16%">
+								<th width="19%">
 									时间
 									<i class="sort"><img src="images/px.gif" alt="" />
 									</i>
 								</th>
 								<th width="11%">
-									登录IP
+									设备
 								</th>
-								<th width="45%">
-									操作事件
-								</th>
-								<th width="23%">
-									操作用户
+								<th width="65%">
+									事件
 								</th>
 							</tr>
 						</thead>
 						<tbody>
-							<s:iterator value="oplogs" var="oplog">
+						<s:iterator value="devlogs" var="devlog">
 							<tr>
 								<td>
 									<input name="input" type="checkbox" value="" />
 								</td>
 								<td>
-									<s:date name="optime" format="yyyy-MM-dd HH:mm:ss"/>
+									<s:date name="devtime" format="yyyy-MM-dd HH:mm:ss"/>
 								</td>
 								<td>
-									<s:property value="loginip"/>
+									<s:property value="sig.name"/>
 								</td>
 								<td>
-									<s:if test="iptype==1">
-										登陆
-									</s:if>
-									<s:else>
-										其他
-									</s:else>
-								</td>
-								<td>
-									<s:property value="usero.username"/>
+									<s:property value="devevent"/>
 								</td>
 							</tr>
 							</s:iterator>
@@ -186,19 +171,19 @@ $(document).ready(function(e) {
 								<td height="34" colspan="6" align="center" bgcolor="#FFFFFF">
 									记录数：<s:property value="totalCount" />&nbsp;&nbsp;&nbsp;
 									<a
-										href="javascript:jumpOplogPage('oplogAction!list',<s:property value="1"/>,<s:property value="uid"/>,<s:property value="logtype"/>,'<s:property value="startdate"/>','<s:property value="enddate"/>');"
+										href="javascript:jumpDevlogPage('devlogAction!list',<s:property value="1"/>,<s:property value="sigid"/>,'<s:property value="devevent"/>','<s:property value="startdate"/>','<s:property value="enddate"/>');"
 										target="main">首页</a>&nbsp;&nbsp;
 									<a
-										href="javascript:jumpOplogPage('oplogAction!list',<s:property value="page-1"/>,<s:property value="uid"/>,<s:property value="logtype"/>,'<s:property value="startdate"/>','<s:property value="enddate"/>');"
+										href="javascript:jumpDevlogPage('devlogAction!list',<s:property value="page-1"/>,<s:property value="sigid"/>,'<s:property value="devevent"/>','<s:property value="startdate"/>','<s:property value="enddate"/>');"
 										target="main">上一页</a>&nbsp;&nbsp;&nbsp;
 									<a
-										href="javascript:jumpOplogPage('oplogAction!list',<s:property value="page+1"/>,<s:property value="uid"/>,<s:property value="logtype"/>,'<s:property value="startdate"/>','<s:property value="enddate"/>');"
+										href="javascript:jumpDevlogPage('devlogAction!list',<s:property value="page+1"/>,<s:property value="sigid"/>,'<s:property value="devevent"/>','<s:property value="startdate"/>','<s:property value="enddate"/>');"
 										target="main">下一页</a>&nbsp;&nbsp;&nbsp;
 									<a
-										href="javascript:jumpOplogPage('oplogAction!list',<s:property value="pageCount"/>,<s:property value="uid"/>,<s:property value="logtype"/>,'<s:property value="startdate"/>','<s:property value="enddate"/>');"
+										href="javascript:jumpDevlogPage('devlogAction!list',<s:property value="pageCount"/>,<s:property value="sigid"/>,'<s:property value="devevent"/>','<s:property value="startdate"/>','<s:property value="enddate"/>');"
 										target="main">尾页</a>&nbsp;&nbsp;&nbsp;
 									<input type='button' class="exit"
-										onclick="jumpOplogPage('oplogAction!list',document.getElementById('page').value,<s:property value="uid"/>,<s:property value="logtype"/>,'<s:property value="startdate"/>','<s:property value="enddate"/>');"
+										onclick="jumpDevlogPage('devlogAction!list',document.getElementById('page').value,<s:property value="sigid"/>,'<s:property value="devevent"/>','<s:property value="startdate"/>','<s:property value="enddate"/>');"
 										value='转到' />
 									&nbsp; 当前页：
 									<input onpaste="return false" onkeypress="checkPage();"
@@ -212,13 +197,6 @@ $(document).ready(function(e) {
 							</tr>
 						</table>
 					</ul>
-				</div>
-
-
-
-
-				<div id="tab4" class="tabson">
-					
 				</div>
 
 

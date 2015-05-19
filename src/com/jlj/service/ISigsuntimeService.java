@@ -36,4 +36,6 @@ public interface ISigsuntimeService {
 
 	public abstract Sigsuntime loadByMkid(long mkid);
 
+	public abstract void updateWeekBysigsunid(String valueOf, Integer id);
+
 }

@@ -36,4 +36,25 @@ public interface ISignpublicparamService {
 
 	public abstract Signpublicparam loadByMkid(long mkid);
 
+	public abstract Signpublicparam getPublicparamByIp(String clientIP);
+
+	public abstract void updateByPublicid(int red_Clearance_Time,
+			int yellow_Flash_Time, String number, String comparam,
+			int checkflow, int innermark, int workingset, int SigSunTime0, int SigSunTime1, int SigSunTime2,
+			int SigSunTime3, int SigSunTime4, int SigSunTime5, int SigSunTime6, int gmintime, int gmaxtime,
+			int zdbctime, int countdownmode, int xrfxtime, int cycle, int xyxr,
+			int SigSpecialTime00,int SigSpecialTime01,int SigSpecialTime10,int SigSpecialTime11,
+			int SigSpecialTime20,int SigSpecialTime21,int SigSpecialTime30,int SigSpecialTime31,
+			int SigSpecialTime40,int SigSpecialTime41,int SigSpecialTime50,int SigSpecialTime51,
+			int SigSpecialTime60,int SigSpecialTime61,int SigSpecialTime70,int SigSpecialTime71,
+			int SigSpecialTime80,int SigSpecialTime81,int SigSpecialTime90,int SigSpecialTime91,
+			int SigSpecialTime100,int SigSpecialTime101,int SigSpecialTime110,int SigSpecialTime111,
+			int SigSpecialTime120,int SigSpecialTime121,int SigSpecialTime130,int SigSpecialTime131,
+			int SigSpecialTime140,int SigSpecialTime141,int SigSpecialTime150,int SigSpecialTime151,
+			int SigSpecialTime160,int SigSpecialTime161,int SigSpecialTime170,int SigSpecialTime171,
+			int SigSpecialTime180,int SigSpecialTime181,int SigSpecialTime190,int SigSpecialTime191,
+			int SigSpecialTime200,int SigSpecialTime201,int SigSpecialTime210,int SigSpecialTime211,
+			int SigSpecialTime220,int SigSpecialTime221,int SigSpecialTime230,int SigSpecialTime231, Integer publicid);
+
+
 }

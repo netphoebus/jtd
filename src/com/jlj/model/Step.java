@@ -2,6 +2,7 @@ package com.jlj.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -26,7 +27,8 @@ public class Step implements java.io.Serializable {
 	// Fields
 
 	private Integer id;
-	private Phase phase;
+	private Solution solution;
+	private String phasename;
 	private String stepname;
 	private Integer second;
 	private Integer orderid;
@@ -39,9 +41,11 @@ public class Step implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public Step(Phase phase, String stepname, Integer second, Integer orderid,
+
+	public Step(Solution solution, String phasename, String stepname, Integer second, Integer orderid,
 			List<Road> roads) {
-		this.phase = phase;
+		this.solution = solution;
+		this.phasename = phasename;
 		this.stepname = stepname;
 		this.second = second;
 		this.orderid = orderid;
@@ -61,13 +65,23 @@ public class Step implements java.io.Serializable {
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "phaseid")
-	public Phase getPhase() {
-		return this.phase;
+	@JoinColumn(name = "soid")
+	public Solution getSolution() {
+		return this.solution;
 	}
 
-	public void setPhase(Phase phase) {
-		this.phase = phase;
+	public void setSolution(Solution solution) {
+		this.solution = solution;
+	}
+
+	
+	@Column(name = "phasename", length = 30)
+	public String getPhasename() {
+		return phasename;
+	}
+
+	public void setPhasename(String phasename) {
+		this.phasename = phasename;
 	}
 
 	@Column(name = "stepname", length = 30)

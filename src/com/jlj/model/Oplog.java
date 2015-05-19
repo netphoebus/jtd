@@ -1,5 +1,6 @@
 package com.jlj.model;
 
+import java.util.Calendar;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -95,7 +96,7 @@ public class Oplog implements java.io.Serializable {
 		this.iptype = iptype;
 	}
 
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "optime", length = 23)
 	public Date getOptime() {
 		return this.optime;

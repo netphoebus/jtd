@@ -36,5 +36,7 @@ public interface ISigService {
 
 	public abstract Sig loadByMkid(long mkid);
 
+	public abstract Sig querySigByIpAddress(String ipAddress);
+
 
 }

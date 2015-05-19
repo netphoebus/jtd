@@ -1,4 +1,5 @@
 package mina;
+import java.net.InetSocketAddress;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -6,11 +7,14 @@ import org.apache.mina.core.buffer.IoBuffer;
 import org.apache.mina.core.service.IoHandler;
 import org.apache.mina.core.session.IdleStatus;
 import org.apache.mina.core.session.IoSession;
-
-
-
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.jlj.action.SigAction;
+import com.jlj.model.Sig;
+import com.jlj.model.Userarea;
+import com.jlj.service.ISigService;
+import com.jlj.service.IUserareaService;
 
 
   
@@ -21,7 +25,9 @@ public class TimeServerHandler  implements IoHandler {
 	final static String cmd_canshu = "FF FF FF FF 01 F0 92 00 00 08 01 8B";
 	
 	final static String cmd_test = "74 65 73 74 73 65 6E 64";
-	
+	public final static ApplicationContext ac=new ClassPathXmlApplicationContext("beans.xml");
+	public final static ISigService sigService = (ISigService)ac.getBean("sigService");
+	public final static IUserareaService userareaService = (IUserareaService)ac.getBean("userareaService");
 	
 	public void exceptionCaught(IoSession arg0, Throwable arg1)
 			throws Exception {
@@ -76,10 +82,23 @@ public class TimeServerHandler  implements IoHandler {
 		iosessions.remove(arg0);
 	}
 
-	public void sessionCreated(IoSession arg0) throws Exception {
+	public void sessionCreated(IoSession session) throws Exception {
 		// TODO Auto-generated method stub
-		System.out.println("IP:"+arg0.getRemoteAddress().toString());
-		iosessions.add(arg0);
+		System.out.println("IP:"+session.getRemoteAddress().toString());
+		iosessions.add(session);
+		//获取session中的IP地址，匹配数据库，发现sig表中无该ip，添加数据；发现sig表中有ip，则不插入-from jlj
+		String ipAddress= ((InetSocketAddress)session.getRemoteAddress()).getAddress().getHostAddress();
+		Sig sig = sigService.querySigByIpAddress(ipAddress);
+		if(sig==null){
+			sig = new Sig();
+			sig.setIp(ipAddress);
+			Userarea userarea = userareaService.loadById(1);//load未知区域
+			if(userarea==null){
+				System.out.println("userarea=null--------------------");
+			}
+			sig.setUserarea(userarea);
+			sigService.add(sig);
+		}
 	}
 
 	public void sessionIdle(IoSession arg0, IdleStatus arg1) throws Exception {
