@@ -14,14 +14,14 @@ import org.apache.struts2.interceptor.SessionAware;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import com.jlj.model.Phase;
 import com.jlj.model.Sig;
 import com.jlj.model.Signpublicparam;
 import com.jlj.model.Solution;
-import com.jlj.service.IPhaseService;
+import com.jlj.model.Step;
 import com.jlj.service.ISigService;
 import com.jlj.service.ISignpublicparamService;
 import com.jlj.service.ISolutionService;
+import com.jlj.service.IStepService;
 import com.opensymphony.xwork2.ActionSupport;
 
 @Component("solutionAction")
@@ -38,11 +38,11 @@ public class SolutionAction extends ActionSupport implements RequestAware,
 	private ISigService sigService;
 	private ISignpublicparamService sigpubparamService;
 	private ISolutionService solutionService;
-	private IPhaseService phaseService;
+	private IStepService stepService;
 	
 	private Solution solution;
 	private List<Solution> solutions;
-	private List<Phase> phases;
+	private List<Step> steps;
 	private Signpublicparam sigpubparam;
 	private int soid;
 	private Sig sig;
@@ -57,7 +57,7 @@ public class SolutionAction extends ActionSupport implements RequestAware,
 		}
 		req.setAttribute("soid", soid);
 		solution = solutionService.loadById(soid);
-		phases = phaseService.loadBySoId(soid);
+//		phases = phaseService.loadBySoId(soid);
 		if(solutions!=null)
 		{
 			return "cssz-fa";
@@ -193,21 +193,25 @@ public class SolutionAction extends ActionSupport implements RequestAware,
 		this.solutions = solutions;
 	}
 
-	public IPhaseService getPhaseService() {
-		return phaseService;
+	
+	public IStepService getStepService() {
+		return stepService;
 	}
+
 	@Resource
-	public void setPhaseService(IPhaseService phaseService) {
-		this.phaseService = phaseService;
+	public void setStepService(IStepService stepService) {
+		this.stepService = stepService;
 	}
 
-	public List<Phase> getPhases() {
-		return phases;
+	public List<Step> getSteps() {
+		return steps;
 	}
 
-	public void setPhases(List<Phase> phases) {
-		this.phases = phases;
+	public void setSteps(List<Step> steps) {
+		this.steps = steps;
 	}
+
+	
 
 	
 	

@@ -2,16 +2,11 @@ package protocpl;
 
 import java.util.ArrayList;
 
-import org.apache.mina.core.session.IoSession;
-
-import com.jlj.model.Phase;
-import com.jlj.model.Road;
-import com.jlj.model.Step;
-
 import mina.CmdFactoryBase;
 import mina.CommandBase;
 import mina.ICmdParser;
-import mina.CmdFactoryBase.MONITOR_CMD_TYPE;
+
+import org.apache.mina.core.session.IoSession;
 
 public class PhaseCmdFactory extends CmdFactoryBase implements ICmdParser{
 

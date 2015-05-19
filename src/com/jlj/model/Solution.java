@@ -31,7 +31,7 @@ public class Solution implements java.io.Serializable {
 	private Commontime commontime;
 	private String soluname;
 	private Integer orderid;
-	private Set<Phase> phases = new HashSet<Phase>(0);
+	private Set<Step> steps = new HashSet<Step>(0);
 
 	// Constructors
 
@@ -41,12 +41,12 @@ public class Solution implements java.io.Serializable {
 
 	/** full constructor */
 	public Solution(Signpublicparam signpublicparam, Commontime commontime,
-			String soluname, Integer orderid, Set<Phase> phases) {
+			String soluname, Integer orderid, Set<Step> steps) {
 		this.signpublicparam = signpublicparam;
 		this.commontime = commontime;
 		this.soluname = soluname;
 		this.orderid = orderid;
-		this.phases = phases;
+		this.steps = steps;
 	}
 
 	// Property accessors
@@ -100,12 +100,12 @@ public class Solution implements java.io.Serializable {
 	}
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "solution")
-	public Set<Phase> getPhases() {
-		return this.phases;
+	public Set<Step> getSteps() {
+		return steps;
 	}
 
-	public void setPhases(Set<Phase> phases) {
-		this.phases = phases;
+	public void setSteps(Set<Step> steps) {
+		this.steps = steps;
 	}
 
 }
