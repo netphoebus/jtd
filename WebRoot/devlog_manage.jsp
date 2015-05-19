@@ -89,7 +89,7 @@ $(document).ready(function(e) {
 									选择事件：
 								</label>
 								<div class="vocation">
-									<s:textfield name="devevent" cssClass="dfinput" cssStyle="width:150px;"/>
+									<s:textfield name="devevent" cssClass="dfinput" cssStyle="width:200px;"/>
 								</div>
 							</div>
 						</li>

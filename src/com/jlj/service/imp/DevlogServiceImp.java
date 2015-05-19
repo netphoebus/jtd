@@ -92,25 +92,25 @@ public class DevlogServiceImp implements IDevlogService  {
 	}
 	public int getConditionTotalCount(int sigid, String devevent,
 			String startdate, String enddate) {
-		String queryString = "select count(*) from Devlog mo where mo.sig.id=? and mo.devevent= '"+devevent+"'";
+		String queryString = "select count(*) from Devlog mo where mo.sig.id=? and mo.devevent like '%"+devevent+"%'";
 		Object[] p = new Object[]{sigid};
 		if(startdate!=null&&!startdate.trim().equals("")){
 			queryString += "and mo.devtime >='"+startdate+"'"; 
 		}
 		if(enddate!=null&&!enddate.trim().equals("")){
-			queryString += "and mo.devtime <='"+enddate+"'"; 
+			queryString += "and mo.devtime <='"+enddate+" 23:59:59'"; 
 		}
 		return devlogDao.getUniqueResult(queryString, p);
 	}
 	public List<Devlog> queryConditionList(int sigid, String devevent,
 			String startdate, String enddate, int page, int size) {
-		String queryString = "from Devlog mo where mo.sig.id=? and mo.devevent= '"+devevent+"'";
+		String queryString = "from Devlog mo where mo.sig.id=? and mo.devevent like '%"+devevent+"%'";
 		Object[] p = new Object[]{sigid};
 		if(startdate!=null&&!startdate.trim().equals("")){
 			queryString += "and mo.devtime >='"+startdate+"'"; 
 		}
 		if(enddate!=null&&!enddate.trim().equals("")){
-			queryString += "and mo.devtime <='"+enddate+"'"; 
+			queryString += "and mo.devtime <='"+enddate+" 23:59:59'"; 
 		}
 		return devlogDao.pageList(queryString, p, page, size);
 	}

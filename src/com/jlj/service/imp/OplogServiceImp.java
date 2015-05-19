@@ -81,7 +81,7 @@ public class OplogServiceImp implements IOplogService {
 			queryString += "and mo.optime >='"+startdate+"'"; 
 		}
 		if(enddate!=null&&!enddate.trim().equals("")){
-			queryString += "and mo.optime <='"+enddate+"'"; 
+			queryString += "and mo.optime <='"+enddate+" 23:59:59'"; 
 		}
 //		queryString += " order by mo.id desc ";
 		return oplogDao.getUniqueResult(queryString,p);
@@ -97,7 +97,7 @@ public class OplogServiceImp implements IOplogService {
 			queryString += "and mo.optime >='"+startdate+"'"; 
 		}
 		if(enddate!=null&&!enddate.trim().equals("")){
-			queryString += "and mo.optime <='"+enddate+"'"; 
+			queryString += "and mo.optime <='"+enddate+" 23:59:59'"; 
 		}
 //		queryString += " order by mo.id desc ";
 		return oplogDao.pageList(queryString,p,page,size);

@@ -72,7 +72,7 @@ public class Devlog implements java.io.Serializable {
 		this.devevent = devevent;
 	}
 
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "devtime", length = 23)
 	public Date getDevtime() {
 		return this.devtime;

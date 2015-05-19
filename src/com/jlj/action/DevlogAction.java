@@ -1,5 +1,6 @@
 package com.jlj.action;
 
+import java.net.URLDecoder;
 import java.util.List;
 import java.util.Map;
 
@@ -54,6 +55,9 @@ SessionAware,ServletResponseAware,ServletRequestAware {
 	 */
 	public String list() throws Exception{
 		//----------------------------------查询设备日志-------------------------------------
+		if(devevent!=null&&!devevent.equals("")){
+			devevent=URLDecoder.decode(devevent, "utf-8");
+		}
 		sigs = sigService.getSigs();
 		if(page<1){
 			page=1;
