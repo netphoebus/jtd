@@ -112,5 +112,9 @@
 		<action name="doCommand" class="sigAction" method="doCommand"/>
 	</package>
 	
+	 <package name="solution_ajax" extends="json-default">
+		<action name="update" class="solutionAction" method="update"/>
+	</package>
+	
 </struts>
 

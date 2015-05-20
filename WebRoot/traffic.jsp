@@ -49,7 +49,7 @@ function test()
 				             if(msg!=null)
 				             {
 					             	 $(".l03").attr("src","images/rod/l03"+msg.l03+".png"); 
-					           	 	 
+					           	 	 $(".l23").attr("src","images/rod/l03"+msg.l23+".png"); 
 					           	 	 
 						           	 $("#l20").attr("src","images/rod/l20"+msg.l20+".png");
 						           	 $("#l21").attr("src","images/rod/l21"+msg.l21+".png");
@@ -60,6 +60,7 @@ function test()
 						           	 $("#l02").attr("src","images/rod/l02"+msg.l02+".png");
 						           	 
 						           	 $(".l13").attr("src","images/rod/l13"+msg.l13+".png");
+						           	 $(".l33").attr("src","images/rod/l33"+msg.l33+".png");
 						           	 
 						           	 $("#l32").attr("src","images/rod/l32"+msg.l32+".png"); 
 						           	 $("#l31").attr("src","images/rod/l31"+msg.l31+".png");
@@ -281,7 +282,7 @@ var btn=document.getElementById('show_btn');
            <ul>
              <li style="height:29px;">
                <div style="width: 29px; height: 29px; float:left; margin-left: 195px;">
-               <img class="l23" src="images/rod/l030.png" alt="东西人行道西面下边" width="29" height="29" /></div>
+               <img class="l23" src="images/rod/l230.png" alt="东西人行道西面下边" width="29" height="29" /></div>
                <div style=" float:left; width: 29px; height: 29px; margin-left: 305px;">
                <img class="l03" src="images/rod/l030.png" alt="东西人行道东面下边" width="29" height="29" /></div>
              </li>

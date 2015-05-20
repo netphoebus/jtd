@@ -93,8 +93,15 @@ public class SolutionAction extends ActionSupport implements RequestAware,
 	 * @return
 	 */
 	public String update() throws Exception {
-		return SUCCESS;
+		System.out.println("================");
+	
+		String map = req.getParameter("dates");
+		
+		System.out.println(map);
+		return NONE;
 	}
+	
+	
 	
 	// get、set-------------------------------------------
 
