@@ -67,7 +67,7 @@ public class PhaseCmdFactory extends CmdFactoryBase implements ICmdParser{
 	
 		ArrayList<int[][]> locatelist = new ArrayList<int[][]>();
 		
-		for(int step_i = 0;step_i<64;step_i++){
+		for(int step_i = 0;step_i<16;step_i++){
 			int locate[][] = new int[4][5];
 			for(int i=0;i<4;i++){
 		  		if((data[i*2+10+step_i*8]&0x80)>0){
