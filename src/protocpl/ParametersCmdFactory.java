@@ -184,16 +184,16 @@ public class ParametersCmdFactory extends CmdFactoryBase implements ICmdParser{
 			signpublicparam.setSpecialday23(SigSpecialTime[23][1]);
 			signpublicparamService.add(signpublicparam);//保存公共参数
 			//保存公共参数底下的周日参数设置
-//			for (int i = 0; i < SigSunTime.length; i++) {
-//				if(SigSunTime[i]==1){
-//					System.out.println("-------------------------------sigsuntime add");
-//					Sigsuntime sigsuntime = new Sigsuntime();
-//					sigsuntime.setOrderid(i+1);//序号
-//					sigsuntime.setWeek(String.valueOf(SigSunTime[i]));
-//					sigsuntime.setSignpublicparam(signpublicparam);
-//					sigsuntimeService.add(sigsuntime);
-//				}
-//			}
+			for (int i = 0; i < SigSunTime.length; i++) {
+				if(SigSunTime[i]==1){
+					System.out.println("-------------------------------sigsuntime add");
+					Sigsuntime sigsuntime = new Sigsuntime();
+					sigsuntime.setOrderid(i+1);//序号
+					sigsuntime.setWeek(String.valueOf(SigSunTime[i]));
+					sigsuntime.setSignpublicparam(signpublicparam);
+					sigsuntimeService.add(sigsuntime);
+				}
+			}
 		}else{
 			System.out.println("-------------------------------signpublicparam update");
 			signpublicparamService.updateByPublicid(Red_Clearance_Time,Yellow_Flash_Time,String.valueOf(number),
@@ -213,14 +213,14 @@ public class ParametersCmdFactory extends CmdFactoryBase implements ICmdParser{
 					SigSpecialTime[20][0],SigSpecialTime[20][1],SigSpecialTime[21][0],SigSpecialTime[21][1],
 					SigSpecialTime[22][0],SigSpecialTime[22][1],SigSpecialTime[23][0],SigSpecialTime[23][1],signpublicparam.getId());
 			//修改公共参数底下的周日参数设置
-//			Set<Sigsuntime> sigsuntimes = signpublicparam.getSigsuntimes();
-//			for (Sigsuntime sigsuntime2 : sigsuntimes) {
-//						for (int i = 0; i < SigSunTime.length; i++) {
-//							if(sigsuntime2.getOrderid()==i+1){
-//								sigsuntimeService.updateWeekBysigsunid(String.valueOf(SigSunTime[i]),sigsuntime2.getId());
-//							}
-//						}
-//			}
+			Set<Sigsuntime> sigsuntimes = signpublicparam.getSigsuntimes();
+			for (Sigsuntime sigsuntime2 : sigsuntimes) {
+						for (int i = 0; i < SigSunTime.length; i++) {
+							if(sigsuntime2.getOrderid()==i+1){
+								sigsuntimeService.updateWeekBysigsunid(String.valueOf(SigSunTime[i]),sigsuntime2.getId());
+							}
+						}
+			}
 					
 		}
 		

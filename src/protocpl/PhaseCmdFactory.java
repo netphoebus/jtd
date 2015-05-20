@@ -7,19 +7,9 @@ import mina.CommandBase;
 import mina.ICmdParser;
 
 import org.apache.mina.core.session.IoSession;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-
-import com.jlj.model.Signpublicparam;
-import com.jlj.model.Solution;
-import com.jlj.service.ISolutionService;
-import com.jlj.service.IStepService;
 
 public class PhaseCmdFactory extends CmdFactoryBase implements ICmdParser{
 
-	final static ApplicationContext ac=new ClassPathXmlApplicationContext("beans.xml");
-	final static ISolutionService solutionService = (ISolutionService)ac.getBean("solutionService");
-	final static IStepService stepService = (IStepService)ac.getBean("stepService");
 	public PhaseCmdFactory(byte[] data) {
 		super(data);
 		// TODO Auto-generated constructor stub
@@ -128,15 +118,6 @@ public class PhaseCmdFactory extends CmdFactoryBase implements ICmdParser{
 		  		
 		  		locatelist.add(locate);
 		  	}
-			//-----------------------------数据库--------------------------------
-			//1-根据ip查询出哪个信号机的公共参数
-			Signpublicparam signpublicparam=null;
-			//2-添加该公共参数的所有相位方案、每个相位步序、每个步序的4个方向
-			for (int j = 0; j < 8; j++) {
-				Solution solution = new Solution();
-//				solution.set
-			}
-			
 			
 //			for(int road_i = 0;road_i<4 ; road_i++){
 //				Road road = new Road();

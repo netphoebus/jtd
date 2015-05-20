@@ -1,8 +1,8 @@
 package com.jlj.model;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -107,8 +107,11 @@ public class Signpublicparam implements java.io.Serializable {
 	private Integer specialday21;
 	private Integer specialday22;
 	private Integer specialday23;
-	private List<Commontime> commontimes = new ArrayList<Commontime>();
-	private List<Solution> solutions = new ArrayList<Solution>();
+	private Set<Sigordinarytime> sigordinarytimes = new HashSet<Sigordinarytime>(
+			0);
+	private Set<Solution> solutions = new HashSet<Solution>(0);
+	private Set<Sigspecialtime> sigspecialtimes = new HashSet<Sigspecialtime>(0);
+	private Set<Sigsuntime> sigsuntimes = new HashSet<Sigsuntime>(0);
 
 	// Constructors
 
@@ -145,7 +148,8 @@ public class Signpublicparam implements java.io.Serializable {
 			Integer specialday15, Integer specialday16, Integer specialday17,
 			Integer specialday18, Integer specialday19, Integer specialday20,
 			Integer specialday21, Integer specialday22, Integer specialday23,
-			List<Commontime> commontimes, List<Solution> solutions) {
+			Set<Sigordinarytime> sigordinarytimes, Set<Solution> solutions,
+			Set<Sigspecialtime> sigspecialtimes, Set<Sigsuntime> sigsuntimes) {
 		this.sig = sig;
 		this.qchdtime = qchdtime;
 		this.kjhstime = kjhstime;
@@ -224,8 +228,10 @@ public class Signpublicparam implements java.io.Serializable {
 		this.specialday21 = specialday21;
 		this.specialday22 = specialday22;
 		this.specialday23 = specialday23;
-		this.commontimes = commontimes;
+		this.sigordinarytimes = sigordinarytimes;
 		this.solutions = solutions;
+		this.sigspecialtimes = sigspecialtimes;
+		this.sigsuntimes = sigsuntimes;
 	}
 
 	// Property accessors
@@ -945,21 +951,39 @@ public class Signpublicparam implements java.io.Serializable {
 	}
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "signpublicparam")
-	public List<Commontime> getCommontimes() {
-		return this.commontimes;
+	public Set<Sigordinarytime> getSigordinarytimes() {
+		return this.sigordinarytimes;
 	}
 
-	public void setCommontimes(List<Commontime> commontimes) {
-		this.commontimes = commontimes;
+	public void setSigordinarytimes(Set<Sigordinarytime> sigordinarytimes) {
+		this.sigordinarytimes = sigordinarytimes;
 	}
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "signpublicparam")
-	public List<Solution> getSolutions() {
+	public Set<Solution> getSolutions() {
 		return this.solutions;
 	}
 
-	public void setSolutions(List<Solution> solutions) {
+	public void setSolutions(Set<Solution> solutions) {
 		this.solutions = solutions;
+	}
+
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "signpublicparam")
+	public Set<Sigspecialtime> getSigspecialtimes() {
+		return this.sigspecialtimes;
+	}
+
+	public void setSigspecialtimes(Set<Sigspecialtime> sigspecialtimes) {
+		this.sigspecialtimes = sigspecialtimes;
+	}
+
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "signpublicparam")
+	public Set<Sigsuntime> getSigsuntimes() {
+		return this.sigsuntimes;
+	}
+
+	public void setSigsuntimes(Set<Sigsuntime> sigsuntimes) {
+		this.sigsuntimes = sigsuntimes;
 	}
 
 }

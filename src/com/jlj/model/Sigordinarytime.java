@@ -1,5 +1,8 @@
 package com.jlj.model;
 
+import java.util.HashSet;
+import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -7,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -21,8 +25,9 @@ public class Sigordinarytime implements java.io.Serializable {
 	// Fields
 
 	private Integer id;
-	private Commontime commontime;
+	private Signpublicparam signpublicparam;
 	private Integer orderid;
+	private Set<Commontime> commontimes = new HashSet<Commontime>(0);
 
 	// Constructors
 
@@ -31,9 +36,10 @@ public class Sigordinarytime implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public Sigordinarytime(Commontime commontime, Integer orderid) {
-		this.commontime = commontime;
-		this.orderid = orderid;
+	public Sigordinarytime(Signpublicparam signpublicparam,
+			Set<Commontime> commontimes) {
+		this.signpublicparam = signpublicparam;
+		this.commontimes = commontimes;
 	}
 
 	// Property accessors
@@ -49,22 +55,32 @@ public class Sigordinarytime implements java.io.Serializable {
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "commonid")
-	public Commontime getCommontime() {
-		return this.commontime;
+	@JoinColumn(name = "publicid")
+	public Signpublicparam getSignpublicparam() {
+		return this.signpublicparam;
 	}
 
-	public void setCommontime(Commontime commontime) {
-		this.commontime = commontime;
+	public void setSignpublicparam(Signpublicparam signpublicparam) {
+		this.signpublicparam = signpublicparam;
+	}
+
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "sigordinarytime")
+	public Set<Commontime> getCommontimes() {
+		return this.commontimes;
+	}
+
+	public void setCommontimes(Set<Commontime> commontimes) {
+		this.commontimes = commontimes;
 	}
 
 	@Column(name = "orderid")
 	public Integer getOrderid() {
-		return this.orderid;
+		return orderid;
 	}
 
 	public void setOrderid(Integer orderid) {
 		this.orderid = orderid;
 	}
 
+	
 }

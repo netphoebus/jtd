@@ -1,8 +1,7 @@
 package com.jlj.model;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -28,8 +27,8 @@ public class Usero implements java.io.Serializable {
 	private String password;
 	private String uip;
 	private Integer ulimit;
-	private List<Userarea> userareas = new ArrayList<Userarea>();
-	private List<Oplog> oplogs = new ArrayList<Oplog>();
+	private Set<Userarea> userareas = new HashSet<Userarea>(0);
+	private Set<Oplog> oplogs = new HashSet<Oplog>(0);
 
 	// Constructors
 
@@ -39,7 +38,7 @@ public class Usero implements java.io.Serializable {
 
 	/** full constructor */
 	public Usero(String username, String password, String uip, Integer ulimit,
-			List<Userarea> userareas, List<Oplog> oplogs) {
+			Set<Userarea> userareas, Set<Oplog> oplogs) {
 		this.username = username;
 		this.password = password;
 		this.uip = uip;
@@ -97,20 +96,20 @@ public class Usero implements java.io.Serializable {
 	}
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "usero")
-	public List<Userarea> getUserareas() {
+	public Set<Userarea> getUserareas() {
 		return this.userareas;
 	}
 
-	public void setUserareas(List<Userarea> userareas) {
+	public void setUserareas(Set<Userarea> userareas) {
 		this.userareas = userareas;
 	}
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "usero")
-	public List<Oplog> getOplogs() {
+	public Set<Oplog> getOplogs() {
 		return this.oplogs;
 	}
 
-	public void setOplogs(List<Oplog> oplogs) {
+	public void setOplogs(Set<Oplog> oplogs) {
 		this.oplogs = oplogs;
 	}
 
