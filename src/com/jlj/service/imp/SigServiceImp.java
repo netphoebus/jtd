@@ -84,7 +84,7 @@ public class SigServiceImp implements ISigService  {
 	}
 	public Sig querySigByIpAddress(String ipAddress) {
 		String queryString = "from Sig mo where mo.ip = :ipAddress";
-		String[] paramNames = new String[] { "ip" };
+		String[] paramNames = new String[] { "ipAddress" };
 		Object[] values = new Object[] { ipAddress };
 		return sigDao.queryByNamedParam(queryString, paramNames, values);
 	}
