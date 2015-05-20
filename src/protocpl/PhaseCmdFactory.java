@@ -1,5 +1,6 @@
 package protocpl;
 
+import java.net.InetSocketAddress;
 import java.util.ArrayList;
 
 import mina.CmdFactoryBase;
@@ -7,9 +8,24 @@ import mina.CommandBase;
 import mina.ICmdParser;
 
 import org.apache.mina.core.session.IoSession;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import com.jlj.model.Road;
+import com.jlj.model.Signpublicparam;
+import com.jlj.model.Solution;
+import com.jlj.model.Step;
+import com.jlj.service.IRoadService;
+import com.jlj.service.ISignpublicparamService;
+import com.jlj.service.ISolutionService;
+import com.jlj.service.IStepService;
 
 public class PhaseCmdFactory extends CmdFactoryBase implements ICmdParser{
-
+	final static ApplicationContext ac=new ClassPathXmlApplicationContext("beans.xml");
+	final static ISignpublicparamService signpublicparamService = (ISignpublicparamService)ac.getBean("signpublicparamService");
+	final static ISolutionService solutionService = (ISolutionService)ac.getBean("solutionService");
+	final static IStepService stepService = (IStepService)ac.getBean("stepService");
+	final static IRoadService roadService = (IRoadService)ac.getBean("roadService");
 	public PhaseCmdFactory(byte[] data) {
 		super(data);
 		// TODO Auto-generated constructor stub
@@ -118,6 +134,55 @@ public class PhaseCmdFactory extends CmdFactoryBase implements ICmdParser{
 		  		
 		  		locatelist.add(locate);
 		  	}
+			//---------------------数据库----------------------------
+			//根据ip获取对应的公共参数，保存相位方案以及步序和方向（东南西北、左直右人人）
+			//获取session中的IP
+			String clientIP = ((InetSocketAddress)session.getRemoteAddress()).getAddress().getHostAddress();
+			Signpublicparam signpublicparam =signpublicparamService.getPublicparamByIp(clientIP);
+			for (int j = 0; j < locatelist.size(); j++) {
+				Solution solution = new Solution();
+				solution.setOrderid(j);
+				solution.setSignpublicparam(signpublicparam);
+				solution.setSoluname("相位方案"+j);
+				try {
+					solutionService.add(solution);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				//保存该相位方案的所有相位步序
+				for (int k = 0; k < 16; k++) {
+					Step step = new Step();
+					step.setOrderid(k);
+					step.setPhasename("相位"+k/2);
+					step.setStepname("步序"+k);
+//					step.setSecond(second);//秒
+					step.setSolution(solution);
+					try {
+						stepService.add(step);
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					//保存该相位步序下的所有方向
+					for (int a = 0; a < 4; a++) {
+						Road road = new Road();
+						road.setLeftcolor(locatelist.get(j)[a][0]);
+						road.setLinecolor(locatelist.get(j)[a][1]);
+						road.setRightcolor(locatelist.get(j)[a][2]);
+						road.setRxcolor(locatelist.get(j)[a][3]);
+						road.setRoadtype(a);
+						road.setStep(step);
+						try {
+							roadService.add(road);
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+				}
+				
+			}
 			
 //			for(int road_i = 0;road_i<4 ; road_i++){
 //				Road road = new Road();
