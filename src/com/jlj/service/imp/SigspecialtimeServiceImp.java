@@ -116,4 +116,12 @@ public class SigspecialtimeServiceImp implements ISigspecialtimeService  {
 		
 		return sigspecialtimeDao.loadByMkid(queryString);
 	}
+	public void updateByOrderid(int month, int day, int orderid,
+			Integer publicid) {
+		String queryString = "update Sigspecialtime mo set mo.specialmonth=:month,mo.specialday=:day where mo.orderid = :orderid and mo.signpublicparam.id=:publicid ";
+		String[] paramNames = new String[] {"month","day", "orderid","publicid" };
+		Object[] values = new Object[] {month,day, orderid,publicid };
+		sigspecialtimeDao.updateByHql(queryString, paramNames, values);
+		
+	}
 }

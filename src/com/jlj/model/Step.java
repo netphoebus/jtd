@@ -32,7 +32,7 @@ public class Step implements java.io.Serializable {
 	private String stepname;
 	private Integer second;
 	private Integer orderid;
-	private List<Road> roads = new ArrayList<Road>(0);
+	private List<Road> roads = new ArrayList<Road>();
 
 	// Constructors
 

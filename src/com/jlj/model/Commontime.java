@@ -36,7 +36,7 @@ public class Commontime implements java.io.Serializable {
 	private Integer lstime;
 	private Integer hdtime;
 	private Integer qchdtime;
-	private Solution solution;
+	private Integer orderid;
 
 	// Constructors
 
@@ -48,8 +48,7 @@ public class Commontime implements java.io.Serializable {
 	public Commontime(Sigordinarytime sigordinarytime, Sigsuntime sigsuntime,
 			Sigspecialtime sigspecialtime, Integer hour, Integer minute,
 			Integer seconds, Integer workingway, Integer workingprogram,
-			Integer lstime, Integer hdtime, Integer qchdtime,
-			Solution solution) {
+			Integer lstime, Integer hdtime, Integer qchdtime,Integer orderid) {
 		this.sigordinarytime = sigordinarytime;
 		this.sigsuntime = sigsuntime;
 		this.sigspecialtime = sigspecialtime;
@@ -61,7 +60,7 @@ public class Commontime implements java.io.Serializable {
 		this.lstime = lstime;
 		this.hdtime = hdtime;
 		this.qchdtime = qchdtime;
-		this.solution = solution;
+		this.orderid = orderid;
 	}
 
 	// Property accessors
@@ -178,13 +177,15 @@ public class Commontime implements java.io.Serializable {
 		this.qchdtime = qchdtime;
 	}
 
-	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "commontime")
-	public Solution getSolution() {
-		return this.solution;
+	@Column(name = "orderid")
+	public Integer getOrderid() {
+		return orderid;
 	}
 
-	public void setSolution(Solution solution) {
-		this.solution = solution;
+	public void setOrderid(Integer orderid) {
+		this.orderid = orderid;
 	}
+
+	
 
 }

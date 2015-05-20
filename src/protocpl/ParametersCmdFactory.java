@@ -1,7 +1,7 @@
 package protocpl;
 
 import java.net.InetSocketAddress;
-import java.util.Set;
+import java.util.List;
 
 import mina.CmdFactoryBase;
 import mina.CommandBase;
@@ -12,8 +12,12 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.jlj.model.Signpublicparam;
+import com.jlj.model.Sigordinarytime;
+import com.jlj.model.Sigspecialtime;
 import com.jlj.model.Sigsuntime;
 import com.jlj.service.ISignpublicparamService;
+import com.jlj.service.ISigordinarytimeService;
+import com.jlj.service.ISigspecialtimeService;
 import com.jlj.service.ISigsuntimeService;
 
 
@@ -23,8 +27,9 @@ public class ParametersCmdFactory extends CmdFactoryBase implements ICmdParser{
 	public static boolean setSuccess;
 	final static ApplicationContext ac=new ClassPathXmlApplicationContext("beans.xml");
 	final static ISignpublicparamService signpublicparamService = (ISignpublicparamService)ac.getBean("signpublicparamService");
+	final static ISigordinarytimeService sigordinarytimeService = (ISigordinarytimeService)ac.getBean("sigordinarytimeService");
 	final static ISigsuntimeService sigsuntimeService = (ISigsuntimeService)ac.getBean("sigsuntimeService");
-//	final static ISigordinarytimeService sigordinarytimeService = (ISigordinarytimeService)ac.getBean("sigordinarytimeService");
+	final static ISigspecialtimeService sigspecialtimeService = (ISigspecialtimeService)ac.getBean("sigspecialtimeService");
 	public ParametersCmdFactory(byte[] data){
 		super(data);
 		this.expected_cmd = MONITOR_CMD_TYPE.MONITOR_CMD_COMMON_PARAMETERS;
@@ -183,19 +188,31 @@ public class ParametersCmdFactory extends CmdFactoryBase implements ICmdParser{
 			signpublicparam.setSpecialmonth23(SigSpecialTime[23][0]);
 			signpublicparam.setSpecialday23(SigSpecialTime[23][1]);
 			signpublicparamService.add(signpublicparam);//保存公共参数
+			//保存公共参数底下的普通参数设置
+			Sigordinarytime sigordinarytime = new Sigordinarytime();
+			sigordinarytime.setOrderid(0);
+			sigordinarytime.setSignpublicparam(signpublicparam);
+			sigordinarytimeService.add(sigordinarytime);
 			//保存公共参数底下的周日参数设置
 			for (int i = 0; i < SigSunTime.length; i++) {
-				if(SigSunTime[i]==1){
-					System.out.println("-------------------------------sigsuntime add");
 					Sigsuntime sigsuntime = new Sigsuntime();
-					sigsuntime.setOrderid(i+1);//序号
+					sigsuntime.setOrderid(i);//序号
 					sigsuntime.setWeek(String.valueOf(SigSunTime[i]));
 					sigsuntime.setSignpublicparam(signpublicparam);
 					sigsuntimeService.add(sigsuntime);
-				}
 			}
+			//保存公共参数底下的特殊日参数设置
+			for (int i = 0; i < 24; i++) {
+				Sigspecialtime sigspecialtime = new Sigspecialtime();
+				sigspecialtime.setOrderid(i);
+				sigspecialtime.setSignpublicparam(signpublicparam);
+				sigspecialtime.setSpecialmonth(SigSpecialTime[i][0]);
+				sigspecialtime.setSpecialday(SigSpecialTime[i][1]);
+				sigspecialtimeService.add(sigspecialtime);
+			}
+			System.out.println("-------------------------------signpublicparam add success");
 		}else{
-			System.out.println("-------------------------------signpublicparam update");
+			System.out.println("-------------------------------signpublicparam update");	
 			signpublicparamService.updateByPublicid(Red_Clearance_Time,Yellow_Flash_Time,String.valueOf(number),
 					String.valueOf(comparam),checkflow,innermark,Workingset,
 					SigSunTime[0],SigSunTime[1],SigSunTime[2],SigSunTime[3],SigSunTime[4],SigSunTime[5],SigSunTime[6],
@@ -212,16 +229,16 @@ public class ParametersCmdFactory extends CmdFactoryBase implements ICmdParser{
 					SigSpecialTime[18][0],SigSpecialTime[18][1],SigSpecialTime[19][0],SigSpecialTime[19][1],
 					SigSpecialTime[20][0],SigSpecialTime[20][1],SigSpecialTime[21][0],SigSpecialTime[21][1],
 					SigSpecialTime[22][0],SigSpecialTime[22][1],SigSpecialTime[23][0],SigSpecialTime[23][1],signpublicparam.getId());
+			//修改公共参数底下的普通参数设置
 			//修改公共参数底下的周日参数设置
-			Set<Sigsuntime> sigsuntimes = signpublicparam.getSigsuntimes();
-			for (Sigsuntime sigsuntime2 : sigsuntimes) {
-						for (int i = 0; i < SigSunTime.length; i++) {
-							if(sigsuntime2.getOrderid()==i+1){
-								sigsuntimeService.updateWeekBysigsunid(String.valueOf(SigSunTime[i]),sigsuntime2.getId());
-							}
-						}
+			for (int i = 0; i < SigSunTime.length; i++) {
+				sigsuntimeService.updateByOrderid(String.valueOf(SigSunTime[i]),i,signpublicparam.getId());
 			}
-					
+			//修改公共参数底下的特殊日参数设置
+			for (int i = 0; i < 24; i++) {
+				sigspecialtimeService.updateByOrderid(SigSpecialTime[i][0],SigSpecialTime[i][1],i,signpublicparam.getId());
+			}
+			System.out.println("-------------------------------signpublicparam update success");		
 		}
 		
 	}

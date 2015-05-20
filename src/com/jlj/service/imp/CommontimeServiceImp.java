@@ -116,4 +116,13 @@ public class CommontimeServiceImp implements ICommontimeService  {
 		
 		return commontimeDao.loadByMkid(queryString);
 	}
+	public void updateByConditionOrdinaryid(int hour, int minute, int seconds,
+			int workingway, int workingprogram, int lstime, int hdtime,
+			int qchdtime, int orderid, Integer ordinaryid) {
+		String queryString = "update Commontime mo set mo.hour=:hour,mo.minute=:minute,mo.seconds=:seconds,mo.workingway=:workingway,mo.workingprogram=:workingprogram," +
+				"mo.lstime=:lstime,mo.hdtime=:hdtime,mo.qchdtime=:qchdtime where mo.orderid = :orderid and mo.sigordinarytime.id=:ordinaryid ";
+		String[] paramNames = new String[] {"hour","minute","seconds","workingway","workingprogram","lstime","hdtime","qchdtime","orderid","ordinaryid"};
+		Object[] values = new Object[] {hour, minute, seconds, workingway, workingprogram, lstime, hdtime, qchdtime, orderid, ordinaryid};
+		commontimeDao.updateByHql(queryString, paramNames, values);
+	}
 }

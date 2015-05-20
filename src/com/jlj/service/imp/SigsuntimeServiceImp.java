@@ -122,4 +122,11 @@ public class SigsuntimeServiceImp implements ISigsuntimeService {
 		Object[] values = new Object[] {week, sigsunid };
 		sigsuntimeDao.updateByHql(queryString, paramNames, values);
 	}
+	public void updateByOrderid(String week, int orderid, Integer publicid) {
+		String queryString = "update Sigsuntime mo set mo.week=:week where mo.orderid = :orderid and mo.signpublicparam.id=:publicid ";
+		String[] paramNames = new String[] {"week", "orderid","publicid" };
+		Object[] values = new Object[] {week, orderid,publicid };
+		sigsuntimeDao.updateByHql(queryString, paramNames, values);
+		
+	}
 }

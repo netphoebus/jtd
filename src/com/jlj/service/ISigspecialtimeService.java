@@ -36,4 +36,6 @@ public interface ISigspecialtimeService {
 
 	public abstract Sigspecialtime loadByMkid(long mkid);
 
+	public abstract void updateByOrderid(int month, int day, int orderid, Integer publicid);
+
 }

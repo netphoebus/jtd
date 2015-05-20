@@ -1,7 +1,8 @@
 package com.jlj.model;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -28,7 +29,7 @@ public class Sigsuntime implements java.io.Serializable {
 	private Signpublicparam signpublicparam;
 	private String week;
 	private Integer orderid;
-	private Set<Commontime> commontimes = new HashSet<Commontime>(0);
+	private List<Commontime> commontimes = new ArrayList<Commontime>();
 
 	// Constructors
 
@@ -38,7 +39,7 @@ public class Sigsuntime implements java.io.Serializable {
 
 	/** full constructor */
 	public Sigsuntime(Signpublicparam signpublicparam, String week,
-			Integer orderid, Set<Commontime> commontimes) {
+			Integer orderid, List<Commontime> commontimes) {
 		this.signpublicparam = signpublicparam;
 		this.week = week;
 		this.orderid = orderid;
@@ -86,11 +87,11 @@ public class Sigsuntime implements java.io.Serializable {
 	}
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "sigsuntime")
-	public Set<Commontime> getCommontimes() {
+	public List<Commontime> getCommontimes() {
 		return this.commontimes;
 	}
 
-	public void setCommontimes(Set<Commontime> commontimes) {
+	public void setCommontimes(List<Commontime> commontimes) {
 		this.commontimes = commontimes;
 	}
 

@@ -38,4 +38,6 @@ public interface ISigsuntimeService {
 
 	public abstract void updateWeekBysigsunid(String valueOf, Integer id);
 
+	public abstract void updateByOrderid(String week, int orderid, Integer publicid);
+
 }

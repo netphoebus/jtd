@@ -1,7 +1,7 @@
 package com.jlj.model;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -35,7 +35,7 @@ public class Sig implements java.io.Serializable {
 	private String ip;
 	private Long mkid;
 	private Signpublicparam signpublicparam;
-	private Set<Devlog> devlogs = new HashSet<Devlog>(0);
+	private List<Devlog> devlogs = new ArrayList<Devlog>();
 	private Sigsystime sigsystime;
 
 	// Constructors
@@ -47,7 +47,7 @@ public class Sig implements java.io.Serializable {
 	/** full constructor */
 	public Sig(Userarea userarea, String name, String address, String lat,
 			String lng, String ip, Long mkid,
-			Signpublicparam signpublicparam, Set<Devlog> devlogs,
+			Signpublicparam signpublicparam, List<Devlog> devlogs,
 			Sigsystime sigsystime) {
 		this.userarea = userarea;
 		this.name = name;
@@ -147,11 +147,11 @@ public class Sig implements java.io.Serializable {
 	}
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "sig")
-	public Set<Devlog> getDevlogs() {
+	public List<Devlog> getDevlogs() {
 		return this.devlogs;
 	}
 
-	public void setDevlogs(Set<Devlog> devlogs) {
+	public void setDevlogs(List<Devlog> devlogs) {
 		this.devlogs = devlogs;
 	}
 
