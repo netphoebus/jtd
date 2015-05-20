@@ -90,6 +90,8 @@ public class CommonTimeCmdFactory extends CmdFactoryBase implements ICmdParser{
 			}
 			commtimelist.add(commontime);
 		}
+		//-----------------------------------数据库-----------------------------
+		//1-
 	}
 
 	public void UpdatePushTask() {

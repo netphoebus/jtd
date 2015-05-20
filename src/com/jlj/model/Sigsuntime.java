@@ -1,8 +1,5 @@
 package com.jlj.model;
 
-import java.util.HashSet;
-import java.util.Set;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -10,7 +7,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -25,10 +21,9 @@ public class Sigsuntime implements java.io.Serializable {
 	// Fields
 
 	private Integer id;
-	private Signpublicparam signpublicparam;
+	private Commontime commontime;
 	private String week;
 	private Integer orderid;
-	private Set<Commontime> commontimes = new HashSet<Commontime>(0);
 
 	// Constructors
 
@@ -37,12 +32,10 @@ public class Sigsuntime implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public Sigsuntime(Signpublicparam signpublicparam, String week,
-			Integer orderid, Set<Commontime> commontimes) {
-		this.signpublicparam = signpublicparam;
+	public Sigsuntime(Commontime commontime, String week, Integer orderid) {
+		this.commontime = commontime;
 		this.week = week;
 		this.orderid = orderid;
-		this.commontimes = commontimes;
 	}
 
 	// Property accessors
@@ -58,13 +51,13 @@ public class Sigsuntime implements java.io.Serializable {
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "publicid")
-	public Signpublicparam getSignpublicparam() {
-		return this.signpublicparam;
+	@JoinColumn(name = "commonid")
+	public Commontime getCommontime() {
+		return this.commontime;
 	}
 
-	public void setSignpublicparam(Signpublicparam signpublicparam) {
-		this.signpublicparam = signpublicparam;
+	public void setCommontime(Commontime commontime) {
+		this.commontime = commontime;
 	}
 
 	@Column(name = "week", length = 10)
@@ -83,15 +76,6 @@ public class Sigsuntime implements java.io.Serializable {
 
 	public void setOrderid(Integer orderid) {
 		this.orderid = orderid;
-	}
-
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "sigsuntime")
-	public Set<Commontime> getCommontimes() {
-		return this.commontimes;
-	}
-
-	public void setCommontimes(Set<Commontime> commontimes) {
-		this.commontimes = commontimes;
 	}
 
 }

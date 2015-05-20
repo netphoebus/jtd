@@ -1,7 +1,8 @@
 package com.jlj.model;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -30,7 +31,7 @@ public class Userarea implements java.io.Serializable {
 	private String lat;
 	private String lng;
 	private Integer size;
-	private Set<Sig> sigs = new HashSet<Sig>(0);
+	private List<Sig> sigs = new ArrayList<Sig>();
 
 	// Constructors
 
@@ -40,7 +41,7 @@ public class Userarea implements java.io.Serializable {
 
 	/** full constructor */
 	public Userarea(Usero usero, String uareaname, String lat, String lng,
-			Integer size, Set<Sig> sigs) {
+			Integer size, List<Sig> sigs) {
 		this.usero = usero;
 		this.uareaname = uareaname;
 		this.lat = lat;
@@ -108,11 +109,11 @@ public class Userarea implements java.io.Serializable {
 	}
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "userarea")
-	public Set<Sig> getSigs() {
+	public List<Sig> getSigs() {
 		return this.sigs;
 	}
 
-	public void setSigs(Set<Sig> sigs) {
+	public void setSigs(List<Sig> sigs) {
 		this.sigs = sigs;
 	}
 

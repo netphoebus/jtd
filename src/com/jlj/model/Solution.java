@@ -13,7 +13,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
@@ -29,12 +28,9 @@ public class Solution implements java.io.Serializable {
 
 	private Integer id;
 	private Signpublicparam signpublicparam;
-	private Commontime commontime;
 	private String soluname;
 	private Integer orderid;
-
-	private List<Step> steps = new ArrayList<Step>(0);
-
+	private List<Step> steps = new ArrayList<Step>();
 
 	// Constructors
 
@@ -43,12 +39,9 @@ public class Solution implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public Solution(Signpublicparam signpublicparam, Commontime commontime,
-
-			String soluname, Integer orderid, List<Step> steps) {
-
+	public Solution(Signpublicparam signpublicparam, String soluname,
+			Integer orderid, List<Step> steps) {
 		this.signpublicparam = signpublicparam;
-		this.commontime = commontime;
 		this.soluname = soluname;
 		this.orderid = orderid;
 		this.steps = steps;
@@ -76,16 +69,6 @@ public class Solution implements java.io.Serializable {
 		this.signpublicparam = signpublicparam;
 	}
 
-	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "commonid")
-	public Commontime getCommontime() {
-		return this.commontime;
-	}
-
-	public void setCommontime(Commontime commontime) {
-		this.commontime = commontime;
-	}
-
 	@Column(name = "soluname", length = 30)
 	public String getSoluname() {
 		return this.soluname;
@@ -106,12 +89,11 @@ public class Solution implements java.io.Serializable {
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "solution")
 	public List<Step> getSteps() {
-		return steps;
+		return this.steps;
 	}
 
 	public void setSteps(List<Step> steps) {
 		this.steps = steps;
-
 	}
 
 }
