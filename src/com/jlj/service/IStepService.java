@@ -38,4 +38,9 @@ public interface IStepService {
 
 	public abstract List<Step> loadBySoId(int soid);
 
+	public abstract Step queryStepBySoluid(int orderid, int soluid);
+
+	public abstract void updateByStepid(String phasename, String stepname,
+			Integer id);
+
 }

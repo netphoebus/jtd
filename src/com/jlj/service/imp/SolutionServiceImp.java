@@ -116,4 +116,16 @@ public class SolutionServiceImp implements ISolutionService  {
 		
 		return solutionDao.loadByMkid(queryString);
 	}
+	public List<Solution> getSolutionsByPublicidOrder(Integer id) {
+		String queryString = "from Solution mo where mo.signpublicparam.id=? order by mo.orderid asc ";
+		Object[] p = new Object[]{id};
+		return solutionDao.getObjectsByCondition(queryString, p);
+	}
+	public void updateBySoluid(String soluname, int soluid) {
+		String queryString = "update Solution mo set mo.soluname=:soluname where mo.id=:soluid ";
+		String[] paramNames = new String[] {"soluname","soluid"};
+		Object[] values = new Object[] {soluname, soluid};
+		solutionDao.updateByHql(queryString, paramNames, values);
+		
+	}
 }

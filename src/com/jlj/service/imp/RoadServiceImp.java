@@ -116,4 +116,12 @@ public class RoadServiceImp implements IRoadService  {
 		
 		return roadDao.loadByMkid(queryString);
 	}
+	public void updateByRoadid(int leftcolor, int linecolor, int rightcolor,
+			int rxcolor, int roadtype, Integer stepid) {
+		String queryString="update Road mo set mo.leftcolor=:leftcolor,mo.linecolor=:linecolor,mo.rightcolor=:rightcolor,mo.rxcolor=:rxcolor where mo.step.id=:stepid and mo.roadtype=:roadtype";
+		String[] paramNames = new String[] {"leftcolor","linecolor","rightcolor","rxcolor","roadtype","stepid"};
+		Object[] values = new Object[]{leftcolor, linecolor, rightcolor,rxcolor, roadtype,stepid};
+		roadDao.updateByHql(queryString, paramNames, values);
+		
+	}
 }

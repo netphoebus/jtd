@@ -36,4 +36,7 @@ public interface IRoadService {
 
 	public abstract Road loadByMkid(long mkid);
 
+	public abstract void updateByRoadid(int leftcolor, int linecolor,
+			int rightcolor, int rxcolor, int roadtype, Integer id);
+
 }

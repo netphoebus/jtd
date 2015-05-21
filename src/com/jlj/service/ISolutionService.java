@@ -36,4 +36,8 @@ public interface ISolutionService {
 
 	public abstract Solution loadByMkid(long mkid);
 
+	public abstract void updateBySoluid(String soluname, int soluid);
+
+	public abstract List<Solution> getSolutionsByPublicidOrder(Integer id);
+
 }
