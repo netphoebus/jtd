@@ -1,7 +1,9 @@
 package com.jlj.model;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -37,6 +39,7 @@ public class Sig implements java.io.Serializable {
 	private Signpublicparam signpublicparam;
 	private List<Devlog> devlogs = new ArrayList<Devlog>();
 	private Sigsystime sigsystime;
+	private Greenconflict greenconflict;
 
 	// Constructors
 
@@ -48,7 +51,7 @@ public class Sig implements java.io.Serializable {
 	public Sig(Userarea userarea, String name, String address, String lat,
 			String lng, String ip, Long mkid,
 			Signpublicparam signpublicparam, List<Devlog> devlogs,
-			Sigsystime sigsystime) {
+			Sigsystime sigsystime,Greenconflict greenconflict) {
 		this.userarea = userarea;
 		this.name = name;
 		this.address = address;
@@ -59,6 +62,7 @@ public class Sig implements java.io.Serializable {
 		this.signpublicparam = signpublicparam;
 		this.devlogs = devlogs;
 		this.sigsystime = sigsystime;
+		this.greenconflict = greenconflict;
 	}
 
 	// Property accessors
@@ -164,4 +168,14 @@ public class Sig implements java.io.Serializable {
 		this.sigsystime = sigsystime;
 	}
 
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "sig")
+	public Greenconflict getGreenconflict() {
+		return greenconflict;
+	}
+
+	public void setGreenconflict(Greenconflict greenconflict) {
+		this.greenconflict = greenconflict;
+	}
+
+	
 }
