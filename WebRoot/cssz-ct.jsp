@@ -1,3 +1,12 @@
+<%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="/struts-tags" prefix="s"%>
+<%
+	String path = request.getContextPath();
+	String basePath = request.getScheme() + "://"
+			+ request.getServerName() + ":" + request.getServerPort()
+			+ path + "/";
+%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -14,6 +23,9 @@
 <script type="text/javascript" src="js/jquery.idTabs.min.js"></script>
 <script type="text/javascript" src="js/select-ui.min.js"></script>
 <script type="text/javascript" src="editor/kindeditor.js"></script>
+<script type="text/javascript" src="js/privatecssz-ct.js"></script>
+
+
 
 <script type="text/javascript">
     KE.show({
@@ -52,11 +64,13 @@ $(document).ready(function(e) {
     
     <div class="itab">
   	<ul> 
-    <li><a href="cssz-cs.html" >一般参数</a></li> 
+    	<li>
+							<a href="sigpublicparamAction!publicParam?id=<s:property value="#session.id"/>">一般参数</a>
+						</li>
      
-    <li><a href="cssz-fa.html" >相位方案</a></li> 
-    <li><a href="cssz-time.html"  >时间段参数</a></li> 
-    <li><a href="cssz-ct.html"  class="selected">绿冲突表</a></li> 
+    <li><a href="solutionAction!solutions" >相位方案</a></li> 
+    <li><a href="cssz-time.jsp"  >时间段参数</a></li> 
+    <li><a href="cssz-ct.jsp"  class="selected">绿冲突表</a></li> 
   	</ul>
     </div>
     <div style="font-size:18px; font-family:黑体; font-weight:bold; width:100%; text-align:center; line-height:30px; margin-top:15px;">绿冲突表</div>
@@ -108,22 +122,22 @@ $(document).ready(function(e) {
           <tr>
             <td>0</td>
             <td>东左</td>
-            <td>0</td>
-            <td>0</td>
-            <td>0</td>
-            <td>0</td>
-            <td>1</td>
-            <td>1</td>
-            <td>0</td>
-            <td>0</td>
-            <td>0</td>
-            <td>1</td>
-            <td>0</td>
-            <td>1</td>
-            <td>1</td>
-            <td>0</td>
-            <td>0</td>
-            <td>1</td>
+            <td>0<img src="img/tick.png"/></td>
+            <td>0<img src="img/tick.png"/></td>
+            <td>0<img src="img/tick.png"/></td>
+            <td>0<img src="img/tick.png"/></td>
+            <td>1<img src="img/cross.png"/></td>
+            <td>1<img src="img/cross.png"/></td>
+            <td>0<img src="img/tick.png"/></td>
+            <td>0<img src="img/tick.png"/></td>
+            <td>0<img src="img/tick.png"/></td>
+            <td>1<img src="img/cross.png"/></td>
+            <td>0<img src="img/tick.png"/></td>
+            <td>1<img src="img/cross.png"/></td>
+            <td>1<img src="img/cross.png"/></td>
+            <td>0<img src="img/tick.png"/></td>
+            <td>0<img src="img/tick.png"/></td>
+            <td>1<img src="img/tick.png"/></td>
           </tr>
           <tr>
             <td>1</td>

@@ -1,32 +1,36 @@
-<%@ page language="java" import="java.util.*" pageEncoding="utf-8"%> <%
-String path = request.getContextPath(); String basePath =
-request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+<%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="/struts-tags" prefix="s"%>
+<%
+	String path = request.getContextPath();
+	String basePath = request.getScheme() + "://"
+			+ request.getServerName() + ":" + request.getServerPort()
+			+ path + "/";
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>时间参数</title>
-<link href="css/style.css" rel="stylesheet" type="text/css" />
-<link href="css/select.css" rel="stylesheet" type="text/css" />
-<link href="css/stilearn-helper.css" rel="stylesheet" type="text/css" />
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>时间参数</title>
+		<link href="css/style.css" rel="stylesheet" type="text/css" />
+		<link href="css/select.css" rel="stylesheet" type="text/css" />
+		<link href="css/stilearn-helper.css" rel="stylesheet" type="text/css" />
 
-<script type="text/javascript" src="js/jquery.js"></script>
-<script src="js/stilearn-base.js"></script>
-<script src="js/holder.js"></script>
+		<script type="text/javascript" src="js/jquery.js"></script>
+		<script src="js/stilearn-base.js"></script>
+		<script src="js/holder.js"></script>
 
-<script type="text/javascript" src="js/jquery.idTabs.min.js"></script>
-<script type="text/javascript" src="js/select-ui.min.js"></script>
-<script type="text/javascript" src="editor/kindeditor.js"></script>
-
-<script type="text/javascript">
+		<script type="text/javascript" src="js/jquery.idTabs.min.js"></script>
+		<script type="text/javascript" src="js/select-ui.min.js"></script>
+		<script type="text/javascript" src="editor/kindeditor.js"></script>
+		<script type="text/javascript" src="js/privatecssz-time.js"></script>
+		<script type="text/javascript">
     KE.show({
         id : 'content7',
         cssPath : './index.css'
     });
   </script>
-  
-<script type="text/javascript">
+		<script type="text/javascript">
 $(document).ready(function(e) {
     $(".select1").uedSelect({
 		width : 200			  
@@ -43,163 +47,283 @@ $(document).ready(function(e) {
 });
 </script>
 
-</head>
+	</head>
 
-<body>
+	<body>
 
-	
-    
-<div class="formbody">
-    
-    
-<div id="usual1" class="usual"> 
-    
-    <div class="itab">
-  	<ul> 
-    <li><a href="sigpublicparamAction!publicParam?id=<s:property value="#session.id"/>" >一般参数</a></li> 
-     
-    <li><a href="solutionAction!solutions" >相位方案</a></li> 
-    <li><a href="solutionAction!solutions" class="selected">时间段参数</a></li> 
-    <li><a href="cssz-ct.html">绿冲突表</a></li> 
-  	</ul>
-    </div> 
-     
-         
-     <div id="tab2" class="tabson">
-       <ul class="forminfo">
-         <li>         </li>
-         <li>
-           <div style="float:left; line-height:35px;">
-             <label>时间段选择：</label>
-             <div class="vocation">
-               <select name="select" class="select1">
-                 <option>普通日</option>
-                 <option>周日</option>
-                 <option>特殊日</option>
-             </select></div>
-             <b>*</b>
-           </div>
-           <div style="float:left; line-height:35px; padding-left:20px;">
-             <label>时间段细分：</label>
-             <div class="vocation">
-               <select name="select3" class="select1">
-                 <option>时间段0</option>
-                 <option>时间段1</option>
-                 <option>时间段2</option>
-                 <option>时间段3</option>
-                 <option>时间段4</option>
-                 <option>时间段5</option>
-                 <option>时间段6</option>
-                 <option>时间段7</option>
-                 <option>时间段8</option>
-                 <option>时间段9</option>
-                 <option>时间段10</option>
-                 <option>时间段11</option>
-                 <option>时间段12</option>
-                 <option>时间段13</option>
-                 <option>时间段14</option>
-                 <option>时间段15</option>
-               </select>
-             </div>
-             <b>*</b> </div>
-           <div style="float:left; line-height:35px; padding-left:20px;">
-             <ul class="toolbar">
-               <li class="click" style="height:28px; line-height:28px;"><span><img src="images/time.png" alt="" width="24" height="24" /></span>查看所有时间段</li>
-             </ul>
-           </div>
-         </li>
-         </ul>
-         <div style="width:100%; float:left;">
-          <div class="csleft" style="line-height:35px;">
-          
-          <table border="0" cellspacing="0" cellpadding="0">
-            <!--
+
+
+		<div class="formbody">
+
+
+			<div id="usual1" class="usual">
+
+				<div class="itab">
+					<ul>
+						<li>
+							<a href="sigpublicparamAction!publicParam?id=<s:property value="#session.id"/>">一般参数</a>
+						</li>
+
+						<li>
+							<a href="solutionAction!solutions">相位方案</a>
+						</li>
+						<li>
+							<a href="solutionAction!solutions" class="selected">时间段参数</a>
+						</li>
+						<li>
+							<a href="cssz-ct.jsp">绿冲突表</a>
+						</li>
+					</ul>
+				</div>
+
+
+				<div id="tab2" class="tabson">
+					<ul class="forminfo">
+						<li>
+						</li>
+						<li>
+							<div style="float: left; line-height: 35px;">
+								<label>
+									时间段选择：
+								</label>
+								<div class="vocation">
+									<select name="select" class="select1">
+										<option>
+											普通日
+										</option>
+										<option>
+											周日
+										</option>
+										<option>
+											特殊日
+										</option>
+									</select>
+								</div>
+								<b>*</b>
+							</div>
+							<div style="float: left; line-height: 35px; padding-left: 20px;">
+								<label>
+									时间段细分：
+								</label>
+								<div class="vocation">
+									<select name="select3" class="select1">
+										<option>
+											时间段0
+										</option>
+										<option>
+											时间段1
+										</option>
+										<option>
+											时间段2
+										</option>
+										<option>
+											时间段3
+										</option>
+										<option>
+											时间段4
+										</option>
+										<option>
+											时间段5
+										</option>
+										<option>
+											时间段6
+										</option>
+										<option>
+											时间段7
+										</option>
+										<option>
+											时间段8
+										</option>
+										<option>
+											时间段9
+										</option>
+										<option>
+											时间段10
+										</option>
+										<option>
+											时间段11
+										</option>
+										<option>
+											时间段12
+										</option>
+										<option>
+											时间段13
+										</option>
+										<option>
+											时间段14
+										</option>
+										<option>
+											时间段15
+										</option>
+									</select>
+								</div>
+								<b>*</b>
+							</div>
+							<div style="float: left; line-height: 35px; padding-left: 20px;">
+								<ul class="toolbar">
+									<li class="click" style="height: 28px; line-height: 28px;">
+										<span><img src="images/time.png" alt="" width="24"
+												height="24" />
+										</span>查看所有时间段
+									</li>
+								</ul>
+							</div>
+						</li>
+					</ul>
+					<div style="width: 100%; float: left;">
+						<div class="csleft" style="line-height: 35px;">
+
+							<table border="0" cellspacing="0" cellpadding="0">
+								<!--
              <tr>
                <td align="right">&nbsp;</td>
                <td>&nbsp;</td>
                <td colspan="2" align="center">相位持续时间： 120 秒</td>
              </tr>
              -->
-             <tr>
-               <td align="right"><label>时　 </label></td>
-               <td><input type="text" class="dfinput"  style="width:150px;"/></td>
-             </tr>
-             <tr>
-               <td align="right"><label>分　 </label></td>
-               <td><input type="text" class="dfinput"  style="width:150px;"/></td>
-             </tr>
-             <tr>
-               <td align="right"><label>秒　 </label></td>
-               <td><input type="text" class="dfinput"  style="width:150px;"/></td>
-             </tr>
-             <tr>
-               <td align="right"><label>控制方式　 </label></td>
-               <td>
-                  <select name="kzfs" class="select4">
-                      <option value="1">无电缆联动</option>
-                      <option value="2">其他控制方式</option>
-                  </select>
-               </td>
-             </tr>
-             <tr>
-               <td align="right"><label>相位方案　 </label></td>
-               <td>
-                  <select name="xwfa" class="select4">
-                      <option value="1">相位方案1</option>
-                      <option value="2">相位方案2</option>
-                  </select>
-               </td>
-             </tr>
-             <tr>
-               <td align="right"><label>绿闪时间　 </label></td>
-               <td><input type="text" class="dfinput"  style="width:150px;"/></td>
-             </tr>
-             <tr>
-               <td align="right"><label>黄灯时间　 </label></td>
-               <td><input type="text" class="dfinput"  style="width:150px;"/></td>
-             </tr>
-             <tr>
-               <td align="right"><label>红灯时间　 </label></td>
-               <td><input type="text" class="dfinput"  style="width:150px;"/></td>
-             </tr>
-             <tr>
-               <td colspan="2" align="right">
-               <div style="line-height:35px;">
-                 <input name="input5" type="button" class="scbtn" style=" margin-right:auto; margin-right:auto; height:25px;" value="保存" onclick=""/>
-               </div></td>
-             </tr>
-           </table>
-           </div>
-         <div class="csright">
-            <div class="xwlb" >
-              <li>
-            		<!--相位图开始 -->
+								<tr>
+									<td align="right">
+										<label>
+											时
+										</label>
+									</td>
+									<td>
+										<input type="text" class="dfinput" style="width: 150px;" />
+									</td>
+								</tr>
+								<tr>
+									<td align="right">
+										<label>
+											分
+										</label>
+									</td>
+									<td>
+										<input type="text" class="dfinput" style="width: 150px;" />
+									</td>
+								</tr>
+								<tr>
+									<td align="right">
+										<label>
+											秒
+										</label>
+									</td>
+									<td>
+										<input type="text" class="dfinput" style="width: 150px;" />
+									</td>
+								</tr>
+								<tr>
+									<td align="right">
+										<label>
+											控制方式
+										</label>
+									</td>
+									<td>
+										<select name="kzfs" class="select4">
+											<option value="1">
+												无电缆联动
+											</option>
+											<option value="2">
+												其他控制方式
+											</option>
+										</select>
+									</td>
+								</tr>
+								<tr>
+									<td align="right">
+										<label>
+											相位方案
+										</label>
+									</td>
+									<td>
+										<select name="xwfa" class="select4">
+											<option value="1">
+												相位方案1
+											</option>
+											<option value="2">
+												相位方案2
+											</option>
+										</select>
+									</td>
+								</tr>
+								<tr>
+									<td align="right">
+										<label>
+											绿闪时间
+										</label>
+									</td>
+									<td>
+										<input type="text" class="dfinput" style="width: 150px;" />
+									</td>
+								</tr>
+								<tr>
+									<td align="right">
+										<label>
+											黄灯时间
+										</label>
+									</td>
+									<td>
+										<input type="text" class="dfinput" style="width: 150px;" />
+									</td>
+								</tr>
+								<tr>
+									<td align="right">
+										<label>
+											红灯时间
+										</label>
+									</td>
+									<td>
+										<input type="text" class="dfinput" style="width: 150px;" />
+									</td>
+								</tr>
+								<tr>
+									<td colspan="2" align="right">
+										<div style="line-height: 35px;">
+											<input name="input5" type="button" class="scbtn"
+												style="margin-right: auto; margin-right: auto; height: 25px;"
+												value="保存" onclick="" />
+										</div>
+									</td>
+								</tr>
+							</table>
+						</div>
+						<div class="csright">
+							<div class="xwlb">
+								<li>
+									<!--相位图开始 -->
 									<div class="picbox">
 										<div style="width: 100%; float: left; height: ">
 											<div class="xhu">
-												<img alt="东西方向人行道" class="l03" src="images/rod/l030.png" width="15" />
+												<img alt="东西方向人行道" class="l03" src="images/rod/l030.png"
+													width="15" />
 											</div>
 											<div class="xhu" style="margin-left: 135px;">
-												<img alt="东西方向人行道" class="l03" src="images/rod/l030.png" width="15" />
+												<img alt="东西方向人行道" class="l03" src="images/rod/l030.png"
+													width="15" />
 											</div>
 										</div>
 										<div style="width: 100%; float: left; height: ">
 											<div class="xhu" style="margin-top: 0px;">
-												<img alt="东西方向人行道" class="l03" src="images/rod/l030_2.png" width="15" />
+												<img alt="东西方向人行道" class="l03" src="images/rod/l030_2.png"
+													width="15" />
 											</div>
 											<div class="xhu" style="margin-left: 135px; margin-top: 0px;">
-												<img alt="东西方向人行道" class="l03" src="images/rod/l030.png" width="15" />
+												<img alt="东西方向人行道" class="l03" src="images/rod/l030.png"
+													width="15" />
 											</div>
 										</div>
 										<div style="width: 100%; float: left; height: ">
 											<div class="xhup">
-												<img alt="东西方向人行道" class="l03" src="images/rod/l030.png" width="15" /><img class="l03" src="images/rod/l030_2.png" width="15" />
+												<img alt="东西方向人行道" class="l03" src="images/rod/l030.png"
+													width="15" />
+												<img class="l03" src="images/rod/l030_2.png" width="15" />
 											</div>
 											<div class="xhup" style="margin-left: 155px;">
-												<img alt="东西方向人行道" class="l03" src="images/rod/l030.png" width="15" /><img  class="l03" src="images/rod/l030_2.png" width="15" />
+												<img alt="东西方向人行道" class="l03" src="images/rod/l030.png"
+													width="15" />
+												<img class="l03" src="images/rod/l030_2.png" width="15" />
 											</div>
 										</div>
-										
+
 										<div style="height: 110px; width: 100%; float: left;">
 											<div class="xleftdown">
 												<table width="18" border="0" align="center" cellpadding="0"
@@ -233,16 +357,16 @@ $(document).ready(function(e) {
 													<tr>
 														<td width="2" height="18"></td>
 														<td>
-															<img id="l32" src="images/rod/l320.png" alt="北向南右拐" width="15"
-																height="15" />
+															<img id="l32" src="images/rod/l320.png" alt="北向南右拐"
+																width="15" height="15" />
 														</td>
 														<td>
-															<img id="l31" src="images/rod/l310.png" alt="北向南直行" width="15"
-																height="15" />
+															<img id="l31" src="images/rod/l310.png" alt="北向南直行"
+																width="15" height="15" />
 														</td>
 														<td>
-															<img id="l30" src="images/rod/l300.png" alt="北向南左拐" width="15"
-																height="15" />
+															<img id="l30" src="images/rod/l300.png" alt="北向南左拐"
+																width="15" height="15" />
 														</td>
 													</tr>
 												</table>
@@ -253,16 +377,16 @@ $(document).ready(function(e) {
 													<tr>
 														<td width="2" height="18"></td>
 														<td>
-															<img id="l10" src="images/rod/l100.png" alt="南向北左拐" width="15"
-																height="15" />
+															<img id="l10" src="images/rod/l100.png" alt="南向北左拐"
+																width="15" height="15" />
 														</td>
 														<td>
-															<img id="l11" src="images/rod/l110.png" alt="南向北直行" width="15"
-																height="15" />
+															<img id="l11" src="images/rod/l110.png" alt="南向北直行"
+																width="15" height="15" />
 														</td>
 														<td>
-															<img id="l12" src="images/rod/l120.png" alt="南向北右拐" width="15"
-																height="15" />
+															<img id="l12" src="images/rod/l120.png" alt="南向北右拐"
+																width="15" height="15" />
 														</td>
 													</tr>
 												</table>
@@ -275,20 +399,20 @@ $(document).ready(function(e) {
 													</tr>
 													<tr>
 														<td align="center">
-															<img  id="l20" src="images/rod/l200.png" alt="西向东左拐" width="15"
-																height="15" />
+															<img id="l20" src="images/rod/l200.png" alt="西向东左拐"
+																width="15" height="15" />
 														</td>
 													</tr>
 													<tr>
 														<td align="center">
-															<img id="l21" src="images/rod/l210.png" alt="西向东直行"  width="15"
-																height="15" />
+															<img id="l21" src="images/rod/l210.png" alt="西向东直行"
+																width="15" height="15" />
 														</td>
 													</tr>
 													<tr>
 														<td align="center">
-															<img id="l22" src="images/rod/l220.png" alt="西向东右拐" width="15"
-																height="15" />
+															<img id="l22" src="images/rod/l220.png" alt="西向东右拐"
+																width="15" height="15" />
 														</td>
 													</tr>
 												</table>
@@ -296,57 +420,73 @@ $(document).ready(function(e) {
 										</div>
 										<div style="width: 100%; float: left; height: ">
 											<div class="xhup">
-												<img class="l13" src="images/rod/l030.png" alt="南北人行道" width="15" /><img class="l13" src="images/rod/l030.png" alt="南北人行道" width="15" />
+												<img class="l13" src="images/rod/l030.png" alt="南北人行道"
+													width="15" />
+												<img class="l13" src="images/rod/l030.png" alt="南北人行道"
+													width="15" />
 											</div>
 											<div class="xhup" style="margin-left: 155px;">
-												<img class="l13" src="images/rod/l030.png" alt="南北人行道" width="15" /><img class="l13" src="images/rod/l030.png" alt="南北人行道" width="15" />
+												<img class="l13" src="images/rod/l030.png" alt="南北人行道"
+													width="15" />
+												<img class="l13" src="images/rod/l030.png" alt="南北人行道"
+													width="15" />
 											</div>
 										</div>
 										<div style="width: 100%; float: left; height: ">
 											<div class="xhu" style="margin-top: 0px;">
-												<img class="l13" src="images/rod/l030.png" alt="南北人行道" width="15" />
+												<img class="l13" src="images/rod/l030.png" alt="南北人行道"
+													width="15" />
 											</div>
 											<div class="xhu" style="margin-left: 135px; margin-top: 0px;">
-												<img class="l13" src="images/rod/l030.png" alt="南北人行道" width="15" />
+												<img class="l13" src="images/rod/l030.png" alt="南北人行道"
+													width="15" />
 											</div>
 										</div>
 										<div style="width: 100%; float: left; height: ">
 											<div class="xhu" style="margin-top: 0px;">
-												<img class="l13" src="images/rod/l030_2.png" alt="南北人行道" width="15" />
+												<img class="l13" src="images/rod/l030_2.png" alt="南北人行道"
+													width="15" />
 											</div>
 											<div class="xhu" style="margin-left: 135px; margin-top: 0px;">
-												<img class="l13" src="images/rod/l030_2.png" alt="南北人行道" width="15" />
+												<img class="l13" src="images/rod/l030_2.png" alt="南北人行道"
+													width="15" />
 											</div>
 										</div>
 									</div>
 									<!--相位图结束 -->
-                 <txt>
-                   <h1 >序号01</h1>
-                   相位0：<input type="text" class="dfinput"  style="width:60px; height:20px;"/> 秒</txt>
+									<txt>
+									<h1>
+										序号01
+									</h1>
+									相位0：
+									<input type="text" class="dfinput"
+										style="width: 60px; height: 20px;" />
+									秒
+									</txt>
 
-          </li>
-            
-      
+								</li>
 
-            </div>
-         </div>
-      </div>   
-      
-     </div>
-       
-      
-     </div>
-<script type="text/javascript"> 
+
+
+							</div>
+						</div>
+					</div>
+
+				</div>
+
+
+			</div>
+			<script type="text/javascript"> 
       $("#usual1 ul").idTabs(); 
     </script>
-    
-  <script type="text/javascript">
+
+			<script type="text/javascript">
 	$('.tablelist tbody tr:odd').addClass('odd');
 	</script>
 
-</div>
+		</div>
 
 
 
-</body>
+	</body>
 </html>

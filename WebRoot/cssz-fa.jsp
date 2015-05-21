@@ -21,7 +21,7 @@ request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+pa
 		<script type="text/javascript" src="js/jquery.idTabs.min.js"></script>
 		<script type="text/javascript" src="js/select-ui.min.js"></script>
 		<script type="text/javascript" src="editor/kindeditor.js"></script>
-		<script type="text/javascript" src="js/privatecssz.js"></script>
+		<script type="text/javascript" src="js/privatecssz-fa.js"></script>
 		<script type="text/javascript">
     KE.show({
         id : 'content7',
@@ -62,7 +62,7 @@ $(document).ready(function(e) {
 						<li>
 							<a href="cssz-time.jsp">时间段参数</a>
 						</li>
-						    <li><a href="cssz-ct.html" >绿冲突表</a></li> 
+						    <li><a href="cssz-ct.jsp" >绿冲突表</a></li> 
 					</ul>
 				</div>
 
