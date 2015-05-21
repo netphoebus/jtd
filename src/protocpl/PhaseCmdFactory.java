@@ -209,13 +209,11 @@ public class PhaseCmdFactory extends CmdFactoryBase implements ICmdParser{
 						
 						//保存该相位步序下的所有方向
 						for (int a = 0; a < 4; a++) {
-							Road road = new Road();
 							int leftcolor=locatelist.get(j)[a][0];
 							int linecolor=locatelist.get(j)[a][1];
 							int rightcolor=locatelist.get(j)[a][2];
 							int rxcolor=locatelist.get(j)[a][3];
 							int roadtype=a;
-//							road.setStep(step);
 							roadService.updateByRoadid(leftcolor,linecolor,rightcolor,rxcolor,roadtype,step.getId());
 						}
 					}
