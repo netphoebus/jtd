@@ -64,10 +64,12 @@ public class ParametersCmdFactory extends CmdFactoryBase implements ICmdParser{
 		}else if(this.m_oData[7]==1){
 			Upload_parameters(session,this.m_oData);
 		}else if(this.m_oData[7]==4){
-			
+			Upload_conflict(session,this.m_oData);
 		}
 		return false;
 	}
+
+	
 
 	public void UpdatePushTask() {
 		// TODO Auto-generated method stub
@@ -245,6 +247,23 @@ public class ParametersCmdFactory extends CmdFactoryBase implements ICmdParser{
 	
 	private void Upload_fault(IoSession session,byte[] data){
 		
+		int conflict[][] = new int[16][16];
+		for (int i = 0; i < 16; i++) {
+			for (int j = 0; j < 16; j++) {
+				conflict[i][j] = data[10+j+i*16];
+			}
+		}
+		
+	}
+	
+	private void Upload_conflict(IoSession session, byte[] data) {
+		// TODO Auto-generated method stub
+		int conflict[][] = new int[16][16];
+		for (int i = 0; i < 16; i++) {
+			for (int j = 0; j < 16; j++) {
+				conflict[i][j] = data[10+j+i*16];
+			}
+		}
 	}
 	
 }
