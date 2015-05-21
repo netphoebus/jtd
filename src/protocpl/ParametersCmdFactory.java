@@ -1,7 +1,6 @@
 package protocpl;
 
 import java.net.InetSocketAddress;
-import java.util.List;
 
 import mina.CmdFactoryBase;
 import mina.CommandBase;
@@ -11,10 +10,14 @@ import org.apache.mina.core.session.IoSession;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import com.jlj.model.Greenconflict;
+import com.jlj.model.Sig;
 import com.jlj.model.Signpublicparam;
 import com.jlj.model.Sigordinarytime;
 import com.jlj.model.Sigspecialtime;
 import com.jlj.model.Sigsuntime;
+import com.jlj.service.IGreenconflictService;
+import com.jlj.service.ISigService;
 import com.jlj.service.ISignpublicparamService;
 import com.jlj.service.ISigordinarytimeService;
 import com.jlj.service.ISigspecialtimeService;
@@ -26,10 +29,12 @@ public class ParametersCmdFactory extends CmdFactoryBase implements ICmdParser{
 
 	public static boolean setSuccess;
 	final static ApplicationContext ac=new ClassPathXmlApplicationContext("beans.xml");
+	final static ISigService sigService = (ISigService)ac.getBean("sigService");
 	final static ISignpublicparamService signpublicparamService = (ISignpublicparamService)ac.getBean("signpublicparamService");
 	final static ISigordinarytimeService sigordinarytimeService = (ISigordinarytimeService)ac.getBean("sigordinarytimeService");
 	final static ISigsuntimeService sigsuntimeService = (ISigsuntimeService)ac.getBean("sigsuntimeService");
 	final static ISigspecialtimeService sigspecialtimeService = (ISigspecialtimeService)ac.getBean("sigspecialtimeService");
+	final static IGreenconflictService greenconflictService = (IGreenconflictService)ac.getBean("greenconflictService");
 	public ParametersCmdFactory(byte[] data){
 		super(data);
 		this.expected_cmd = MONITOR_CMD_TYPE.MONITOR_CMD_COMMON_PARAMETERS;
@@ -120,6 +125,7 @@ public class ParametersCmdFactory extends CmdFactoryBase implements ICmdParser{
 		if(signpublicparam==null){
 			System.out.println("-------------------------------signpublicparam add");
 			signpublicparam = new Signpublicparam();
+			signpublicparam.setIp(clientIP);
 			signpublicparam.setQchdtime(Red_Clearance_Time);//清场红灯
 			signpublicparam.setKjhstime(Yellow_Flash_Time);//开机黄闪
 			signpublicparam.setNumber(String.valueOf(number));
@@ -256,12 +262,41 @@ public class ParametersCmdFactory extends CmdFactoryBase implements ICmdParser{
 		
 	}
 	
+	/**
+	 * @param session
+	 * @param data
+	 */
 	private void Upload_conflict(IoSession session, byte[] data) {
 		// TODO Auto-generated method stub
 		int conflict[][] = new int[16][16];
 		for (int i = 0; i < 16; i++) {
 			for (int j = 0; j < 16; j++) {
 				conflict[i][j] = data[10+j+i*16];
+			}
+		}
+		//-----------------------数据库---------------------------
+		//获取session中的IP
+		String clientIP = ((InetSocketAddress)session.getRemoteAddress()).getAddress().getHostAddress();
+		//检查公共参数表的冲突子表：若无，插入新数据；若有，修改原数据
+		Sig sig = sigService.querySigByIpAddress(clientIP);
+		if(sig!=null){
+			Greenconflict greenconflict = sig.getGreenconflict();
+			if(greenconflict!=null){
+				//更新数据
+//				greenconflictService.updateByGreenid(name,l00,greenconflict.getId());
+			}else{
+				//新增数据
+				greenconflict = new Greenconflict();
+//				greenconflict.setName(name);
+//				greenconflict.setL00(l00);
+				greenconflict.setSig(sig);
+				try {
+					greenconflictService.add(greenconflict);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
 			}
 		}
 	}
