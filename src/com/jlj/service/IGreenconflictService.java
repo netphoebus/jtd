@@ -34,4 +34,6 @@ public interface IGreenconflictService {
 	public abstract List<Greenconflict> queryList(int con, String convalue,
 			int page, int size);
 
+	public abstract List<Greenconflict> loadBySid(int id);
+
 }
