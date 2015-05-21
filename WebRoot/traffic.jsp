@@ -43,6 +43,7 @@ function test()
 				            error: function(msg)
 				            { //失败   
 				            	console.log('Error loading document');   
+				            	async
 				            },   
 				            success: function(msg)
 				            { //成功   

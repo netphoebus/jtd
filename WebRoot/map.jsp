@@ -1,6 +1,11 @@
-<%@ page language="java" import="java.util.*" pageEncoding="utf-8"%> <%
-String path = request.getContextPath(); String basePath =
-request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+<%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="/struts-tags" prefix="s"%>
+<%
+	String path = request.getContextPath();
+	String basePath = request.getScheme() + "://"
+			+ request.getServerName() + ":" + request.getServerPort()
+			+ path + "/";
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -29,5 +34,6 @@ request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+pa
    <div id="map_canvas" style="margin:4px ;width:98%; height:760px;border:2px solid #cfdfe4">
    		地图加载失败....
    </div>
+   <s:debug></s:debug>
 </body>
 </html>

@@ -103,7 +103,7 @@
     </package>  
     
     <package name="map_ajax" extends="json-default">
-		<action name="add" class="mapAction" method="add"/>	
+		<action name="addOrUpdate" class="mapAction" method="addOrUpdate"/>	
 		<action name="load" class="mapAction" method="load"/>
 		<action name="delete" class="mapAction" method="delete"/>
 	</package>

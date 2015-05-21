@@ -20,6 +20,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.jlj.model.Sig;
+import com.jlj.model.Userarea;
 import com.jlj.service.ISigService;
 import com.jlj.vo.MarkerVO;
 import com.opensymphony.xwork2.ActionSupport;
@@ -50,6 +51,7 @@ public class MapAction extends ActionSupport implements RequestAware,
 	public String load() throws Exception {
 
 		sigs = sigService.getSigs();
+		
 		if(sigs!=null&&sigs.size()>0)
 		{
 			for (Sig sig : sigs) {
@@ -62,7 +64,6 @@ public class MapAction extends ActionSupport implements RequestAware,
 				markervo.setName(sig.getName());
 				initMarkers.add(markervo);
 			}
-
 			JSONArray jsonArr = JSONArray.fromObject(initMarkers);
 
 			PrintWriter out;
@@ -85,23 +86,34 @@ public class MapAction extends ActionSupport implements RequestAware,
 	 * @return
 	 * @throws Exception
 	 */
-	public String add() throws Exception {
-		
-		long mkid = Long.parseLong(req.getParameter("id"));
+	public String addOrUpdate() throws Exception {
 		String ip = req.getParameter("ip");
+		long mkid = Long.parseLong(req.getParameter("id"));
 		String address = req.getParameter("address");
 		String name = req.getParameter("name");
 		String lng = req.getParameter("lng");
 		String lat = req.getParameter("lat");
-
-		Sig sig = new Sig();
-		sig.setMkid(mkid);
-		sig.setIp(ip);
-		sig.setAddress(address);
-		sig.setName(name);
-		sig.setLat(lat);
-		sig.setLng(lng);
-		sigService.add(sig);
+		Sig sig1 = sigService.querySigByIpAddress(ip);
+		if(sig1==null){
+			System.out.println("coming null.......");
+			Sig sig = new Sig();
+			sig.setMkid(mkid);
+			sig.setIp(ip);
+			sig.setAddress(address);
+			sig.setName(name);
+			sig.setLat(lat);
+			sig.setLng(lng);
+			sigService.add(sig);
+		}else
+		{
+			System.out.println("coming.......");
+			sig1.setMkid(mkid);
+			sig1.setAddress(address);
+			sig1.setName(name);
+			sig1.setLat(lat);
+			sig1.setLng(lng);
+			sigService.update(sig1);
+		}
 		return NONE;
 	}
 
@@ -112,14 +124,20 @@ public class MapAction extends ActionSupport implements RequestAware,
 	 */
 	public String delete() {
 		long mkid = Long.parseLong(req.getParameter("id"));
+		System.out.println(mkid);
 		sigs = sigService.getSigs();
 		if(sigs!=null&&sigs.size()>0)
 		{
 			for (Sig sigobj : sigs) {
-				if(sigobj.getMkid()==mkid)
+				if(sigobj.getMkid()!=null&&sigobj.getMkid()==mkid)
 				{
 					sig = sigobj;
-					sigService.delete(sig);
+					sig.setMkid(null);
+					sig.setAddress(null);
+					sig.setName(null);
+					sig.setLat(null);
+					sig.setLng(null);
+					sigService.update(sig);
 					break;
 				}
 			}

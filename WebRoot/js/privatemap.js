@@ -10,6 +10,8 @@ var markermsg = [];
 var markerId = Date.parse(new Date());//时间做唯一标示
 var markersJson = '';
 var user=null;
+var ips=[];
+var options = "";
 
 google.maps.event.addDomListener(window, "load", initialize);
 
@@ -37,13 +39,21 @@ google.maps.event.addDomListener(window, "load", initialize);
 
     maphelper = new mapHelper();
     mapobj = maphelper.initMap(mapCanvas, myOptions);
-		
+	
 	MarkersInit();
 
 	//google.maps.event.addListener(mapobj, "rightclick", reset);
 
-
 }
+
+//初始化select
+function addOption(){  
+
+		for(var i=0;i<ips.length;i++){   
+		  	options = options+"+<option value=" +ips[i] + ">" + ips[i] + "</option>"
+		}   
+    }  
+
 
 function reset() {
 
@@ -167,7 +177,6 @@ function setMarkerEvents(marker)
 		 });*/
 
 	maphelper.bindInstanceEvent(marker, 'dragend', function(event,map,marker) {
-		 	console.log(event.latLng);
 		 	marker.setPosition(event.latLng);
 		 });
 
@@ -182,6 +191,7 @@ function MarkersInit()
 	            url:'load',//这里是你的action或者servlert的路径地址   
 	            type:'post', //数据发送方式   
 	            dataType:'json', 
+	            async:false,
 	            error: function(msg)
 	            { //失败   
 	            	console.log('post失败');   
@@ -189,10 +199,11 @@ function MarkersInit()
 	            success: function(msg)
 	            { //成功
 	            		encodeURI(msg);
-	            		console.log(msg);
+	            		
 	            	 	markermsg = msg;
 	            	 	for(var i=0;i<markermsg.length;i++)
 			    	    {
+			    	    	ips.push(markermsg[i].ip);
 				    	     var marker =  maphelper.markerPoint({
 						  	    id:  markermsg[i].id,
 								lat: markermsg[i].lat,
@@ -209,9 +220,10 @@ function MarkersInit()
 						  setMarkerEvents(marker);
 						  initMarkers.push(marker);
 			    	    } 	   
+			    	   
 	            }  
     	    });  
-    	    
+    	    addOption();//初始化select
 }
 
 
@@ -219,7 +231,7 @@ function MarkersInit()
 function getMarkerContent(marker)
 {
 	return '<div  id="content"><h1 id="">当前信号机</h1><div id="bodyContent">' 
-	+ '<br><div style="margin-top:0.8px">&nbsp;ip&nbsp;地&nbsp;&nbsp;址&nbsp;&nbsp;：<input id="ip" value="'+marker.ip+'" name="signal_ipaddress" type="text"  width="25px"/></div>' 
+	+ '<br><div style="margin-top:0.8px">&nbsp;ip&nbsp;地&nbsp;&nbsp;址&nbsp;&nbsp;：<input id="getip" value="'+marker.ip+'" name="signal_ipaddress" type="text"  width="25px"/></div>' 
 	+ '<br><div style="margin-top:0.8px">信号机地址：<input  id="address" value="'+marker.name+'" name="signal_address" type="text"    width="25px"/></div>' 
 	+ '<br><div style="margin-top:0.8px">信号机名称：<input id="name" value="'+marker.address+'" name="signal_name" type="text"   width="25px"/></div>' 
 	+ '<br><div class="maptip"><btn><a href="javascript:deleteMarker('+marker.id+')" target="rightFrame" ">删除</a></btn></div></div>'
@@ -229,9 +241,10 @@ function getMarkerContent(marker)
 //绑定信号机并设置基本信息
 function setMarkerContent(marker)
 {
-
+	
 	return '<div  id="content"><h1 id="">绑定远程信号机</h1><div id="bodyContent">'
-	+ '<div style="margin-top:10px; float:left; width:300px;">&nbsp;ip&nbsp;&nbsp;地&nbsp;&nbsp;址&nbsp;&nbsp;：<input id="ip" value="" name="signal_ipaddress" type="text" style="padding-bottom:1px;border:1px solid #cfdfe4" width="25px"/></div>' 
+	+ '<div style="margin-top:10px; float:left; width:300px;">&nbsp;ip&nbsp;&nbsp;地&nbsp;&nbsp;址&nbsp;&nbsp;：<select id="ipSelect"  name="ipSelect"  style="padding-bottom:1px;border:1px solid #cfdfe4" width="25px">'
+	+options+'</select></div>' 
 	+ '<br><div style="margin-top:5px; float:left; width:300px;">信号机地址：<input id="address" value="" name="signal_address" type="text"   style="padding-bottom:1px;border:1px solid #cfdfe4"  width="25px"/></div>' 
 	+ '<br><div style="margin-top:5px; float:left; width:300px;">信号机名称：<input id="name" value="" name="signal_name" type="text"   style="padding-bottom:1px;border:1px solid #cfdfe4"  width="25px"/></div>' 
 	+ '<br><div class="maptip"><btn><a href="javascript:saveMarker('+marker.id+')" target="rightFrame" ">绑定</a></btn></div></div>'
@@ -247,7 +260,7 @@ function saveMarker(id)
 	{
 		if(initMarkers[i].id == id)
 		{
-			var ip = $('#ip').val();
+			var ip = $('#ipSelect').val();
 			var address = $('#address').val();
 			var name = $('#name').val();
 			var lat = initMarkers[i].getPosition().jb;
@@ -255,7 +268,7 @@ function saveMarker(id)
 			
 
 			$.ajax({   
-	            url:'add',//这里是你的action或者servlert的路径地址   
+	            url:'addOrUpdate',//这里是你的action或者servlert的路径地址   
 	            type:'post', //数据发送方式     
 	 			data: { "id":id,"ip":ip,"address":address,"name":name,"lat":lat,"lng":lng},
 	            error: function(msg)
