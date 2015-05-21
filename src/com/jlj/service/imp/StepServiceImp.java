@@ -129,7 +129,7 @@ public class StepServiceImp implements IStepService  {
 	}
 	public void updateByStepid(String phasename, String stepname, Integer stepid) {
 		String queryString="update Step mo set mo.phasename=:phasename,mo.stepname=:stepname where mo.id=:stepid";
-		String[] paramNames = new String[] {"phasename","stepname"};
+		String[] paramNames = new String[] {"phasename","stepname","stepid"};
 		Object[] values = new Object[]{phasename,stepname,stepid};
 		stepDao.updateByHql(queryString, paramNames, values);
 	}
