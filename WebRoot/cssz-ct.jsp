@@ -65,12 +65,12 @@ $(document).ready(function(e) {
     <div class="itab">
   	<ul> 
     	<li>
-							<a href="sigpublicparamAction!publicParam?id=<s:property value="#session.id"/>">一般参数</a>
+							<a href="sigpublicparamAction!publicParam?sigIp=<s:property value="#session.sigIp"/>">一般参数</a>
 						</li>
      
     <li><a href="solutionAction!solutions" >相位方案</a></li> 
     <li><a href="cssz-time.jsp"  >时间段参数</a></li> 
-    <li><a href="cssz-ct.jsp"  class="selected">绿冲突表</a></li> 
+    <li><a href="greenAction!green?sid=<s:property value="#session.sidp"/>"  class="selected">绿冲突表</a></li> 
   	</ul>
     </div>
     <div style="font-size:18px; font-family:黑体; font-weight:bold; width:100%; text-align:center; line-height:30px; margin-top:15px;">绿冲突表</div>
@@ -81,7 +81,7 @@ $(document).ready(function(e) {
         <tbody>
           <tr>
             <td>&nbsp;</td>
-            <td>&nbsp;</td>
+            <td>序号</td>
             <td>0</td>
             <td>1</td>
             <td>2</td>
@@ -101,7 +101,7 @@ $(document).ready(function(e) {
           </tr>
           <tr>
             <td>&nbsp;</td>
-            <td>&nbsp;</td>
+            <td>灯位置</td>
             <td>东左</td>
             <td>东直</td>
             <td>东右</td>
@@ -119,332 +119,151 @@ $(document).ready(function(e) {
             <td>北右</td>
             <td>北人</td>
           </tr>
-          <tr>
-            <td>0</td>
-            <td>东左</td>
-            <td>0<img src="img/tick.png"/></td>
-            <td>0<img src="img/tick.png"/></td>
-            <td>0<img src="img/tick.png"/></td>
-            <td>0<img src="img/tick.png"/></td>
-            <td>1<img src="img/cross.png"/></td>
-            <td>1<img src="img/cross.png"/></td>
-            <td>0<img src="img/tick.png"/></td>
-            <td>0<img src="img/tick.png"/></td>
-            <td>0<img src="img/tick.png"/></td>
-            <td>1<img src="img/cross.png"/></td>
-            <td>0<img src="img/tick.png"/></td>
-            <td>1<img src="img/cross.png"/></td>
-            <td>1<img src="img/cross.png"/></td>
-            <td>0<img src="img/tick.png"/></td>
-            <td>0<img src="img/tick.png"/></td>
-            <td>1<img src="img/tick.png"/></td>
+          
+         
+          <s:iterator value="greens" var="green" status="status">
+          	<tr>
+	            <td> <s:property value="#status.index"/></td>
+	            <td> <s:property value="green.name"/></td>
+	            <td>
+			            <s:if test="green.l00==1">
+				            <img src="img/tick.png"/>
+				        </s:if>
+				        <s:else>
+				            <img src="img/cross.png"/>
+				        </s:else>
+		        </td>
+	            <td>
+			            <s:if test="green.l01==1">
+				            <img src="img/tick.png"/>
+				        </s:if>
+				        <s:else>
+				            <img src="img/cross.png"/>
+				        </s:else>
+		        </td>
+	            <td>
+			            <s:if test="green.l02==1">
+				            <img src="img/tick.png"/>
+				        </s:if>
+				        <s:else>
+				            <img src="img/cross.png"/>
+				        </s:else>
+		        </td>
+	            <td>
+			            <s:if test="green.l03==1">
+				            <img src="img/tick.png"/>
+				        </s:if>
+				        <s:else>
+				            <img src="img/cross.png"/>
+				        </s:else>
+		        </td>
+	            <td>
+			            <s:if test="green.l10==1">
+				            <img src="img/tick.png"/>
+				        </s:if>
+				        <s:else>
+				            <img src="img/cross.png"/>
+				        </s:else>
+		        </td>
+	            <td>
+			            <s:if test="green.l11==1">
+				            <img src="img/tick.png"/>
+				        </s:if>
+				        <s:else>
+				            <img src="img/cross.png"/>
+				        </s:else>
+		        </td>
+	             <td>
+			            <s:if test="green.l12==1">
+				            <img src="img/tick.png"/>
+				        </s:if>
+				        <s:else>
+				            <img src="img/cross.png"/>
+				        </s:else>
+		        </td>
+	            <td>
+			            <s:if test="green.l13==1">
+				            <img src="img/tick.png"/>
+				        </s:if>
+				        <s:else>
+				            <img src="img/cross.png"/>
+				        </s:else>
+		        </td>
+	             <td>
+			            <s:if test="green.l20==1">
+				            <img src="img/tick.png"/>
+				        </s:if>
+				        <s:else>
+				            <img src="img/cross.png"/>
+				        </s:else>
+		        </td>
+	           <td>
+			            <s:if test="green.l21==1">
+				            <img src="img/tick.png"/>
+				        </s:if>
+				        <s:else>
+				            <img src="img/cross.png"/>
+				        </s:else>
+		        </td>
+	           <td>
+			            <s:if test="green.l22==1">
+				            <img src="img/tick.png"/>
+				        </s:if>
+				        <s:else>
+				            <img src="img/cross.png"/>
+				        </s:else>
+		        </td>
+	             <td>
+			            <s:if test="green.l23==1">
+				            <img src="img/tick.png"/>
+				        </s:if>
+				        <s:else>
+				            <img src="img/cross.png"/>
+				        </s:else>
+		        </td>
+	             <td>
+			            <s:if test="green.l30==1">
+				            <img src="img/tick.png"/>
+				        </s:if>
+				        <s:else>
+				            <img src="img/cross.png"/>
+				        </s:else>
+		        </td>
+	            <td>
+			            <s:if test="green.l31==1">
+				            <img src="img/tick.png"/>
+				        </s:if>
+				        <s:else>
+				            <img src="img/cross.png"/>
+				        </s:else>
+		        </td>
+	             <td>
+			            <s:if test="green.l32==1">
+				            <img src="img/tick.png"/>
+				        </s:if>
+				        <s:else>
+				            <img src="img/cross.png"/>
+				        </s:else>
+		        </td>
+	             <td>
+			            <s:if test="green.l33==1">
+				            <img src="img/tick.png"/>
+				        </s:if>
+				        <s:else>
+				            <img src="img/cross.png"/>
+				        </s:else>
+		        </td>
           </tr>
-          <tr>
-            <td>1</td>
-            <td>东直</td>
-            <td>0</td>
-            <td>0</td>
-            <td>0</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>1</td>
-            <td>0</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>0</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>1</td>
-            <td>0</td>
-            <td>&nbsp;</td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>东右</td>
-            <td>0</td>
-            <td>0</td>
-            <td>0</td>
-            <td>0</td>
-            <td>0</td>
-            <td>0</td>
-            <td>0</td>
-            <td>0</td>
-            <td>0</td>
-            <td>0</td>
-            <td>0</td>
-            <td>0</td>
-            <td>0</td>
-            <td>0</td>
-            <td>0</td>
-            <td>0</td>
-          </tr>
-          <tr>
-            <td>3</td>
-            <td>东人</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>0</td>
-            <td>0</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>0</td>
-            <td>0</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>0</td>
-            <td>0</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>0</td>
-            <td>0</td>
-          </tr>
-          <tr>
-            <td>4</td>
-            <td>南左</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>0</td>
-            <td>&nbsp;</td>
-            <td>0</td>
-            <td>0</td>
-            <td>0</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>0</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>0</td>
-            <td>&nbsp;</td>
-          </tr>
-          <tr>
-            <td>5</td>
-            <td>南直</td>
-            <td>&nbsp;</td>
-            <td>1</td>
-            <td>0</td>
-            <td>&nbsp;</td>
-            <td>0</td>
-            <td>0</td>
-            <td>0</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>1</td>
-            <td>0</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>0</td>
-            <td>&nbsp;</td>
-          </tr>
-          <tr>
-            <td>6</td>
-            <td>南右</td>
-            <td>0</td>
-            <td>0</td>
-            <td>0</td>
-            <td>0</td>
-            <td>0</td>
-            <td>0</td>
-            <td>0</td>
-            <td>0</td>
-            <td>0</td>
-            <td>0</td>
-            <td>0</td>
-            <td>0</td>
-            <td>0</td>
-            <td>0</td>
-            <td>0</td>
-            <td>0</td>
-          </tr>
-          <tr>
-            <td>7</td>
-            <td>南人</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>0</td>
-            <td>0</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>0</td>
-            <td>0</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>0</td>
-            <td>0</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>0</td>
-            <td>0</td>
-          </tr>
-          <tr>
-            <td>8</td>
-            <td>西左</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>0</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>0</td>
-            <td>&nbsp;</td>
-            <td>0</td>
-            <td>0</td>
-            <td>0</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>0</td>
-            <td>&nbsp;</td>
-          </tr>
-          <tr>
-            <td>9</td>
-            <td>西直</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>0</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>1</td>
-            <td>0</td>
-            <td>&nbsp;</td>
-            <td>0</td>
-            <td>0</td>
-            <td>0</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>1</td>
-            <td>0</td>
-            <td>&nbsp;</td>
-          </tr>
-          <tr>
-            <td>10</td>
-            <td>西右</td>
-            <td>0</td>
-            <td>0</td>
-            <td>0</td>
-            <td>0</td>
-            <td>0</td>
-            <td>0</td>
-            <td>0</td>
-            <td>0</td>
-            <td>0</td>
-            <td>0</td>
-            <td>0</td>
-            <td>0</td>
-            <td>0</td>
-            <td>0</td>
-            <td>0</td>
-            <td>0</td>
-          </tr>
-          <tr>
-            <td>11</td>
-            <td>西人</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>0</td>
-            <td>0</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>0</td>
-            <td>0</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>0</td>
-            <td>0</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>0</td>
-            <td>0</td>
-          </tr>
-          <tr>
-            <td>12</td>
-            <td>北左</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>0</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>0</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>0</td>
-            <td>&nbsp;</td>
-            <td>0</td>
-            <td>&nbsp;</td>
-            <td>0</td>
-            <td>&nbsp;</td>
-          </tr>
-          <tr>
-            <td>13</td>
-            <td>北直</td>
-            <td>&nbsp;</td>
-            <td>1</td>
-            <td>0</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>0</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>0</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>0</td>
-            <td>0</td>
-            <td>0</td>
-          </tr>
-          <tr>
-            <td>14</td>
-            <td>北右</td>
-            <td>0</td>
-            <td>0</td>
-            <td>0</td>
-            <td>0</td>
-            <td>0</td>
-            <td>0</td>
-            <td>0</td>
-            <td>0</td>
-            <td>0</td>
-            <td>0</td>
-            <td>0</td>
-            <td>0</td>
-            <td>0</td>
-            <td>0</td>
-            <td>0</td>
-            <td>0</td>
-          </tr>
-          <tr>
-            <td>15</td>
-            <td>北人</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>0</td>
-            <td>0</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>0</td>
-            <td>0</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>0</td>
-            <td>0</td>
-            <td>&nbsp;</td>
-            <td>0</td>
-            <td>0</td>
-            <td>0</td>
-          </tr>
+          
+          </s:iterator>
+          
+         
         </tbody>
       </table>
     </div>
     <div class="formtext">
-      <p>256的表格</p>
-      <p>自己对自己肯定是不冲突的，其它可定义，默认表，需填写</p>
+      <p>操作说明：点击图标，修改图标状态</p>
+      <p>注：红色叉：设置冲突   绿色钩：不冲突</p>
     </div>
 </div>
 <script type="text/javascript"> 

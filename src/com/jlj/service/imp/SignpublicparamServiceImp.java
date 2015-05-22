@@ -202,4 +202,14 @@ public class SignpublicparamServiceImp implements ISignpublicparamService  {
 				publicid };
 		signpublicparamDao.updateByHql(hql, paramNames, values);
 	}
+	public Signpublicparam loadBySid(int sid) {
+		
+		String queryString = "from Signpublicparam mo where 1=1 and mo.sig.id="+sid;
+		return signpublicparamDao.loadByMkid(queryString);	
+	}
+	public Signpublicparam loadBySigIp(String sigIp) {
+		// TODO Auto-generated method stub
+		String queryString = "from Signpublicparam mo where 1=1 and mo.ip='"+sigIp+"'";
+		return signpublicparamDao.loadByMkid(queryString);
+	}
 }

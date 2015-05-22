@@ -23,7 +23,6 @@ function initPublicParam() {
 		}
 	});
 	
-	
 
 	//checkbox部分
 	if ($("#xyxr").attr("value") == 1) {
@@ -79,11 +78,5 @@ function cleanAll()
 	 .val('')  
 }
 
-function changeSolution()
-{
-	$("#solutions").val();
-	console.log($("#solutions").val());
-	window.open("solutionAction!solutions?soid="+$("#solutions").val(),"rightFrame");
-}
 
 

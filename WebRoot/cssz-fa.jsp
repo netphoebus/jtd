@@ -54,7 +54,7 @@ $(document).ready(function(e) {
 				<div class="itab">
 					<ul>
 						<li>
-							<a href="sigpublicparamAction!publicParam?id=<s:property value="#session.id"/>">一般参数</a>
+							<a href="sigpublicparamAction!publicParam?sigIp=<s:property value="#session.sigIp"/>">一般参数</a>
 						</li>
 						<li>
 							<a href="solutionAction!solutions" class="selected">相位方案</a>
@@ -62,7 +62,7 @@ $(document).ready(function(e) {
 						<li>
 							<a href="cssz-time.jsp">时间段参数</a>
 						</li>
-						    <li><a href="cssz-ct.jsp" >绿冲突表</a></li> 
+						    <li><a href="greenAction!green?sid=<s:property value="#session.sidp"/>" >绿冲突表</a></li> 
 					</ul>
 				</div>
 
@@ -92,11 +92,11 @@ $(document).ready(function(e) {
 									<div class="picbox">
 										<div style="width: 100%; float: left; height: ">
 											<div class="xhu">
-												<img class="${step.id}_2_3" alt="东西方向人行道西面上边" class="l23" src="images/rod/l230.png" width="15" />
+													<img class="${step.id}_2_3" alt="东西方向人行道西面上边" class="l23" src="images/rod/l23${step.roads[3].rxcolor}.png" width="15" />
 											</div>
 											<div class="xhu" style="margin-left: 135px;">
 											
-												<img class="${step.id}_0_3" alt="东西方向人行道东面上边" class="l03" src="images/rod/l030.png" width="15" />
+												<img class="${step.id}_0_3" alt="东西方向人行道东面上边" class="l03" src="images/rod/l03${step.roads[0].rxcolor}.png" width="15" />
 											
 											</div>
 										</div>
@@ -114,14 +114,14 @@ $(document).ready(function(e) {
 										</div>
 										<div style="width: 100%; float: left; height: ">
 											<div class="xhup">
-												<img  class="${step.id}_3_3" alt="南北方向人行道北面左边"  src="images/rod/l330.png" width="15" />
+												<img  class="${step.id}_3_3" alt="南北方向人行道北面左边"  src="images/rod/l33${step.roads[3].rxcolor}.png" width="15" />
 												<!-- 
 												<img class="l03" src="images/rod/l030_2.png" width="15" />
 											-->
 											</div>
 											<div class="xhup" style="margin-left: 155px;">
 											
-												<img class="${step.id}_3_3" alt="南北方向人行道北面右边" src="images/rod/l330.png" width="15" />
+												<img class="${step.id}_3_3" alt="南北方向人行道北面右边" src="images/rod/l33${step.roads[3].rxcolor}.png" width="15" />
 													<!-- 
 												<img  class="l03" src="images/rod/l030_2.png" width="15" />
 											-->
@@ -137,19 +137,19 @@ $(document).ready(function(e) {
 													</tr>
 													<tr>
 														<td align="center">
-															<img id="${step.id}_0_2"  src="images/rod/l020.png" alt="东向西右拐"
+															<img id="${step.id}_0_2"  src="images/rod/l02${step.roads[0].rightcolor}.png" alt="东向西右拐"
 																width="15" height="15" />
 														</td>
 													</tr>
 													<tr>
 														<td align="center">
-															<img id="${step.id}_0_1"  src="images/rod/l010.png" alt="东向西直行"
+															<img id="${step.id}_0_1"  src="images/rod/l01${step.roads[0].linecolor}.png" alt="东向西直行"
 																width="15" height="15" />
 														</td>
 													</tr>
 													<tr>
 														<td align="center">
-															<img id="${step.id}_0_0"   src="images/rod/l000.png" alt="东向西左拐"
+															<img id="${step.id}_0_0"   src="images/rod/l00${step.roads[0].leftcolor}.png" alt="东向西左拐"
 																width="15" height="15" />
 														</td>
 													</tr>
@@ -161,15 +161,15 @@ $(document).ready(function(e) {
 													<tr>
 														<td width="2" height="18"></td>
 														<td>
-															<img id="${step.id}_3_2"  src="images/rod/l320.png" alt="北向南右拐" width="15"
+															<img id="${step.id}_3_2"  src="images/rod/l32${step.roads[3].rightcolor}.png" alt="北向南右拐" width="15"
 																height="15" />
 														</td>
 														<td>
-															<img id="${step.id}_3_1"  src="images/rod/l310.png" alt="北向南直行" width="15"
+															<img id="${step.id}_3_1"  src="images/rod/l31${step.roads[3].linecolor}.png" alt="北向南直行" width="15"
 																height="15" />
 														</td>
 														<td>
-															<img  id="${step.id}_3_0"  src="images/rod/l300.png" alt="北向南左拐" width="15"
+															<img  id="${step.id}_3_0"  src="images/rod/l30${step.roads[3].leftcolor}.png" alt="北向南左拐" width="15"
 																height="15" />
 														</td>
 													</tr>
@@ -181,15 +181,15 @@ $(document).ready(function(e) {
 													<tr>
 														<td width="2" height="18"></td>
 														<td>
-															<img id="${step.id}_1_0"  src="images/rod/l100.png" alt="南向北左拐" width="15"
+															<img id="${step.id}_1_0"  src="images/rod/l10${step.roads[1].leftcolor}.png" alt="南向北左拐" width="15"
 																height="15" />
 														</td>
 														<td>
-															<img id="${step.id}_1_1"  src="images/rod/l110.png" alt="南向北直行" width="15"
+															<img id="${step.id}_1_1"  src="images/rod/l11${step.roads[1].linecolor}.png" alt="南向北直行" width="15"
 																height="15" />
 														</td>
 														<td>
-															<img id="${step.id}_1_2"  src="images/rod/l120.png" alt="南向北右拐" width="15"
+															<img id="${step.id}_1_2"  src="images/rod/l12${step.roads[1].rightcolor}.png" alt="南向北右拐" width="15"
 																height="15" />
 														</td>
 													</tr>
@@ -203,19 +203,19 @@ $(document).ready(function(e) {
 													</tr>
 													<tr>
 														<td align="center">
-															<img  id="${step.id}_2_0"  src="images/rod/l200.png" alt="西向东左拐" width="15"
+															<img  id="${step.id}_2_0"  src="images/rod/l20${step.roads[2].leftcolor}.png" alt="西向东左拐" width="15"
 																height="15" />
 														</td>
 													</tr>
 													<tr>
 														<td align="center">
-															<img id="${step.id}_2_1"  src="images/rod/l210.png" alt="西向东直行"  width="15"
+															<img id="${step.id}_2_1"  src="images/rod/l21${step.roads[2].linecolor}.png" alt="西向东直行"  width="15"
 																height="15" />
 														</td>
 													</tr>
 													<tr>
 														<td align="center">
-															<img id="${step.id}_2_2"  src="images/rod/l220.png" alt="西向东右拐" width="15"
+															<img id="${step.id}_2_2"  src="images/rod/l22${step.roads[2].rightcolor}.png" alt="西向东右拐" width="15"
 																height="15" />
 														</td>
 													</tr>
@@ -225,14 +225,14 @@ $(document).ready(function(e) {
 										<div style="width: 100%; float: left; height: ">
 											<div class="xhup">
 											
-												<img class="${step.id}_1_3"  src="images/rod/l130.png" alt="南北方向人行道南面左边" width="15" />
+												<img class="${step.id}_1_3"  src="images/rod/l13${step.roads[1].rxcolor}.png" alt="南北方向人行道南面左边" width="15" />
 												<!-- 
 												<img class="l13" src="images/rod/l130_2.png" alt="南北人行道" width="15" />
 												-->
 											</div>
 											<div class="xhup" style="margin-left: 155px;">
 											
-												<img class="${step.id}_1_3"  src="images/rod/l130.png" alt="南北方向人行道南面右边" width="15" />
+												<img class="${step.id}_1_3"  src="images/rod/l13${step.roads[1].rxcolor}.png" alt="南北方向人行道南面右边" width="15" />
 												<!--  
 												<img class="l13" src="images/rod/l130_2.png" alt="南北人行道" width="15" />
 													-->
@@ -241,12 +241,12 @@ $(document).ready(function(e) {
 										<div style="width: 100%; float: left; height: ">
 											<div class="xhu" style="margin-top: 0px;">
 												
-												<img  class="${step.id}_2_3"  src="images/rod/l230.png" alt="东西方向人行道西面下边" width="15" />
+												<img  class="${step.id}_2_3"  src="images/rod/l23${step.roads[2].rxcolor}.png" alt="东西方向人行道西面下边" width="15" />
 											
 											</div>
 											<div class="xhu" style="margin-left: 135px; margin-top: 0px;">
 											
-												<img class="${step.id}_0_3"  src="images/rod/l030.png" alt="东西方向人行道东面下边" width="15" />
+												<img class="${step.id}_0_3"  src="images/rod/l03${step.roads[0].rxcolor}.png" alt="东西方向人行道东面下边" width="15" />
 											
 											</div>
 										</div>

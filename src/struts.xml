@@ -78,7 +78,7 @@
 		</global-results>
 		<action name="sigpublicparamAction" class="sigpublicparamAction">
 			<result name="cssz-cs">/cssz-cs.jsp</result>
-			<result name="success">/smap.jsp</result>
+			<result name="map">/smap.jsp</result>
 			<result name="error">/error.html</result>
 		</action>
 	</package>

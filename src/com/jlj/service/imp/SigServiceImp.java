@@ -88,4 +88,7 @@ public class SigServiceImp implements ISigService  {
 		Object[] values = new Object[] { ipAddress };
 		return sigDao.queryByNamedParam(queryString, paramNames, values);
 	}
+	public List<Sig> getAllSigs() {
+		return sigDao.queryList("from Sig ");
+	}
 }

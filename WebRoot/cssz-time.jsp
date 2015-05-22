@@ -61,7 +61,7 @@ $(document).ready(function(e) {
 				<div class="itab">
 					<ul>
 						<li>
-							<a href="sigpublicparamAction!publicParam?id=<s:property value="#session.id"/>">一般参数</a>
+							<a href="sigpublicparamAction!publicParam?sigIp=<s:property value="#session.sigIp"/>">一般参数</a>
 						</li>
 
 						<li>
@@ -71,7 +71,7 @@ $(document).ready(function(e) {
 							<a href="solutionAction!solutions" class="selected">时间段参数</a>
 						</li>
 						<li>
-							<a href="cssz-ct.jsp">绿冲突表</a>
+							<a href="greenAction!green?sid=<s:property value="#session.sidp"/>">绿冲突表</a>
 						</li>
 					</ul>
 				</div>

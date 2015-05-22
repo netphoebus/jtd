@@ -35,20 +35,20 @@ public class GreenconflictAction extends ActionSupport implements RequestAware,
 
 	private Sig sig;
 	private int id;
+	private int sid;
 	
 	public String green()
 	{
-		greens = greenService.loadBySid(id);
+		greens = greenService.loadBySid(sid);
 		if(greens!=null)
 		{
-			session.put("id", id);//从地图中进入信号机，将信号机id传入session
-			return "cssz-fa";
+			session.put("sid", sid);//从地图中进入信号机，将信号机id传入session
+			return "cssz-ct";
 		}else
 		{
 			return "error";//预留没有查询到相应公共参数时跳转的提示页面
 		}
 	}
-
 	/**
 	 * 添加
 	 * 
@@ -120,7 +120,6 @@ public class GreenconflictAction extends ActionSupport implements RequestAware,
 		this.id = id;
 	}
 
-
 	public IGreenconflictService getGreenService() {
 		return greenService;
 	}
@@ -130,14 +129,18 @@ public class GreenconflictAction extends ActionSupport implements RequestAware,
 		this.greenService = greenService;
 	}
 
-
 	public List<Greenconflict> getGreens() {
 		return greens;
 	}
 
-
 	public void setGreens(List<Greenconflict> greens) {
 		this.greens = greens;
+	}
+	public int getSid() {
+		return sid;
+	}
+	public void setSid(int sid) {
+		this.sid = sid;
 	}
 	
 	

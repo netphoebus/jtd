@@ -1,4 +1,13 @@
 //相位方案
+function changeSolution()
+{
+	$("#solutions").val();
+	console.log($("#solutions").val());
+	window.open("solutionAction!solutions?soid="+$("#solutions").val(),"rightFrame");
+}
+
+
+
 var updatedatas = {};
 $(document).ready(function(){
 
@@ -240,7 +249,7 @@ function saveSolution()
 		$.ajax({   
             url:'update',//这里是你的action或者servlert的路径地址   
             type:'post', //数据发送方式  
-            data: { "dates":updatedatas},  
+            data: { "dates":msg},  
             traditional: true,  
             error: function(msg)
             { //失败   

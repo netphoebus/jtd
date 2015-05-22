@@ -39,6 +39,9 @@ public class SignpublicparamAction extends ActionSupport implements RequestAware
 	private Signpublicparam sigpubparam;
 	private int id;
 	private Sig sig;
+	private int sid;//信号机id
+	private int sigpubid;//信号机公共参数Id
+	private String sigIp;//信号机IP
 	
 	
 	private Integer spetimeable;
@@ -46,22 +49,44 @@ public class SignpublicparamAction extends ActionSupport implements RequestAware
 	
 	//跳转 一般参数页面  
 	public String publicParam() {
-			sigpubparam = sigpubparamService.loadById(id);
-			if(sigpubparam!=null)
+			if(sigIp==null||sigIp.equals(""))
 			{
-				session.put("id", id);//从地图中进入信号机，将信号机id传入session
-				initPublicParamJSP(sigpubparam);
-				return "cssz-cs";
+				return "map";
 			}else
 			{
-				return "error";//预留没有查询到相应公共参数时跳转的提示页面
+				//根据IP来查询信号机公共参数
+				sigpubparam = sigpubparamService.loadBySigIp(sigIp);
+				if(sigpubparam!=null&&sigpubparam.getIp()!=null)
+				{
+					if(sid!=0)
+					{
+						//判断信号机公共参数中的signid是否为空，如果为空则设置公共参数中的signid对应sig
+						if(sigpubparam.getSig().getId()==null||sigpubparam.getSig().getId()==0)
+						{
+							sig = sigService.loadById(sid);
+							sigpubparam.setSig(sig);
+							sigpubparamService.update(sigpubparam);//公共参数中设置信号机id
+						}
+					}
+					session.put("sigIp", sigIp);//从地图中进入信号机，将信号机ip传入session
+					session.put("sid", sigpubparam.getSig().getId());//从地图中进入信号机，将信号机id传入session
+					initPublicParamJSP(sigpubparam.getWorkingset());
+					//判断是否首次进入一般参数,如果首次进入一般参数则需设置公共参数中的signid对应sig
+					
+					return "cssz-cs";
+				}else
+				{
+					return "error";//预留没有查询到相应公共参数时跳转的提示页面
+				}
+				
 			}
 	}
 	
-	private void initPublicParamJSP(Signpublicparam sigpubparam)
+	//工作日设置处理
+	private void initPublicParamJSP(int workingset)
 	{
-		//工作日设置处理
-		switch(sigpubparam.getWorkingset())
+
+		switch(workingset)
 		{
 			case 0:
 				spetimeable = 0;
@@ -278,5 +303,29 @@ public class SignpublicparamAction extends ActionSupport implements RequestAware
 		this.suntimeable = suntimeable;
 	}
 
+	public int getSid() {
+		return sid;
+	}
 
+	public void setSid(int sid) {
+		this.sid = sid;
+	}
+
+	public String getSigIp() {
+		return sigIp;
+	}
+
+	public void setSigIp(String sigIp) {
+		this.sigIp = sigIp;
+	}
+
+	public int getSigpubid() {
+		return sigpubid;
+	}
+
+	public void setSigpubid(int sigpubid) {
+		this.sigpubid = sigpubid;
+	}
+	
+	
 }

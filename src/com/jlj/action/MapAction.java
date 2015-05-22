@@ -39,7 +39,7 @@ public class MapAction extends ActionSupport implements RequestAware,
 	private ISigService sigService;
 
 	private List<MarkerVO> initMarkers = new ArrayList<MarkerVO>();
-	private List<Sig> sigs = new ArrayList<Sig>();
+	private List<Sig> sigs;
 	private Sig sig;
 
 	/**
@@ -49,9 +49,9 @@ public class MapAction extends ActionSupport implements RequestAware,
 	 * @throws Exception
 	 */
 	public String load() throws Exception {
-
-		sigs = sigService.getSigs();
-		
+		System.out.println("---------------1");
+		sigs = sigService.getAllSigs();
+		System.out.println("---------------2");
 		if(sigs!=null&&sigs.size()>0)
 		{
 			for (Sig sig : sigs) {
@@ -228,4 +228,5 @@ public class MapAction extends ActionSupport implements RequestAware,
 		this.sig = sig;
 	}
 
+	
 }

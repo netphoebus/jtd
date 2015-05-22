@@ -38,6 +38,8 @@ public interface ISigService {
 
 	public abstract Sig querySigByIpAddress(String ipAddress);
 
+	public abstract List<Sig> getAllSigs();
+
 
 
 }
