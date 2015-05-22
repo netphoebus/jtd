@@ -39,7 +39,7 @@ public class Sig implements java.io.Serializable {
 	private Signpublicparam signpublicparam;
 	private List<Devlog> devlogs = new ArrayList<Devlog>();
 	private Sigsystime sigsystime;
-	private Greenconflict greenconflict;
+	private List<Greenconflict> greenconflicts = new ArrayList<Greenconflict>();
 
 	// Constructors
 
@@ -51,7 +51,7 @@ public class Sig implements java.io.Serializable {
 	public Sig(Userarea userarea, String name, String address, String lat,
 			String lng, String ip, Long mkid,
 			Signpublicparam signpublicparam, List<Devlog> devlogs,
-			Sigsystime sigsystime,Greenconflict greenconflict) {
+			Sigsystime sigsystime,List<Greenconflict> greenconflicts) {
 		this.userarea = userarea;
 		this.name = name;
 		this.address = address;
@@ -62,7 +62,7 @@ public class Sig implements java.io.Serializable {
 		this.signpublicparam = signpublicparam;
 		this.devlogs = devlogs;
 		this.sigsystime = sigsystime;
-		this.greenconflict = greenconflict;
+		this.greenconflicts = greenconflicts;
 	}
 
 	// Property accessors
@@ -168,14 +168,16 @@ public class Sig implements java.io.Serializable {
 		this.sigsystime = sigsystime;
 	}
 
-	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "sig")
-	public Greenconflict getGreenconflict() {
-		return greenconflict;
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "sig")
+	public List<Greenconflict> getGreenconflicts() {
+		return greenconflicts;
 	}
 
-	public void setGreenconflict(Greenconflict greenconflict) {
-		this.greenconflict = greenconflict;
+	public void setGreenconflicts(List<Greenconflict> greenconflicts) {
+		this.greenconflicts = greenconflicts;
 	}
+
+	
 
 	
 }

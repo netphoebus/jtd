@@ -280,7 +280,7 @@ public class ParametersCmdFactory extends CmdFactoryBase implements ICmdParser{
 		//检查公共参数表的冲突子表：若无，插入新数据；若有，修改原数据
 		Sig sig = sigService.querySigByIpAddress(clientIP);
 		if(sig!=null){
-			Greenconflict greenconflict = sig.getGreenconflict();
+			Greenconflict greenconflict = sig.getGreenconflicts().get(0);
 			if(greenconflict!=null){
 				//更新数据
 //				greenconflictService.updateByGreenid(name,l00,greenconflict.getId());
