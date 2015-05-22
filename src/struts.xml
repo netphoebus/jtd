@@ -83,7 +83,7 @@
 		</action>
 	</package>
 	
-	<package name="solutionAction" extends="struts-default">
+	<package name="solution" extends="struts-default">
 		<global-results>
 			<result name="adminLogin">/login.jsp</result>
 			<result name="opsessiongo">/op_sessiongo.jsp</result>
@@ -94,7 +94,19 @@
 		</action>
 	</package>
 	
-	<package name="realtime" extends="json-default">  
+	
+	<package name="green" extends="struts-default">
+		<global-results>
+			<result name="adminLogin">/login.jsp</result>
+			<result name="opsessiongo">/op_sessiongo.jsp</result>
+		</global-results>
+		<action name="greenAction" class="greenAction">
+			<result name="cssz-ct">/cssz-ct.jsp</result>
+			<result name="error">/error.html</result>
+		</action>
+	</package>
+	
+	<package name="realtime_ajax" extends="json-default">  
         <action name="realtime" class="sigAction" method="realtime">  
             <result type="json">  
                 <param name="excludeNullProperties">true</param>  

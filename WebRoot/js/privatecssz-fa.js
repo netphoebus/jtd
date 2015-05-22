@@ -8,7 +8,7 @@ function changeSolution()
 
 
 
-var updatedatas = {};
+var updateFang = {};
 $(document).ready(function(){
 
 			var datas = {};
@@ -43,14 +43,14 @@ $(document).ready(function(){
 			{
 				var imgclass= img[0].classList[0];
 				
-				updatedatas[imgclass] = lastnumber;
+				updateFang[imgclass] = lastnumber;
 				
 				$("."+imgclass).attr("src",imgsrc_new);
 			}else
 			{
 				var imgid = img[0].id;
 				
-				updatedatas[imgid] = lastnumber;
+				updateFang[imgid] = lastnumber;
 				
 				img.attr("src",imgsrc_new);
 			}
@@ -100,149 +100,149 @@ function allRed(id)
 {
 	
 		$("."+id+"_2_3").attr("src","images/rod/l233.png");
-		updatedatas[id+"_2_3"] = 3;	
+		updateFang[id+"_2_3"] = 3;	
 									
 		$("."+id+"_0_3").attr("src","images/rod/l033.png");
-		updatedatas[id+"_0_3"] = 3;	
+		updateFang[id+"_0_3"] = 3;	
 			
 		$("."+id+"_3_3").attr("src","images/rod/l333.png");
-		updatedatas[id+"_3_3"] = 3;	
+		updateFang[id+"_3_3"] = 3;	
 		
 		$("."+id+"_3_3").attr("src","images/rod/l333.png");
-		updatedatas[id+"_3_3"] = 3;	
+		updateFang[id+"_3_3"] = 3;	
 		
 		
 		$("#"+id+"_0_2").attr("src","images/rod/l023.png");
-		updatedatas[id+"_0_2"] = 3;	
+		updateFang[id+"_0_2"] = 3;	
 		
 		$("#"+id+"_0_2").attr("src","images/rod/l023.png");
-		updatedatas[id+"_0_2"] = 3;	
+		updateFang[id+"_0_2"] = 3;	
 		
 							
 		$("#"+id+"_0_1").attr("src","images/rod/l013.png");
-		updatedatas[id+"_0_1"] = 3;	
+		updateFang[id+"_0_1"] = 3;	
 		
 		$("#"+id+"_0_0").attr("src","images/rod/l003.png");
-		updatedatas[id+"_0_0"] = 3;	
+		updateFang[id+"_0_0"] = 3;	
 		
 		$("#"+id+"_3_2").attr("src","images/rod/l323.png");
-		updatedatas[id+"_3_2"] = 3;
+		updateFang[id+"_3_2"] = 3;
 		
 		$("#"+id+"_3_1").attr("src","images/rod/l313.png");
-		updatedatas[id+"_3_1"] = 3;
+		updateFang[id+"_3_1"] = 3;
 		
 		$("#"+id+"_3_0").attr("src","images/rod/l303.png");
-		updatedatas[id+"_3_0"] = 3;
+		updateFang[id+"_3_0"] = 3;
 		
 		$("#"+id+"_1_0").attr("src","images/rod/l103.png");
-		updatedatas[id+"_1_0"] = 3;
+		updateFang[id+"_1_0"] = 3;
 		
 		$("#"+id+"_1_1").attr("src","images/rod/l113.png");
-		updatedatas[id+"_1_1"] = 3;
+		updateFang[id+"_1_1"] = 3;
 		
 		$("#"+id+"_1_2").attr("src","images/rod/l123.png");
-		updatedatas[id+"_1_2"] = 3;
+		updateFang[id+"_1_2"] = 3;
 		
 		$("#"+id+"_2_0").attr("src","images/rod/l203.png");
-		updatedatas[id+"_2_0"] = 3;
+		updateFang[id+"_2_0"] = 3;
 		
 		$("#"+id+"_2_1").attr("src","images/rod/l213.png");
-		updatedatas[id+"_2_1"] = 3;
+		updateFang[id+"_2_1"] = 3;
 		
 		$("#"+id+"_2_2").attr("src","images/rod/l223.png");
-		updatedatas[id+"_2_2"] = 3;
+		updateFang[id+"_2_2"] = 3;
 		
 		$("."+id+"_1_3").attr("src","images/rod/l133.png");
-		updatedatas[id+"_1_3"] = 3;
+		updateFang[id+"_1_3"] = 3;
 		
 		$("."+id+"_1_3").attr("src","images/rod/l133.png");
-		updatedatas[id+"_1_3"] = 3;
+		updateFang[id+"_1_3"] = 3;
 		
 		$("."+id+"_2_3").attr("src","images/rod/l233.png");
-		updatedatas[id+"_2_3"] = 3;
+		updateFang[id+"_2_3"] = 3;
 		
 		$("."+id+"_0_3").attr("src","images/rod/l033.png");
-		updatedatas[id+"_0_3"] = 3;
+		updateFang[id+"_0_3"] = 3;
 	
 }
 
 function clearAllLight(id)
 {
 	$("."+id+"_2_3").attr("src","images/rod/l230.png");
-		updatedatas[id+"_2_3"] = 0;	
+		updateFang[id+"_2_3"] = 0;	
 									
 		$("."+id+"_0_3").attr("src","images/rod/l030.png");
-		updatedatas[id+"_0_3"] = 0;	
+		updateFang[id+"_0_3"] = 0;	
 			
 		$("."+id+"_3_3").attr("src","images/rod/l330.png");
-		updatedatas[id+"_3_3"] = 0;	
+		updateFang[id+"_3_3"] = 0;	
 		
 		$("."+id+"_3_3").attr("src","images/rod/l330.png");
-		updatedatas[id+"_3_3"] = 0;	
+		updateFang[id+"_3_3"] = 0;	
 		
 		
 		$("#"+id+"_0_2").attr("src","images/rod/l020.png");
-		updatedatas[id+"_0_2"] = 0;	
+		updateFang[id+"_0_2"] = 0;	
 		
 		$("#"+id+"_0_2").attr("src","images/rod/l020.png");
-		updatedatas[id+"_0_2"] = 0;	
+		updateFang[id+"_0_2"] = 0;	
 		
 							
 		$("#"+id+"_0_1").attr("src","images/rod/l010.png");
-		updatedatas[id+"_0_1"] = 0;	
+		updateFang[id+"_0_1"] = 0;	
 		
 		$("#"+id+"_0_0").attr("src","images/rod/l000.png");
-		updatedatas[id+"_0_0"] = 0;	
+		updateFang[id+"_0_0"] = 0;	
 		
 		$("#"+id+"_3_2").attr("src","images/rod/l320.png");
-		updatedatas[id+"_3_2"] = 0;
+		updateFang[id+"_3_2"] = 0;
 		
 		$("#"+id+"_3_1").attr("src","images/rod/l310.png");
-		updatedatas[id+"_3_1"] = 0;
+		updateFang[id+"_3_1"] = 0;
 		
 		$("#"+id+"_3_0").attr("src","images/rod/l300.png");
-		updatedatas[id+"_3_0"] = 0;
+		updateFang[id+"_3_0"] = 0;
 		
 		$("#"+id+"_1_0").attr("src","images/rod/l100.png");
-		updatedatas[id+"_1_0"] = 0;
+		updateFang[id+"_1_0"] = 0;
 		
 		$("#"+id+"_1_1").attr("src","images/rod/l110.png");
-		updatedatas[id+"_1_1"] = 0;
+		updateFang[id+"_1_1"] = 0;
 		
 		$("#"+id+"_1_2").attr("src","images/rod/l120.png");
-		updatedatas[id+"_1_2"] = 0;
+		updateFang[id+"_1_2"] = 0;
 		
 		$("#"+id+"_2_0").attr("src","images/rod/l200.png");
-		updatedatas[id+"_2_0"] = 0;
+		updateFang[id+"_2_0"] = 0;
 		
 		$("#"+id+"_2_1").attr("src","images/rod/l210.png");
-		updatedatas[id+"_2_1"] = 0;
+		updateFang[id+"_2_1"] = 0;
 		
 		$("#"+id+"_2_2").attr("src","images/rod/l220.png");
-		updatedatas[id+"_2_2"] = 0;
+		updateFang[id+"_2_2"] = 0;
 		
 		$("."+id+"_1_3").attr("src","images/rod/l130.png");
-		updatedatas[id+"_1_3"] = 0;
+		updateFang[id+"_1_3"] = 0;
 		
 		$("."+id+"_1_3").attr("src","images/rod/l130.png");
-		updatedatas[id+"_1_3"] = 0;
+		updateFang[id+"_1_3"] = 0;
 		
 		$("."+id+"_2_3").attr("src","images/rod/l230.png");
-		updatedatas[id+"_2_3"] = 0;
+		updateFang[id+"_2_3"] = 0;
 		
 		$("."+id+"_0_3").attr("src","images/rod/l030.png");
-		updatedatas[id+"_0_3"] = 0;
+		updateFang[id+"_0_3"] = 0;
 }
 
 function saveSolution()
 {
-	console.log(updatedatas);
+	console.log(updateFang);
 	var msg = "";
 	
-	for(var prop in updatedatas){
-    if(updatedatas.hasOwnProperty(prop)){
-        console.log('key is ' + prop +' and value is' + updatedatas[prop]);
-        msg = msg + prop+":"+ updatedatas[prop]+",";
+	for(var prop in updateFang){
+    if(updateFang.hasOwnProperty(prop)){
+        console.log('key is ' + prop +' and value is' + updateFang[prop]);
+        msg = msg + prop+":"+ updateFang[prop]+",";
     	}
 	}
 	console.log(msg);

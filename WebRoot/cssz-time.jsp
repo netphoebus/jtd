@@ -71,7 +71,7 @@ $(document).ready(function(e) {
 							<a href="solutionAction!solutions" class="selected">时间段参数</a>
 						</li>
 						<li>
-							<a href="greenAction!green?sid=<s:property value="#session.sidp"/>">绿冲突表</a>
+							<a href="greenAction!green?sid=<s:property value="#session.sid"/>">绿冲突表</a>
 						</li>
 					</ul>
 				</div>

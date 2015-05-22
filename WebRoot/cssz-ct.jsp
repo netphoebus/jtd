@@ -70,7 +70,7 @@ $(document).ready(function(e) {
      
     <li><a href="solutionAction!solutions" >相位方案</a></li> 
     <li><a href="cssz-time.jsp"  >时间段参数</a></li> 
-    <li><a href="greenAction!green?sid=<s:property value="#session.sidp"/>"  class="selected">绿冲突表</a></li> 
+    <li><a href="greenAction!green?sid=<s:property value="#session.sid"/>"  class="selected">绿冲突表</a></li> 
   	</ul>
     </div>
     <div style="font-size:18px; font-family:黑体; font-weight:bold; width:100%; text-align:center; line-height:30px; margin-top:15px;">绿冲突表</div>
@@ -124,140 +124,139 @@ $(document).ready(function(e) {
           <s:iterator value="greens" var="green" status="status">
           	<tr>
 	            <td> <s:property value="#status.index"/></td>
-	            <td> <s:property value="green.name"/></td>
+	            <td> <s:property value="name"/></td>
 	            <td>
-			            <s:if test="green.l00==1">
-				            <img src="img/tick.png"/>
+			            <s:if test="l00==0">
+				            <img id="${id}_00" src="img/tick.png"/>
 				        </s:if>
 				        <s:else>
-				            <img src="img/cross.png"/>
+				            <img id="${id}_00" src="img/cross.png"/>
 				        </s:else>
 		        </td>
 	            <td>
-			            <s:if test="green.l01==1">
-				            <img src="img/tick.png"/>
+			            <s:if test="l01==0">
+				            <img id="${id}_01" src="img/tick.png"/>
 				        </s:if>
 				        <s:else>
-				            <img src="img/cross.png"/>
+				            <img id="${id}_01" src="img/cross.png"/>
 				        </s:else>
 		        </td>
 	            <td>
-			            <s:if test="green.l02==1">
-				            <img src="img/tick.png"/>
+			            <s:if test="l02==0">
+				            <img id="${id}_02" src="img/tick.png"/>
 				        </s:if>
 				        <s:else>
-				            <img src="img/cross.png"/>
+				            <img id="${id}_02" src="img/cross.png"/>
 				        </s:else>
 		        </td>
 	            <td>
-			            <s:if test="green.l03==1">
-				            <img src="img/tick.png"/>
+			            <s:if test="l03==0">
+				            <img id="${id}_03" src="img/tick.png"/>
 				        </s:if>
 				        <s:else>
-				            <img src="img/cross.png"/>
+				            <img id="${id}_03" src="img/cross.png"/>
 				        </s:else>
 		        </td>
 	            <td>
-			            <s:if test="green.l10==1">
-				            <img src="img/tick.png"/>
+			            <s:if test="l10==0">
+				            <img id="${id}_10" src="img/tick.png"/>
 				        </s:if>
 				        <s:else>
-				            <img src="img/cross.png"/>
+				            <img id="${id}_10" src="img/cross.png"/>
 				        </s:else>
 		        </td>
 	            <td>
-			            <s:if test="green.l11==1">
-				            <img src="img/tick.png"/>
+			            <s:if test="l11==0">
+				            <img id="${id}_11" src="img/tick.png"/>
 				        </s:if>
 				        <s:else>
-				            <img src="img/cross.png"/>
+				            <img id="${id}_11" src="img/cross.png"/>
 				        </s:else>
 		        </td>
 	             <td>
-			            <s:if test="green.l12==1">
-				            <img src="img/tick.png"/>
+			            <s:if test="l12==0">
+				            <img id="${id}_12" src="img/tick.png"/>
 				        </s:if>
 				        <s:else>
-				            <img src="img/cross.png"/>
+				            <img id="${id}_12" src="img/cross.png"/>
 				        </s:else>
 		        </td>
 	            <td>
-			            <s:if test="green.l13==1">
-				            <img src="img/tick.png"/>
+			            <s:if test="l13==0">
+				            <img id="${id}_13" src="img/tick.png"/>
 				        </s:if>
 				        <s:else>
-				            <img src="img/cross.png"/>
+				            <img id="${id}_13" src="img/cross.png"/>
 				        </s:else>
 		        </td>
 	             <td>
-			            <s:if test="green.l20==1">
-				            <img src="img/tick.png"/>
+			            <s:if test="l20==0">
+				            <img id="${id}_20" src="img/tick.png"/>
 				        </s:if>
 				        <s:else>
-				            <img src="img/cross.png"/>
+				            <img id="${id}_20" src="img/cross.png"/>
 				        </s:else>
 		        </td>
 	           <td>
-			            <s:if test="green.l21==1">
-				            <img src="img/tick.png"/>
+			            <s:if test="l21==0">
+				            <img id="${id}_21" src="img/tick.png"/>
 				        </s:if>
 				        <s:else>
-				            <img src="img/cross.png"/>
+				            <img id="${id}_21" src="img/cross.png"/>
 				        </s:else>
 		        </td>
 	           <td>
-			            <s:if test="green.l22==1">
-				            <img src="img/tick.png"/>
+			            <s:if test="l22==0">
+				            <img id="${id}_22" src="img/tick.png"/>
 				        </s:if>
 				        <s:else>
-				            <img src="img/cross.png"/>
+				            <img id="${id}_22" src="img/cross.png"/>
 				        </s:else>
 		        </td>
 	             <td>
-			            <s:if test="green.l23==1">
-				            <img src="img/tick.png"/>
+			            <s:if test="l23==0">
+				            <img id="${id}_23" src="img/tick.png"/>
 				        </s:if>
 				        <s:else>
-				            <img src="img/cross.png"/>
+				            <img id="${id}_23" src="img/cross.png"/>
 				        </s:else>
 		        </td>
 	             <td>
-			            <s:if test="green.l30==1">
-				            <img src="img/tick.png"/>
+			            <s:if test="l30==0">
+				            <img id="${id}_30" src="img/tick.png"/>
 				        </s:if>
 				        <s:else>
-				            <img src="img/cross.png"/>
+				            <img id="${id}_30" src="img/cross.png"/>
 				        </s:else>
 		        </td>
 	            <td>
-			            <s:if test="green.l31==1">
-				            <img src="img/tick.png"/>
+			            <s:if test="l31==0">
+				            <img id="${id}_31" src="img/tick.png"/>
 				        </s:if>
 				        <s:else>
-				            <img src="img/cross.png"/>
+				            <img id="${id}_31" src="img/cross.png"/>
 				        </s:else>
 		        </td>
 	             <td>
-			            <s:if test="green.l32==1">
-				            <img src="img/tick.png"/>
+			            <s:if test="l32==0">
+				            <img id="${id}_32" src="img/tick.png"/>
 				        </s:if>
 				        <s:else>
-				            <img src="img/cross.png"/>
+				            <img id="${id}_32" src="img/cross.png"/>
 				        </s:else>
 		        </td>
 	             <td>
-			            <s:if test="green.l33==1">
-				            <img src="img/tick.png"/>
+			            <s:if test="l33==0">
+				            <img id="${id}_33" src="img/tick.png"/>
 				        </s:if>
 				        <s:else>
-				            <img src="img/cross.png"/>
+				            <img id="${id}_33" src="img/cross.png"/>
 				        </s:else>
 		        </td>
           </tr>
           
           </s:iterator>
           
-         
         </tbody>
       </table>
     </div>

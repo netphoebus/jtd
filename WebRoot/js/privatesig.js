@@ -25,3 +25,8 @@ function autojs()
 		setInterval("executeCommand(28)",60*1000*60*24*7);
 	}
 }
+
+function topSetting()
+{
+	alert("这里是高级设置~");
+}
