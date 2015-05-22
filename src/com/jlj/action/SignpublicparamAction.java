@@ -207,10 +207,15 @@ public class SignpublicparamAction extends ActionSupport implements RequestAware
 		setPublicParamJSP();
 		
 		sigpubparamService.update(sigpubparam);//修改
+		//同步传给信号机
+		setMsgToSig();
 		return SUCCESS;
 	}
 	
-	
+	public void setMsgToSig()
+	{
+		
+	}
 	
 
 	// get、set-------------------------------------------
