@@ -126,7 +126,8 @@
 	
 	 <package name="solution_ajax" extends="json-default">
 		<action name="update" class="solutionAction" method="update"/>
-	</package>
+		
+	 </package>
 	
 </struts>
 

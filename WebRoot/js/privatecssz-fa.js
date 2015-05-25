@@ -7,7 +7,7 @@ function changeSolution()
 }
 
 
-
+ //3：红 2：黄 1：绿 0：灭 null：未知
 var updateFang = {};
 $(document).ready(function(){
 
@@ -21,14 +21,29 @@ $(document).ready(function(){
 			var imgsrc = img[0].src;//获得当前焦点的src
 			var lastnumber = imgsrc.substring(imgsrc.indexOf(".png")-1,imgsrc.indexOf(".png"));//灯的颜色
 			var headnumber = imgsrc.substring(imgsrc.indexOf(".png")-3,imgsrc.indexOf(".png")-1);//路口方位及左转还是右转灯
+			
+			
+			
+			
+			
 			var headnumber1 = headnumber.substring(0,1);//路口方位
 			var headnumber2 = headnumber.substring(1,2);//灯转向
 			
 			//根据灯的种类及当前颜色 来修改灯的颜色
 			if(lastnumber == 0)
 			{
+				//当前灯色要改为绿色的时候进行一次查询
+				
+				
+				
+				
+				
+				
 				lastnumber = 1;
 				imgsrc_new = "images/rod/l"+headnumber+"1.png";
+				
+				
+				
 			}else if(lastnumber == 1)
 			{
 				lastnumber = 3;

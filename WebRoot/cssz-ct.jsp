@@ -120,7 +120,6 @@ $(document).ready(function(e) {
             <td>北人</td>
           </tr>
           
-         
           <s:iterator value="greens" var="green" status="status">
           	<tr>
 	            <td> <s:property value="#status.index"/></td>

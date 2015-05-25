@@ -14,14 +14,17 @@ import org.apache.struts2.interceptor.SessionAware;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import com.jlj.model.Greenconflict;
 import com.jlj.model.Sig;
 import com.jlj.model.Signpublicparam;
 import com.jlj.model.Solution;
 import com.jlj.model.Step;
+import com.jlj.service.IGreenconflictService;
 import com.jlj.service.ISigService;
 import com.jlj.service.ISignpublicparamService;
 import com.jlj.service.ISolutionService;
 import com.jlj.service.IStepService;
+import com.jlj.vo.ConflictVO;
 import com.opensymphony.xwork2.ActionSupport;
 
 @Component("solutionAction")
@@ -39,17 +42,21 @@ public class SolutionAction extends ActionSupport implements RequestAware,
 	private ISignpublicparamService sigpubparamService;
 	private ISolutionService solutionService;
 	private IStepService stepService;
+	private IGreenconflictService greenService;
 	
 	private Solution solution;
 	private List<Solution> solutions;
 	private List<Step> steps;
+	private List<Greenconflict> greens;
 	private Signpublicparam sigpubparam;
 	private int soid;
 	private Sig sig;
+	private ConflictVO conflictVO;//绿冲突表：实际有的冲突对象
 	
 	
 	public String solutions()
 	{
+		conflictVO = getConflicts();
 		solutions = solutionService.getSolutions();
 		if(soid==0)
 		{
@@ -68,6 +75,19 @@ public class SolutionAction extends ActionSupport implements RequestAware,
 		}
 	}
 	
+	//获得冲突对象
+	private ConflictVO getConflicts() {
+		// TODO Auto-generated method stub
+		greens = greenService.getGreenconflicts();
+		if(greens.size()>0)
+		{
+			//for(Gr)
+		}
+		
+		
+		return conflictVO;
+	}
+
 	/**
 	 * 添加
 	 * 
@@ -96,8 +116,17 @@ public class SolutionAction extends ActionSupport implements RequestAware,
 		System.out.println("================");
 	
 		String map = req.getParameter("dates");
-		
+		//需要插入数据库 解析 map-from jlj
 		System.out.println(map);
+		/**
+		 * map数组元素解释说明
+		 * 4_0_3:1[解释 id_方向_灯: 灯色]
+		 * 4  [解释 id(步序id都是偶数位)]
+		 * 0  [方向(0:东-》西,1:南-》北,2:西-》东]
+		 * 3  [0:左转灯,1: 直行灯 ,2:右转灯 ,3:人行道]
+		 * : 
+		 * 1  [3：红 2：黄 1：绿 0：灭 null：未知]
+		 */
 		return NONE;
 	}
 	
@@ -216,8 +245,32 @@ public class SolutionAction extends ActionSupport implements RequestAware,
 		this.steps = steps;
 	}
 
-	
+	public ConflictVO getConflictVO() {
+		return conflictVO;
+	}
 
+	public void setConflictVO(ConflictVO conflictVO) {
+		this.conflictVO = conflictVO;
+	}
+
+	public IGreenconflictService getGreenService() {
+		return greenService;
+	}
+	@Resource
+	public void setGreenService(IGreenconflictService greenService) {
+		this.greenService = greenService;
+	}
+
+	public List<Greenconflict> getGreens() {
+		return greens;
+	}
+
+	public void setGreens(List<Greenconflict> greens) {
+		this.greens = greens;
+	}
+
+	
+	
 	
 	
 }
