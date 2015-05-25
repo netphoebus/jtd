@@ -51,7 +51,7 @@ public class TimeServerHandler  implements IoHandler {
 //		else {
 //			
 //		}
-//	System.out.println("ente messageReceived"+bytesToHexString(DataConvertor.toByteArray(msg)));
+	System.out.println("ente messageReceived"+bytesToHexString(DataConvertor.toByteArray(msg)));
 //			byte[] m_oData = DataConvertor.toByteArray(msg);
 //			String data = bytesToHexString(m_oData);
 //			AnalysisData(data, session);

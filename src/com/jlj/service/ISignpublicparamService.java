@@ -54,7 +54,7 @@ public interface ISignpublicparamService {
 			int SigSpecialTime160,int SigSpecialTime161,int SigSpecialTime170,int SigSpecialTime171,
 			int SigSpecialTime180,int SigSpecialTime181,int SigSpecialTime190,int SigSpecialTime191,
 			int SigSpecialTime200,int SigSpecialTime201,int SigSpecialTime210,int SigSpecialTime211,
-			int SigSpecialTime220,int SigSpecialTime221,int SigSpecialTime230,int SigSpecialTime231, Integer publicid);
+			int SigSpecialTime220,int SigSpecialTime221,int SigSpecialTime230,int SigSpecialTime231, int publicid);
 
 	public abstract Signpublicparam loadBySid(int sid);
 

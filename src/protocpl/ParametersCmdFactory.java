@@ -43,7 +43,7 @@ public class ParametersCmdFactory extends CmdFactoryBase implements ICmdParser{
 	
 	@Override
 	public void Process(IoSession session, CommandBase cmd) throws Exception{
-	//	System.out.println("cmd.getCmdType() is "+cmd.getCmdType() +"this.expected_cmd is "+this.expected_cmd);
+		System.out.println("cmd.getCmdType() is "+cmd.getCmdType() +"this.expected_cmd is "+this.expected_cmd);
 		if(cmd.getCmdType() == this.expected_cmd)
 		{
 				
@@ -221,8 +221,8 @@ public class ParametersCmdFactory extends CmdFactoryBase implements ICmdParser{
 			System.out.println("-------------------------------signpublicparam add success");
 		}else{
 			System.out.println("-------------------------------signpublicparam update");	
-			signpublicparamService.updateByPublicid(Red_Clearance_Time,Yellow_Flash_Time,String.valueOf(number),
-					String.valueOf(comparam),checkflow,innermark,Workingset,
+			signpublicparamService.updateByPublicid(Red_Clearance_Time,Yellow_Flash_Time,number+"",
+					comparam+"",checkflow,innermark,Workingset,
 					SigSunTime[0],SigSunTime[1],SigSunTime[2],SigSunTime[3],SigSunTime[4],SigSunTime[5],SigSunTime[6],
 					gmintime,gmaxtime,zdbctime,countdownmode,xrfxtime,cycle,xyxr,
 					SigSpecialTime[0][0],SigSpecialTime[0][1],SigSpecialTime[1][0],SigSpecialTime[1][1],

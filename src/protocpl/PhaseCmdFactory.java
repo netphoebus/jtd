@@ -140,91 +140,92 @@ public class PhaseCmdFactory extends CmdFactoryBase implements ICmdParser{
 			//获取session中的IP
 			String clientIP = ((InetSocketAddress)session.getRemoteAddress()).getAddress().getHostAddress();
 			Signpublicparam signpublicparam =signpublicparamService.getPublicparamByIp(clientIP);
-			List<Solution> solutions = solutionService.getSolutionsByPublicidOrder(signpublicparam.getId());
-			if(solutions==null||solutions.size()==0){
-				if(locatelist.size()==8){
-					for (int j = 0; j < locatelist.size(); j++) {
-						Solution solution = new Solution();
-						solution.setOrderid(j);
-						solution.setSignpublicparam(signpublicparam);
-						solution.setSoluname("相位方案"+j);
-						try {
-							solutionService.add(solution);
-						} catch (Exception e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-						//保存该相位方案的所有相位步序
-						for (int k = 0; k < 16; k++) {
-							Step step = new Step();
-							step.setOrderid(k);
-							step.setPhasename("相位"+k/2);
-							step.setStepname("步序"+k);
-	//						step.setSecond(second);//秒
-							step.setSolution(solution);
+			if(signpublicparam!=null){
+				
+				List<Solution> solutions = solutionService.getSolutionsByPublicidOrder(signpublicparam.getId());
+				if(solutions==null||solutions.size()==0){
+					if(locatelist.size()==8){
+						for (int j = 0; j < locatelist.size(); j++) {
+							Solution solution = new Solution();
+							solution.setOrderid(j);
+							solution.setSignpublicparam(signpublicparam);
+							solution.setSoluname("相位方案"+j);
 							try {
-								stepService.add(step);
+								solutionService.add(solution);
 							} catch (Exception e) {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
 							}
-							//保存该相位步序下的所有方向
-							for (int a = 0; a < 4; a++) {
-								Road road = new Road();
-								road.setLeftcolor(locatelist.get(j)[a][0]);
-								road.setLinecolor(locatelist.get(j)[a][1]);
-								road.setRightcolor(locatelist.get(j)[a][2]);
-								road.setRxcolor(locatelist.get(j)[a][3]);
-								road.setRoadtype(a);
-								road.setStep(step);
+							//保存该相位方案的所有相位步序
+							for (int k = 0; k < 16; k++) {
+								Step step = new Step();
+								step.setOrderid(k);
+								step.setPhasename("相位"+k/2);
+								step.setStepname("步序"+k);
+		//						step.setSecond(second);//秒
+								step.setSolution(solution);
 								try {
-									roadService.add(road);
+									stepService.add(step);
 								} catch (Exception e) {
 									// TODO Auto-generated catch block
 									e.printStackTrace();
 								}
+								//保存该相位步序下的所有方向
+								for (int a = 0; a < 4; a++) {
+									Road road = new Road();
+									road.setLeftcolor(locatelist.get(j)[a][0]);
+									road.setLinecolor(locatelist.get(j)[a][1]);
+									road.setRightcolor(locatelist.get(j)[a][2]);
+									road.setRxcolor(locatelist.get(j)[a][3]);
+									road.setRoadtype(a);
+									road.setStep(step);
+									try {
+										roadService.add(road);
+									} catch (Exception e) {
+										// TODO Auto-generated catch block
+										e.printStackTrace();
+									}
+								}
 							}
 						}
 					}
-				}
-			}else{
-				if(locatelist.size()==8){
-					//更新数据库
-					for (int j = 0; j < locatelist.size(); j++) {
-						String soluname="相位方案"+j;
-						Solution solution = solutions.get(j);
-						int soluid=0;
-						if(solution!=null){
-							soluid=solutions.get(j).getId();
-						}
-						
-						solutionService.updateBySoluid(soluname,soluid);
-						
-						//保存该相位方案的所有相位步序
-						for (int k = 0; k < 16; k++) {
-							int orderid=k;
-							String phasename="相位"+k/2;
-							String stepname="步序"+k;
-							int stepid=0;
-							Step step = stepService.queryStepBySoluid(orderid,soluid);
-							stepService.updateByStepid(phasename,stepname,step.getId());
-							
-							//保存该相位步序下的所有方向
-							for (int a = 0; a < 4; a++) {
-								int leftcolor=locatelist.get(j)[a][0];
-								int linecolor=locatelist.get(j)[a][1];
-								int rightcolor=locatelist.get(j)[a][2];
-								int rxcolor=locatelist.get(j)[a][3];
-								int roadtype=a;
-								roadService.updateByRoadid(leftcolor,linecolor,rightcolor,rxcolor,roadtype,step.getId());
+				}else{
+					if(locatelist.size()==8){
+						//更新数据库
+						for (int j = 0; j < locatelist.size(); j++) {
+							String soluname="相位方案"+j;
+							Solution solution = solutions.get(j);
+							int soluid=0;
+							if(solution!=null){
+								soluid=solutions.get(j).getId();
 							}
+							
+							solutionService.updateBySoluid(soluname,soluid);
+							
+							//保存该相位方案的所有相位步序
+							for (int k = 0; k < 16; k++) {
+								int orderid=k;
+								String phasename="相位"+k/2;
+								String stepname="步序"+k;
+								int stepid=0;
+								Step step = stepService.queryStepBySoluid(orderid,soluid);
+								stepService.updateByStepid(phasename,stepname,step.getId());
+								
+								//保存该相位步序下的所有方向
+								for (int a = 0; a < 4; a++) {
+									int leftcolor=locatelist.get(j)[a][0];
+									int linecolor=locatelist.get(j)[a][1];
+									int rightcolor=locatelist.get(j)[a][2];
+									int rxcolor=locatelist.get(j)[a][3];
+									int roadtype=a;
+									roadService.updateByRoadid(leftcolor,linecolor,rightcolor,rxcolor,roadtype,step.getId());
+								}
+							}
+							
 						}
-						
 					}
 				}
 			}
-			
-			
 //			for(int road_i = 0;road_i<4 ; road_i++){
 //				Road road = new Road();
 //				road.setRoadtype(road_i);
