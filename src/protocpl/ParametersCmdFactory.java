@@ -281,21 +281,77 @@ public class ParametersCmdFactory extends CmdFactoryBase implements ICmdParser{
 		Sig sig = sigService.querySigByIpAddress(clientIP);
 		if(sig!=null){
 			Greenconflict greenconflict = sig.getGreenconflicts().get(0);
-			if(greenconflict!=null){
-				//更新数据
-//				greenconflictService.updateByGreenid(name,l00,greenconflict.getId());
-			}else{
+			if(greenconflict==null){
 				//新增数据
-				greenconflict = new Greenconflict();
-//				greenconflict.setName(name);
-//				greenconflict.setL00(l00);
-				greenconflict.setSig(sig);
-				try {
-					greenconflictService.add(greenconflict);
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+				for (int i = 0; i < 16; i++) {
+					greenconflict = new Greenconflict();
+					greenconflict.setSig(sig);
+					int j2=0;
+					for (int j = 0; j < 16; j++) {
+						j2=j;
+						switch (j) {
+						case 0:
+							greenconflict.setL00(conflict[i][j]);
+							break;
+						case 1:
+							greenconflict.setL01(conflict[i][j]);
+							break;
+						case 2:
+							greenconflict.setL02(conflict[i][j]);
+							break;
+						case 3:
+							greenconflict.setL03(conflict[i][j]);
+							break;
+						case 4:
+							greenconflict.setL10(conflict[i][j]);
+							break;
+						case 5:
+							greenconflict.setL11(conflict[i][j]);
+							break;
+						case 6:
+							greenconflict.setL12(conflict[i][j]);
+							break;
+						case 7:
+							greenconflict.setL13(conflict[i][j]);
+							break;
+						case 8:
+							greenconflict.setL20(conflict[i][j]);
+							break;
+						case 9:
+							greenconflict.setL21(conflict[i][j]);
+							break;
+						case 10:
+							greenconflict.setL22(conflict[i][j]);
+							break;
+						case 11:
+							greenconflict.setL23(conflict[i][j]);
+							break;
+						case 12:
+							greenconflict.setL30(conflict[i][j]);
+							break;
+						case 13:
+							greenconflict.setL31(conflict[i][j]);
+							break;
+						case 14:
+							greenconflict.setL32(conflict[i][j]);
+							break;
+						case 15:
+							greenconflict.setL33(conflict[i][j]);
+							break;
+						
+						default:
+							break;
+						}
+					}
+					greenconflict.setName("l"+i+""+j2);
+					try {
+						greenconflictService.add(greenconflict);
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
+				
 				
 			}
 		}
