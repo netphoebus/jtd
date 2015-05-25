@@ -43,7 +43,7 @@ public class Commands {
 	public final static String cmd_sdhxw  = "FF FF FF FF 01 F0 A2 0D 00 08 01 A8"; //发送手动换相位命令  命令编号 32
 	public final static String cmd_hfkz   = "FF FF FF FF 01 F0 A2 0E 00 08 01 A9"; //发送恢复信号机控制命令	  命令编号 33 自动
 	public final static String cmd_qcll   = "FF FF FF FF 01 F0 A2 0F 00 08 01 AA"; //发送清除累计流量命令  命令编号 34
-	
+	public final static String cmd_dylct  = "FF FF FF FF 01 F0 92 04 00 08 01 8F";
 	public static String getCommandStr(int i)
 	{
 		switch (i) {
@@ -117,6 +117,8 @@ public class Commands {
 			return cmd_hfkz;
 		case 34:
 			return cmd_qcll;
+		case 35:
+			return cmd_dylct;
 		default:
 			break;
 		}

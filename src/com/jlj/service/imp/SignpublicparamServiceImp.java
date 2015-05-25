@@ -152,7 +152,7 @@ public class SignpublicparamServiceImp implements ISignpublicparamService  {
 		String hql = "update Signpublicparam mo set mo.qchdtime =:red_Clearance_Time,mo.kjhstime=:yellow_Flash_Time,mo.number=:number," +
 				"mo.comparam=:comparam,mo.checkflow=:checkflow,mo.innermark=:innermark,mo.workingset=:workingset," +
 				"mo.mon=:SigSunTime0,mo.tue=:SigSunTime1,mo.wes=:SigSunTime2,mo.thir=:SigSunTime3,mo.fra=:SigSunTime4,mo.sata=:SigSunTime5,mo.sun=:SigSunTime6," +
-				"mo.gmintime=:gmintime,mo.gmaxtime=:gmaxtime,mo.zdbctime=:zdbctime,mo.countdownmode=:countdownmode,mo.xrfxtime=:xrfxtime,mo.cycle=:cycle,mo.xyxr=:xyxr " +
+				"mo.gmintime=:gmintime,mo.gmaxtime=:gmaxtime,mo.zdbctime=:zdbctime,mo.countdownmode=:countdownmode,mo.xrfxtime=:xrfxtime,mo.cycle=:cycle,mo.xyxr=:xyxr," +
 				"mo.specialmonth0=:SigSpecialTime00,mo.specialday0=:SigSpecialTime01,mo.specialmonth1=:SigSpecialTime10,mo.specialday1=:SigSpecialTime11," +
 				"mo.specialmonth2=:SigSpecialTime20,mo.specialday2=:SigSpecialTime21,mo.specialmonth3=:SigSpecialTime30,mo.specialday3=:SigSpecialTime31," +
 				"mo.specialmonth4=:SigSpecialTime40,mo.specialday4=:SigSpecialTime41,mo.specialmonth5=:SigSpecialTime50,mo.specialday5=:SigSpecialTime51," +
