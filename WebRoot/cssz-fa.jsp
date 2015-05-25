@@ -65,7 +65,22 @@ $(document).ready(function(e) {
 						    <li><a href="greenAction!green?sid=<s:property value="#session.sid"/>" >绿冲突表</a></li> 
 					</ul>
 				</div>
-
+				 <s:hidden id="c1" name="conflictVO.c_00"></s:hidden>
+				  <s:hidden id="c2" name="conflictVO.c_01"></s:hidden>
+				   <s:hidden id="c3" name="conflictVO.c_02"></s:hidden>
+				    <s:hidden id="c4" name="conflictVO.c_03"></s:hidden>
+				     <s:hidden id="c5" name="conflictVO.c_10"></s:hidden>
+				      <s:hidden id="c6" name="conflictVO.c_11"></s:hidden>
+				       <s:hidden id="c7" name="conflictVO.c_12"></s:hidden>
+				        <s:hidden id="c8" name="conflictVO.c_13"></s:hidden>
+				         <s:hidden id="c9" name="conflictVO.c_20"></s:hidden>
+				          <s:hidden id="c10" name="conflictVO.c_21"></s:hidden>
+				           <s:hidden id="c11" name="conflictVO.c_22"></s:hidden>
+				            <s:hidden id="c12" name="conflictVO.c_23"></s:hidden>
+				             <s:hidden id="c13" name="conflictVO.c_30"></s:hidden>
+				              <s:hidden id="c14" name="conflictVO.c_31"></s:hidden>
+				               <s:hidden id="c15" name="conflictVO.c_32"></s:hidden>
+				                <s:hidden id="c16" name="conflictVO.c_33"></s:hidden>
 				<div id="tab3" class="tabson">
 					<div style="width: 100%; float: left;">
 						<ul class="forminfo">
@@ -85,6 +100,7 @@ $(document).ready(function(e) {
 						</ul>
 						<div>
 							<div class="xwlb">
+							
 							<s:iterator value="steps" var="step" status="status">
 									<!--单个相位图li开始 -->
 								<li>
@@ -255,6 +271,7 @@ $(document).ready(function(e) {
 									</li>
 								</ul>
 							</div>
+							<s:debug></s:debug>
 					</div>
 					<script type="text/javascript"> 
       $("#usual1 ul").idTabs(); 

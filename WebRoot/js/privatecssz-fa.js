@@ -6,7 +6,6 @@ function changeSolution()
 	window.open("solutionAction!solutions?soid="+$("#solutions").val(),"rightFrame");
 }
 
-
  //3：红 2：黄 1：绿 0：灭 null：未知
 var updateFang = {};
 $(document).ready(function(){
@@ -14,35 +13,131 @@ $(document).ready(function(){
 			var datas = {};
 			var imgsrc_new = "";//新的图片路径
 			var img = "";
-			
-	$("div img").click(function(event) {
+			var conflictStart = "";
+			var conflictStr = "";
+		$("div img").click(function(event) {
 	
 			img = $(event.target);
 			var imgsrc = img[0].src;//获得当前焦点的src
-			var lastnumber = imgsrc.substring(imgsrc.indexOf(".png")-1,imgsrc.indexOf(".png"));//灯的颜色
-			var headnumber = imgsrc.substring(imgsrc.indexOf(".png")-3,imgsrc.indexOf(".png")-1);//路口方位及左转还是右转灯
-			
-			
-			
-			
-			
-			var headnumber1 = headnumber.substring(0,1);//路口方位
-			var headnumber2 = headnumber.substring(1,2);//灯转向
+			var lastnumber = imgsrc.substring(imgsrc.indexOf(".png")-1,imgsrc.indexOf(".png"));//当前焦点的灯的颜色
+			var headnumber = imgsrc.substring(imgsrc.indexOf(".png")-3,imgsrc.indexOf(".png")-1);//当前焦点的路口方位及左转还是右转灯	
+		
+			var headnumber1 = headnumber.substring(0,1);//当前焦点的路口方位
+			var headnumber2 = headnumber.substring(1,2);//当前焦点的灯转向
 			
 			//根据灯的种类及当前颜色 来修改灯的颜色
 			if(lastnumber == 0)
 			{
-				//当前灯色要改为绿色的时候进行一次查询
-				
-				
-				
-				
-				
+					//当前灯色要改为绿色的时候要进行绿冲突判断
+					
+					//第一步：判断是那个路口的那个灯进行设置为绿色，则获得当前绿冲突的情况 放在conflictStr中
+					if(headnumber=="00")
+					{
+						conflictStr = $("#c1").val();
+					}
+					else if(headnumber=="01")
+					{
+						conflictStr = $("#c2").val();
+					}
+					else if(headnumber=="02")
+					{
+						conflictStr = $("#c3").val();
+					}
+					else if(headnumber=="03")
+					{
+						conflictStr = $("#c4").val();
+					}
+					else if(headnumber=="10")
+					{
+						conflictStr = $("#c5").val();
+					}
+					else if(headnumber=="11")
+					{
+						conflictStr = $("#c6").val();
+					}
+					else if(headnumber=="12")
+					{
+						conflictStr = $("#c7").val();
+					}
+					else if(headnumber=="13")
+					{
+						conflictStr = $("#c8").val();
+					}
+					else if(headnumber=="20")
+					{
+						conflictStr = $("#c9").val();
+					}
+					else if(headnumber=="21")
+					{
+						conflictStr = $("#c10").val();
+					}else if(headnumber=="22")
+					{
+						conflictStr = $("#c11").val();
+					}else if(headnumber=="23")
+					{
+						conflictStr = $("#c12").val();
+					}else if(headnumber=="30")
+					{
+						conflictStr = $("#c13").val();
+					}else if(headnumber=="31")
+					{
+						conflictStr = $("#c14").val();
+					}else if(headnumber=="32")
+					{
+						conflictStr = $("#c15").val();
+					}else if(headnumber=="33")
+					{
+						conflictStr = $("#c16").val();
+					}
+					console.log(conflictStr);
+					//第二部：分两种情况，一种为 id 一种为 class 解析conflictStr 并逐一找出冲突的灯当前的颜色是否为绿色如果为绿色则返回
+					if(img[0].id==null||img[0].id =="")
+					{
+						var imgclass= img[0].classList[0];
+						conflictStart = imgclass.substring(0,1);
+						if(conflictStr!="")
+						{
+							console.log(conflictStart+conflictStr);
+							var bjsrc = $("."+conflictStart+conflictStr)[0].src;
+							console.log(bjsrc);
+						}
+						
+					}else
+					{
+						var imgid = img[0].id;
+						conflictStart = imgid.substring(0,1);
+						if(conflictStr!="")
+						{
+							var strs= new Array(); //定义一数组 
+							strs=conflictStr.split(","); //字符分割 
+							for (i=0;i<strs.length-1;i++) 
+							{ 
+								var lightKind = strs[i].substring(strs[i].length-1,strs[i].length);
+								var imgNow = null;//当前比较灯
+								var currentLightNumber = 0;
+								var srcNow = "";
+								if(lightKind==3)
+								{
+									 imgNow = $("."+conflictStart+strs[i]);
+									 srcNow = imgNow[0].currentSrc;
+									 currentLightNumber = srcNow.substring(srcNow.indexOf(".png")-1,srcNow.indexOf(".png"));//当前比较灯的颜色
+								}else
+								{
+									imgNow = $("#"+conflictStart+strs[i]);
+									 srcNow = imgNow[0].currentSrc;
+								    currentLightNumber = srcNow.substring(srcNow.indexOf(".png")-1,srcNow.indexOf(".png"));//当前比较灯的颜色
+								}
+								if(currentLightNumber==1)
+								{
+									alert(imgNow[0].alt+"与当前灯绿冲突");
+									return;
+								}
+							} 
+						}
+					}
 				
 				lastnumber = 1;
 				imgsrc_new = "images/rod/l"+headnumber+"1.png";
-				
-				
 				
 			}else if(lastnumber == 1)
 			{
@@ -53,7 +148,6 @@ $(document).ready(function(){
 				lastnumber = 0;
 				imgsrc_new = "images/rod/l"+headnumber+"0.png";
 			}
-			
 			if(headnumber2==3)
 			{
 				var imgclass= img[0].classList[0];

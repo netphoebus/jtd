@@ -51,12 +51,12 @@ public class SolutionAction extends ActionSupport implements RequestAware,
 	private Signpublicparam sigpubparam;
 	private int soid;
 	private Sig sig;
-	private ConflictVO conflictVO;//绿冲突表：实际有的冲突对象
+	private ConflictVO conflictVO;
+	
 	
 	
 	public String solutions()
 	{
-		conflictVO = getConflicts();
 		solutions = solutionService.getSolutions();
 		if(soid==0)
 		{
@@ -68,6 +68,8 @@ public class SolutionAction extends ActionSupport implements RequestAware,
 		
 		if(solutions!=null)
 		{
+			setGreenConflict();
+			System.out.println(conflictVO);
 			return "cssz-fa";
 		}else
 		{
@@ -76,16 +78,130 @@ public class SolutionAction extends ActionSupport implements RequestAware,
 	}
 	
 	//获得冲突对象
-	private ConflictVO getConflicts() {
-		// TODO Auto-generated method stub
+	private void setGreenConflict() {
+		
 		greens = greenService.getGreenconflicts();
-		if(greens.size()>0)
+		if(greens!=null&&greens.size()==16)
 		{
-			//for(Gr)
+			conflictVO = new ConflictVO();
+			for(int i=0;i<greens.size();i++)
+			{
+				String conflictname="";
+				
+				if(greens.get(i).getL00()!=null&&greens.get(i).getL00()==1)
+				{
+					conflictname = conflictname+"_0_0,";
+				} if(greens.get(i).getL01()!=null&&greens.get(i).getL01()==1)
+				{
+					conflictname = conflictname+"_0_1,";
+				} if(greens.get(i).getL02()!=null&&greens.get(i).getL02()==1)
+				{
+					conflictname = conflictname+"_0_2,";
+				} if(greens.get(i).getL03()!=null&&greens.get(i).getL03()==1)
+				{
+					conflictname = conflictname+"_0_3,";
+				} if(greens.get(i).getL10()!=null&&greens.get(i).getL10()==1)
+				{
+					conflictname = conflictname+"_1_0,";
+				} if(greens.get(i).getL11()!=null&&greens.get(i).getL11()==1)
+				{
+					conflictname = conflictname+"_1_1,";
+				} if(greens.get(i).getL12()!=null&&greens.get(i).getL12()==1)
+				{
+					conflictname = conflictname+"_1_2,";
+				} if(greens.get(i).getL13()!=null&&greens.get(i).getL13()==1)
+				{
+					conflictname = conflictname+"_1_3,";
+				} if(greens.get(i).getL20()!=null&&greens.get(i).getL20()==1)
+				{
+					conflictname = conflictname+"_2_0,";
+				} if(greens.get(i).getL21()!=null&&greens.get(i).getL21()==1)
+				{
+					conflictname = conflictname+"_2_1,";
+				} if(greens.get(i).getL22()!=null&&greens.get(i).getL22()==1)
+				{
+					conflictname = conflictname+"_2_2,";
+				} if(greens.get(i).getL23()!=null&&greens.get(i).getL23()==1)
+				{
+					conflictname = conflictname+"_2_3,";
+				} if(greens.get(i).getL30()!=null&&greens.get(i).getL30()==1)
+				{
+					conflictname = conflictname+"_3_0,";
+				} if(greens.get(i).getL31()!=null&&greens.get(i).getL31()==1)
+				{
+					conflictname = conflictname+"_3_1,";
+				} if(greens.get(i).getL32()!=null&&greens.get(i).getL32()==1)
+				{
+					conflictname = conflictname+"_3_2,";
+				} if(greens.get(i).getL33()!=null&&greens.get(i).getL33()==1)
+				{
+					conflictname = conflictname+"_3_3,";
+				}
+				
+				switch (i) {
+				case 0:
+					conflictVO.setC_00(conflictname);
+					break;
+				case 1:
+					conflictVO.setC_01(conflictname);
+					break;
+				case 2:
+					conflictVO.setC_02(conflictname);
+					break;
+				case 3:
+					conflictVO.setC_03(conflictname);
+					break;
+				case 4:
+					conflictVO.setC_10(conflictname);
+					break;
+				case 5:
+					conflictVO.setC_11(conflictname);
+					break;
+				case 6:
+					conflictVO.setC_12(conflictname);
+					break;
+				case 7:
+					conflictVO.setC_13(conflictname);
+					break;
+				case 8:
+					conflictVO.setC_20(conflictname);
+					break;
+				case 9:
+					conflictVO.setC_21(conflictname);
+					break;
+				case 10:
+					conflictVO.setC_22(conflictname);
+					break;
+				case 11:
+					conflictVO.setC_23(conflictname);
+					break;
+				case 12:
+					conflictVO.setC_30(conflictname);
+					break;
+				case 13:
+					conflictVO.setC_31(conflictname);
+					break;
+				case 14:
+					conflictVO.setC_32(conflictname);
+					break;
+				case 15:
+					conflictVO.setC_33(conflictname);
+					break;
+				default:
+					break;
+				}
+				
+				
+			}
+			
 		}
 		
 		
-		return conflictVO;
+		
+		
+		
+		
+		
 	}
 
 	/**
@@ -245,13 +361,6 @@ public class SolutionAction extends ActionSupport implements RequestAware,
 		this.steps = steps;
 	}
 
-	public ConflictVO getConflictVO() {
-		return conflictVO;
-	}
-
-	public void setConflictVO(ConflictVO conflictVO) {
-		this.conflictVO = conflictVO;
-	}
 
 	public IGreenconflictService getGreenService() {
 		return greenService;
@@ -267,6 +376,14 @@ public class SolutionAction extends ActionSupport implements RequestAware,
 
 	public void setGreens(List<Greenconflict> greens) {
 		this.greens = greens;
+	}
+
+	public ConflictVO getConflictVO() {
+		return conflictVO;
+	}
+
+	public void setConflictVO(ConflictVO conflictVO) {
+		this.conflictVO = conflictVO;
 	}
 
 	
