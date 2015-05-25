@@ -62,7 +62,6 @@ $(document).ready(function(e) {
 						<li>
 							<a href="cssz-time.jsp">时间段参数</a>
 						</li>
-						    <li><a href="greenAction!green?sid=<s:property value="#session.sid"/>" >绿冲突表</a></li> 
 					</ul>
 				</div>
 				 <s:hidden id="c1" name="conflictVO.c_00"></s:hidden>

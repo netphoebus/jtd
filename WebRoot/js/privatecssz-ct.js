@@ -27,3 +27,32 @@ $(document).ready(function(){
 		
 	
 });
+
+
+function saveGreen()
+{
+	console.log(updateCTs);
+	var msg = "";
+	
+	for(var prop in updateCTs){
+    if(updateCTs.hasOwnProperty(prop)){
+        console.log('key is ' + prop +' and value is' + updateCTs[prop]);
+        msg = msg + prop+":"+ updateCTs[prop]+",";
+    	}
+	}
+	console.log(msg);
+		$.ajax({   
+            url:'updateGreen',//这里是你的action或者servlert的路径地址   
+            type:'post', //数据发送方式  
+            data: { "dates":msg},  
+            traditional: true,  
+            error: function(msg)
+            { //失败   
+            	alert('发送命令失败');   
+            },   
+            success: function(msg)
+            { //成功   
+				alert('修改绿冲突成功');   
+            }  
+   	    });  
+}

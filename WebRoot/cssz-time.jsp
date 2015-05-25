@@ -70,9 +70,6 @@ $(document).ready(function(e) {
 						<li>
 							<a href="solutionAction!solutions" class="selected">时间段参数</a>
 						</li>
-						<li>
-							<a href="greenAction!green?sid=<s:property value="#session.sid"/>">绿冲突表</a>
-						</li>
 					</ul>
 				</div>
 
@@ -188,7 +185,7 @@ $(document).ready(function(e) {
 										</label>
 									</td>
 									<td>
-										<input type="text" class="dfinput" style="width: 150px;" />
+										&nbsp;&nbsp;<input type="text" class="dfinput" style="width: 150px;" />
 									</td>
 								</tr>
 								<tr>
@@ -198,7 +195,7 @@ $(document).ready(function(e) {
 										</label>
 									</td>
 									<td>
-										<input type="text" class="dfinput" style="width: 150px;" />
+										&nbsp;&nbsp;<input type="text" class="dfinput" style="width: 150px;" />
 									</td>
 								</tr>
 								<tr>
@@ -208,7 +205,7 @@ $(document).ready(function(e) {
 										</label>
 									</td>
 									<td>
-										<input type="text" class="dfinput" style="width: 150px;" />
+										&nbsp;&nbsp;<input type="text" class="dfinput" style="width: 150px;" />
 									</td>
 								</tr>
 								<tr>
@@ -234,7 +231,7 @@ $(document).ready(function(e) {
 											相位方案
 										</label>
 									</td>
-									<td>
+									<td style="margin-left:10px">
 										<select name="xwfa" class="select4">
 											<option value="1">
 												相位方案1
@@ -252,7 +249,7 @@ $(document).ready(function(e) {
 										</label>
 									</td>
 									<td>
-										<input type="text" class="dfinput" style="width: 150px;" />
+										&nbsp;&nbsp;<input type="text" class="dfinput" style="width: 150px;" />
 									</td>
 								</tr>
 								<tr>
@@ -262,7 +259,7 @@ $(document).ready(function(e) {
 										</label>
 									</td>
 									<td>
-										<input type="text" class="dfinput" style="width: 150px;" />
+										&nbsp;&nbsp;<input type="text" class="dfinput" style="width: 150px;" />
 									</td>
 								</tr>
 								<tr>
@@ -272,7 +269,7 @@ $(document).ready(function(e) {
 										</label>
 									</td>
 									<td>
-										<input type="text" class="dfinput" style="width: 150px;" />
+										&nbsp;&nbsp;<input type="text" class="dfinput" style="width: 150px;" />
 									</td>
 								</tr>
 								<tr>

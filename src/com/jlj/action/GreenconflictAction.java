@@ -74,7 +74,19 @@ public class GreenconflictAction extends ActionSupport implements RequestAware,
 	 * @return
 	 */
 	public String update() throws Exception {
-		return SUCCESS;
+		System.out.println("================");
+		String map = req.getParameter("dates");
+		//需要插入数据库 解析 map-from jlj
+		System.out.println(map);
+		/**
+		 * map数组元素解释说明
+		 * 16_02: 1[解释 id_方向灯: 冲突]
+		 * 16  [解释 id(绿冲突表id]
+		 * 02  东右[方向(0:东-》西,1:南-》北,2:西-》东][0:左转灯,1: 直行灯 ,2:右转灯 ,3:人行道]
+		 * : 
+		 * 1  [1:冲突 0：不冲突]
+		 */
+		return NONE;
 	}
 
 	// get、set-------------------------------------------

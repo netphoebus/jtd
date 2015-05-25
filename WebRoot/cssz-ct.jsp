@@ -65,11 +65,9 @@ $(document).ready(function(e) {
     <div class="itab">
   	<ul> 
     	<li>
-							<a href="sigpublicparamAction!publicParam?sigIp=<s:property value="#session.sigIp"/>">一般参数</a>
+							<a href="map.jsp">其他高级设置</a>
 						</li>
      
-    <li><a href="solutionAction!solutions" >相位方案</a></li> 
-    <li><a href="cssz-time.jsp"  >时间段参数</a></li> 
     <li><a href="greenAction!green?sid=<s:property value="#session.sid"/>"  class="selected">绿冲突表</a></li> 
   	</ul>
     </div>
@@ -120,6 +118,7 @@ $(document).ready(function(e) {
             <td>北人</td>
           </tr>
           
+         
           <s:iterator value="greens" var="green" status="status">
           	<tr>
 	            <td> <s:property value="#status.index"/></td>
@@ -259,7 +258,19 @@ $(document).ready(function(e) {
         </tbody>
       </table>
     </div>
-    <div class="formtext">
+
+    <ul class="forminfo">
+      <li>
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td width="539">&nbsp;</td>
+            <td width="590" height="50">
+            <input name="input2" onclick="saveGreen()" type="button" class="scbtn" value="提交"/></td>
+          </tr>
+        </table>
+        
+    </ul>
+        <div class="formtext">
       <p>操作说明：点击图标，修改图标状态</p>
       <p>注：红色叉：设置冲突   绿色钩：不冲突</p>
     </div>

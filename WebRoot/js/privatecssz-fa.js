@@ -356,7 +356,7 @@ function saveSolution()
 	}
 	console.log(msg);
 		$.ajax({   
-            url:'update',//这里是你的action或者servlert的路径地址   
+            url:'updateSolution',//这里是你的action或者servlert的路径地址   
             type:'post', //数据发送方式  
             data: { "dates":msg},  
             traditional: true,  
@@ -366,7 +366,7 @@ function saveSolution()
             },   
             success: function(msg)
             { //成功   
-				//alert('发送命令成功');   
+				alert('修改相位方案成功'); 
             }  
    	    });  
 }

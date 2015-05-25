@@ -298,7 +298,7 @@ var btn=document.getElementById('show_btn');
            
        <li onclick="javascript:location.href='sigpublicparamAction!publicParam?sigIp=<s:property value="sig.ip"/>&sid=<s:property value="sig.id"/>'">设置参数</li>
 		  <li  onclick="executeCommand(5)">执行命令</li>
-			  <li  onclick="topSetting()">高级设置</li>
+			  <li  onclick="javascript:location.href='greenAction!green?sid=<s:property value="sig.id"/>'">高级设置</li>
          </ul>
          
        </div>
