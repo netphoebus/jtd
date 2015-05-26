@@ -15,7 +15,6 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.jlj.model.Sig;
-import com.jlj.model.Sigordinarytime;
 import com.jlj.service.ISigService;
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -33,14 +32,12 @@ public class SigtimeAction extends ActionSupport implements RequestAware,
 	private ISigService sigService;
 	
 	
-
-	
 	private Sig sig;
 	private int id;
 	
-	private List<Sigordinarytime> ordinarytimes;
+	
 
-	public String times()
+	public String sigtimes()
 	{
 		if(1==1)
 		{

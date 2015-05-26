@@ -52,18 +52,16 @@ $(document).ready(function(e) {
 	<body>
 
 
-
 		<div class="formbody">
 
-
+		<form id="publicparamform" name="publicparamform" action="sigpublicparamAction!update"
+			method="post">
 			<div id="usual1" class="usual">
-
 				<div class="itab">
 					<ul>
 						<li>
 							<a href="sigpublicparamAction!publicParam?sigIp=<s:property value="#session.sigIp"/>">一般参数</a>
 						</li>
-
 						<li>
 							<a href="solutionAction!solutions">相位方案</a>
 						</li>
@@ -73,7 +71,7 @@ $(document).ready(function(e) {
 					</ul>
 				</div>
 
-
+	
 				<div id="tab2" class="tabson">
 					<ul class="forminfo">
 						<li>
@@ -84,14 +82,14 @@ $(document).ready(function(e) {
 									时间段选择：
 								</label>
 								<div class="vocation">
-									<select name="select" class="select1">
-										<option>
+									<select id="timetype" name="timetype" class="select1" onchange="changeTimetype()">
+										<option value="1">
 											普通日
 										</option>
-										<option>
+										<option value="2">
 											周日
 										</option>
-										<option>
+										<option value="3">
 											特殊日
 										</option>
 									</select>
@@ -103,7 +101,7 @@ $(document).ready(function(e) {
 									时间段细分：
 								</label>
 								<div class="vocation">
-									<select name="select3" class="select1">
+									<select id="commontimeid" name="commontimename" class="select1" onchange="changeTime()">
 										<option>
 											时间段0
 										</option>
@@ -171,13 +169,6 @@ $(document).ready(function(e) {
 						<div class="csleft" style="line-height: 35px;">
 
 							<table border="0" cellspacing="0" cellpadding="0">
-								<!--
-             <tr>
-               <td align="right">&nbsp;</td>
-               <td>&nbsp;</td>
-               <td colspan="2" align="center">相位持续时间： 120 秒</td>
-             </tr>
-             -->
 								<tr>
 									<td align="right">
 										<label style="margin-right: 20px">
@@ -471,7 +462,7 @@ $(document).ready(function(e) {
 
 				</div>
 
-
+	
 			</div>
 			<script type="text/javascript"> 
       $("#usual1 ul").idTabs(); 
@@ -480,7 +471,7 @@ $(document).ready(function(e) {
 			<script type="text/javascript">
 	$('.tablelist tbody tr:odd').addClass('odd');
 	</script>
-
+	</form>
 		</div>
 
 

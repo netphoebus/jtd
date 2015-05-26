@@ -106,6 +106,18 @@
 		</action>
 	</package>
 	
+	
+	<package name="sigtime" extends="struts-default">
+		<global-results>
+			<result name="adminLogin">/login.jsp</result>
+			<result name="opsessiongo">/op_sessiongo.jsp</result>
+		</global-results>
+		<action name="sigtimeAction" class="sigtimeAction">
+			<result name="cssz-time">/cssz-time.jsp</result>
+			<result name="error">/error.html</result>
+		</action>
+	</package>
+	
 	<package name="realtime_ajax" extends="json-default">  
         <action name="realtime" class="sigAction" method="realtime">  
             <result type="json">  
