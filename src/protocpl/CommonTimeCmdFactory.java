@@ -67,8 +67,8 @@ public class CommonTimeCmdFactory extends CmdFactoryBase implements ICmdParser{
 //		ArrayList<Commontime> commtimelist = new ArrayList<Commontime>();
 		
 		if(sig!=null){
-			List<Commontime> commontimes = sig.getCommontimes();
-			//查询是否数据库中普通参数的公共参数为空，如果为空，新插入；如果不为空，更新所有数据；
+			List<Commontime> commontimes = commontimeService.getCommontimesBySigid(sig.getId());
+			//查询是否数据库中该sig的公共参数为空，如果为空，新插入；如果不为空，更新所有数据；
 			if(commontimes==null||commontimes.size()==0){
 				for(int i = 0;i<8;i++){
 					Commontime commontime = new Commontime();
@@ -117,7 +117,7 @@ public class CommonTimeCmdFactory extends CmdFactoryBase implements ICmdParser{
 		// TODO Auto-generated method stub
 //		ArrayList<Commontime> commtimelist = new ArrayList<Commontime>();
 		if(sig!=null){
-			List<Commontime> commontimes = sig.getCommontimes();
+			List<Commontime> commontimes = commontimeService.getCommontimesBySigid(sig.getId());
 			//查询是否数据库中普通参数的公共参数为空，如果为空，新插入；如果不为空，更新所有数据；
 			if(commontimes==null||commontimes.size()==0){
 				for(int i = 0;i<8;i++){

@@ -35,7 +35,6 @@ public class SigtimeAction extends ActionSupport implements RequestAware,
 	private Sig sig;
 	private int id;
 	
-	
 
 	public String sigtimes()
 	{
