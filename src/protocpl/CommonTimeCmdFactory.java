@@ -71,14 +71,13 @@ public class CommonTimeCmdFactory extends CmdFactoryBase implements ICmdParser{
 		return false;
 	}
 
-	
-
-	private void Upload_CommonTimeHead(IoSession session, byte[] data,Sig sig) {
+	private void Upload_CommonTimeTail(IoSession session, byte[] data,Sig sig) {
 		// TODO Auto-generated method stub
 //		ArrayList<Commontime> commtimelist = new ArrayList<Commontime>();
+		
 		if(sig!=null){
 			List<Commontime> commontimes = commontimeService.getCommontimesBySigid(sig.getId());
-			//查询是否数据库中普通参数的公共参数为空，如果为空，新插入；如果不为空，更新所有数据；
+			//查询是否数据库中该sig的公共参数为空，如果为空，新插入；如果不为空，更新所有数据；
 			if(commontimes==null||commontimes.size()==0){
 				for(int i = 0;i<8;i++){
 					Commontime commontime = new Commontime();
@@ -89,8 +88,8 @@ public class CommonTimeCmdFactory extends CmdFactoryBase implements ICmdParser{
 					commontime.setWorkingprogram((int)data[14+i*40]);
 					commontime.setLstime((int)data[15+i*40]);
 					commontime.setHdtime((int)data[16+i*40]);
-					commontime.setOrderid(i);
 					commontime.setQchdtime((int)data[17+i*40]) ;
+					commontime.setOrderid(i+8);
 					commontime.setTimetype(1);//普通参数1；周日2；特殊3
 					commontime.setSig(sig);
 					int worktime[] = new int[32];
@@ -127,21 +126,22 @@ public class CommonTimeCmdFactory extends CmdFactoryBase implements ICmdParser{
 					int lstime = (int)data[15+i*40];
 					int hdtime = (int)data[16+i*40];
 					int qchdtime = (int)data[17+i*40];
-					int orderid = i;
+					int orderid = i+8;
 					commontimeService.updateByConditionOrdinaryid(hour,minute,seconds,workingway,workingprogram,lstime,hdtime,qchdtime,orderid,sig.getId());
 				}
 			}
 		}
+		
+		
 	}
 
-	private void Upload_CommonTimeTail(IoSession session, byte[] data,Sig sig) {
+	private void Upload_CommonTimeHead(IoSession session, byte[] data,Sig sig) {
 		// TODO Auto-generated method stub
 //		ArrayList<Commontime> commtimelist = new ArrayList<Commontime>();
-		
 		if(sig!=null){
 			List<Commontime> commontimes = commontimeService.getCommontimesBySigid(sig.getId());
-			//查询是否数据库中该sig的公共参数为空，如果为空，新插入；如果不为空，更新所有数据；
-			if(commontimes==null||commontimes.size()==8){
+			//查询是否数据库中普通参数的公共参数为空，如果为空，新插入；如果不为空，更新所有数据；
+			if(commontimes==null||commontimes.size()==0){
 				for(int i = 0;i<8;i++){
 					Commontime commontime = new Commontime();
 					commontime.setHour((int)data[10+i*40]);
@@ -151,8 +151,8 @@ public class CommonTimeCmdFactory extends CmdFactoryBase implements ICmdParser{
 					commontime.setWorkingprogram((int)data[14+i*40]);
 					commontime.setLstime((int)data[15+i*40]);
 					commontime.setHdtime((int)data[16+i*40]);
+					commontime.setOrderid(i);
 					commontime.setQchdtime((int)data[17+i*40]) ;
-					commontime.setOrderid(i+8);
 					commontime.setTimetype(1);//普通参数1；周日2；特殊3
 					commontime.setSig(sig);
 					int worktime[] = new int[32];
@@ -176,15 +176,13 @@ public class CommonTimeCmdFactory extends CmdFactoryBase implements ICmdParser{
 					int lstime = (int)data[15+i*40];
 					int hdtime = (int)data[16+i*40];
 					int qchdtime = (int)data[17+i*40];
-					int orderid = i+8;
+					int orderid = i;
 					commontimeService.updateByConditionOrdinaryid(hour,minute,seconds,workingway,workingprogram,lstime,hdtime,qchdtime,orderid,sig.getId());
 				}
 			}
 		}
-		
-		
 	}
-	
+
 	public void UpdatePushTask() {
 		// TODO Auto-generated method stub
 		
