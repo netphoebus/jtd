@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 
 
 
+import protocpl.CommandCommonTime;
 import protocpl.CommandDiaoyue;
 import protocpl.CommandParam;
 import protocpl.CommandPhase;
@@ -179,7 +180,7 @@ public class CmdFactoryBase implements ICmdParser {
 				cmd = new CommandParam(this, m_oData);
 				break;
 			case MONITOR_CMD_COMMON_TIME:
-				
+				cmd = new CommandCommonTime(this, m_oData);
 				break;
 			case MONITOR_CMD_SUN_TIME:
 				cmd = new CommandSunTime(this, m_oData);
