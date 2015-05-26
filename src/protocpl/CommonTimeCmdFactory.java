@@ -86,7 +86,7 @@ public class CommonTimeCmdFactory extends CmdFactoryBase implements ICmdParser{
 				commontime.setHdtime((int)data[16+i*40]);
 				commontime.setQchdtime((int)data[17+i*40]) ;
 				commontime.setOrderid(i+8);
-				commontime.setSigordinarytime(sigordinarytime);
+//				commontime.setSigordinarytime(sigordinarytime);
 				int worktime[] = new int[32];
 				for(int j=0;j<32;j++){
 					worktime[j] = data[18+j+i*40];
@@ -132,7 +132,7 @@ public class CommonTimeCmdFactory extends CmdFactoryBase implements ICmdParser{
 				commontime.setHdtime((int)data[16+i*40]);
 				commontime.setOrderid(i);
 				commontime.setQchdtime((int)data[17+i*40]) ;
-				commontime.setSigordinarytime(sigordinarytime);
+//				commontime.setSigordinarytime(sigordinarytime);
 				int worktime[] = new int[32];
 				for(int j=0;j<32;j++){
 					worktime[j] = data[18+j+i*40];

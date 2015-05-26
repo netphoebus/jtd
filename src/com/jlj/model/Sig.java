@@ -1,9 +1,7 @@
 package com.jlj.model;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -38,6 +36,7 @@ public class Sig implements java.io.Serializable {
 	private Long mkid;
 	private Signpublicparam signpublicparam;
 	private List<Devlog> devlogs = new ArrayList<Devlog>();
+	private List<Commontime> commontimes = new ArrayList<Commontime>();
 	private Sigsystime sigsystime;
 	private List<Greenconflict> greenconflicts = new ArrayList<Greenconflict>();
 
@@ -51,7 +50,7 @@ public class Sig implements java.io.Serializable {
 	public Sig(Userarea userarea, String name, String address, String lat,
 			String lng, String ip, Long mkid,
 			Signpublicparam signpublicparam, List<Devlog> devlogs,
-			Sigsystime sigsystime,List<Greenconflict> greenconflicts) {
+			Sigsystime sigsystime,List<Greenconflict> greenconflicts,List<Commontime> commontimes) {
 		this.userarea = userarea;
 		this.name = name;
 		this.address = address;
@@ -63,6 +62,7 @@ public class Sig implements java.io.Serializable {
 		this.devlogs = devlogs;
 		this.sigsystime = sigsystime;
 		this.greenconflicts = greenconflicts;
+		this.commontimes = commontimes;
 	}
 
 	// Property accessors
@@ -175,6 +175,15 @@ public class Sig implements java.io.Serializable {
 
 	public void setGreenconflicts(List<Greenconflict> greenconflicts) {
 		this.greenconflicts = greenconflicts;
+	}
+
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "sig")
+	public List<Commontime> getCommontimes() {
+		return commontimes;
+	}
+
+	public void setCommontimes(List<Commontime> commontimes) {
+		this.commontimes = commontimes;
 	}
 
 	

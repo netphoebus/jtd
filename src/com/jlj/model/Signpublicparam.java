@@ -107,10 +107,7 @@ public class Signpublicparam implements java.io.Serializable {
 	private Integer specialday21;
 	private Integer specialday22;
 	private Integer specialday23;
-	private List<Sigordinarytime> sigordinarytimes = new ArrayList<Sigordinarytime>();
 	private List<Solution> solutions = new ArrayList<Solution>();
-	private List<Sigspecialtime> sigspecialtimes = new ArrayList<Sigspecialtime>();
-	private List<Sigsuntime> sigsuntimes = new ArrayList<Sigsuntime>();
 
 	// Constructors
 
@@ -147,8 +144,7 @@ public class Signpublicparam implements java.io.Serializable {
 			Integer specialday15, Integer specialday16, Integer specialday17,
 			Integer specialday18, Integer specialday19, Integer specialday20,
 			Integer specialday21, Integer specialday22, Integer specialday23,
-			List<Sigordinarytime> sigordinarytimes, List<Solution> solutions,
-			List<Sigspecialtime> sigspecialtimes, List<Sigsuntime> sigsuntimes) {
+			List<Solution> solutions) {
 		this.sig = sig;
 		this.qchdtime = qchdtime;
 		this.kjhstime = kjhstime;
@@ -227,10 +223,7 @@ public class Signpublicparam implements java.io.Serializable {
 		this.specialday21 = specialday21;
 		this.specialday22 = specialday22;
 		this.specialday23 = specialday23;
-		this.sigordinarytimes = sigordinarytimes;
 		this.solutions = solutions;
-		this.sigspecialtimes = sigspecialtimes;
-		this.sigsuntimes = sigsuntimes;
 	}
 
 	// Property accessors
@@ -950,39 +943,12 @@ public class Signpublicparam implements java.io.Serializable {
 	}
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "signpublicparam")
-	public List<Sigordinarytime> getSigordinarytimes() {
-		return this.sigordinarytimes;
-	}
-
-	public void setSigordinarytimes(List<Sigordinarytime> sigordinarytimes) {
-		this.sigordinarytimes = sigordinarytimes;
-	}
-
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "signpublicparam")
 	public List<Solution> getSolutions() {
 		return this.solutions;
 	}
 
 	public void setSolutions(List<Solution> solutions) {
 		this.solutions = solutions;
-	}
-
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "signpublicparam")
-	public List<Sigspecialtime> getSigspecialtimes() {
-		return this.sigspecialtimes;
-	}
-
-	public void setSigspecialtimes(List<Sigspecialtime> sigspecialtimes) {
-		this.sigspecialtimes = sigspecialtimes;
-	}
-
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "signpublicparam")
-	public List<Sigsuntime> getSigsuntimes() {
-		return this.sigsuntimes;
-	}
-
-	public void setSigsuntimes(List<Sigsuntime> sigsuntimes) {
-		this.sigsuntimes = sigsuntimes;
 	}
 
 }

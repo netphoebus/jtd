@@ -196,28 +196,7 @@ public class ParametersCmdFactory extends CmdFactoryBase implements ICmdParser{
 			signpublicparam.setSpecialmonth23(SigSpecialTime[23][0]);
 			signpublicparam.setSpecialday23(SigSpecialTime[23][1]);
 			signpublicparamService.add(signpublicparam);//保存公共参数
-			//保存公共参数底下的普通参数设置
-			Sigordinarytime sigordinarytime = new Sigordinarytime();
-			sigordinarytime.setOrderid(0);
-			sigordinarytime.setSignpublicparam(signpublicparam);
-			sigordinarytimeService.add(sigordinarytime);
-			//保存公共参数底下的周日参数设置
-			for (int i = 0; i < SigSunTime.length; i++) {
-					Sigsuntime sigsuntime = new Sigsuntime();
-					sigsuntime.setOrderid(i);//序号
-					sigsuntime.setWeek(String.valueOf(SigSunTime[i]));
-					sigsuntime.setSignpublicparam(signpublicparam);
-					sigsuntimeService.add(sigsuntime);
-			}
-			//保存公共参数底下的特殊日参数设置
-			for (int i = 0; i < 24; i++) {
-				Sigspecialtime sigspecialtime = new Sigspecialtime();
-				sigspecialtime.setOrderid(i);
-				sigspecialtime.setSignpublicparam(signpublicparam);
-				sigspecialtime.setSpecialmonth(SigSpecialTime[i][0]);
-				sigspecialtime.setSpecialday(SigSpecialTime[i][1]);
-				sigspecialtimeService.add(sigspecialtime);
-			}
+
 			System.out.println("-------------------------------signpublicparam add success");
 		}else{
 			System.out.println("-------------------------------signpublicparam update");	
@@ -237,15 +216,7 @@ public class ParametersCmdFactory extends CmdFactoryBase implements ICmdParser{
 					SigSpecialTime[18][0],SigSpecialTime[18][1],SigSpecialTime[19][0],SigSpecialTime[19][1],
 					SigSpecialTime[20][0],SigSpecialTime[20][1],SigSpecialTime[21][0],SigSpecialTime[21][1],
 					SigSpecialTime[22][0],SigSpecialTime[22][1],SigSpecialTime[23][0],SigSpecialTime[23][1],signpublicparam.getId());
-			//修改公共参数底下的普通参数设置
-			//修改公共参数底下的周日参数设置
-			for (int i = 0; i < SigSunTime.length; i++) {
-				sigsuntimeService.updateByOrderid(String.valueOf(SigSunTime[i]),i,signpublicparam.getId());
-			}
-			//修改公共参数底下的特殊日参数设置
-			for (int i = 0; i < 24; i++) {
-				sigspecialtimeService.updateByOrderid(SigSpecialTime[i][0],SigSpecialTime[i][1],i,signpublicparam.getId());
-			}
+			
 			System.out.println("-------------------------------signpublicparam update success");		
 		}
 		

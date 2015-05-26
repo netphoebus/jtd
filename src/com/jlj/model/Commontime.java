@@ -25,9 +25,7 @@ public class Commontime implements java.io.Serializable {
 	// Fields
 
 	private Integer id;
-	private Sigordinarytime sigordinarytime;
-	private Sigsuntime sigsuntime;
-	private Sigspecialtime sigspecialtime;
+	private Sig sig;
 	private Integer hour;
 	private Integer minute;
 	private Integer seconds;
@@ -37,6 +35,7 @@ public class Commontime implements java.io.Serializable {
 	private Integer hdtime;
 	private Integer qchdtime;
 	private Integer orderid;
+	private Integer timetype;
 
 	// Constructors
 
@@ -45,13 +44,10 @@ public class Commontime implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public Commontime(Sigordinarytime sigordinarytime, Sigsuntime sigsuntime,
-			Sigspecialtime sigspecialtime, Integer hour, Integer minute,
+	public Commontime(Sig sig, Integer hour, Integer minute,
 			Integer seconds, Integer workingway, Integer workingprogram,
-			Integer lstime, Integer hdtime, Integer qchdtime,Integer orderid) {
-		this.sigordinarytime = sigordinarytime;
-		this.sigsuntime = sigsuntime;
-		this.sigspecialtime = sigspecialtime;
+			Integer lstime, Integer hdtime, Integer qchdtime,Integer orderid,Integer timetype) {
+		this.sig = sig;
 		this.hour = hour;
 		this.minute = minute;
 		this.seconds = seconds;
@@ -61,6 +57,7 @@ public class Commontime implements java.io.Serializable {
 		this.hdtime = hdtime;
 		this.qchdtime = qchdtime;
 		this.orderid = orderid;
+		this.timetype = timetype;
 	}
 
 	// Property accessors
@@ -76,34 +73,16 @@ public class Commontime implements java.io.Serializable {
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "ordinaryid")
-	public Sigordinarytime getSigordinarytime() {
-		return this.sigordinarytime;
+	@JoinColumn(name = "signid")
+	public Sig getSig() {
+		return this.sig;
 	}
 
-	public void setSigordinarytime(Sigordinarytime sigordinarytime) {
-		this.sigordinarytime = sigordinarytime;
+	public void setSig(Sig sig) {
+		this.sig = sig;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "sunid")
-	public Sigsuntime getSigsuntime() {
-		return this.sigsuntime;
-	}
-
-	public void setSigsuntime(Sigsuntime sigsuntime) {
-		this.sigsuntime = sigsuntime;
-	}
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "specialid")
-	public Sigspecialtime getSigspecialtime() {
-		return this.sigspecialtime;
-	}
-
-	public void setSigspecialtime(Sigspecialtime sigspecialtime) {
-		this.sigspecialtime = sigspecialtime;
-	}
+	
 
 	@Column(name = "hour")
 	public Integer getHour() {
@@ -184,6 +163,15 @@ public class Commontime implements java.io.Serializable {
 
 	public void setOrderid(Integer orderid) {
 		this.orderid = orderid;
+	}
+
+	@Column(name = "timetype")
+	public Integer getTimetype() {
+		return timetype;
+	}
+
+	public void setTimetype(Integer timetype) {
+		this.timetype = timetype;
 	}
 
 	
