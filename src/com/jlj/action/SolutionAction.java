@@ -20,6 +20,7 @@ import com.jlj.model.Signpublicparam;
 import com.jlj.model.Solution;
 import com.jlj.model.Step;
 import com.jlj.service.IGreenconflictService;
+import com.jlj.service.IRoadService;
 import com.jlj.service.ISigService;
 import com.jlj.service.ISignpublicparamService;
 import com.jlj.service.ISolutionService;
@@ -42,6 +43,7 @@ public class SolutionAction extends ActionSupport implements RequestAware,
 	private ISignpublicparamService sigpubparamService;
 	private ISolutionService solutionService;
 	private IStepService stepService;
+	private IRoadService roadService;
 	private IGreenconflictService greenService;
 	
 	private List<Solution> solutions;
@@ -241,11 +243,37 @@ public class SolutionAction extends ActionSupport implements RequestAware,
 		 * map数组元素解释说明
 		 * 4_0_3:1[解释 id_方向_灯: 灯色]
 		 * 4  [解释 id(步序id都是偶数位)]
-		 * 0  [方向(0:东-》西,1:南-》北,2:西-》东]
+		 * 0  [方向(0:东-》西,1:南-》北,2:西-》东,3:北-》南]
 		 * 3  [0:左转灯,1: 直行灯 ,2:右转灯 ,3:人行道]
 		 * : 
 		 * 1  [3：红 2：黄 1：绿 0：灭 null：未知]
 		 */
+		String[] solus = map.split(",");
+		for (int i = 0; i < solus.length; i++) {
+			int stepid= Integer.parseInt(solus[i].substring(0, solus[i].indexOf("_")));
+			int roadtype = Integer.parseInt(solus[i].substring(solus[i].indexOf("_")+1, solus[i].lastIndexOf("_")));
+			int dengtype = Integer.parseInt(solus[i].substring(solus[i].lastIndexOf("_")+1, solus[i].indexOf(":")));
+			String dengtypestr="";
+			switch (dengtype) {
+			case 0:
+				dengtypestr = "leftcolor";
+				break;
+			case 1:
+				dengtypestr = "linecolor";
+				break;
+			case 2:
+				dengtypestr = "rightcolor";
+				break;
+			case 3:
+				dengtypestr = "rxcolor";
+				break;
+			default:
+				break;
+			}
+			int deng = Integer.parseInt(solus[i].substring(solus[i].indexOf(":")+1));
+			System.out.println("stepid="+stepid+",fangxiang="+roadtype+",dengtype="+dengtype+",deng="+deng);
+			roadService.updateByCondition(deng,dengtypestr, roadtype, stepid);
+		}
 		return NONE;
 	}
 	
@@ -395,6 +423,15 @@ public class SolutionAction extends ActionSupport implements RequestAware,
 
 	public void setPubid(Integer pubid) {
 		this.pubid = pubid;
+	}
+
+	public IRoadService getRoadService() {
+		return roadService;
+	}
+
+	@Resource
+	public void setRoadService(IRoadService roadService) {
+		this.roadService = roadService;
 	}
 
 	

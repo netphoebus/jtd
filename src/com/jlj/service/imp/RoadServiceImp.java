@@ -124,4 +124,11 @@ public class RoadServiceImp implements IRoadService  {
 		roadDao.updateByHql(queryString, paramNames, values);
 		
 	}
+	public void updateByCondition(int deng, String dengtypestr, int roadtype,
+			int stepid) {
+		String queryString="update Road mo set mo."+dengtypestr+"=:deng where mo.step.id=:stepid and mo.roadtype=:roadtype";
+		String[] paramNames = new String[] {"deng","stepid","roadtype"};
+		Object[] values = new Object[]{deng,stepid,roadtype};
+		roadDao.updateByHql(queryString, paramNames, values);
+	}
 }

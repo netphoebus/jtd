@@ -39,4 +39,7 @@ public interface IRoadService {
 	public abstract void updateByRoadid(int leftcolor, int linecolor,
 			int rightcolor, int rxcolor, int roadtype, Integer id);
 
+	public abstract void updateByCondition(int deng, String dengtypestr,
+			int roadtype, int stepid);
+
 }
