@@ -132,9 +132,7 @@ public class CommontimeServiceImp implements ICommontimeService  {
 	}
 	public List<Commontime> getCommontimesBySigAndTimetype(int sid,
 			Integer timetype) {
-		
-		String queryString = "from Commontime mo where mo.sig.id=:sid and  mo.timetype=:timetype";
-		Object[] p = new Object[]{sid,timetype};
-		return commontimeDao.getObjectsByCondition(queryString, p);
+		String queryString = "from Commontime mo where mo.sig.id="+sid+" and  mo.timetype="+timetype;
+		return commontimeDao.queryList(queryString);
 	}
 }

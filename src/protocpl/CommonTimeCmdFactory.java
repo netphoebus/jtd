@@ -13,9 +13,13 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.jlj.model.Commontime;
 import com.jlj.model.Sig;
+import com.jlj.model.Solution;
+import com.jlj.model.Step;
 import com.jlj.service.ICommontimeService;
 import com.jlj.service.ISigService;
 import com.jlj.service.ISignpublicparamService;
+import com.jlj.service.ISolutionService;
+import com.jlj.service.IStepService;
 
 public class CommonTimeCmdFactory extends CmdFactoryBase implements ICmdParser{
 
@@ -23,6 +27,11 @@ public class CommonTimeCmdFactory extends CmdFactoryBase implements ICmdParser{
 	final static ISignpublicparamService signpublicparamService = (ISignpublicparamService)ac.getBean("signpublicparamService");
 	final static ISigService sigService = (ISigService)ac.getBean("sigService");
 	final static ICommontimeService commontimeService = (ICommontimeService)ac.getBean("commontimeService");
+	final static ISolutionService solutionService = (ISolutionService)ac.getBean("solutionService");
+	final static IStepService stepService = (IStepService)ac.getBean("stepService");
+	private Solution solution;
+	private Step step;
+	private List<Step> steps;
 	public CommonTimeCmdFactory(byte[] data) {
 		super(data);
 		// TODO Auto-generated constructor stub
@@ -84,9 +93,22 @@ public class CommonTimeCmdFactory extends CmdFactoryBase implements ICmdParser{
 					commontime.setTimetype(1);//普通参数1；周日2；特殊3
 					commontime.setSig(sig);
 					int worktime[] = new int[32];
-					for(int j=0;j<32;j++){
-						worktime[j] = data[18+j+i*40];
+					
+					//向当前时间段中的相位方案中的每个相位设置时间
+					solution = solutionService.loadById(commontime.getWorkingprogram()+1);// 相位方案0对应数据库中的id=1
+					if(solution!=null){
+						steps = stepService.loadBySoId(solution.getId());
+						if(steps!=null&&steps.size()>=8)
+						{
+							for(int j=0;j<8;j++){
+								steps.get(i).setSecond((int)data[18+j+i*40]);
+								stepService.update(steps.get(i));//修改步序对象
+							}
+						}
 					}
+					
+					
+					
 					try {
 						commontimeService.add(commontime);
 					} catch (Exception e) {
@@ -175,6 +197,32 @@ public class CommonTimeCmdFactory extends CmdFactoryBase implements ICmdParser{
 		// TODO Auto-generated method stub
 		
 	}
+
+	public Solution getSolution() {
+		return solution;
+	}
+
+	public void setSolution(Solution solution) {
+		this.solution = solution;
+	}
+
+	public Step getStep() {
+		return step;
+	}
+
+	public void setStep(Step step) {
+		this.step = step;
+	}
+
+	public List<Step> getSteps() {
+		return steps;
+	}
+
+	public void setSteps(List<Step> steps) {
+		this.steps = steps;
+	}
+	
+	
 }
 	
 

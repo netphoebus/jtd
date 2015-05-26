@@ -85,7 +85,6 @@ public class SolutionAction extends ActionSupport implements RequestAware,
 	
 	//获得绿冲突对象
 	private void setGreenConflict() {
-		
 		greens = greenService.getGreenconflicts();
 		if(greens!=null&&greens.size()==16)
 		{
