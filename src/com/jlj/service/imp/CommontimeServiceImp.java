@@ -125,4 +125,9 @@ public class CommontimeServiceImp implements ICommontimeService  {
 		Object[] values = new Object[] {hour, minute, seconds, workingway, workingprogram, lstime, hdtime, qchdtime, orderid, sigid};
 		commontimeDao.updateByHql(queryString, paramNames, values);
 	}
+	public List<Commontime> getCommontimesBySigid(Integer id) {
+		String queryString = "from Commontime mo where mo.sig.id=? ";
+		Object[] p = new Object[]{id};;
+		return commontimeDao.getObjectsByCondition(queryString, p);
+	}
 }

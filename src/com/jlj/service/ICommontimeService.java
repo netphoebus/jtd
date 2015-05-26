@@ -40,4 +40,6 @@ public interface ICommontimeService {
 			int seconds, int workingway, int workingprogram, int lstime,
 			int hdtime, int qchdtime, int orderid, Integer sigid);
 
+	public abstract List<Commontime> getCommontimesBySigid(Integer id);
+
 }
