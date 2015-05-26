@@ -57,10 +57,10 @@ $(document).ready(function(e) {
 							<a href="sigpublicparamAction!publicParam?sigIp=<s:property value="#session.sigIp"/>">一般参数</a>
 						</li>
 						<li>
-							<a href="solutionAction!solutions" class="selected">相位方案</a>
+							<a href="solutionAction!solutions?pubid=<s:property value="#session.pubid"/>" class="selected">相位方案</a>
 						</li>
 						<li>
-							<a href="cssz-time.jsp">时间段参数</a>
+							<a href="sigtimeAction!sigtimes?sid=<s:property value="#session.sid"/>">时间段参数</a>
 						</li>
 					</ul>
 				</div>

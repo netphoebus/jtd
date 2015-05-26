@@ -44,31 +44,36 @@ public class SolutionAction extends ActionSupport implements RequestAware,
 	private IStepService stepService;
 	private IGreenconflictService greenService;
 	
-	private Solution solution;
 	private List<Solution> solutions;
 	private List<Step> steps;
 	private List<Greenconflict> greens;
+	
+	private Solution solution;
 	private Signpublicparam sigpubparam;
 	private int soid;
 	private Sig sig;
 	private ConflictVO conflictVO;
+	private Integer pubid;
 	
 	
 	public String solutions()
 	{
-		solutions = solutionService.getSolutions();
-		if(soid==0)
+		if(pubid!=null)
 		{
-			soid = 1;
+			solutions = solutionService.loadByPubid(pubid);
 		}
-		req.setAttribute("soid", soid);
-		solution = solutionService.loadById(soid);
-		steps = stepService.loadBySoId(soid);//获得相位方案的相位（相位为步序是偶数位的步序,service层已做处理）
-		
-		if(solutions!=null)
+		if(solutions!=null&&solutions.size()>0)
 		{
+			if(soid==0)
+			{
+				soid = 1;
+			}
+			
+			req.setAttribute("soid", soid);
+			solution = solutionService.loadById(soid);
+			steps = stepService.loadBySoId(soid);//获得相位方案的相位（相位为步序是偶数位的步序,service层已做处理）
 			setGreenConflict();
-			System.out.println(conflictVO);
+			session.put("sid", pubid);//从地图中进入信号机，将信号机id传入session
 			return "cssz-fa";
 		}else
 		{
@@ -229,7 +234,6 @@ public class SolutionAction extends ActionSupport implements RequestAware,
 	 */
 	public String update() throws Exception {
 		System.out.println("================");
-	
 		String map = req.getParameter("dates");
 		//需要插入数据库 解析 map-from jlj
 		System.out.println(map);
@@ -385,7 +389,14 @@ public class SolutionAction extends ActionSupport implements RequestAware,
 		this.conflictVO = conflictVO;
 	}
 
-	
+	public Integer getPubid() {
+		return pubid;
+	}
+
+	public void setPubid(Integer pubid) {
+		this.pubid = pubid;
+	}
+
 	
 	
 	

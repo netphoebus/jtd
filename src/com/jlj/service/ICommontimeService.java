@@ -42,4 +42,7 @@ public interface ICommontimeService {
 
 	public abstract List<Commontime> getCommontimesBySigid(Integer id);
 
+	public abstract List<Commontime> getCommontimesBySigAndTimetype(int sid,
+			Integer timetype);
+
 }

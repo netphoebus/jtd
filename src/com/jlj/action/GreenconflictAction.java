@@ -35,12 +35,15 @@ public class GreenconflictAction extends ActionSupport implements RequestAware,
 
 	private Sig sig;
 	private int id;
-	private int sid;
+	private Integer sid;
 	
 	public String green()
 	{
-		greens = greenService.loadBySid(sid);
-		if(greens!=null)
+		if(sid!=null&&sid!=0)
+		{
+			greens = greenService.loadBySid(sid);
+		}
+		if(greens!=null&&greens.size()>0)
 		{
 			session.put("sid", sid);//从地图中进入信号机，将信号机id传入session
 			return "cssz-ct";
@@ -148,12 +151,13 @@ public class GreenconflictAction extends ActionSupport implements RequestAware,
 	public void setGreens(List<Greenconflict> greens) {
 		this.greens = greens;
 	}
-	public int getSid() {
+	public Integer getSid() {
 		return sid;
 	}
-	public void setSid(int sid) {
+	public void setSid(Integer sid) {
 		this.sid = sid;
 	}
+	
 	
 	
 }

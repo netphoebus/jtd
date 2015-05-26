@@ -300,14 +300,14 @@ var btn=document.getElementById('show_btn');
 
 		  <li  onclick="executeCommand(5)">初始化公共参数</li>
 		  <li  onclick="executeCommand(6)">初始化普通时间段0-7</li>
-		   <li  onclick="executeCommand(7)">初始化普通时间段8-15</li>
-		   <li  onclick="executeCommand(8)">初始化周日时间段0-7 </li>
-		    <li  onclick="executeCommand(9)">初始化周日时间段8-15</li>
-		    <li  onclick="executeCommand(10)">初始化特殊时间段0-7 </li>
-		     <li  onclick="executeCommand(11)">初始化特殊时间段8-15</li>
-		      <li  onclick="executeCommand(12)">初始化相位方案16</li>
+		  <li  onclick="executeCommand(7)">初始化普通时间段8-15</li>
+		  <li  onclick="executeCommand(8)">初始化周日时间段0-7</li>
+		  <li  onclick="executeCommand(9)">初始化周日时间段8-15</li>
+		  <li  onclick="executeCommand(10)">初始化特殊时间段0-7</li>
+		  <li  onclick="executeCommand(11)">初始化特殊时间段8-15</li>
+		  <li  onclick="executeCommand(12)">初始化相位方案16</li>
 
-			  <li  onclick="javascript:location.href='greenAction!green?sid=<s:property value="sig.id"/>'">高级设置</li>
+		<li  onclick="javascript:location.href='greenAction!green?sid=<s:property value="sig.id"/>'">高级设置</li>
          </ul>
          
        </div>

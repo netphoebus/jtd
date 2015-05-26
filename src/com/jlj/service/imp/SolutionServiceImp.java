@@ -128,4 +128,9 @@ public class SolutionServiceImp implements ISolutionService  {
 		solutionDao.updateByHql(queryString, paramNames, values);
 		
 	}
+	
+	public List<Solution> loadByPubid(Integer pubid) {
+		String queryString = "from Solution mo where 1=1 and mo.signpublicparam.id ="+pubid;
+		return solutionDao.queryList(queryString);
+	}
 }

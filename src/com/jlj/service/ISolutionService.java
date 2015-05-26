@@ -40,4 +40,6 @@ public interface ISolutionService {
 
 	public abstract List<Solution> getSolutionsByPublicidOrder(Integer id);
 
+	public abstract List<Solution> loadByPubid(Integer pubid);
+
 }

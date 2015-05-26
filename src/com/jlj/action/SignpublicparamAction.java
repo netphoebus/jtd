@@ -43,7 +43,6 @@ public class SignpublicparamAction extends ActionSupport implements RequestAware
 	private int sigpubid;//信号机公共参数Id
 	private String sigIp;//信号机IP
 	
-	
 	private Integer spetimeable;
 	private Integer suntimeable;
 	
@@ -61,7 +60,7 @@ public class SignpublicparamAction extends ActionSupport implements RequestAware
 					if(sid!=0)
 					{
 						//判断信号机公共参数中的signid是否为空，如果为空则设置公共参数中的signid对应sig
-						if(sigpubparam.getSig().getId()==null||sigpubparam.getSig().getId()==0)
+						if(sigpubparam.getSig()==null)
 						{
 							sig = sigService.loadById(sid);
 							sigpubparam.setSig(sig);
@@ -70,9 +69,9 @@ public class SignpublicparamAction extends ActionSupport implements RequestAware
 					}
 					session.put("sigIp", sigIp);//从地图中进入信号机，将信号机ip传入session
 					session.put("sid", sigpubparam.getSig().getId());//从地图中进入信号机，将信号机id传入session
+					session.put("pubid", sigpubparam.getId());
 					initPublicParamJSP(sigpubparam.getWorkingset());
 					//判断是否首次进入一般参数,如果首次进入一般参数则需设置公共参数中的signid对应sig
-					
 					return "cssz-cs";
 				}else
 				{

@@ -14,7 +14,9 @@ import org.apache.struts2.interceptor.SessionAware;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import com.jlj.model.Commontime;
 import com.jlj.model.Sig;
+import com.jlj.service.ICommontimeService;
 import com.jlj.service.ISigService;
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -30,23 +32,39 @@ public class SigtimeAction extends ActionSupport implements RequestAware,
 	private javax.servlet.http.HttpServletRequest req;
 
 	private ISigService sigService;
+	private ICommontimeService commontimeService;
 	
+	private List<Commontime> commontimes;
 	
 	private Sig sig;
 	private int id;
+	private Commontime commontime;
+	private Integer timetype;
+	private int sid;
+	private int timeid;
 	
-
 	public String sigtimes()
 	{
-		if(1==1)
+		timetype  = Integer.parseInt(req.getParameter("timetype"));//获得前台的时间类型
+		//处理时间类型
+		if(timetype==null||timetype==0)
 		{
+			timetype = 1;
+		}
+		//判断是否获得了sid，信号机的id
+		if(sid!=0)
+		{
+			commontimes = commontimeService.getCommontimesBySigAndTimetype(sid,timetype);
+		}
+		if(commontimes.size()>0)
+		{
+			session.put("sid", sid);//从地图中进入信号机，将信号机id传入session
 			return "cssz-time";
 		}else
 		{
 			return "error";//预留没有查询到相应公共参数时跳转的提示页面
 		}
 	}
-
 
 	/**
 	 * 添加
@@ -129,6 +147,61 @@ public class SigtimeAction extends ActionSupport implements RequestAware,
 		this.sigService = sigService;
 	}
 
+
+	public ICommontimeService getCommontimeService() {
+		return commontimeService;
+	}
+
+	@Resource
+	public void setCommontimeService(ICommontimeService commontimeService) {
+		this.commontimeService = commontimeService;
+	}
+
+
+	public List<Commontime> getCommontimes() {
+		return commontimes;
+	}
+
+
+	public void setCommontimes(List<Commontime> commontimes) {
+		this.commontimes = commontimes;
+	}
+
+
+	public Commontime getCommontime() {
+		return commontime;
+	}
+
+
+	public void setCommontime(Commontime commontime) {
+		this.commontime = commontime;
+	}
+
+
+	public void setTimetype(Integer timetype) {
+		this.timetype = timetype;
+	}
+
+
+	public int getSid() {
+		return sid;
+	}
+
+
+	public void setSid(int sid) {
+		this.sid = sid;
+	}
+
+
+	public int getTimeid() {
+		return timeid;
+	}
+
+
+	public void setTimeid(int timeid) {
+		this.timeid = timeid;
+	}
+	
 	
 	
 }
