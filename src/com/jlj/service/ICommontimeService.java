@@ -38,6 +38,6 @@ public interface ICommontimeService {
 
 	public abstract void updateByConditionOrdinaryid(int hour, int minute,
 			int seconds, int workingway, int workingprogram, int lstime,
-			int hdtime, int qchdtime, int orderid, Integer id);
+			int hdtime, int qchdtime, int orderid, Integer sigid);
 
 }

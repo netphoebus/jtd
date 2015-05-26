@@ -8,7 +8,6 @@ import org.springframework.stereotype.Component;
 
 import com.jlj.dao.ISignpublicparamDao;
 import com.jlj.model.Signpublicparam;
-import com.jlj.model.Sigsuntime;
 import com.jlj.service.ISignpublicparamService;
 
 
@@ -166,23 +165,7 @@ public class SignpublicparamServiceImp implements ISignpublicparamService  {
 				"mo.specialmonth20=?,mo.specialday20=?,mo.specialmonth21=?,mo.specialday21=?," +
 				"mo.specialmonth22=?,mo.specialday22=?,mo.specialmonth23=?,mo.specialday23=?" +
 				" where mo.id = ?";
-//		String[] paramNames = new String[] {"red_Clearance_Time","yellow_Flash_Time","number",
-//				"comparam","checkflow","innermark","workingset","SigSunTime0",
-//				"SigSunTime1","SigSunTime2","SigSunTime3","SigSunTime4","SigSunTime5","SigSunTime6",
-//				"gmintime","gmaxtime","zdbctime","countdownmode","xrfxtime","cycle","xyxr",
-//				"SigSpecialTime00","SigSpecialTime01","SigSpecialTime10","SigSpecialTime11",
-//				"SigSpecialTime20","SigSpecialTime21","SigSpecialTime30","SigSpecialTime31",
-//				"SigSpecialTime40","SigSpecialTime41","SigSpecialTime50","SigSpecialTime51",
-//				"SigSpecialTime60","SigSpecialTime61","SigSpecialTime70","SigSpecialTime71",
-//				"SigSpecialTime80","SigSpecialTime81","SigSpecialTime90","SigSpecialTime91",
-//				"SigSpecialTime100","SigSpecialTime101","SigSpecialTime110","SigSpecialTime111",
-//				"SigSpecialTime120","SigSpecialTime121","SigSpecialTime130","SigSpecialTime131",
-//				"SigSpecialTime140","SigSpecialTime141","SigSpecialTime150","SigSpecialTime151",
-//				"SigSpecialTime160","SigSpecialTime161","SigSpecialTime170","SigSpecialTime171",
-//				"SigSpecialTime180","SigSpecialTime181","SigSpecialTime190","SigSpecialTime191",
-//				"SigSpecialTime200","SigSpecialTime201","SigSpecialTime210","SigSpecialTime211",
-//				"SigSpecialTime220","SigSpecialTime221","SigSpecialTime230","SigSpecialTime231", 
-//				"publicid"};
+
 		Object[] values = new Object[] { red_Clearance_Time,yellow_Flash_Time,number,
 				comparam,checkflow,innermark+"",workingset,
 				SigSunTime0,SigSunTime1,SigSunTime2,SigSunTime3,SigSunTime4,SigSunTime5,SigSunTime6,

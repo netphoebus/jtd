@@ -19,8 +19,6 @@ import com.jlj.model.Signpublicparam;
 import com.jlj.model.Solution;
 import com.jlj.service.ISigService;
 import com.jlj.service.ISignpublicparamService;
-import com.jlj.service.ISigspecialtimeService;
-import com.jlj.service.ISigsuntimeService;
 import com.jlj.service.ISolutionService;
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -38,8 +36,6 @@ public class TimeSlotAction extends ActionSupport implements RequestAware,
 	private ISigService sigService;
 	private ISignpublicparamService sigpubparamService;
 	private ISolutionService solutionService;
-	private ISigsuntimeService sigsuntimeService;
-	private ISigspecialtimeService sigspecialtimeService;
 	
 	
 	private Solution solution;

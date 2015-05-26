@@ -13,15 +13,9 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import com.jlj.model.Greenconflict;
 import com.jlj.model.Sig;
 import com.jlj.model.Signpublicparam;
-import com.jlj.model.Sigordinarytime;
-import com.jlj.model.Sigspecialtime;
-import com.jlj.model.Sigsuntime;
 import com.jlj.service.IGreenconflictService;
 import com.jlj.service.ISigService;
 import com.jlj.service.ISignpublicparamService;
-import com.jlj.service.ISigordinarytimeService;
-import com.jlj.service.ISigspecialtimeService;
-import com.jlj.service.ISigsuntimeService;
 
 
 
@@ -31,9 +25,6 @@ public class ParametersCmdFactory extends CmdFactoryBase implements ICmdParser{
 	final static ApplicationContext ac=new ClassPathXmlApplicationContext("beans.xml");
 	final static ISigService sigService = (ISigService)ac.getBean("sigService");
 	final static ISignpublicparamService signpublicparamService = (ISignpublicparamService)ac.getBean("signpublicparamService");
-	final static ISigordinarytimeService sigordinarytimeService = (ISigordinarytimeService)ac.getBean("sigordinarytimeService");
-	final static ISigsuntimeService sigsuntimeService = (ISigsuntimeService)ac.getBean("sigsuntimeService");
-	final static ISigspecialtimeService sigspecialtimeService = (ISigspecialtimeService)ac.getBean("sigspecialtimeService");
 	final static IGreenconflictService greenconflictService = (IGreenconflictService)ac.getBean("greenconflictService");
 	public ParametersCmdFactory(byte[] data){
 		super(data);
