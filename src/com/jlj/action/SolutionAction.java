@@ -54,7 +54,6 @@ public class SolutionAction extends ActionSupport implements RequestAware,
 	private ConflictVO conflictVO;
 	
 	
-	
 	public String solutions()
 	{
 		solutions = solutionService.getSolutions();

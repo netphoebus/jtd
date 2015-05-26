@@ -180,41 +180,41 @@ $(document).ready(function(e) {
              -->
 								<tr>
 									<td align="right">
-										<label>
+										<label style="margin-right: 20px">
 											时
 										</label>
 									</td>
 									<td>
-										&nbsp;&nbsp;<input type="text" class="dfinput" style="width: 150px;" />
+										<input type="text" class="dfinput" style="width: 150px;" />
 									</td>
 								</tr>
 								<tr>
 									<td align="right">
-										<label>
+										<label style="margin-right: 20px"> 
 											分
 										</label>
 									</td>
 									<td>
-										&nbsp;&nbsp;<input type="text" class="dfinput" style="width: 150px;" />
+										<input type="text" class="dfinput" style="width: 150px;" />
 									</td>
 								</tr>
 								<tr>
 									<td align="right">
-										<label>
+										<label style="margin-right: 20px">
 											秒
 										</label>
 									</td>
 									<td>
-										&nbsp;&nbsp;<input type="text" class="dfinput" style="width: 150px;" />
+										<input type="text" class="dfinput" style="width: 150px;" />
 									</td>
 								</tr>
 								<tr>
 									<td align="right">
-										<label>
+										<label style="margin-right: 20px">
 											控制方式
 										</label>
 									</td>
-									<td>
+									<td >
 										<select name="kzfs" class="select4">
 											<option value="1">
 												无电缆联动
@@ -227,7 +227,7 @@ $(document).ready(function(e) {
 								</tr>
 								<tr>
 									<td align="right">
-										<label>
+										<label style="margin-right: 20px">
 											相位方案
 										</label>
 									</td>
@@ -244,32 +244,32 @@ $(document).ready(function(e) {
 								</tr>
 								<tr>
 									<td align="right">
-										<label>
+										<label style="margin-right: 20px">
 											绿闪时间
 										</label>
 									</td>
 									<td>
-										&nbsp;&nbsp;<input type="text" class="dfinput" style="width: 150px;" />
+										<input type="text" class="dfinput" style="width: 150px;" />
 									</td>
 								</tr>
 								<tr>
 									<td align="right">
-										<label>
+										<label style="margin-right: 20px">
 											黄灯时间
 										</label>
 									</td>
 									<td>
-										&nbsp;&nbsp;<input type="text" class="dfinput" style="width: 150px;" />
+										<input type="text" class="dfinput" style="width: 150px;" />
 									</td>
 								</tr>
 								<tr>
 									<td align="right">
-										<label>
+										<label style="margin-right: 20px">
 											红灯时间
 										</label>
 									</td>
 									<td>
-										&nbsp;&nbsp;<input type="text" class="dfinput" style="width: 150px;" />
+										<input type="text" class="dfinput" style="width: 150px;" />
 									</td>
 								</tr>
 								<tr>
