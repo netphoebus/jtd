@@ -107,5 +107,11 @@ public class GreenconflictServiceImp implements IGreenconflictService  {
 		String queryString = "from Greenconflict mo where 1=1 and mo.sig.id ="+id;
 		return greenconflictDao.queryList(queryString);
 	}
+	public void updateGreenByCondition(int isct, String name, int gid) {
+		String queryString = "update Greenconflict mo set mo.l"+name+"=:isct where mo.id=:gid ";
+		String[] paramNames = new String[] {"isct","gid"};
+		Object[] values = new Object[] {isct, gid};
+		greenconflictDao.updateByHql(queryString, paramNames, values);
+	}
 	
 }

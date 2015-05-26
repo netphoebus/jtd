@@ -36,4 +36,6 @@ public interface IGreenconflictService {
 
 	public abstract List<Greenconflict> loadBySid(int id);
 
+	public abstract void updateGreenByCondition(int isct, String name, int gid);
+
 }

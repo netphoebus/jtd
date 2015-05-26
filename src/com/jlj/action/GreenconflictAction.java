@@ -89,6 +89,15 @@ public class GreenconflictAction extends ActionSupport implements RequestAware,
 		 * : 
 		 * 1  [1:冲突 0：不冲突]
 		 */
+		String[] greens = map.split(",");
+		for (int i = 0; i < greens.length; i++) {
+			String green = greens[i];
+			int gid = Integer.parseInt(green.substring(0, green.indexOf("_")));
+			String name = green.substring(green.indexOf("_")+1,green.indexOf(":"));
+			int isct = Integer.parseInt(green.substring(green.indexOf(":")+1));
+			System.out.println(isct+"\t"+name+"\t"+gid);
+			greenService.updateGreenByCondition(isct,name,gid);
+		}
 		return NONE;
 	}
 
