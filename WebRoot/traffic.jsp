@@ -296,7 +296,7 @@ var btn=document.getElementById('show_btn');
          </ul>
          <ul class="toolbar1">
            
-       <li onclick="javascript:location.href='sigpublicparamAction!publicParam?sigIp=<s:property value="sig.ip"/>&sid=<s:property value="sig.id"/>'">设置参数</li>
+       <li onclick="javascript:location.href='sigpublicparamAction!publicParam'">设置参数</li>
 
 		  <li  onclick="executeCommand(5)">初始化公共参数</li>
 		  <li  onclick="executeCommand(6)">初始化普通时间段0-7</li>

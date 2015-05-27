@@ -54,20 +54,18 @@ $(document).ready(function(e) {
 
 		<div class="formbody">
 
-		<form id="sigtimeform" name="sigtimeform" action="sigtimeAction!update"
-			method="post">
-			<s:hidden name="sid" id="sid"></s:hidden>
+		
 			<div id="usual1" class="usual">
 				<div class="itab">
 					<ul>
 						<li>
-							<a href="sigpublicparamAction!publicParam?sigIp=<s:property value="#session.sigIp"/>">一般参数</a>
+							<a href="sigpublicparamAction!publicParam">一般参数</a>
 						</li>
 						<li>
-							<a href="solutionAction!solutions?pubid=<s:property value="#session.pubid"/>">相位方案</a>
+							<a href="solutionAction!solutions">相位方案</a>
 						</li>
 						<li>
-							<a href="sigtimeAction!sigtimes?sid=<s:property value="#session.sid"/>" class="selected"> 时间段参数</a>
+							<a href="sigtimeAction!sigtimes" class="selected"> 时间段参数</a>
 						</li>
 					</ul>
 				</div>
@@ -83,7 +81,7 @@ $(document).ready(function(e) {
 									时间段选择：
 								</label>
 								<div class="vocation">
-									<select id="timetype" name="timetype" class="select1" onchange="changeTimetype()">
+									<select id="timetype" name="timetype" class="select1" onchange="changeTimeSelect()">
 										<option value="1">
 											普通日
 										</option>
@@ -103,13 +101,13 @@ $(document).ready(function(e) {
 								</label>
 								<div class="vocation">
 									<s:select list="commontimesVO"   listValue="commontimename" listKey="cid"   id="timeid"
-						             name="commontimeVO" value="commontime.id" cssClass="select1" onchange="changeTime()"></s:select>  
+						             name="commontimeVO" value="commontime.id" cssClass="select1" onchange="changeTimeSelect()"></s:select>  
 								</div>
 								<b>*</b>
 							</div>
 							<div style="float: left; line-height: 35px; padding-left: 20px;">
 								<ul class="toolbar">
-									<li class="click" style="height: 28px; line-height: 28px;">
+									<li onclick="updateStepTimes()" class="click" style="height: 28px; line-height: 28px;">
 										<span><img src="images/time.png" alt="" width="24"
 												height="24" />
 										</span>保存相位执行时间
@@ -120,7 +118,9 @@ $(document).ready(function(e) {
 					</ul>
 					<div style="width: 100%; float: left;">
 						<div class="csleft" style="line-height: 35px;">
-
+						<form id="sigtimeform" name="sigtimeform" action="sigtimeAction!update"
+									method="post">
+									<s:hidden name="commontime.id"></s:hidden>
 							<table border="0" cellspacing="0" cellpadding="0">
 								<tr>
 									<td align="right">
@@ -173,8 +173,9 @@ $(document).ready(function(e) {
 										</label>
 									</td>
 									<td style="margin-left:10px">
-											<s:select list="solutions"   listValue="soluname" listKey="id"   id="solutionid"
-						             name="solution" value="solution.id" cssClass="select4"  onchange="changeTime()"></s:select> 
+								 
+											<s:select list="solutions"   listValue="soluname" listKey="id"   id="soid"
+						             name="commontime.workingprogram" value="solution.id" cssClass="select4"  onchange="changeSelect()"></s:select> 
 									</td>
 								</tr>
 								<tr>
@@ -220,6 +221,7 @@ $(document).ready(function(e) {
 									</td>
 								</tr>
 							</table>
+							</form>
 						</div>
 						<div class="csright">
 							<div class="xwlb">
@@ -380,8 +382,8 @@ $(document).ready(function(e) {
 										序号<s:property value="#status.index"/>
 									</h1>
 									<s:property value="phasename"/>：
-										<s:textfield name="second" cssClass="dfinput" style="width: 60px; height: 20px;"></s:textfield>
-									秒
+										<input value="${step.second}" name="${step.id}" class="timeinput" style="width: 60px; height: 20px;"/>
+									秒	
 									</txt>
 								</li>
 							</s:iterator>
@@ -401,7 +403,6 @@ $(document).ready(function(e) {
 			<script type="text/javascript">
 	$('.tablelist tbody tr:odd').addClass('odd');
 	</script>
-	</form>
 		</div>
 
 

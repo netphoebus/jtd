@@ -53,6 +53,8 @@ function saveGreen()
             success: function(msg)
             { //成功   
 				alert('修改绿冲突成功');   
+				updateCTs = {};
+				msg = "";
             }  
    	    });  
 }
