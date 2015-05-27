@@ -1,17 +1,13 @@
 package com.jlj.model;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -107,7 +103,7 @@ public class Signpublicparam implements java.io.Serializable {
 	private Integer specialday21;
 	private Integer specialday22;
 	private Integer specialday23;
-	private List<Solution> solutions = new ArrayList<Solution>();
+	
 
 	// Constructors
 
@@ -143,8 +139,7 @@ public class Signpublicparam implements java.io.Serializable {
 			Integer specialday12, Integer specialday13, Integer specialday14,
 			Integer specialday15, Integer specialday16, Integer specialday17,
 			Integer specialday18, Integer specialday19, Integer specialday20,
-			Integer specialday21, Integer specialday22, Integer specialday23,
-			List<Solution> solutions) {
+			Integer specialday21, Integer specialday22, Integer specialday23) {
 		this.sig = sig;
 		this.qchdtime = qchdtime;
 		this.kjhstime = kjhstime;
@@ -223,7 +218,7 @@ public class Signpublicparam implements java.io.Serializable {
 		this.specialday21 = specialday21;
 		this.specialday22 = specialday22;
 		this.specialday23 = specialday23;
-		this.solutions = solutions;
+		
 	}
 
 	// Property accessors
@@ -942,13 +937,6 @@ public class Signpublicparam implements java.io.Serializable {
 		this.specialday23 = specialday23;
 	}
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "signpublicparam")
-	public List<Solution> getSolutions() {
-		return this.solutions;
-	}
-
-	public void setSolutions(List<Solution> solutions) {
-		this.solutions = solutions;
-	}
+	
 
 }

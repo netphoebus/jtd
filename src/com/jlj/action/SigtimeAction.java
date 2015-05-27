@@ -71,9 +71,8 @@ public class SigtimeAction extends ActionSupport implements RequestAware,
 			commontimes = commontimeService.getCommontimesBySigAndTimetype(sig.getId(),
 					timetype);// 直接获得当前所有时间段
 			// 查询当前信号机中所有的相位方案
-			publicparam = publicparamService.getPublicparamByIp(sigIp);
-			solutions = solutionService.getSolutionsByPublicidOrder(publicparam
-					.getId());
+//			publicparam = publicparamService.getPublicparamByIp(sigIp);
+			solutions = solutionService.getSolutionsBySignidOrder(sig.getId());
 		}
 		if (commontimes.size() > 0) {
 			setCommontimeVOs(commontimes);
@@ -180,10 +179,11 @@ public class SigtimeAction extends ActionSupport implements RequestAware,
 		 * map数组元素解释说明
 		 * 50: 0[解释 id_步序: 执行时间]
 		 */
-		
+		//修改数据库中commontime中的时间t0-t31中的字段值-from jlj
 		
 		
 		//下发信号机  步序执行时间  -from sl
+		
 		return NONE;
 	}
 

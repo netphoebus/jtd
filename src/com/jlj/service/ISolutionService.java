@@ -38,7 +38,7 @@ public interface ISolutionService {
 
 	public abstract void updateBySoluid(String soluname, int soluid);
 
-	public abstract List<Solution> getSolutionsByPublicidOrder(Integer id);
+	public abstract List<Solution> getSolutionsBySignidOrder(Integer signid);
 
 	public abstract List<Solution> loadByPubid(Integer pubid);
 

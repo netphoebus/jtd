@@ -1,22 +1,22 @@
 package com.jlj.action;
 
+import java.net.InetSocketAddress;
 import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import mina.TimeServerHandler;
 
+import org.apache.mina.core.session.IoSession;
 import org.apache.struts2.interceptor.RequestAware;
 import org.apache.struts2.interceptor.ServletRequestAware;
 import org.apache.struts2.interceptor.ServletResponseAware;
 import org.apache.struts2.interceptor.SessionAware;
-import org.hibernate.dialect.IngresDialect;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-
-import com.jlj.dao.ISignpublicparamDao;
 import com.jlj.model.Sig;
 import com.jlj.model.Signpublicparam;
 import com.jlj.service.ISigService;
@@ -200,9 +200,34 @@ public class SignpublicparamAction extends ActionSupport implements RequestAware
 		
 		
 		//下发信号机公共参数-from sl
+		sigIp = (String) session.get("sigIp");
+		if(sigIp==null){
+			return "opsessiongo";
+		}
 		
+		updateSigPublicparamBytes( getCurrrenSession(sigIp),sigpubparam);
 		
 		return NONE;
+	}
+	
+	private void updateSigPublicparamBytes(IoSession currrenSession,
+			Signpublicparam sigpubparam) {
+		
+		
+		
+		
+	}
+
+	public IoSession getCurrrenSession(String sigIp)
+	{
+		for(IoSession session : TimeServerHandler.iosessions)
+		{
+			if(((InetSocketAddress)session.getRemoteAddress()).getAddress().getHostAddress().equals(sigIp))
+			{
+				return session;
+			}
+		}
+		return null;
 	}
 	
 	public void setMsgToSig()

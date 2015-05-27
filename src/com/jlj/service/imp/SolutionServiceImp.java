@@ -116,8 +116,8 @@ public class SolutionServiceImp implements ISolutionService  {
 		
 		return solutionDao.loadByMkid(queryString);
 	}
-	public List<Solution> getSolutionsByPublicidOrder(Integer id) {
-		String queryString = "from Solution mo where mo.signpublicparam.id=? order by mo.orderid asc ";
+	public List<Solution> getSolutionsBySignidOrder(Integer id) {
+		String queryString = "from Solution mo where mo.sig.id=? order by mo.orderid asc ";
 		Object[] p = new Object[]{id};
 		return solutionDao.getObjectsByCondition(queryString, p);
 	}
