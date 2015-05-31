@@ -2,6 +2,7 @@ package protocpl;
 
 import java.net.InetSocketAddress;
 
+import org.apache.mina.core.buffer.IoBuffer;
 import org.apache.mina.core.session.IoSession;
 
 import com.jlj.action.SigAction;
@@ -29,7 +30,21 @@ public class DiaoYueCmdFactory extends CmdFactoryBase implements ICmdParser{
 		//System.out.println("cmd.getCmdType() is "+cmd.getCmdType() +"this.expected_cmd is "+this.expected_cmd);
 		if(cmd.getCmdType() == this.expected_cmd)
 		{
+			
 
+			String Reply_cmd = "FF FF FF FF 01 F0 9F 00 00 08 01 98";
+			String[] cmds = Reply_cmd.split(" ");
+	        byte[] aaa = new byte[cmds.length];
+	        int i = 0;
+	        for (String b : cmds) {
+	            if (b.equals("FF")) {
+	                aaa[i++] = -1;
+	            } else {
+	                aaa[i++] = Integer.valueOf(b, 16).byteValue();;
+	            }
+	        }
+	        session.write(IoBuffer.wrap(aaa));
+			
 			OnAfter_Ack(session, cmd);
 			
 		}

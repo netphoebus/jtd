@@ -297,7 +297,8 @@ var btn=document.getElementById('show_btn');
          <ul class="toolbar1">
            
        <li onclick="javascript:location.href='sigpublicparamAction!publicParam?sigIp=<s:property value="sig.ip"/>&sid=<s:property value="sig.id"/>'">设置参数</li>
-
+		<li  onclick="javascript:location.href='greenAction!green?sid=<s:property value="sig.id"/>'">高级设置</li>
+		 <li  onclick="executeCommand(2)">所有参数</li>
 		  <li  onclick="executeCommand(5)">初始化公共参数</li>
 		  <li  onclick="executeCommand(6)">初始化普通时间段0-7</li>
 		  <li  onclick="executeCommand(7)">初始化普通时间段8-15</li>
@@ -305,23 +306,16 @@ var btn=document.getElementById('show_btn');
 		  <li  onclick="executeCommand(9)">初始化周日时间段8-15</li>
 		  <li  onclick="executeCommand(10)">初始化特殊时间段0-7</li>
 		  <li  onclick="executeCommand(11)">初始化特殊时间段8-15</li>
-		  <li  onclick="executeCommand(12)">初始化相位方案16</li>
-
-		<li  onclick="javascript:location.href='greenAction!green?sid=<s:property value="sig.id"/>'">高级设置</li>
          </ul>
-         
        </div>
-       
        <div style="width:100%; float:left; margin-bottom:10px;">
          <ul class="toolbar" >
            <li style="cursor: auto;"><span><img src="images/car.png" alt="" width="24" height="24" /></span>查 看 :</li>
          </ul>
          <ul class="toolbar1">
-           
        <li class="click2">汽车流量</li>
        <li class="click3">故障信息</li>
        <li class="click4">操作日志</li>
-
          </ul>
          
        </div>

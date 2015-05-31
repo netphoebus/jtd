@@ -6,6 +6,7 @@ import mina.CmdFactoryBase;
 import mina.CommandBase;
 import mina.ICmdParser;
 
+import org.apache.mina.core.buffer.IoBuffer;
 import org.apache.mina.core.session.IoSession;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -54,6 +55,20 @@ public class ParametersCmdFactory extends CmdFactoryBase implements ICmdParser{
 		//this.m_oData
 		
 		System.out.println("the 6 is"+this.m_oData[6]+"the 7 is"+this.m_oData[7]);
+		
+
+		String Reply_cmd = "FF FF FF FF 01 F0 9F 00 00 08 01 98";
+		String[] cmds = Reply_cmd.split(" ");
+        byte[] aaa = new byte[cmds.length];
+        int i = 0;
+        for (String b : cmds) {
+            if (b.equals("FF")) {
+                aaa[i++] = -1;
+            } else {
+                aaa[i++] = Integer.valueOf(b, 16).byteValue();;
+            }
+        }
+        session.write(IoBuffer.wrap(aaa));
 		
 		if(this.m_oData[7]==0){
 			Upload_fault(session,this.m_oData);

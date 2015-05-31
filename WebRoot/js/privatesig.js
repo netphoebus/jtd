@@ -30,3 +30,24 @@ function topSetting()
 {
 	alert("这里是高级设置~");
 }
+
+function executeSolutionCommands()
+{
+	 executeCommand(12);
+	 executeCommand(13);
+	 executeCommand(14);
+	 executeCommand(15);
+	 executeCommand(16);
+	 executeCommand(17);
+	 executeCommand(18);
+	 executeCommand(19);
+	 executeCommand(20);
+	 executeCommand(21);
+	 executeCommand(22);
+	 executeCommand(23);
+	 executeCommand(24);
+	 executeCommand(25);
+	 executeCommand(26);
+	 executeCommand(27);
+	            
+}

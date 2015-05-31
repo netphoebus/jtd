@@ -60,7 +60,7 @@ public class SolutionAction extends ActionSupport implements RequestAware,
 	
 	public String solutions()
 	{
-		if(pubid!=null)
+		if(pubid!=0)
 		{
 			solutions = solutionService.loadByPubid(pubid);
 		}
@@ -70,7 +70,6 @@ public class SolutionAction extends ActionSupport implements RequestAware,
 			{
 				soid = 1;
 			}
-			
 			req.setAttribute("soid", soid);
 			solution = solutionService.loadById(soid);
 			steps = stepService.loadBySoId(soid);//获得相位方案的相位（相位为步序是偶数位的步序,service层已做处理）
