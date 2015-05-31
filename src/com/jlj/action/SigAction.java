@@ -51,6 +51,7 @@ public class SigAction extends ActionSupport implements RequestAware,
 		sig = sigService.loadByMkid(mkid);
 		if (sig != null) {
 			curruntSigIp = sig.getIp();
+			session.put("sigIp", sig.getIp());//从地图中进入信号机，将信号机ip传入session
 		}
 		return "traffic";
 	}

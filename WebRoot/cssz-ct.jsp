@@ -68,7 +68,7 @@ $(document).ready(function(e) {
 							<a href="map.jsp">其他高级设置</a>
 						</li>
      
-    <li><a href="greenAction!green?sid=<s:property value="#session.sid"/>"  class="selected">绿冲突表</a></li> 
+    <li><a href="greenAction!green"  class="selected">绿冲突表</a></li> 
   	</ul>
     </div>
     <div style="font-size:18px; font-family:黑体; font-weight:bold; width:100%; text-align:center; line-height:30px; margin-top:15px;">绿冲突表</div>

@@ -66,7 +66,7 @@
 	<package name="sig" extends="struts-default">
 		<action name="sigAction" class="sigAction">
 			<result name="traffic">/traffic.jsp</result>
-			<result name="error">/error.html</result>
+			<result name="error">/error.jsp</result>
 		</action>
 	</package>
 	
@@ -79,7 +79,7 @@
 		<action name="sigpublicparamAction" class="sigpublicparamAction">
 			<result name="cssz-cs">/cssz-cs.jsp</result>
 			<result name="map">/smap.jsp</result>
-			<result name="error">/error.html</result>
+			<result name="error">/error.jsp</result>
 		</action>
 	</package>
 	
@@ -90,7 +90,7 @@
 		</global-results>
 		<action name="solutionAction" class="solutionAction">
 			<result name="cssz-fa">/cssz-fa.jsp</result>
-			<result name="error">/error.html</result>
+			<result name="error">/error.jsp</result>
 		</action>
 	</package>
 	
@@ -102,7 +102,7 @@
 		</global-results>
 		<action name="greenAction" class="greenAction">
 			<result name="cssz-ct">/cssz-ct.jsp</result>
-			<result name="error">/error.html</result>
+			<result name="error">/error.jsp</result>
 		</action>
 	</package>
 	
@@ -114,7 +114,7 @@
 		</global-results>
 		<action name="sigtimeAction" class="sigtimeAction">
 			<result name="cssz-time">/cssz-time.jsp</result>
-			<result name="error">/error.html</result>
+			<result name="error">/error.jsp</result>
 		</action>
 	</package>
 	
@@ -142,6 +142,10 @@
 	
 	 <package name="green_ajax" extends="json-default">
 		<action name="updateGreen" class="greenAction" method="update"/>
+	 </package>
+	 
+	  <package name="sigtime_ajax" extends="json-default">
+		<action name="updateStepTimes" class="sigtimeAction" method="updateStepTimes"/>
 	 </package>
 	
 </struts>

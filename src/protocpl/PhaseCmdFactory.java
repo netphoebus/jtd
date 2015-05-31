@@ -14,16 +14,18 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.jlj.model.Road;
-import com.jlj.model.Signpublicparam;
+import com.jlj.model.Sig;
 import com.jlj.model.Solution;
 import com.jlj.model.Step;
 import com.jlj.service.IRoadService;
+import com.jlj.service.ISigService;
 import com.jlj.service.ISignpublicparamService;
 import com.jlj.service.ISolutionService;
 import com.jlj.service.IStepService;
 
 public class PhaseCmdFactory extends CmdFactoryBase implements ICmdParser{
 	final static ApplicationContext ac=new ClassPathXmlApplicationContext("beans.xml");
+	final static ISigService sigService = (ISigService)ac.getBean("sigService");
 	final static ISignpublicparamService signpublicparamService = (ISignpublicparamService)ac.getBean("signpublicparamService");
 	final static ISolutionService solutionService = (ISolutionService)ac.getBean("solutionService");
 	final static IStepService stepService = (IStepService)ac.getBean("stepService");
@@ -154,16 +156,16 @@ public class PhaseCmdFactory extends CmdFactoryBase implements ICmdParser{
 			//根据ip获取对应的公共参数，保存相位方案以及步序和方向（东南西北、左直右人人）
 			//获取session中的IP
 			String clientIP = ((InetSocketAddress)session.getRemoteAddress()).getAddress().getHostAddress();
-			Signpublicparam signpublicparam =signpublicparamService.getPublicparamByIp(clientIP);
-			if(signpublicparam!=null){
+			Sig sig =sigService.querySigByIpAddress(clientIP);
+			if(sig!=null){
 				
-				List<Solution> solutions = solutionService.getSolutionsByPublicidOrder(signpublicparam.getId());
+				List<Solution> solutions = solutionService.getSolutionsBySignidOrder(sig.getId());
 				if(solutions==null||solutions.size()==0){
 					if(locatelist.size()==8){
 						for (int j = 0; j < locatelist.size(); j++) {
 							Solution solution = new Solution();
 							solution.setOrderid(j);
-							solution.setSignpublicparam(signpublicparam);
+							solution.setSig(sig);
 							solution.setSoluname("相位方案"+j);
 							try {
 								solutionService.add(solution);

@@ -1,22 +1,22 @@
 package com.jlj.action;
 
+import java.net.InetSocketAddress;
 import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import mina.TimeServerHandler;
 
+import org.apache.mina.core.session.IoSession;
 import org.apache.struts2.interceptor.RequestAware;
 import org.apache.struts2.interceptor.ServletRequestAware;
 import org.apache.struts2.interceptor.ServletResponseAware;
 import org.apache.struts2.interceptor.SessionAware;
-import org.hibernate.dialect.IngresDialect;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-
-import com.jlj.dao.ISignpublicparamDao;
 import com.jlj.model.Sig;
 import com.jlj.model.Signpublicparam;
 import com.jlj.service.ISigService;
@@ -33,13 +33,12 @@ public class SignpublicparamAction extends ActionSupport implements RequestAware
 	Map<String, Object> session;
 	private javax.servlet.http.HttpServletResponse response;
 	private javax.servlet.http.HttpServletRequest req;
-
+	
 	private ISigService sigService;
 	private ISignpublicparamService sigpubparamService;
+	
 	private Signpublicparam sigpubparam;
-	private int id;
 	private Sig sig;
-	private int sid;//信号机id
 	private int sigpubid;//信号机公共参数Id
 	private String sigIp;//信号机IP
 	
@@ -48,37 +47,30 @@ public class SignpublicparamAction extends ActionSupport implements RequestAware
 	
 	//跳转 一般参数页面  
 	public String publicParam() {
-			if(sigIp==null||sigIp.equals(""))
+		sigIp = (String) session.get("sigIp");
+		if(sigIp==null){
+			return "opsessiongo";
+		}
+		//根据IP来查询信号机公共参数
+		sigpubparam = sigpubparamService.loadBySigIp(sigIp);
+		if(sigpubparam!=null&&sigpubparam.getIp()!=null)
+		{
+			//判断信号机公共参数中的signid是否为空，如果为空则设置公共参数中的signid对应sig
+			if(sigpubparam.getSig()==null)
 			{
-				return "map";
-			}else
-			{
-				//根据IP来查询信号机公共参数
-				sigpubparam = sigpubparamService.loadBySigIp(sigIp);
-				if(sigpubparam!=null&&sigpubparam.getIp()!=null)
-				{
-					if(sid!=0)
-					{
-						//判断信号机公共参数中的signid是否为空，如果为空则设置公共参数中的signid对应sig
-						if(sigpubparam.getSig()==null)
-						{
-							sig = sigService.loadById(sid);
-							sigpubparam.setSig(sig);
-							sigpubparamService.update(sigpubparam);//公共参数中设置信号机id
-						}
-					}
-					session.put("sigIp", sigIp);//从地图中进入信号机，将信号机ip传入session
-					session.put("sid", sigpubparam.getSig().getId());//从地图中进入信号机，将信号机id传入session
-					session.put("pubid", sigpubparam.getId());
-					initPublicParamJSP(sigpubparam.getWorkingset());
-					//判断是否首次进入一般参数,如果首次进入一般参数则需设置公共参数中的signid对应sig
-					return "cssz-cs";
-				}else
-				{
-					return "error";//预留没有查询到相应公共参数时跳转的提示页面
-				}
-				
+				sig = sigService.querySigByIpAddress(sigIp);
+				sigpubparam.setSig(sig);
+				sigpubparamService.update(sigpubparam);//公共参数中设置信号机id
 			}
+			session.put("sigIp", sigIp);//从地图中进入信号机，将信号机ip传入session
+			initPublicParamJSP(sigpubparam.getWorkingset());
+			//判断是否首次进入一般参数,如果首次进入一般参数则需设置公共参数中的signid对应sig
+			return "cssz-cs";
+		}else
+		{
+			return "error";//预留没有查询到相应公共参数时跳转的提示页面
+		}
+				
 	}
 	
 	//工作日设置处理
@@ -204,11 +196,38 @@ public class SignpublicparamAction extends ActionSupport implements RequestAware
 		System.out.println(suntimeable);
 		System.out.println(spetimeable);
 		setPublicParamJSP();
-		
 		sigpubparamService.update(sigpubparam);//修改
-		//同步传给信号机
-		setMsgToSig();
-		return SUCCESS;
+		
+		
+		//下发信号机公共参数-from sl
+		sigIp = (String) session.get("sigIp");
+		if(sigIp==null){
+			return "opsessiongo";
+		}
+		
+		updateSigPublicparamBytes( getCurrrenSession(sigIp),sigpubparam);
+		
+		return NONE;
+	}
+	
+	private void updateSigPublicparamBytes(IoSession currrenSession,
+			Signpublicparam sigpubparam) {
+		
+		
+		
+		
+	}
+
+	public IoSession getCurrrenSession(String sigIp)
+	{
+		for(IoSession session : TimeServerHandler.iosessions)
+		{
+			if(((InetSocketAddress)session.getRemoteAddress()).getAddress().getHostAddress().equals(sigIp))
+			{
+				return session;
+			}
+		}
+		return null;
 	}
 	
 	public void setMsgToSig()
@@ -250,16 +269,6 @@ public class SignpublicparamAction extends ActionSupport implements RequestAware
 
 	public void setSig(Sig sig) {
 		this.sig = sig;
-	}
-	
-	
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
 	}
 
 	public ISigService getSigService() {
@@ -305,14 +314,6 @@ public class SignpublicparamAction extends ActionSupport implements RequestAware
 
 	public void setSuntimeable(int suntimeable) {
 		this.suntimeable = suntimeable;
-	}
-
-	public int getSid() {
-		return sid;
-	}
-
-	public void setSid(int sid) {
-		this.sid = sid;
 	}
 
 	public String getSigIp() {

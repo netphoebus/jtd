@@ -30,7 +30,6 @@ public class Step implements java.io.Serializable {
 	private Solution solution;
 	private String phasename;
 	private String stepname;
-	private Integer second;
 	private Integer orderid;
 	private List<Road> roads = new ArrayList<Road>();
 
@@ -42,12 +41,11 @@ public class Step implements java.io.Serializable {
 
 	/** full constructor */
 
-	public Step(Solution solution, String phasename, String stepname, Integer second, Integer orderid,
+	public Step(Solution solution, String phasename, String stepname, Integer orderid,
 			List<Road> roads) {
 		this.solution = solution;
 		this.phasename = phasename;
 		this.stepname = stepname;
-		this.second = second;
 		this.orderid = orderid;
 		this.roads = roads;
 	}
@@ -91,15 +89,6 @@ public class Step implements java.io.Serializable {
 
 	public void setStepname(String stepname) {
 		this.stepname = stepname;
-	}
-
-	@Column(name = "second")
-	public Integer getSecond() {
-		return this.second;
-	}
-
-	public void setSecond(Integer second) {
-		this.second = second;
 	}
 
 	@Column(name = "orderid")

@@ -55,31 +55,36 @@ public class SolutionAction extends ActionSupport implements RequestAware,
 	private int soid;
 	private Sig sig;
 	private ConflictVO conflictVO;
-	private Integer pubid;
-	
+	private String sigIp;
 	
 	public String solutions()
 	{
-		if(pubid!=0)
-		{
-			solutions = solutionService.loadByPubid(pubid);
-		}
-		if(solutions!=null&&solutions.size()>0)
-		{
-			if(soid==0)
-			{
-				soid = 1;
+
+			sigIp = (String) session.get("sigIp");
+			if(sigIp==null){
+				return "opsessiongo";
 			}
-			req.setAttribute("soid", soid);
-			solution = solutionService.loadById(soid);
-			steps = stepService.loadBySoId(soid);//获得相位方案的相位（相位为步序是偶数位的步序,service层已做处理）
-			setGreenConflict();
-			session.put("sid", pubid);//从地图中进入信号机，将信号机id传入session
-			return "cssz-fa";
-		}else
-		{
-			return "error";//预留没有查询到相应公共参数时跳转的提示页面
-		}
+			sigpubparam = sigpubparamService.getPublicparamByIp(sigIp);
+			if(sigpubparam!=null)
+			{
+				solutions = solutionService.loadByPubid(sigpubparam.getId());
+			}
+			if(solutions!=null&&solutions.size()>0)
+			{
+				if(soid==0)
+				{
+					soid = 1;
+				}
+				solution = solutionService.loadById(soid);
+				steps = stepService.loadBySoId(soid);//获得相位方案的相位（相位为步序是偶数位的步序,service层已做处理）
+				setGreenConflict();
+				session.put("sigIp", sigIp);//从地图中进入信号机，将信号机id传入session
+				return "cssz-fa";
+			}else
+			{
+				return "error";//预留没有查询到相应公共参数时跳转的提示页面
+			}
+
 	}
 	
 	//获得绿冲突对象
@@ -200,12 +205,6 @@ public class SolutionAction extends ActionSupport implements RequestAware,
 			
 		}
 		
-		
-		
-		
-		
-		
-		
 	}
 
 	/**
@@ -272,6 +271,9 @@ public class SolutionAction extends ActionSupport implements RequestAware,
 			System.out.println("stepid="+stepid+",fangxiang="+roadtype+",dengtype="+dengtype+",deng="+deng);
 			roadService.updateByCondition(deng,dengtypestr, roadtype, stepid);
 		}
+		
+		
+		//下发信号机  相位解决方案-from sl
 		return NONE;
 	}
 	
@@ -415,13 +417,6 @@ public class SolutionAction extends ActionSupport implements RequestAware,
 		this.conflictVO = conflictVO;
 	}
 
-	public Integer getPubid() {
-		return pubid;
-	}
-
-	public void setPubid(Integer pubid) {
-		this.pubid = pubid;
-	}
 
 	public IRoadService getRoadService() {
 		return roadService;
@@ -430,6 +425,14 @@ public class SolutionAction extends ActionSupport implements RequestAware,
 	@Resource
 	public void setRoadService(IRoadService roadService) {
 		this.roadService = roadService;
+	}
+
+	public String getSigIp() {
+		return sigIp;
+	}
+
+	public void setSigIp(String sigIp) {
+		this.sigIp = sigIp;
 	}
 
 	

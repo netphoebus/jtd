@@ -51,33 +51,35 @@ public class SigtimeAction extends ActionSupport implements RequestAware,
 	private List<Step> steps;
 
 	private Sig sig;
-	private int id;
 	private Commontime commontime;
 	private Integer timetype;
-	private int sid;
 	private int timeid;
 	private Solution solution;
 	private Signpublicparam publicparam;
 	private int soid;
+	private String sigIp;
 
 	public String sigtimes() {
+		sigIp = (String) session.get("sigIp");
+		if(sigIp==null){
+			return "opsessiongo";
+		}
 		setURLParameter();
-		// 判断是否获得了sid，信号机的id
-		if (sid != 0) {
-			commontimes = commontimeService.getCommontimesBySigAndTimetype(sid,
+		sig = sigService.querySigByIpAddress(sigIp);
+		if(sig!=null)
+		{
+			commontimes = commontimeService.getCommontimesBySigAndTimetype(sig.getId(),
 					timetype);// 直接获得当前所有时间段
 			// 查询当前信号机中所有的相位方案
-			publicparam = publicparamService.loadBySid(sid);
-			solutions = solutionService.getSolutionsByPublicidOrder(publicparam
-					.getId());
+//			publicparam = publicparamService.getPublicparamByIp(sigIp);
+			solutions = solutionService.getSolutionsBySignidOrder(sig.getId());
 		}
-
 		if (commontimes.size() > 0) {
 			setCommontimeVOs(commontimes);
 			getCurrentCommontime();
 			getCurrentSolution();
 
-			session.put("sid", sid);// 从地图中进入信号机，将信号机id传入session
+			session.put("sigIp", sigIp);// 从地图中进入信号机，将信号机id传入session
 			return "cssz-time";
 		} else {
 			return "error";// 预留没有查询到相应公共参数时跳转的提示页面
@@ -91,9 +93,6 @@ public class SigtimeAction extends ActionSupport implements RequestAware,
 		}
 		if (req.getParameter("timeid") != null) {
 			timeid = Integer.parseInt(req.getParameter("timeid"));// 获得前台的时间段id
-		}
-		if (req.getParameter("sid") != null) {
-			sid = Integer.parseInt(req.getParameter("sid"));// 获得前台sid
 		}
 		if (req.getParameter("soid") != null) {
 			soid = Integer.parseInt(req.getParameter("soid"));// 获得前台sid
@@ -160,13 +159,32 @@ public class SigtimeAction extends ActionSupport implements RequestAware,
 	 * @return
 	 */
 	public String update() throws Exception {
+		System.out.println("----------------------------update commontime------------------------------");
+		//修改数据库
+		commontimeService.update(commontime);
+		//下发信号机  时间段参数 -from sl
 		
-		return SUCCESS;
+		
+		
+		
+		return NONE;
 	}
 	
 	public String updateStepTimes() throws Exception {
+		System.out.println("================");
+		String map = req.getParameter("dates");
+		//需要插入数据库 解析 map-from jlj
+		System.out.println(map);
+		/**
+		 * map数组元素解释说明
+		 * 50: 0[解释 id_步序: 执行时间]
+		 */
+		//修改数据库中commontime中的时间t0-t31中的字段值-from jlj
 		
-		return SUCCESS;
+		
+		//下发信号机  步序执行时间  -from sl
+		
+		return NONE;
 	}
 
 	// get、set-------------------------------------------
@@ -202,14 +220,6 @@ public class SigtimeAction extends ActionSupport implements RequestAware,
 
 	public void setSig(Sig sig) {
 		this.sig = sig;
-	}
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
 	}
 
 	public ISigService getSigService() {
@@ -248,14 +258,6 @@ public class SigtimeAction extends ActionSupport implements RequestAware,
 
 	public void setTimetype(Integer timetype) {
 		this.timetype = timetype;
-	}
-
-	public int getSid() {
-		return sid;
-	}
-
-	public void setSid(int sid) {
-		this.sid = sid;
 	}
 
 	public int getTimeid() {
@@ -345,4 +347,12 @@ public class SigtimeAction extends ActionSupport implements RequestAware,
 		this.steps = steps;
 	}
 
+	public String getSigIp() {
+		return sigIp;
+	}
+
+	public void setSigIp(String sigIp) {
+		this.sigIp = sigIp;
+	}
+	
 }

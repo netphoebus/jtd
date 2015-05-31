@@ -28,7 +28,7 @@ public class Solution implements java.io.Serializable {
 	// Fields
 
 	private Integer id;
-	private Signpublicparam signpublicparam;
+	private Sig sig;
 	private String soluname;
 	private Integer orderid;
 
@@ -42,9 +42,9 @@ public class Solution implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public Solution(Signpublicparam signpublicparam, String soluname, Integer orderid, List<Step> steps) {
+	public Solution(Sig sig, String soluname, Integer orderid, List<Step> steps) {
 
-		this.signpublicparam = signpublicparam;
+		this.sig = sig;
 		this.soluname = soluname;
 		this.orderid = orderid;
 		this.steps = steps;
@@ -63,13 +63,13 @@ public class Solution implements java.io.Serializable {
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "publicid")
-	public Signpublicparam getSignpublicparam() {
-		return this.signpublicparam;
+	@JoinColumn(name = "signid")
+	public Sig getSig() {
+		return this.sig;
 	}
 
-	public void setSignpublicparam(Signpublicparam signpublicparam) {
-		this.signpublicparam = signpublicparam;
+	public void setSig(Sig sig) {
+		this.sig = sig;
 	}
 
 	@Column(name = "soluname", length = 30)

@@ -367,6 +367,8 @@ function saveSolution()
             success: function(msg)
             { //成功   
 				alert('修改相位方案成功'); 
+				updateFang = {};
+				msg = "";
             }  
    	    });  
 }

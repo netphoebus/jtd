@@ -64,13 +64,13 @@ $(document).ready(function(e) {
 					<div class="itab">
 						<ul>
 							<li>
-								<a href="sigpublicparamAction!publicParam?sigIp=<s:property value="#session.sigIp"/>" class="selected">一般参数</a>
+								<a href="sigpublicparamAction!publicParam" class="selected">一般参数</a>
 							</li>
 							<li>
-								<a href="solutionAction!solutions?pubid=<s:property value="#session.pubid"/>">相位方案</a>
+								<a href="solutionAction!solutions">相位方案</a>
 							</li>
 							<li>
-								<a href="sigtimeAction!sigtimes?sid=<s:property value="#session.sid"/>">时间段参数</a>
+								<a href="sigtimeAction!sigtimes">时间段参数</a>
 							</li>
 						</ul>
 					</div>
@@ -106,9 +106,9 @@ $(document).ready(function(e) {
 						</div>
 
 
-						<div
-							style="width: 30%; padding-top: 15px; padding-bottom: 15px; float: left;">
-
+						<div style="width: 30%; padding-top: 15px; padding-bottom: 15px; float: left;">
+							<s:hidden name="sigpubparam.id"></s:hidden>
+							<s:hidden name="sigpubparam.ip"></s:hidden>
 							<div class="csbox">
 								开机黄闪：
 								<!-- 

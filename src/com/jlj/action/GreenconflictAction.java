@@ -17,6 +17,7 @@ import org.springframework.stereotype.Component;
 import com.jlj.model.Greenconflict;
 import com.jlj.model.Sig;
 import com.jlj.service.IGreenconflictService;
+import com.jlj.service.ISigService;
 import com.opensymphony.xwork2.ActionSupport;
 
 @Component("greenAction")
@@ -31,21 +32,27 @@ public class GreenconflictAction extends ActionSupport implements RequestAware,
 	private javax.servlet.http.HttpServletRequest req;
 	
 	private IGreenconflictService greenService;
+	private ISigService sigService;
+	
 	private List<Greenconflict> greens;
 
 	private Sig sig;
-	private int id;
-	private Integer sid;
+	private String sigIp;
 	
 	public String green()
 	{
-		if(sid!=null&&sid!=0)
+		sigIp = (String) session.get("sigIp");
+		if(sigIp==null){
+			return "opsessiongo";
+		}
+		sig = sigService.querySigByIpAddress(sigIp);
+		if(sig!=null)
 		{
-			greens = greenService.loadBySid(sid);
+			greens = greenService.loadBySid(sig.getId());
 		}
 		if(greens!=null&&greens.size()>0)
 		{
-			session.put("sid", sid);//从地图中进入信号机，将信号机id传入session
+			session.put("sigIp", sigIp);//从地图中进入信号机，将信号机id传入session
 			return "cssz-ct";
 		}else
 		{
@@ -98,6 +105,13 @@ public class GreenconflictAction extends ActionSupport implements RequestAware,
 			System.out.println(isct+"\t"+name+"\t"+gid);
 			greenService.updateGreenByCondition(isct,name,gid);
 		}
+		
+		
+		
+		
+		//下发信号机 绿冲突表-from sl
+		
+		
 		return NONE;
 	}
 
@@ -136,13 +150,6 @@ public class GreenconflictAction extends ActionSupport implements RequestAware,
 		this.sig = sig;
 	}
 
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
 
 	public IGreenconflictService getGreenService() {
 		return greenService;
@@ -160,11 +167,18 @@ public class GreenconflictAction extends ActionSupport implements RequestAware,
 	public void setGreens(List<Greenconflict> greens) {
 		this.greens = greens;
 	}
-	public Integer getSid() {
-		return sid;
+	public ISigService getSigService() {
+		return sigService;
 	}
-	public void setSid(Integer sid) {
-		this.sid = sid;
+	@Resource
+	public void setSigService(ISigService sigService) {
+		this.sigService = sigService;
+	}
+	public String getSigIp() {
+		return sigIp;
+	}
+	public void setSigIp(String sigIp) {
+		this.sigIp = sigIp;
 	}
 	
 	
