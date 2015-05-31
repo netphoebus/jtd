@@ -64,10 +64,10 @@ public class SolutionAction extends ActionSupport implements RequestAware,
 			if(sigIp==null){
 				return "opsessiongo";
 			}
-			sigpubparam = sigpubparamService.getPublicparamByIp(sigIp);
-			if(sigpubparam!=null)
+			sig = sigService.querySigByIpAddress(sigIp);
+			if(sig!=null)
 			{
-				solutions = solutionService.loadByPubid(sigpubparam.getId());
+				solutions = solutionService.loadByPubid(sig.getId());
 			}
 			if(solutions!=null&&solutions.size()>0)
 			{
