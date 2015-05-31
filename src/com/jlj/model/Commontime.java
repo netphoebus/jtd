@@ -68,7 +68,6 @@ public class Commontime implements java.io.Serializable {
 	private Integer t29;
 	private Integer t30;
 	private Integer t31;
-	private Integer t32;
 	// Constructors
 
 	/** default constructor */
@@ -492,15 +491,6 @@ public class Commontime implements java.io.Serializable {
 
 	public void setT31(Integer t31) {
 		this.t31 = t31;
-	}
-
-	@Column(name = "t32")
-	public Integer getT32() {
-		return t32;
-	}
-
-	public void setT32(Integer t32) {
-		this.t32 = t32;
 	}
 
 	
