@@ -12,9 +12,11 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.jlj.model.Greenconflict;
+import com.jlj.model.Issuedcommand;
 import com.jlj.model.Sig;
 import com.jlj.model.Signpublicparam;
 import com.jlj.service.IGreenconflictService;
+import com.jlj.service.IIssuedcommandService;
 import com.jlj.service.ISigService;
 import com.jlj.service.ISignpublicparamService;
 
@@ -27,6 +29,7 @@ public class ParametersCmdFactory extends CmdFactoryBase implements ICmdParser{
 	final static ISigService sigService = (ISigService)ac.getBean("sigService");
 	final static ISignpublicparamService signpublicparamService = (ISignpublicparamService)ac.getBean("signpublicparamService");
 	final static IGreenconflictService greenconflictService = (IGreenconflictService)ac.getBean("greenconflictService");
+	final static IIssuedcommandService issuedcommandService = (IIssuedcommandService)ac.getBean("issuedcommandService");
 	public ParametersCmdFactory(byte[] data){
 		super(data);
 		this.expected_cmd = MONITOR_CMD_TYPE.MONITOR_CMD_COMMON_PARAMETERS;
@@ -98,8 +101,23 @@ public class ParametersCmdFactory extends CmdFactoryBase implements ICmdParser{
 	}
 	
 	private void Upload_parameters(IoSession session,byte[] data) throws Exception{
+		
+		
 		//获取session中的IP
 		String clientIP = ((InetSocketAddress)session.getRemoteAddress()).getAddress().getHostAddress();
+		//保存信号机的公共参数下发命令的数据-start-from jlj
+		String datastr = data.toString();
+		System.out.println("--------------------datastr="+datastr);
+			//根据ip查出信号机
+			Sig sig = sigService.querySigByIpAddress(clientIP);
+			Issuedcommand issuedcommand = new Issuedcommand();
+			issuedcommand.setName("公共参数");
+			issuedcommand.setDatas(datastr);
+			issuedcommand.setNumber(5);//编号5
+			issuedcommand.setSig(sig);
+			issuedcommandService.add(issuedcommand);
+		//保存信号机的公共参数下发命令的数据-end-from jlj
+		
 		//获取信号机中的数据
 		int Red_Clearance_Time	 	= data[11];
 		int Yellow_Flash_Time 		= data[12];
