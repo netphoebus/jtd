@@ -161,7 +161,7 @@ public class PhaseCmdFactory extends CmdFactoryBase implements ICmdParser{
 				
 				List<Solution> solutions = solutionService.getSolutionsBySignidOrder(sig.getId());
 				if(solutions==null||solutions.size()==0){
-					if(locatelist.size()==8){
+					if(locatelist.size()==32){
 						for (int j = 0; j < locatelist.size(); j++) {
 							Solution solution = new Solution();
 							solution.setOrderid(j);
@@ -207,7 +207,7 @@ public class PhaseCmdFactory extends CmdFactoryBase implements ICmdParser{
 						}
 					}
 				}else{
-					if(locatelist.size()==8){
+					if(locatelist.size()==32){
 						//更新数据库
 						for (int j = 0; j < locatelist.size(); j++) {
 							String soluname="相位方案"+j;
