@@ -1,6 +1,7 @@
 package protocpl;
 
 import java.net.InetSocketAddress;
+import java.util.List;
 
 import mina.CmdFactoryBase;
 import mina.CommandBase;
@@ -293,11 +294,11 @@ public class ParametersCmdFactory extends CmdFactoryBase implements ICmdParser{
 		
 		//检查公共参数表的冲突子表：若无，插入新数据；若有，修改原数据
 		if(sig!=null){
-			Greenconflict greenconflict = greenconflictService.loadBySid(sig.getId()).get(0);
-			if(greenconflict==null){
+			List<Greenconflict> greenconflicts = greenconflictService.loadBySid(sig.getId());
+			if(greenconflicts==null||greenconflicts.size()==0){
 				//新增数据
 				for (int i = 0; i < 16; i++) {
-					greenconflict = new Greenconflict();
+					Greenconflict greenconflict = new Greenconflict();
 					greenconflict.setSig(sig);
 					int j2=0;
 					for (int j = 0; j < 16; j++) {

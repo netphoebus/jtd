@@ -70,13 +70,9 @@ public class PhaseCmdFactory extends CmdFactoryBase implements ICmdParser{
 	public boolean OnAfter_Ack(IoSession session, CommandBase cmd) {
 		// TODO Auto-generated method stub
 		//this.m_oData
-		if(this.m_oData[7]==0){
-			Upload_fault(session,this.m_oData);
-		}else if(this.m_oData[7]==1){
-			Upload_parameters(session,this.m_oData);
-		}else if(this.m_oData[7]==4){
-			
-		}
+		
+		Upload_parameters(session,this.m_oData);
+	
 		return false;
 	}
 
@@ -101,7 +97,7 @@ public class PhaseCmdFactory extends CmdFactoryBase implements ICmdParser{
 	
 		ArrayList<int[][]> locatelist = new ArrayList<int[][]>();
 		
-		for(int step_i = 0;step_i<16;step_i++){
+		for(int step_i = 0;step_i<64;step_i++){
 			int locate[][] = new int[4][5];
 			for(int i=0;i<4;i++){
 		  		if((data[i*2+10+step_i*8]&0x80)>0){
@@ -152,6 +148,9 @@ public class PhaseCmdFactory extends CmdFactoryBase implements ICmdParser{
 		  		
 		  		locatelist.add(locate);
 		  	}
+			
+			System.out.println("the locatelist is "+locatelist);
+			
 			//---------------------数据库----------------------------
 			//根据ip获取对应的公共参数，保存相位方案以及步序和方向（东南西北、左直右人人）
 			//获取session中的IP
