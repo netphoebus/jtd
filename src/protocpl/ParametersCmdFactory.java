@@ -107,7 +107,7 @@ public class ParametersCmdFactory extends CmdFactoryBase implements ICmdParser{
 		String clientIP = ((InetSocketAddress)session.getRemoteAddress()).getAddress().getHostAddress();
 		//保存信号机的公共参数下发命令的数据-start-from jlj
 		String datastr = data.toString();
-		System.out.println("--------------------datastr="+datastr);
+		System.out.println("公共参数--------------------datastr="+datastr);
 			//根据ip查出信号机
 			Sig sig = sigService.querySigByIpAddress(clientIP);
 			Issuedcommand issuedcommand = new Issuedcommand();
@@ -272,10 +272,28 @@ public class ParametersCmdFactory extends CmdFactoryBase implements ICmdParser{
 		//-----------------------数据库---------------------------
 		//获取session中的IP
 		String clientIP = ((InetSocketAddress)session.getRemoteAddress()).getAddress().getHostAddress();
+		
+		//保存信号机的公共参数下发命令的数据-start-from jlj
+		String datastr = data.toString();
+		System.out.println("公共参数--------------------datastr="+datastr);
+			//根据ip查出信号机
+			Sig sig = sigService.querySigByIpAddress(clientIP);
+			Issuedcommand issuedcommand = new Issuedcommand();
+			issuedcommand.setName("公共参数");
+			issuedcommand.setDatas(datastr);
+			issuedcommand.setNumber(5);//编号5
+			issuedcommand.setSig(sig);
+			try {
+				issuedcommandService.add(issuedcommand);
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		//保存信号机的公共参数下发命令的数据-end-from jlj
+		
 		//检查公共参数表的冲突子表：若无，插入新数据；若有，修改原数据
-		Sig sig = sigService.querySigByIpAddress(clientIP);
 		if(sig!=null){
-			Greenconflict greenconflict = sig.getGreenconflicts().get(0);
+			Greenconflict greenconflict = greenconflictService.loadBySid(sig.getId()).get(0);
 			if(greenconflict==null){
 				//新增数据
 				for (int i = 0; i < 16; i++) {
