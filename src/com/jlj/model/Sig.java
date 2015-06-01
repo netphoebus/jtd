@@ -40,6 +40,7 @@ public class Sig implements java.io.Serializable {
 	private Sigsystime sigsystime;
 	private List<Greenconflict> greenconflicts = new ArrayList<Greenconflict>();
 	private List<Solution> solutions = new ArrayList<Solution>();
+	private List<Issuedcommand> issuedcommands = new ArrayList<Issuedcommand>();
 	// Constructors
 
 	/** default constructor */
@@ -51,7 +52,7 @@ public class Sig implements java.io.Serializable {
 			String lng, String ip, Long mkid,
 			Signpublicparam signpublicparam, List<Devlog> devlogs,
 			Sigsystime sigsystime,List<Greenconflict> greenconflicts,List<Commontime> commontimes,
-			List<Solution> solutions) {
+			List<Solution> solutions,List<Issuedcommand> issuedcommands) {
 		this.userarea = userarea;
 		this.name = name;
 		this.address = address;
@@ -65,6 +66,7 @@ public class Sig implements java.io.Serializable {
 		this.greenconflicts = greenconflicts;
 		this.commontimes = commontimes;
 		this.solutions = solutions;
+		this.issuedcommands = issuedcommands;
 	}
 
 	// Property accessors
@@ -194,6 +196,15 @@ public class Sig implements java.io.Serializable {
 
 	public void setSolutions(List<Solution> solutions) {
 		this.solutions = solutions;
+	}
+
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "sig")
+	public List<Issuedcommand> getIssuedcommands() {
+		return issuedcommands;
+	}
+
+	public void setIssuedcommands(List<Issuedcommand> issuedcommands) {
+		this.issuedcommands = issuedcommands;
 	}
 	
 
