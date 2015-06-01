@@ -34,7 +34,19 @@ public class SunTimeCmdFactory extends CmdFactoryBase implements ICmdParser{
 	public SunTimeCmdFactory(byte[] data) {
 		super(data);
 		// TODO Auto-generated constructor stub
-		this.expected_cmd = MONITOR_CMD_TYPE.MONITOR_CMD_COMMON_TIME;
+		this.expected_cmd = MONITOR_CMD_TYPE.MONITOR_CMD_SUN_TIME;
+	}
+	
+	@Override
+	public void Process(IoSession session, CommandBase cmd){
+		System.out.println("cmd.getCmdType() is "+cmd.getCmdType() +"this.expected_cmd is "+this.expected_cmd);
+		if(cmd.getCmdType() == this.expected_cmd)
+		{
+				
+			OnAfter_Ack(session, cmd);
+			
+		}
+		
 	}
 	
 	public int GetByeAckFlag(CommandBase cmd) {

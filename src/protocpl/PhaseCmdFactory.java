@@ -98,6 +98,8 @@ public class PhaseCmdFactory extends CmdFactoryBase implements ICmdParser{
 		
 		//data[7]  相位方案序号
 	
+		System.out.println("长度是"+data.length);
+		
 		ArrayList<int[][]> locatelist = new ArrayList<int[][]>();
 		
 		for(int step_i = 0;step_i<64;step_i++){

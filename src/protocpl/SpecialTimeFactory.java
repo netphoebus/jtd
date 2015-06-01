@@ -36,6 +36,19 @@ public class SpecialTimeFactory extends CmdFactoryBase implements ICmdParser{
 		// TODO Auto-generated constructor stub
 		this.expected_cmd = MONITOR_CMD_TYPE.MONITOR_CMD_SPECIAL_TIME;
 	}
+	
+	@Override
+	public void Process(IoSession session, CommandBase cmd){
+		System.out.println("cmd.getCmdType() is "+cmd.getCmdType() +"this.expected_cmd is "+this.expected_cmd);
+		if(cmd.getCmdType() == this.expected_cmd)
+		{
+				
+			OnAfter_Ack(session, cmd);
+			
+		}
+		
+	}
+	
 	public int GetByeAckFlag(CommandBase cmd) {
 		// TODO Auto-generated method stub
 		return 0;
