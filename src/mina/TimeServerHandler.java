@@ -109,18 +109,18 @@ public class TimeServerHandler  implements IoHandler {
 
 	public void sessionOpened(IoSession session) throws Exception {
 		// TODO Auto-generated method stub
-//		System.out.println( "opened " );  
-//			String[] cmds = cmd_diaoyue1.split(" ");
-//	        byte[] aaa = new byte[cmds.length];
-//	        int i = 0;
-//	        for (String b : cmds) {
-//	            if (b.equals("FF")) {
-//	                aaa[i++] = -1;
-//	            } else {
-//	                aaa[i++] = Integer.valueOf(b, 16).byteValue();;
-//	            }
-//	        }
-//	        session.write(IoBuffer.wrap(aaa));
+		System.out.println( "opened " );  
+			String[] cmds = cmd_diaoyue1.split(" ");
+	        byte[] aaa = new byte[cmds.length];
+	        int i = 0;
+	        for (String b : cmds) {
+	            if (b.equals("FF")) {
+	                aaa[i++] = -1;
+	            } else {
+	                aaa[i++] = Integer.valueOf(b, 16).byteValue();;
+	            }
+	        }
+	        session.write(IoBuffer.wrap(aaa));
 	        
 	}
 	
