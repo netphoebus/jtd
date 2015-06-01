@@ -13,10 +13,12 @@ import org.apache.mina.core.session.IoSession;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import com.jlj.model.Issuedcommand;
 import com.jlj.model.Road;
 import com.jlj.model.Sig;
 import com.jlj.model.Solution;
 import com.jlj.model.Step;
+import com.jlj.service.IIssuedcommandService;
 import com.jlj.service.IRoadService;
 import com.jlj.service.ISigService;
 import com.jlj.service.ISignpublicparamService;
@@ -28,6 +30,7 @@ public class PhaseCmdFactory extends CmdFactoryBase implements ICmdParser{
 	final static ISigService sigService = (ISigService)ac.getBean("sigService");
 	final static ISignpublicparamService signpublicparamService = (ISignpublicparamService)ac.getBean("signpublicparamService");
 	final static ISolutionService solutionService = (ISolutionService)ac.getBean("solutionService");
+	final static IIssuedcommandService issuedcommandService = (IIssuedcommandService)ac.getBean("issuedcommandService");
 	final static IStepService stepService = (IStepService)ac.getBean("stepService");
 	final static IRoadService roadService = (IRoadService)ac.getBean("roadService");
 	public PhaseCmdFactory(byte[] data) {
@@ -156,6 +159,32 @@ public class PhaseCmdFactory extends CmdFactoryBase implements ICmdParser{
 			//获取session中的IP
 			String clientIP = ((InetSocketAddress)session.getRemoteAddress()).getAddress().getHostAddress();
 			Sig sig =sigService.querySigByIpAddress(clientIP);
+			
+				//保存信号机的绿冲突下发命令的数据-start-from jlj
+				String datastr = data.toString();
+				System.out.println("相位方案--------------------datastr="+datastr);
+				//根据ip查出信号机，检查是否为空
+				if(sig!=null){
+					Issuedcommand issuedcommand = issuedcommandService.loadBySigid(sig.getId());
+					if(issuedcommand==null){
+						issuedcommand = new Issuedcommand();
+						issuedcommand.setName("相位方案");
+						issuedcommand.setDatas(datastr);
+						issuedcommand.setNumber(12);//编号12
+						issuedcommand.setSig(sig);
+						try {
+							issuedcommandService.add(issuedcommand);
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					}else{
+						issuedcommandService.updateObjectById(datastr,issuedcommand.getId());
+					}
+					
+				
+				}
+				//保存信号机的绿冲突下发命令的数据-end-from jlj
+			
 			if(sig!=null){
 				
 				List<Solution> solutions = solutionService.getSolutionsBySignidOrder(sig.getId());

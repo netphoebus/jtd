@@ -38,4 +38,8 @@ public interface IIssuedcommandService {
 
 	public abstract List<Issuedcommand> getAllIssuedcommands();
 
+	public abstract Issuedcommand loadBySigid(Integer id);
+
+	public abstract void updateObjectById(String datastr, Integer id);
+
 }

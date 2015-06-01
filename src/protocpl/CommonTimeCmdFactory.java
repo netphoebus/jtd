@@ -13,10 +13,12 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.jlj.model.Commontime;
+import com.jlj.model.Issuedcommand;
 import com.jlj.model.Sig;
 import com.jlj.model.Solution;
 import com.jlj.model.Step;
 import com.jlj.service.ICommontimeService;
+import com.jlj.service.IIssuedcommandService;
 import com.jlj.service.ISigService;
 import com.jlj.service.ISignpublicparamService;
 import com.jlj.service.ISolutionService;
@@ -30,6 +32,7 @@ public class CommonTimeCmdFactory extends CmdFactoryBase implements ICmdParser{
 	final static ICommontimeService commontimeService = (ICommontimeService)ac.getBean("commontimeService");
 	final static ISolutionService solutionService = (ISolutionService)ac.getBean("solutionService");
 	final static IStepService stepService = (IStepService)ac.getBean("stepService");
+	final static IIssuedcommandService issuedcommandService = (IIssuedcommandService)ac.getBean("issuedcommandService");
 	private Solution solution;
 	private Step step;
 	private List<Step> steps;
@@ -92,6 +95,34 @@ public class CommonTimeCmdFactory extends CmdFactoryBase implements ICmdParser{
 	private void Upload_CommonTimeHead(IoSession session, byte[] data,Sig sig) {
 		// TODO Auto-generated method stub
 //		ArrayList<Commontime> commtimelist = new ArrayList<Commontime>();
+		//获取session中的IP
+		String clientIP = ((InetSocketAddress)session.getRemoteAddress()).getAddress().getHostAddress();
+		//保存信号机的公共参数下发命令的数据-start-from jlj
+		String datastr = data.toString();
+		System.out.println("公共参数--------------------datastr="+datastr);
+			//根据ip查出信号机
+			if(sig!=null){
+				Issuedcommand issuedcommand = issuedcommandService.loadBySigid(sig.getId());
+				if(issuedcommand==null){
+					issuedcommand = new Issuedcommand();
+					issuedcommand.setName("公共参数");
+					issuedcommand.setDatas(datastr);
+					issuedcommand.setNumber(5);//编号5
+					issuedcommand.setSig(sig);
+					try {
+						issuedcommandService.add(issuedcommand);
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}else{
+					issuedcommandService.updateObjectById(datastr,issuedcommand.getId());
+				}
+				
+			
+			}
+			
+		//保存信号机的公共参数下发命令的数据-end-from jlj
 		if(sig!=null){
 			List<Commontime> commontimes = commontimeService.getCommontimesBySigid(sig.getId());
 			//查询是否数据库中普通参数的公共参数为空，如果为空，新插入；如果不为空，更新所有数据；
@@ -187,7 +218,35 @@ public class CommonTimeCmdFactory extends CmdFactoryBase implements ICmdParser{
 	private void Upload_CommonTimeTail(IoSession session, byte[] data,Sig sig) {
 		// TODO Auto-generated method stub
 //		ArrayList<Commontime> commtimelist = new ArrayList<Commontime>();
-		
+		//获取session中的IP
+		String clientIP = ((InetSocketAddress)session.getRemoteAddress()).getAddress().getHostAddress();
+		//保存信号机的公共参数下发命令的数据-start-from jlj
+		String datastr = data.toString();
+		System.out.println("公共参数--------------------datastr="+datastr);
+			//根据ip查出信号机
+			if(sig!=null){
+				Issuedcommand issuedcommand = issuedcommandService.loadBySigid(sig.getId());
+				if(issuedcommand==null){
+					issuedcommand = new Issuedcommand();
+					issuedcommand.setName("公共参数");
+					issuedcommand.setDatas(datastr);
+					issuedcommand.setNumber(5);//编号5
+					issuedcommand.setSig(sig);
+					try {
+						issuedcommandService.add(issuedcommand);
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}else{
+					issuedcommandService.updateObjectById(datastr,issuedcommand.getId());
+				}
+				
+			
+			}
+			
+		//保存信号机的公共参数下发命令的数据-end-from jlj
+			
 		if(sig!=null){
 			List<Commontime> commontimes = commontimeService.getCommontimesBySigid(sig.getId());
 			//查询是否数据库中该sig的公共参数为空，如果为空，新插入；如果不为空，更新所有数据；
