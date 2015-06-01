@@ -42,4 +42,6 @@ public interface IIssuedcommandService {
 
 	public abstract void updateObjectById(String datastr, Integer id);
 
+	public abstract Issuedcommand loadBySigidAndNumber(int number, Integer id);
+
 }

@@ -135,4 +135,10 @@ public class IssuedcommandServiceImp implements IIssuedcommandService  {
 		issuedcommandDao.updateByHql(queryString, paramNames, values);
 		
 	}
+	public Issuedcommand loadBySigidAndNumber(int number, Integer id) {
+		String queryString = "from Issuedcommand mo where mo.sig.id = :id and mo.number =:number";
+		String[] paramNames = new String[] { "id","number"};
+		Object[] values = new Object[] { id,number };
+		return issuedcommandDao.queryByNamedParam(queryString, paramNames, values);
+	}
 }

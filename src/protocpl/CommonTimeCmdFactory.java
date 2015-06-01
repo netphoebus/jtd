@@ -99,15 +99,15 @@ public class CommonTimeCmdFactory extends CmdFactoryBase implements ICmdParser{
 		String clientIP = ((InetSocketAddress)session.getRemoteAddress()).getAddress().getHostAddress();
 		//保存信号机的公共参数下发命令的数据-start-from jlj
 		String datastr = data.toString();
-		System.out.println("公共参数--------------------datastr="+datastr);
+		System.out.println("普通日参数1--------------------datastr="+datastr);
 			//根据ip查出信号机
 			if(sig!=null){
-				Issuedcommand issuedcommand = issuedcommandService.loadBySigid(sig.getId());
+				Issuedcommand issuedcommand = issuedcommandService.loadBySigidAndNumber(6,sig.getId());
 				if(issuedcommand==null){
 					issuedcommand = new Issuedcommand();
-					issuedcommand.setName("公共参数");
+					issuedcommand.setName("普通日参数1");
 					issuedcommand.setDatas(datastr);
-					issuedcommand.setNumber(5);//编号5
+					issuedcommand.setNumber(6);//编号6
 					issuedcommand.setSig(sig);
 					try {
 						issuedcommandService.add(issuedcommand);
@@ -222,15 +222,15 @@ public class CommonTimeCmdFactory extends CmdFactoryBase implements ICmdParser{
 		String clientIP = ((InetSocketAddress)session.getRemoteAddress()).getAddress().getHostAddress();
 		//保存信号机的公共参数下发命令的数据-start-from jlj
 		String datastr = data.toString();
-		System.out.println("公共参数--------------------datastr="+datastr);
+		System.out.println("普通日参数2--------------------datastr="+datastr);
 			//根据ip查出信号机
 			if(sig!=null){
-				Issuedcommand issuedcommand = issuedcommandService.loadBySigid(sig.getId());
+				Issuedcommand issuedcommand = issuedcommandService.loadBySigidAndNumber(7,sig.getId());
 				if(issuedcommand==null){
 					issuedcommand = new Issuedcommand();
-					issuedcommand.setName("公共参数");
+					issuedcommand.setName("普通日参数2");
 					issuedcommand.setDatas(datastr);
-					issuedcommand.setNumber(5);//编号5
+					issuedcommand.setNumber(7);//编号7
 					issuedcommand.setSig(sig);
 					try {
 						issuedcommandService.add(issuedcommand);
