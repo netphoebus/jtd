@@ -8,10 +8,20 @@ var markers = [];
 var initMarkers = [];
 var markermsg = [];
 var markerId = Date.parse(new Date());//时间做唯一标示
+var lineId = Date.parse(new Date())+1;//时间做唯一标示表示当前线的ID
 var markersJson = '';
 var user=null;
 var ips=[];
 var options = "";
+
+
+
+//绿波带
+var markerids = [];
+var dbclickable = true;
+var clickable = false;
+var dots = Array();
+
 
 google.maps.event.addDomListener(window, "load", initialize);
 
@@ -135,13 +145,44 @@ function removeClickListener() {
 //设置信号机标示的事件
 function setMarkerEvents(marker)
 {
-
-
+	 maphelper.bindInstanceEvent(marker, 'click', function(event,map,marker) {
+	 	
+	 		if(clickable)
+	 		{
+				if($.inArray( marker.id, markerids)==-1)
+				{
+					console.log(marker.id);
+					markerids.push(marker.id);
+					for(var i=0;i<initMarkers.length;i++)
+					{
+						if(initMarkers[i].id==marker.id)
+						{
+							console.log(initMarkers[i]);
+							dots.push(new Array(initMarkers[i].getPosition().kb,initMarkers[i].getPosition().jb));
+						}
+					}
+				}
+				console.log(dots);
+				var poly = maphelper.polyline({
+				dots:dots,						
+				color:"#008000",
+				weight:16,
+				opacity:0.5,
+				id:lineId
+				});
+	 			$("#total_km").empty().text((poly.getLength()/1000).toFixed(3) + "km");  
+	 		}
+		});
+		
+		
 	maphelper.bindInstanceEvent(marker, 'dblclick', function(event,map,marker) {
-					
-					window.open("sigAction!toTraffic?mkid="+marker.id,"rightFrame");
+					if(dbclickable)
+					{
+						window.open("sigAction!toTraffic?mkid="+marker.id,"rightFrame");
+					}
 	        });
 
+	/*
 	maphelper.bindInstanceEvent(marker, 'mouseover', function(event,map,marker) {
 		
 			//if(marker.isConnect&&!marker.isInitMarker)
@@ -170,7 +211,7 @@ function setMarkerEvents(marker)
 		 
 		 
 		});
-		/*
+		
 	maphelper.bindInstanceEvent(marker, 'mouseout', function(event,map,marker) {
 		 	if(getMarkerWindow)
 		 	getMarkerWindow.close();
@@ -266,7 +307,6 @@ function saveMarker(id)
 			var lat = initMarkers[i].getPosition().jb;
 			var lng = initMarkers[i].getPosition().kb;
 			
-
 			$.ajax({   
 	            url:'addOrUpdate',//这里是你的action或者servlert的路径地址   
 	            type:'post', //数据发送方式     
@@ -320,5 +360,21 @@ function deleteMarker(id)
 	}
 }
 
+
+function Polyline() {
+		alert("点击地图上的信号机");
+ 		 dbclickable = false;//双击屏蔽
+		 clickable = true;//单击启动
+}
+
+//清楚当前绿线
+function ClearPoly() {
+	maphelper.clearPoly();
+	maphelper.clearLine();
+	$("#total_km").text("");
+	dbclickable = false;//双击恢复
+	clickable = true;//单击恢复
+	
+}
 
 
