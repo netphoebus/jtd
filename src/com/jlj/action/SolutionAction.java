@@ -1,5 +1,6 @@
 package com.jlj.action;
 
+import java.net.InetSocketAddress;
 import java.util.List;
 import java.util.Map;
 
@@ -7,6 +8,9 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import mina.TimeServerHandler;
+
+import org.apache.mina.core.session.IoSession;
 import org.apache.struts2.interceptor.RequestAware;
 import org.apache.struts2.interceptor.ServletRequestAware;
 import org.apache.struts2.interceptor.ServletResponseAware;
@@ -15,6 +19,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.jlj.model.Greenconflict;
+import com.jlj.model.Road;
 import com.jlj.model.Sig;
 import com.jlj.model.Signpublicparam;
 import com.jlj.model.Solution;
@@ -272,13 +277,52 @@ public class SolutionAction extends ActionSupport implements RequestAware,
 			System.out.println("stepid="+stepid+",fangxiang="+roadtype+",dengtype="+dengtype+",deng="+deng);
 			roadService.updateByCondition(deng,dengtypestr, roadtype, stepid);
 		}
+		//下发
+		sigIp = (String) session.get("sigIp");
+		this.updateSolutionBytes(this.getCurrrenSession(sigIp));
 		
 		
-		//下发信号机  相位解决方案-from sl
 		return NONE;
 	}
 	
+	private void updateSolutionBytes(IoSession currrenSession) {
+		//下发信号机  相位解决方案-from sl
+		Solution solution = solutionService.loadById(soid);
+		int orderid = solution.getOrderid();//(int)data[7]
+		List<Step> steps = stepService.loadBySoId(soid);
+		if(steps!=null&&steps.size()==64){
+			for (int k = 0; k < steps.size(); k++) {
+				Step step1 = steps.get(k);
+				if(step1!=null){
+					List<Road> roads = roadService.loadByStepid(step1.getId());
+					for (int i = 0; i < roads.size(); i++) {
+						Road road1 = roads.get(i);
+						int leftcolor = road1.getLeftcolor();//locatelist.get(k)[a][0]
+						int linecolor = road1.getLinecolor();//locatelist.get(k)[a][1]
+						int rightcolor = road1.getRightcolor();//locatelist.get(k)[a][2]
+						int rxcolor = road1.getRxcolor();//locatelist.get(k)[a][3]
+						
+					}
+					
+				}
+			}
+		}
+		
+		//命令下发-需改
+		currrenSession.write(null);
+	}
 	
+	public IoSession getCurrrenSession(String sigIp)
+	{
+		for(IoSession session : TimeServerHandler.iosessions)
+		{
+			if(((InetSocketAddress)session.getRemoteAddress()).getAddress().getHostAddress().equals(sigIp))
+			{
+				return session;
+			}
+		}
+		return null;
+	}
 	
 	// get、set-------------------------------------------
 

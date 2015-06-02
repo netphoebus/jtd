@@ -208,20 +208,65 @@ public class SignpublicparamAction extends ActionSupport implements RequestAware
 			return "opsessiongo";
 		}
 		
-		updateSigPublicparamBytes(sigIp,getCurrrenSession(sigIp),sigpubparam);
+		updateSigPublicparamBytes(sigIp,getCurrrenSession(sigIp));
 		
 		return NONE;
 	}
 	
-	private void updateSigPublicparamBytes(String sigIp,IoSession currrenSession,
-			Signpublicparam sigpubparam) {
+	private void updateSigPublicparamBytes(String sigIp,IoSession currrenSession) {
 		Sig sig1 = sigService.querySigByIpAddress(sigIp);
 		if(sig1!=null){
 			Issuedcommand issuedcommand = issuedcommandService.loadBySigidAndNumber(5,sig1.getId());//编号5
 			if(issuedcommand!=null){
 				//更改数据库最新的命令以及发送最新下发命令
-				String datastr="";
+//				//获取信号机中的数据
+//				int Red_Clearance_Time	 	= data[11];
+//				int Yellow_Flash_Time 		= data[12];
+//				int number 					= data[13];
+//				int comparam				= data[15];
+//				int checkflow 				= data[16];
+//				int innermark				= data[17];
+//				int Workingset 				= data[18];
+//				int SigSun 					= data[19];
+//				int SigSunTime[] 			= new int[7];
+//				for (int i = 0; i < SigSunTime.length; i++) {
+//					SigSunTime[i] 			= SigSun&((int)Math.pow(2,i));
+//				}
+//				int gmintime 				= data[26];
+//				int gmaxtime 				= data[27];
+//				int zdbctime 				= data[28];
+//				int countdownmode			= data[29];
+//				int xrfxtime 				= data[42];
+//				int cycle 					= data[43];			
+//				int  xyxr 					= data[44];
+//				int SigSpecialTime[][] 		= new int[24][2];
+//				for( int j =0 ;j < 24;j++){
+//					SigSpecialTime[j][0] 	= data[58+j*2] ;
+//					SigSpecialTime[j][1] 	= data[58+j*2+1] ;
+//				}
+				String datastr=issuedcommand.getDatas();//普通参数-原始命令
+				int qchdtime = sigpubparam.getQchdtime();//清场红灯Red_Clearance_Time//data[11]
+				int kjhstime = sigpubparam.getKjhstime();//开机黄闪Yellow_Flash_Time//data[12]
+				String number = sigpubparam.getNumber();//number//data[13]
+				String comparam = sigpubparam.getComparam();//comparam//data[15]
+				int checkflow = sigpubparam.getCheckflow();//checkflow//data[16]
+				String innermark = sigpubparam.getInnermark();//innermark//data[17]
+				int workingset = sigpubparam.getWorkingset();//Workingset//data[18]
+				Integer[] days = sigpubparam.getDays();//SigSunTime[]
+				int gmintime = sigpubparam.getGmintime();//gmintime//data[26]
+				int gmaxtime = sigpubparam.getGmaxtime();//gmaxtime//data[27]
+				int zdbctime = sigpubparam.getZdbctime();//zdbctime//data[28]
+				int countdownmode = sigpubparam.getCountdownmode();//countdownmode//data[29]
+				int xrfxtime = sigpubparam.getXrfxtime();//xrfxtime//data[42]
+				int cycle = sigpubparam.getCycle();//cycle//data[43]
+				int xyxr = sigpubparam.getXyxr();//xyxr//data[44]
+				Integer[] getSpecialmonths = sigpubparam.getSpecialmonths();//SigSpecialTime[][]
+				Integer[] specialdays = sigpubparam.getSpecialdays();//SigSpecialTime[][]
+				
+				
+				//修改数据库
 				issuedcommandService.updateObjectById(datastr, issuedcommand.getId());
+				//发送下行命令-需改
 				currrenSession.write(null);
 			}
 		}

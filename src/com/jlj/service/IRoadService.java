@@ -42,4 +42,6 @@ public interface IRoadService {
 	public abstract void updateByCondition(int deng, String dengtypestr,
 			int roadtype, int stepid);
 
+	public abstract List<Road> loadByStepid(Integer id);
+
 }

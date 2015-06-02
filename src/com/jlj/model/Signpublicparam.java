@@ -937,6 +937,25 @@ public class Signpublicparam implements java.io.Serializable {
 		this.specialday23 = specialday23;
 	}
 
+	public Integer[] getSpecialdays(){
+		Integer[] specialdays = new Integer[]{this.getSpecialday0(),this.getSpecialday1(),this.getSpecialday2(),
+			this.getSpecialday3(),this.getSpecialday4(),this.getSpecialday5(),this.getSpecialday6(),this.getSpecialday7(),this.getSpecialday8(),this.getSpecialday9(),this.getSpecialday10(),
+			this.getSpecialday11(),this.getSpecialday12(),this.getSpecialday13(),this.getSpecialday14(),this.getSpecialday15(),this.getSpecialday16(),this.getSpecialday17(),this.getSpecialday18(),
+			this.getSpecialday19(),this.getSpecialday20(),this.getSpecialday21(),this.getSpecialday22(),this.getSpecialday23()};
+		return specialdays;
+	}
 	
+	public Integer[] getSpecialmonths(){
+		Integer[] specialmonths = new Integer[]{this.getSpecialmonth0(),this.getSpecialmonth1(),this.getSpecialmonth2(),
+			this.getSpecialmonth3(),this.getSpecialmonth4(),this.getSpecialmonth5(),this.getSpecialmonth6(),this.getSpecialmonth7(),this.getSpecialmonth8(),this.getSpecialmonth9(),this.getSpecialmonth10(),
+			this.getSpecialmonth11(),this.getSpecialmonth12(),this.getSpecialmonth13(),this.getSpecialmonth14(),this.getSpecialmonth15(),this.getSpecialmonth16(),this.getSpecialmonth17(),this.getSpecialmonth18(),
+			this.getSpecialmonth19(),this.getSpecialmonth20(),this.getSpecialmonth21(),this.getSpecialmonth22(),this.getSpecialmonth23()};
+		return specialmonths;
+	}
+	
+	public Integer[] getDays(){
+		Integer[] days = new Integer[]{this.getMon(),this.getTue(),this.getWes(),this.getThir(),this.getFra(),this.getSata(),this.getSun()};
+		return days;
+	}
 
 }

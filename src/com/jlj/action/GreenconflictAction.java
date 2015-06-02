@@ -1,5 +1,6 @@
 package com.jlj.action;
 
+import java.net.InetSocketAddress;
 import java.util.List;
 import java.util.Map;
 
@@ -7,6 +8,9 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import mina.TimeServerHandler;
+
+import org.apache.mina.core.session.IoSession;
 import org.apache.struts2.interceptor.RequestAware;
 import org.apache.struts2.interceptor.ServletRequestAware;
 import org.apache.struts2.interceptor.ServletResponseAware;
@@ -15,7 +19,10 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.jlj.model.Greenconflict;
+import com.jlj.model.Road;
 import com.jlj.model.Sig;
+import com.jlj.model.Solution;
+import com.jlj.model.Step;
 import com.jlj.service.IGreenconflictService;
 import com.jlj.service.ISigService;
 import com.opensymphony.xwork2.ActionSupport;
@@ -110,11 +117,32 @@ public class GreenconflictAction extends ActionSupport implements RequestAware,
 		
 		
 		//下发信号机 绿冲突表-from sl
-		
+		sigIp = (String) session.get("sigIp");
+		this.updateGreenconflictBytes(this.getCurrrenSession(sigIp));
 		
 		return NONE;
 	}
 
+	private void updateGreenconflictBytes(IoSession currrenSession) {
+		//下发信号机  绿冲突表-from sl
+		
+		//命令下发-需改
+		currrenSession.write(null);
+	}
+	
+	public IoSession getCurrrenSession(String sigIp)
+	{
+		for(IoSession session : TimeServerHandler.iosessions)
+		{
+			if(((InetSocketAddress)session.getRemoteAddress()).getAddress().getHostAddress().equals(sigIp))
+			{
+				return session;
+			}
+		}
+		return null;
+	}
+	
+	
 	// get、set-------------------------------------------
 
 	// 获得HttpServletResponse对象
