@@ -7,7 +7,7 @@ var mapClickEventListener = null;
 var markers = [];
 var initMarkers = [];
 var markermsg = [];
-var markerId = Date.parse(new Date());//时间做唯一标示
+
 var markersJson = '';
 var user=null;
 var ips=[];
@@ -20,7 +20,9 @@ var markerids = [];
 var dbclickable = true;
 var clickable = false;
 var dots = Array();
+var lineId = Date.parse(new Date());//时间做唯一标示表示当前线的ID
 
+var poly = null;
 
 google.maps.event.addDomListener(window, "load", initialize);
 
@@ -55,51 +57,16 @@ google.maps.event.addDomListener(window, "load", initialize);
 
 }
 
-//初始化select
-function addOption(){  
-
-		for(var i=0;i<ips.length;i++){   
-		  	options = options+"+<option value=" +ips[i] + ">" + ips[i] + "</option>"
-		}   
-    }  
 
 
-function reset() {
-
-    for (var i=0;i<markers.length;i++) {
-      markers[i].setMap(null);
-    }
-    markers = [];
- }
 
 function ClearPoly() {
 	maphelper.clearInstanceEvent(mapobj, 'click');//删除实例其所有事件侦听器或指定侦听器.
 }
 
-function addClickEventListener() {
-        if (!mapClickEventListener) {
-          mapClickEventListener = google.maps.event.addListener(mapobj, 'click', function (event) {
-            addMarker(event.latLng, true);
-          });
-        }
-      }
 
-	function addMarker(latlng, doQuery) {
-		  var marker =  maphelper.markerPoint({
-		  	    id:  markerId++,
-				lat: latlng.lat(),
-		        lng: latlng.lng(),
-		        title: '红绿灯',
-		        icon: "images/boot2.png"
 
-		  });
-		  marker.connectSuccess = false;
-		  marker.initOver = false;
-		  marker.name = '';
-		  marker.address = '';
-		  initSignal(marker);  
-		  initMarkers.push(marker);
-	}
+
 
 	//初始化信号机
 function initSignal(marker) {
@@ -132,6 +99,8 @@ function initSignal(marker) {
 }
 
 
+
+
 function removeClickListener() {
     if (mapClickEventListener) {
       google.maps.event.removeListener(mapClickEventListener);
@@ -142,16 +111,44 @@ function removeClickListener() {
 //设置信号机标示的事件
 function setMarkerEvents(marker)
 {
-		
-		maphelper.bindInstanceEvent(marker, 'dblclick', function(event,map,marker) {
-					if(dbclickable)
+	 maphelper.bindInstanceEvent(marker, 'click', function(event,map,marker) {
+	 		if(clickable)
+	 		{
+				if($.inArray( marker.id, markerids)==-1)
+				{
+					console.log(marker.id);
+					markerids.push(marker.id);
+					for(var i=0;i<initMarkers.length;i++)
 					{
-						window.open("sigAction!toTraffic?mkid="+marker.id,"rightFrame");
+						if(initMarkers[i].id==marker.id)
+						{
+							console.log(initMarkers[i]);
+							dots.push(new Array(initMarkers[i].getPosition().kb,initMarkers[i].getPosition().jb));
+						}
 					}
+				}
+				console.log(dots);
+				 poly = maphelper.polyline({
+						dots:dots,						
+						color:"#008000",
+						weight:16,
+						opacity:0.5,
+						id:lineId
+				});
+				
+					maphelper.bindInstanceEvent(poly, 'dblclick', function(event,map) {
+					
+					console.log("这条线被打开了");
 	        });
+									
+				
+	 			$("#total_km").empty().text((poly.getLength()/1000).toFixed(3) + "km");  
+	 		}
+		});
+		
+		
 
-	
-		maphelper.bindInstanceEvent(marker, 'mouseover', function(event,map,marker) {
+	maphelper.bindInstanceEvent(marker, 'mouseover', function(event,map,marker) {
 		
 			//if(marker.isConnect&&!marker.isInitMarker)
 			if(marker.initOver)
@@ -185,12 +182,6 @@ function setMarkerEvents(marker)
 		 	getMarkerWindow.close();
 		 });
 
-	maphelper.bindInstanceEvent(marker, 'dragend', function(event,map,marker) {
-		 	marker.setPosition(event.latLng);
-		 });
-
-
-	
 }
 
 //初始化地图所有标志
@@ -232,7 +223,6 @@ function MarkersInit()
 			    	   
 	            }  
     	    });  
-    	    addOption();//初始化select
 }
 
 
@@ -246,19 +236,6 @@ function getMarkerContent(marker)
 	'</div>' ;
 }
 
-//绑定信号机并设置基本信息
-function setMarkerContent(marker)
-{
-	
-	return '<div  id="content"><h1 id="">绑定远程信号机</h1><div id="bodyContent">'
-	+ '<div style="margin-top:10px; float:left; width:300px;">&nbsp;ip&nbsp;&nbsp;地&nbsp;&nbsp;址&nbsp;&nbsp;：<select id="ipSelect"  name="ipSelect"  style="padding-bottom:1px;border:1px solid #cfdfe4" width="25px">'
-	+options+'</select></div>' 
-	+ '<br><div style="margin-top:5px; float:left; width:300px;">信号机地址：<input id="address" value="" name="signal_address" type="text"   style="padding-bottom:1px;border:1px solid #cfdfe4"  width="25px"/></div>' 
-	+ '<br><div style="margin-top:5px; float:left; width:300px;">信号机名称：<input id="name" value="" name="signal_name" type="text"   style="padding-bottom:1px;border:1px solid #cfdfe4"  width="25px"/></div>' 
-	+ '<br><div class="maptip"><btn><a href="javascript:saveMarker('+marker.id+')" target="rightFrame" ">绑定</a></btn></div></div>'
-
-	'</div>' ;
-}
 
 
 //添加单个信号机标记
@@ -341,6 +318,38 @@ function ClearPoly() {
 	$("#total_km").text("");
 	dbclickable = false;//双击恢复
 	clickable = true;//单击恢复
+	
+}
+
+
+function saveLine()
+{
+	if(markerids.length<2)
+	{
+		alert("当前没有可保存的绿波带");
+	}else
+	{
+		console.log(poly);
+		var sids = "";
+		for(var i=0;i<markerids.length;i++)
+		{
+			sids = sids +markerids[i]+",";
+		}
+		$.ajax({   
+            url:'addLine',//这里是你的action或者servlert的路径地址   
+            type:'post', //数据发送方式     
+ 			data: { "linemid":lineId,"sids":sids},
+            error: function(msg)
+            { //失败   
+            		alert("当前绿波带保存失败"); 
+            },   
+            success: function(msg)
+            { //成功   
+					alert("当前绿波带保存成功");  
+            }  
+   	    });   
+	
+	}
 	
 }
 

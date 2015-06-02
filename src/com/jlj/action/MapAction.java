@@ -41,7 +41,7 @@ public class MapAction extends ActionSupport implements RequestAware,
 	private List<MarkerVO> initMarkers = new ArrayList<MarkerVO>();
 	private List<Sig> sigs;
 	private Sig sig;
-
+	private String sigIp;
 	/**
 	 * load加载地图
 	 * 
@@ -84,7 +84,7 @@ public class MapAction extends ActionSupport implements RequestAware,
 	 * 添加
 	 * 
 	 * @return
-	 * @throws Exception
+	 * @throws Exception信号机
 	 */
 	public String addOrUpdate() throws Exception {
 		String ip = req.getParameter("ip");
@@ -116,6 +116,18 @@ public class MapAction extends ActionSupport implements RequestAware,
 		}
 		return NONE;
 	}
+	
+	
+	//添加绿波带
+	public String addLine() throws Exception {
+		long mklid = Long.parseLong(req.getParameter("linemid"));
+		String sids = req.getParameter("sids");
+		String[] arysids = sids.split(",");
+		
+		
+		
+		return NONE;
+	}
 
 	/**
 	 * 删除
@@ -123,26 +135,18 @@ public class MapAction extends ActionSupport implements RequestAware,
 	 * @return
 	 */
 	public String delete() {
-		long mkid = Long.parseLong(req.getParameter("id"));
-		System.out.println(mkid);
-		sigs = sigService.getSigs();
-		if(sigs!=null&&sigs.size()>0)
-		{
-			for (Sig sigobj : sigs) {
-				if(sigobj.getMkid()!=null&&sigobj.getMkid()==mkid)
-				{
-					sig = sigobj;
-					sig.setMkid(null);
-					sig.setAddress(null);
-					sig.setName(null);
-					sig.setLat(null);
-					sig.setLng(null);
-					sigService.update(sig);
-					break;
-				}
-			}
+		sigIp = (String) session.get("sigIp");
+		if(sigIp==null){
+			return "opsessiongo";
 		}
-		return NONE;
+		sig = sigService.querySigByIpAddress(sigIp);
+		sig.setMkid(null);
+		sig.setAddress(null);
+		sig.setName(null);
+		sig.setLat(null);
+		sig.setLng(null);
+		sigService.update(sig);
+		return "map";
 	}
 	
 	/**
@@ -227,6 +231,16 @@ public class MapAction extends ActionSupport implements RequestAware,
 	public void setSig(Sig sig) {
 		this.sig = sig;
 	}
+
+	public String getSigIp() {
+		return sigIp;
+	}
+
+	public void setSigIp(String sigIp) {
+		this.sigIp = sigIp;
+	}
+
+	
 
 	
 }

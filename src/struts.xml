@@ -63,6 +63,12 @@
 		</action>
 	</package>
 	
+	<package name="map" extends="struts-default">
+		<action name="mapAction" class="mapAction">
+			<result name="map">/smap.jsp</result>
+		</action>
+	</package>
+	
 	<package name="sig" extends="struts-default">
 		<action name="sigAction" class="sigAction">
 			<result name="traffic">/traffic.jsp</result>
@@ -128,6 +134,7 @@
     
     <package name="map_ajax" extends="json-default">
 		<action name="addOrUpdate" class="mapAction" method="addOrUpdate"/>	
+		<action name="addLine" class="mapAction" method="addLine"/>	
 		<action name="load" class="mapAction" method="load"/>
 		<action name="delete" class="mapAction" method="delete"/>
 	</package>
