@@ -17,8 +17,10 @@ import org.apache.struts2.interceptor.SessionAware;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import com.jlj.model.Issuedcommand;
 import com.jlj.model.Sig;
 import com.jlj.model.Signpublicparam;
+import com.jlj.service.IIssuedcommandService;
 import com.jlj.service.ISigService;
 import com.jlj.service.ISignpublicparamService;
 import com.opensymphony.xwork2.ActionSupport;
@@ -36,6 +38,7 @@ public class SignpublicparamAction extends ActionSupport implements RequestAware
 	
 	private ISigService sigService;
 	private ISignpublicparamService sigpubparamService;
+	private IIssuedcommandService issuedcommandService;
 	
 	private Signpublicparam sigpubparam;
 	private Sig sig;
@@ -205,14 +208,23 @@ public class SignpublicparamAction extends ActionSupport implements RequestAware
 			return "opsessiongo";
 		}
 		
-		updateSigPublicparamBytes( getCurrrenSession(sigIp),sigpubparam);
+		updateSigPublicparamBytes(sigIp,getCurrrenSession(sigIp),sigpubparam);
 		
 		return NONE;
 	}
 	
-	private void updateSigPublicparamBytes(IoSession currrenSession,
+	private void updateSigPublicparamBytes(String sigIp,IoSession currrenSession,
 			Signpublicparam sigpubparam) {
-		
+		Sig sig1 = sigService.querySigByIpAddress(sigIp);
+		if(sig1!=null){
+			Issuedcommand issuedcommand = issuedcommandService.loadBySigidAndNumber(5,sig1.getId());//编号5
+			if(issuedcommand!=null){
+				//更改数据库最新的命令以及发送最新下发命令
+				String datastr="";
+				issuedcommandService.updateObjectById(datastr, issuedcommand.getId());
+				currrenSession.write(null);
+			}
+		}
 		
 		
 		
@@ -330,6 +342,15 @@ public class SignpublicparamAction extends ActionSupport implements RequestAware
 
 	public void setSigpubid(int sigpubid) {
 		this.sigpubid = sigpubid;
+	}
+
+	public IIssuedcommandService getIssuedcommandService() {
+		return issuedcommandService;
+	}
+
+	@Resource
+	public void setIssuedcommandService(IIssuedcommandService issuedcommandService) {
+		this.issuedcommandService = issuedcommandService;
 	}
 	
 	

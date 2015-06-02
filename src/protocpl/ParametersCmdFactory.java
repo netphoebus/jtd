@@ -1,6 +1,7 @@
 package protocpl;
 
 import java.net.InetSocketAddress;
+import java.util.List;
 
 import mina.CmdFactoryBase;
 import mina.CommandBase;
@@ -107,15 +108,25 @@ public class ParametersCmdFactory extends CmdFactoryBase implements ICmdParser{
 		String clientIP = ((InetSocketAddress)session.getRemoteAddress()).getAddress().getHostAddress();
 		//保存信号机的公共参数下发命令的数据-start-from jlj
 		String datastr = data.toString();
-		System.out.println("--------------------datastr="+datastr);
+		System.out.println("公共参数--------------------datastr="+datastr);
 			//根据ip查出信号机
 			Sig sig = sigService.querySigByIpAddress(clientIP);
-			Issuedcommand issuedcommand = new Issuedcommand();
-			issuedcommand.setName("公共参数");
-			issuedcommand.setDatas(datastr);
-			issuedcommand.setNumber(5);//编号5
-			issuedcommand.setSig(sig);
-			issuedcommandService.add(issuedcommand);
+			if(sig!=null){
+				Issuedcommand issuedcommand = issuedcommandService.loadBySigidAndNumber(5,sig.getId());
+				if(issuedcommand==null){
+					issuedcommand = new Issuedcommand();
+					issuedcommand.setName("公共参数");
+					issuedcommand.setDatas(datastr);
+					issuedcommand.setNumber(5);//编号5
+					issuedcommand.setSig(sig);
+					issuedcommandService.add(issuedcommand);
+				}else{
+					issuedcommandService.updateObjectById(datastr,issuedcommand.getId());
+				}
+				
+			
+			}
+			
 		//保存信号机的公共参数下发命令的数据-end-from jlj
 		
 		//获取信号机中的数据
@@ -272,14 +283,41 @@ public class ParametersCmdFactory extends CmdFactoryBase implements ICmdParser{
 		//-----------------------数据库---------------------------
 		//获取session中的IP
 		String clientIP = ((InetSocketAddress)session.getRemoteAddress()).getAddress().getHostAddress();
-		//检查公共参数表的冲突子表：若无，插入新数据；若有，修改原数据
-		Sig sig = sigService.querySigByIpAddress(clientIP);
+		
+		//保存信号机的绿冲突下发命令的数据-start-from jlj
+		String datastr = data.toString();
+		System.out.println("绿冲突--------------------datastr="+datastr);
+			//根据ip查出信号机
+			Sig sig = sigService.querySigByIpAddress(clientIP);
+			if(sig!=null){
+				Issuedcommand issuedcommand = issuedcommandService.loadBySigidAndNumber(35,sig.getId());
+				if(issuedcommand==null){
+					issuedcommand = new Issuedcommand();
+					issuedcommand.setName("绿冲突");
+					issuedcommand.setDatas(datastr);
+					issuedcommand.setNumber(35);//编号35
+					issuedcommand.setSig(sig);
+					try {
+						issuedcommandService.add(issuedcommand);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}else{
+					issuedcommandService.updateObjectById(datastr,issuedcommand.getId());
+				}
+				
+			
+			}
+			
+		//保存信号机的绿冲突下发命令的数据-end-from jlj
+		
+		//检查绿冲突表：若无，插入新数据；若有，修改原数据
 		if(sig!=null){
-			Greenconflict greenconflict = sig.getGreenconflicts().get(0);
-			if(greenconflict==null){
+			List<Greenconflict> greenconflicts = greenconflictService.loadBySid(sig.getId());
+			if(greenconflicts==null||greenconflicts.size()==0){
 				//新增数据
 				for (int i = 0; i < 16; i++) {
-					greenconflict = new Greenconflict();
+					Greenconflict greenconflict = new Greenconflict();
 					greenconflict.setSig(sig);
 					int j2=0;
 					for (int j = 0; j < 16; j++) {

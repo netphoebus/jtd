@@ -13,10 +13,12 @@ import org.apache.mina.core.session.IoSession;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import com.jlj.model.Issuedcommand;
 import com.jlj.model.Road;
 import com.jlj.model.Sig;
 import com.jlj.model.Solution;
 import com.jlj.model.Step;
+import com.jlj.service.IIssuedcommandService;
 import com.jlj.service.IRoadService;
 import com.jlj.service.ISigService;
 import com.jlj.service.ISignpublicparamService;
@@ -28,6 +30,7 @@ public class PhaseCmdFactory extends CmdFactoryBase implements ICmdParser{
 	final static ISigService sigService = (ISigService)ac.getBean("sigService");
 	final static ISignpublicparamService signpublicparamService = (ISignpublicparamService)ac.getBean("signpublicparamService");
 	final static ISolutionService solutionService = (ISolutionService)ac.getBean("solutionService");
+	final static IIssuedcommandService issuedcommandService = (IIssuedcommandService)ac.getBean("issuedcommandService");
 	final static IStepService stepService = (IStepService)ac.getBean("stepService");
 	final static IRoadService roadService = (IRoadService)ac.getBean("roadService");
 	public PhaseCmdFactory(byte[] data) {
@@ -70,13 +73,9 @@ public class PhaseCmdFactory extends CmdFactoryBase implements ICmdParser{
 	public boolean OnAfter_Ack(IoSession session, CommandBase cmd) {
 		// TODO Auto-generated method stub
 		//this.m_oData
-		if(this.m_oData[7]==0){
-			Upload_fault(session,this.m_oData);
-		}else if(this.m_oData[7]==1){
-			Upload_parameters(session,this.m_oData);
-		}else if(this.m_oData[7]==4){
-			
-		}
+		
+		Upload_parameters(session,this.m_oData);
+	
 		return false;
 	}
 
@@ -99,9 +98,11 @@ public class PhaseCmdFactory extends CmdFactoryBase implements ICmdParser{
 		
 		//data[7]  相位方案序号
 	
+		System.out.println("长度是"+data.length);
+		
 		ArrayList<int[][]> locatelist = new ArrayList<int[][]>();
 		
-		for(int step_i = 0;step_i<16;step_i++){
+		for(int step_i = 0;step_i<64;step_i++){
 			int locate[][] = new int[4][5];
 			for(int i=0;i<4;i++){
 		  		if((data[i*2+10+step_i*8]&0x80)>0){
@@ -152,34 +153,62 @@ public class PhaseCmdFactory extends CmdFactoryBase implements ICmdParser{
 		  		
 		  		locatelist.add(locate);
 		  	}
+			
+			System.out.println("the locatelist is "+locatelist);
+			
 			//---------------------数据库----------------------------
 			//根据ip获取对应的公共参数，保存相位方案以及步序和方向（东南西北、左直右人人）
 			//获取session中的IP
 			String clientIP = ((InetSocketAddress)session.getRemoteAddress()).getAddress().getHostAddress();
 			Sig sig =sigService.querySigByIpAddress(clientIP);
+			
+				//保存信号机的绿冲突下发命令的数据-start-from jlj
+				String datastr = data.toString();
+				System.out.println("相位方案--------------------datastr="+datastr);
+				//根据ip查出信号机，检查是否为空
+				if(sig!=null){
+					Issuedcommand issuedcommand = issuedcommandService.loadBySigidAndNumber(12,sig.getId());
+					if(issuedcommand==null){
+						issuedcommand = new Issuedcommand();
+						issuedcommand.setName("相位方案");
+						issuedcommand.setDatas(datastr);
+						issuedcommand.setNumber(12);//编号12
+						issuedcommand.setSig(sig);
+						try {
+							issuedcommandService.add(issuedcommand);
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					}else{
+						issuedcommandService.updateObjectById(datastr,issuedcommand.getId());
+					}
+					
+				
+				}
+				//保存信号机的绿冲突下发命令的数据-end-from jlj
+			
 			if(sig!=null){
 				
 				List<Solution> solutions = solutionService.getSolutionsBySignidOrder(sig.getId());
 				if(solutions==null||solutions.size()==0){
-					if(locatelist.size()==8){
-						for (int j = 0; j < locatelist.size(); j++) {
-							Solution solution = new Solution();
-							solution.setOrderid(j);
-							solution.setSig(sig);
-							solution.setSoluname("相位方案"+j);
-							try {
-								solutionService.add(solution);
-							} catch (Exception e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
-							//保存该相位方案的所有相位步序
-							for (int k = 0; k < 16; k++) {
+					if(locatelist.size()==64){
+						Solution solution = new Solution();
+						solution.setOrderid(0);//?
+						solution.setSig(sig);
+						solution.setSoluname("相位方案");//?
+						try {
+							solutionService.add(solution);
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+							
+							//保存该相位方案的所有相位和步序
+							for (int k = 0; k < 64; k++) {
 								Step step = new Step();
 								step.setOrderid(k);
 								step.setPhasename("相位"+k/2);
 								step.setStepname("步序"+k);
-		//						step.setSecond(second);//秒
 								step.setSolution(solution);
 								try {
 									stepService.add(step);
@@ -190,10 +219,10 @@ public class PhaseCmdFactory extends CmdFactoryBase implements ICmdParser{
 								//保存该相位步序下的所有方向
 								for (int a = 0; a < 4; a++) {
 									Road road = new Road();
-									road.setLeftcolor(locatelist.get(j)[a][0]);
-									road.setLinecolor(locatelist.get(j)[a][1]);
-									road.setRightcolor(locatelist.get(j)[a][2]);
-									road.setRxcolor(locatelist.get(j)[a][3]);
+									road.setLeftcolor(locatelist.get(k)[a][0]);
+									road.setLinecolor(locatelist.get(k)[a][1]);
+									road.setRightcolor(locatelist.get(k)[a][2]);
+									road.setRxcolor(locatelist.get(k)[a][3]);
 									road.setRoadtype(a);
 									road.setStep(step);
 									try {
@@ -203,24 +232,20 @@ public class PhaseCmdFactory extends CmdFactoryBase implements ICmdParser{
 										e.printStackTrace();
 									}
 								}
-							}
 						}
 					}
 				}else{
-					if(locatelist.size()==8){
+					if(locatelist.size()==64){
 						//更新数据库
-						for (int j = 0; j < locatelist.size(); j++) {
-							String soluname="相位方案"+j;
-							Solution solution = solutions.get(j);
-							int soluid=0;
-							if(solution!=null){
-								soluid=solutions.get(j).getId();
+							String soluname="相位方案";//?
+							int soluid = 0;
+							if(solutions!=null&&solutions.size()>0){
+								soluid = solutions.get(0).getId();
 							}
-							
 							solutionService.updateBySoluid(soluname,soluid);
 							
 							//保存该相位方案的所有相位步序
-							for (int k = 0; k < 16; k++) {
+							for (int k = 0; k < 64; k++) {
 								int orderid=k;
 								String phasename="相位"+k/2;
 								String stepname="步序"+k;
@@ -230,17 +255,16 @@ public class PhaseCmdFactory extends CmdFactoryBase implements ICmdParser{
 								
 								//保存该相位步序下的所有方向
 								for (int a = 0; a < 4; a++) {
-									int leftcolor=locatelist.get(j)[a][0];
-									int linecolor=locatelist.get(j)[a][1];
-									int rightcolor=locatelist.get(j)[a][2];
-									int rxcolor=locatelist.get(j)[a][3];
+									int leftcolor=locatelist.get(k)[a][0];
+									int linecolor=locatelist.get(k)[a][1];
+									int rightcolor=locatelist.get(k)[a][2];
+									int rxcolor=locatelist.get(k)[a][3];
 									int roadtype=a;
 									roadService.updateByRoadid(leftcolor,linecolor,rightcolor,rxcolor,roadtype,step.getId());
 								}
 							}
 							
 						}
-					}
 				}
 			}
 //			for(int road_i = 0;road_i<4 ; road_i++){
