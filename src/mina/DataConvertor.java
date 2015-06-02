@@ -146,6 +146,8 @@ public static int str2hexfun(String str){
 		return lValue;
 	}
 	
+	
+	
 	public static String toString(final byte[] data){
 	
 		if(null == data)

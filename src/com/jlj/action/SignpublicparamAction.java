@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import mina.DataConvertor;
 import mina.TimeServerHandler;
 
 import org.apache.mina.core.session.IoSession;
@@ -245,6 +246,10 @@ public class SignpublicparamAction extends ActionSupport implements RequestAware
 //					SigSpecialTime[j][1] 	= data[58+j*2+1] ;
 //				}
 				String datastr=issuedcommand.getDatas();//普通参数-原始命令
+				
+				System.out.println("the  data str is"+DataConvertor.bytesToHexString(DataConvertor.toByteArray(datastr)));
+				byte[] msendDatas = datastr.getBytes();
+				
 				int qchdtime = sigpubparam.getQchdtime();//清场红灯Red_Clearance_Time//data[11]
 				int kjhstime = sigpubparam.getKjhstime();//开机黄闪Yellow_Flash_Time//data[12]
 				String number = sigpubparam.getNumber();//number//data[13]
@@ -252,6 +257,7 @@ public class SignpublicparamAction extends ActionSupport implements RequestAware
 				int checkflow = sigpubparam.getCheckflow();//checkflow//data[16]
 				String innermark = sigpubparam.getInnermark();//innermark//data[17]
 				int workingset = sigpubparam.getWorkingset();//Workingset//data[18]
+				
 				Integer[] days = sigpubparam.getDays();//SigSunTime[]
 				int gmintime = sigpubparam.getGmintime();//gmintime//data[26]
 				int gmaxtime = sigpubparam.getGmaxtime();//gmaxtime//data[27]
@@ -264,8 +270,36 @@ public class SignpublicparamAction extends ActionSupport implements RequestAware
 				Integer[] specialdays = sigpubparam.getSpecialdays();//SigSpecialTime[][]
 				
 				
+				msendDatas[11] = (byte)qchdtime;
+				msendDatas[12] = (byte)kjhstime;
+				msendDatas[13] = Byte.parseByte(number, 16);
+				msendDatas[15] = Byte.parseByte(comparam, 16);
+				msendDatas[16] = (byte)checkflow;
+				msendDatas[17] = Byte.parseByte(innermark, 16);
+				msendDatas[17] = (byte)workingset;
+				for (int i = 0; i < 7; i++) {
+					msendDatas[18] |= days[i]<<(6-i);
+				}
+				
+				msendDatas[26] = (byte) gmintime;
+				msendDatas[27] = (byte) gmaxtime;
+				msendDatas[28] = (byte) zdbctime;
+				msendDatas[29] = (byte) countdownmode;
+				msendDatas[30] = (byte) xrfxtime;
+				msendDatas[31] = (byte) cycle;
+				msendDatas[32] = (byte) xyxr;
+				
+				for( int j =0 ;j < 24;j++){
+					msendDatas[58+j*2]   =	getSpecialmonths[j].byteValue();
+					msendDatas[58+j*2+1] = specialdays[j].byteValue() ;
+				}
+				
+				String s = msendDatas + "";
+				
+				System.out.println("the  send str is"+DataConvertor.bytesToHexString(DataConvertor.toByteArray(s)));
+				
 				//修改数据库
-				issuedcommandService.updateObjectById(datastr, issuedcommand.getId());
+				//issuedcommandService.updateObjectById(datastr, issuedcommand.getId());
 				//发送下行命令-需改
 				currrenSession.write(null);
 			}
