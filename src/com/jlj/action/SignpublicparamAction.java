@@ -218,8 +218,6 @@ public class SignpublicparamAction extends ActionSupport implements RequestAware
 		if(sig1!=null){
 			Issuedcommand issuedcommand = issuedcommandService.loadBySigidAndNumber(5,sig1.getId());//编号5
 			if(issuedcommand!=null){
-				//更改数据库最新的命令以及发送最新下发命令
-//				//获取信号机中的数据
 //				int Red_Clearance_Time	 	= data[11];
 //				int Yellow_Flash_Time 		= data[12];
 //				int number 					= data[13];
@@ -244,7 +242,7 @@ public class SignpublicparamAction extends ActionSupport implements RequestAware
 //					SigSpecialTime[j][0] 	= data[58+j*2] ;
 //					SigSpecialTime[j][1] 	= data[58+j*2+1] ;
 //				}
-				String datastr=issuedcommand.getDatas();//普通参数-原始命令
+				//0-获取新数据
 				int qchdtime = sigpubparam.getQchdtime();//清场红灯Red_Clearance_Time//data[11]
 				int kjhstime = sigpubparam.getKjhstime();//开机黄闪Yellow_Flash_Time//data[12]
 				String number = sigpubparam.getNumber();//number//data[13]
@@ -263,10 +261,15 @@ public class SignpublicparamAction extends ActionSupport implements RequestAware
 				Integer[] getSpecialmonths = sigpubparam.getSpecialmonths();//SigSpecialTime[][]
 				Integer[] specialdays = sigpubparam.getSpecialdays();//SigSpecialTime[][]
 				
+				//1-获取数据库中保存的命令
+				String datastr=issuedcommand.getDatas();//普通参数-原始命令
+				System.out.println("datastr="+datastr);
 				
-				//修改数据库
-				issuedcommandService.updateObjectById(datastr, issuedcommand.getId());
-				//发送下行命令-需改
+				//2-获取的新数据，包装成新命令，并修改数据库“命令表issuedCommand”-from jlj
+				String newdatastr = "";
+				issuedcommandService.updateObjectById(newdatastr, issuedcommand.getId());
+				
+				//3-命令下发-需改-from sl
 				currrenSession.write(null);
 			}
 		}

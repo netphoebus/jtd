@@ -141,4 +141,10 @@ public class IssuedcommandServiceImp implements IIssuedcommandService  {
 		Object[] values = new Object[] { id,number };
 		return issuedcommandDao.queryByNamedParam(queryString, paramNames, values);
 	}
+	public Issuedcommand loadBySigipAndNumber(String sigIp,Integer number) {
+		String queryString = "from Issuedcommand mo where mo.sig.ip = :ip and mo.number =:number";
+		String[] paramNames = new String[] { "sigIp","number"};
+		Object[] values = new Object[] { sigIp,number };
+		return issuedcommandDao.queryByNamedParam(queryString, paramNames, values);
+	}
 }

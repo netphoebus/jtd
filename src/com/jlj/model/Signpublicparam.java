@@ -12,6 +12,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 /**
  * Signpublicparam entity.
@@ -937,6 +938,7 @@ public class Signpublicparam implements java.io.Serializable {
 		this.specialday23 = specialday23;
 	}
 
+	@Transient
 	public Integer[] getSpecialdays(){
 		Integer[] specialdays = new Integer[]{this.getSpecialday0(),this.getSpecialday1(),this.getSpecialday2(),
 			this.getSpecialday3(),this.getSpecialday4(),this.getSpecialday5(),this.getSpecialday6(),this.getSpecialday7(),this.getSpecialday8(),this.getSpecialday9(),this.getSpecialday10(),
@@ -945,6 +947,7 @@ public class Signpublicparam implements java.io.Serializable {
 		return specialdays;
 	}
 	
+	@Transient
 	public Integer[] getSpecialmonths(){
 		Integer[] specialmonths = new Integer[]{this.getSpecialmonth0(),this.getSpecialmonth1(),this.getSpecialmonth2(),
 			this.getSpecialmonth3(),this.getSpecialmonth4(),this.getSpecialmonth5(),this.getSpecialmonth6(),this.getSpecialmonth7(),this.getSpecialmonth8(),this.getSpecialmonth9(),this.getSpecialmonth10(),
@@ -953,6 +956,7 @@ public class Signpublicparam implements java.io.Serializable {
 		return specialmonths;
 	}
 	
+	@Transient
 	public Integer[] getDays(){
 		Integer[] days = new Integer[]{this.getMon(),this.getTue(),this.getWes(),this.getThir(),this.getFra(),this.getSata(),this.getSun()};
 		return days;

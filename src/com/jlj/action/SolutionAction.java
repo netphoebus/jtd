@@ -19,12 +19,14 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.jlj.model.Greenconflict;
+import com.jlj.model.Issuedcommand;
 import com.jlj.model.Road;
 import com.jlj.model.Sig;
 import com.jlj.model.Signpublicparam;
 import com.jlj.model.Solution;
 import com.jlj.model.Step;
 import com.jlj.service.IGreenconflictService;
+import com.jlj.service.IIssuedcommandService;
 import com.jlj.service.IRoadService;
 import com.jlj.service.ISigService;
 import com.jlj.service.ISignpublicparamService;
@@ -50,6 +52,7 @@ public class SolutionAction extends ActionSupport implements RequestAware,
 	private IStepService stepService;
 	private IRoadService roadService;
 	private IGreenconflictService greenService;
+	private IIssuedcommandService issuedcommandService;
 	
 	private List<Solution> solutions;
 	private List<Step> steps;
@@ -286,7 +289,8 @@ public class SolutionAction extends ActionSupport implements RequestAware,
 	}
 	
 	private void updateSolutionBytes(IoSession currrenSession) {
-		//下发信号机  相位解决方案-from sl
+		//下发信号机-相位方案
+		//0-获取所有新数据
 		Solution solution = solutionService.loadById(soid);
 		int orderid = solution.getOrderid();//(int)data[7]
 		List<Step> steps = stepService.loadBySoId(soid);
@@ -307,8 +311,18 @@ public class SolutionAction extends ActionSupport implements RequestAware,
 				}
 			}
 		}
+		//1-获取数据库中保存的命令
+		Issuedcommand issued1 = issuedcommandService.loadBySigipAndNumber(sigIp,12);//根据sigip和number确定唯一命令
+		String datastr1 ="";
+		if(issued1!=null){
+			datastr1 = issued1.getDatas();
+		}
+		System.out.println("datastr1="+datastr1);
 		
-		//命令下发-需改
+		//2-获取的新数据，包装成新命令，并修改数据库“命令表issuedCommand”-from jlj
+		
+		
+		//3-命令下发-需改-from sl
 		currrenSession.write(null);
 	}
 	
@@ -478,6 +492,15 @@ public class SolutionAction extends ActionSupport implements RequestAware,
 
 	public void setSigIp(String sigIp) {
 		this.sigIp = sigIp;
+	}
+
+	public IIssuedcommandService getIssuedcommandService() {
+		return issuedcommandService;
+	}
+
+	@Resource
+	public void setIssuedcommandService(IIssuedcommandService issuedcommandService) {
+		this.issuedcommandService = issuedcommandService;
 	}
 
 	
