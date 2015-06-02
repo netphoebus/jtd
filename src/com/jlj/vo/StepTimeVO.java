@@ -2,13 +2,14 @@ package com.jlj.vo;
 
 public class StepTimeVO {
 	
-	private int stepId;
+	private String stepname;
 	private int second;
-	public int getStepId() {
-		return stepId;
+	
+	public String getStepname() {
+		return stepname;
 	}
-	public void setStepId(int stepId) {
-		this.stepId = stepId;
+	public void setStepname(String stepname) {
+		this.stepname = stepname;
 	}
 	public int getSecond() {
 		return second;

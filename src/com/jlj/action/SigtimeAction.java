@@ -101,63 +101,81 @@ public class SigtimeAction extends ActionSupport implements RequestAware,
 		// TODO Auto-generated method stub
 		for (int i = 0; i < steps.size(); i++) {
 			StepTimeVO steptime = new StepTimeVO();
-			steptime.setStepId(steps.get(i).getId());
 			switch (i) {
 			case 0:
+				steptime.setStepname("0");
 				steptime.setSecond(commontime.getT0());
 				break;
 			case 1:
+				steptime.setStepname("0");
 				steptime.setSecond(commontime.getT1());
 				break;
 			case 2:
+				steptime.setStepname("0");
 				steptime.setSecond(commontime.getT2());
 				break;
 			case 3:
+				steptime.setStepname("0");
 				steptime.setSecond(commontime.getT3());
 				break;
 			case 4:
+				steptime.setStepname("0");
 				steptime.setSecond(commontime.getT4());
 				break;
 			case 5:
+				steptime.setStepname("0");
 				steptime.setSecond(commontime.getT5());
 				break;
 			case 6:
+				steptime.setStepname("0");
 				steptime.setSecond(commontime.getT6());
 				break;
 			case 7:
+				steptime.setStepname("0");
 				steptime.setSecond(commontime.getT7());
 				break;
 			case 8:
+				steptime.setStepname("0");
 				steptime.setSecond(commontime.getT8());
 				break;
 			case 9:
+				steptime.setStepname("0");
 				steptime.setSecond(commontime.getT9());
 				break;
 			case 10:
+				steptime.setStepname("0");
 				steptime.setSecond(commontime.getT10());
 				break;
 			case 11:
+				steptime.setStepname("0");
 				steptime.setSecond(commontime.getT11());
 				break;
 			case 12:
+				steptime.setStepname("0");
 				steptime.setSecond(commontime.getT12());
 				break;
 			case 13:
+				steptime.setStepname("0");
 				steptime.setSecond(commontime.getT13());
 				break;
 			case 14:
+				steptime.setStepname("0");
 				steptime.setSecond(commontime.getT14());
 				break;
 			case 15:
+				steptime.setStepname("0");
 				steptime.setSecond(commontime.getT15());
 				break;
 			case 16:
+				steptime.setStepname("0");
 				steptime.setSecond(commontime.getT16());
 				break;
 			case 17:
+				steptime.setStepname("0");
 				steptime.setSecond(commontime.getT17());
 				break;
 			case 18:
+				steptime.setStepname("0");
 				steptime.setSecond(commontime.getT18());
 				break;
 			case 19:

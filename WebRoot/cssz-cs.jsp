@@ -109,6 +109,18 @@ $(document).ready(function(e) {
 						<div style="width: 30%; padding-top: 15px; padding-bottom: 15px; float: left;">
 							<s:hidden name="sigpubparam.id"></s:hidden>
 							<s:hidden name="sigpubparam.ip"></s:hidden>
+							<s:hidden name="sigpubparam.number"></s:hidden>
+							<s:hidden name="sigpubparam.comparam"></s:hidden>
+							<s:hidden name="sigpubparam.checkflow"></s:hidden>
+							<s:hidden name="sigpubparam.innermark"></s:hidden>
+							<s:hidden name="sigpubparam.paramversion"></s:hidden>
+							<s:hidden name="sigpubparam.countdownmode"></s:hidden>
+							<s:hidden name="sigpubparam.jgkz"></s:hidden>
+							<s:hidden name="sigpubparam.centerport"></s:hidden>
+							<s:hidden name="sigpubparam.centerip"></s:hidden>
+							<s:hidden name="sigpubparam.checklight"></s:hidden>
+							<s:hidden name="sigpubparam.sbnetmastk"></s:hidden>
+							<s:hidden name="sigpubparam.gateway"></s:hidden>
 							<div class="csbox">
 								开机黄闪：
 								<!-- 
