@@ -193,9 +193,9 @@ public class PhaseCmdFactory extends CmdFactoryBase implements ICmdParser{
 				if(solutions==null||solutions.size()==0){
 					if(locatelist.size()==64){
 						Solution solution = new Solution();
-						solution.setOrderid(0);//?
+						solution.setOrderid((int)data[7]);//?
 						solution.setSig(sig);
-						solution.setSoluname("相位方案");//?
+						solution.setSoluname("相位方案"+data[7]);//?
 						try {
 							solutionService.add(solution);
 						} catch (Exception e) {
@@ -237,7 +237,7 @@ public class PhaseCmdFactory extends CmdFactoryBase implements ICmdParser{
 				}else{
 					if(locatelist.size()==64){
 						//更新数据库
-							String soluname="相位方案";//?
+							String soluname="相位方案"+data[7];//?
 							int soluid = 0;
 							if(solutions!=null&&solutions.size()>0){
 								soluid = solutions.get(0).getId();
