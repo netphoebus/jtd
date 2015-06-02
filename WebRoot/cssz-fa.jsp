@@ -265,7 +265,7 @@ $(document).ready(function(e) {
 
 					<div class="xwbtn" >
 								<ul class="toolbar">
-									<li onclick="saveSolution()" style="height: 36px;width: 150px;">
+									<li onclick="saveSolution(${})" style="height: 36px;width: 150px;">
 										<span><img src="images/note-2.png" alt="" /> </span>保存相位方案
 									</li>
 								</ul>

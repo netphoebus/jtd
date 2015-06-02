@@ -26,6 +26,7 @@ import com.jlj.service.ISignpublicparamService;
 import com.jlj.service.ISolutionService;
 import com.jlj.service.IStepService;
 import com.jlj.vo.CommontimeVO;
+import com.jlj.vo.StepTimeVO;
 import com.opensymphony.xwork2.ActionSupport;
 
 @Component("sigtimeAction")
@@ -49,6 +50,7 @@ public class SigtimeAction extends ActionSupport implements RequestAware,
 	private List<CommontimeVO> commontimeVOs;
 	private List<Solution> solutions;
 	private List<Step> steps;
+	private List<StepTimeVO> steptimes;
 
 	private Sig sig;
 	private Commontime commontime;
@@ -61,28 +63,138 @@ public class SigtimeAction extends ActionSupport implements RequestAware,
 
 	public String sigtimes() {
 		sigIp = (String) session.get("sigIp");
-		if(sigIp==null){
+		if (sigIp == null) {
 			return "opsessiongo";
 		}
 		setURLParameter();
 		sig = sigService.querySigByIpAddress(sigIp);
-		if(sig!=null)
-		{
-			commontimes = commontimeService.getCommontimesBySigAndTimetype(sig.getId(),
-					timetype);// 直接获得当前所有时间段
+		if (sig != null) {
+			commontimes = commontimeService.getCommontimesBySigAndTimetype(sig
+					.getId(), timetype);// 直接获得当前所有时间段
 			// 查询当前信号机中所有的相位方案
-//			publicparam = publicparamService.getPublicparamByIp(sigIp);
+			// publicparam = publicparamService.getPublicparamByIp(sigIp);
 			solutions = solutionService.getSolutionsBySignidOrder(sig.getId());
 		}
 		if (commontimes.size() > 0) {
+
 			setCommontimeVOs(commontimes);
-			getCurrentCommontime();
-			getCurrentSolution();
+			commontime = getCurrentCommontime();
+			steps = getCurrentSolution();
+			setCurrentSteptimes(commontime, steps);
 
 			session.put("sigIp", sigIp);// 从地图中进入信号机，将信号机id传入session
 			return "cssz-time";
 		} else {
 			return "error";// 预留没有查询到相应公共参数时跳转的提示页面
+		}
+	}
+
+	private void setCurrentSteptimes(Commontime commontime, List<Step> steps) {
+		// TODO Auto-generated method stub
+		for (int i = 0; i < steps.size(); i++) {
+			StepTimeVO steptime = new StepTimeVO();
+			steptime.setStepId(steps.get(i).getId());
+			switch (i) {
+			case 0:
+				steptime.setSecond(commontime.getT0());
+				break;
+			case 1:
+				steptime.setSecond(commontime.getT1());
+				break;
+			case 2:
+				steptime.setSecond(commontime.getT2());
+				break;
+			case 3:
+				steptime.setSecond(commontime.getT3());
+				break;
+			case 4:
+				steptime.setSecond(commontime.getT4());
+				break;
+			case 5:
+				steptime.setSecond(commontime.getT5());
+				break;
+			case 6:
+				steptime.setSecond(commontime.getT6());
+				break;
+			case 7:
+				steptime.setSecond(commontime.getT7());
+				break;
+			case 8:
+				steptime.setSecond(commontime.getT8());
+				break;
+			case 9:
+				steptime.setSecond(commontime.getT9());
+				break;
+			case 10:
+				steptime.setSecond(commontime.getT10());
+				break;
+			case 11:
+				steptime.setSecond(commontime.getT11());
+				break;
+			case 12:
+				steptime.setSecond(commontime.getT12());
+				break;
+			case 13:
+				steptime.setSecond(commontime.getT13());
+				break;
+			case 14:
+				steptime.setSecond(commontime.getT14());
+				break;
+			case 15:
+				steptime.setSecond(commontime.getT15());
+				break;
+			case 16:
+				steptime.setSecond(commontime.getT16());
+				break;
+			case 17:
+				steptime.setSecond(commontime.getT17());
+				break;
+			case 18:
+				steptime.setSecond(commontime.getT18());
+				break;
+			case 19:
+				steptime.setSecond(commontime.getT19());
+				break;
+			case 20:
+				steptime.setSecond(commontime.getT20());
+				break;
+			case 21:
+				steptime.setSecond(commontime.getT21());
+				break;
+			case 22:
+				steptime.setSecond(commontime.getT22());
+				break;
+			case 23:
+				steptime.setSecond(commontime.getT23());
+				break;
+			case 24:
+				steptime.setSecond(commontime.getT24());
+				break;
+			case 25:
+				steptime.setSecond(commontime.getT25());
+				break;
+			case 26:
+				steptime.setSecond(commontime.getT26());
+				break;
+			case 27:
+				steptime.setSecond(commontime.getT27());
+				break;
+			case 28:
+				steptime.setSecond(commontime.getT28());
+				break;
+			case 29:
+				steptime.setSecond(commontime.getT29());
+				break;
+			case 30:
+				steptime.setSecond(commontime.getT30());
+				break;
+			case 31:
+				steptime.setSecond(commontime.getT31());
+				break;
+			default:
+				break;
+			}
+			steptimes.add(steptime);
 		}
 	}
 
@@ -115,22 +227,25 @@ public class SigtimeAction extends ActionSupport implements RequestAware,
 		return commontimeVOs;
 	}
 
-	public void getCurrentCommontime() {
+	public Commontime getCurrentCommontime() {
 		// 获得当前时间段参数
 		if (timeid == 0) {
 			commontime = commontimes.get(0);
 		} else {
 			commontime = commontimeService.loadById(timeid);
 		}
+		return commontime;
 	}
 
-	public void getCurrentSolution() {
+	public List<Step> getCurrentSolution() {
 		if (soid == 0) {
-			solution = solutionService.loadById(commontime.getWorkingprogram() + 1);// 相位方案0对应数据库中的id=1
+			solution = solutionService
+					.loadById(commontime.getWorkingprogram() + 1);// 相位方案0对应数据库中的id=1
 		} else {
 			solution = solutionService.loadById(soid);
 		}
-		steps = stepService.loadBySoId(solution.getId());
+		return steps = stepService.loadBySoId(solution.getId());
+
 	}
 
 	/**
@@ -159,31 +274,26 @@ public class SigtimeAction extends ActionSupport implements RequestAware,
 	 * @return
 	 */
 	public String update() throws Exception {
-		System.out.println("----------------------------update commontime------------------------------");
-		//修改数据库
+		System.out
+				.println("----------------------------update commontime------------------------------");
+		// 修改数据库
 		commontimeService.update(commontime);
-		//下发信号机  时间段参数 -from sl
-		
-		
-		
-		
+		// 下发信号机 时间段参数 -from sl
+
 		return NONE;
 	}
-	
+
 	public String updateStepTimes() throws Exception {
 		System.out.println("================");
 		String map = req.getParameter("dates");
-		//需要插入数据库 解析 map-from jlj
+		timeid = Integer.parseInt(req.getParameter("timeid"));
+		// 需要插入数据库 解析 map-from jlj
 		System.out.println(map);
 		/**
-		 * map数组元素解释说明
-		 * 50: 0[解释 id_步序: 执行时间]
+		 * map数组元素解释说明 50: 0[解释 id_步序: 执行时间]
 		 */
-		//修改数据库中commontime中的时间t0-t31中的字段值-from jlj
-		
-		
-		//下发信号机  步序执行时间  -from sl
-		
+		// 修改数据库中commontime中的时间t0-t31中的字段值-from jlj
+		// 下发信号机 步序执行时间 -from sl
 		return NONE;
 	}
 
@@ -354,5 +464,13 @@ public class SigtimeAction extends ActionSupport implements RequestAware,
 	public void setSigIp(String sigIp) {
 		this.sigIp = sigIp;
 	}
-	
+
+	public List<StepTimeVO> getSteptimes() {
+		return steptimes;
+	}
+
+	public void setSteptimes(List<StepTimeVO> steptimes) {
+		this.steptimes = steptimes;
+	}
+
 }

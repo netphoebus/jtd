@@ -51,7 +51,6 @@ $(document).ready(function(e) {
 
 	<body>
 
-
 		<div class="formbody">
 
 		
@@ -69,7 +68,6 @@ $(document).ready(function(e) {
 						</li>
 					</ul>
 				</div>
-
 	
 				<div id="tab2" class="tabson">
 					<ul class="forminfo">
@@ -225,7 +223,7 @@ $(document).ready(function(e) {
 						</div>
 						<div class="csright">
 							<div class="xwlb">
-							<s:iterator value="steps" var="step" status="status">
+							<s:iterator value="steptimes" var="step" status="status">
 									<!--单个相位图li开始 -->
 								<li>
 									<!--相位图开始 -->

@@ -234,6 +234,7 @@ public class SolutionAction extends ActionSupport implements RequestAware,
 	public String update() throws Exception {
 		System.out.println("================");
 		String map = req.getParameter("dates");
+		soid =  Integer.parseInt(req.getParameter("soid"));
 		//需要插入数据库 解析 map-from jlj
 		System.out.println(map);
 		/**

@@ -347,7 +347,7 @@ function saveSolution()
 {
 	console.log(updateFang);
 	var msg = "";
-	
+	var currentsoid = $("#solutions").val();
 	for(var prop in updateFang){
     if(updateFang.hasOwnProperty(prop)){
         console.log('key is ' + prop +' and value is' + updateFang[prop]);
@@ -358,7 +358,7 @@ function saveSolution()
 		$.ajax({   
             url:'updateSolution',//这里是你的action或者servlert的路径地址   
             type:'post', //数据发送方式  
-            data: { "dates":msg},  
+            data: { "dates":msg,"soid":currentsoid},  
             traditional: true,  
             error: function(msg)
             { //失败   
