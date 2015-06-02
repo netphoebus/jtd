@@ -12,6 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 /**
  * Commontime entity.
@@ -493,6 +494,13 @@ public class Commontime implements java.io.Serializable {
 		this.t31 = t31;
 	}
 
-	
+	@Transient
+	public Integer[] getTimes(){
+		Integer[] times = new Integer[]{this.getT0(),this.getT1(),this.getT2(),this.getT3(),this.getT4(),this.getT5(),this.getT6(),this.getT7(),this.getT8(),this.getT9(),
+				this.getT10(),this.getT11(),this.getT12(),this.getT13(),this.getT14(),this.getT15(),this.getT16(),this.getT17(),this.getT18(),this.getT19(),
+				this.getT20(),this.getT21(),this.getT22(),this.getT23(),this.getT24(),this.getT25(),this.getT26(),this.getT27(),this.getT28(),this.getT29(),
+				this.getT30(),this.getT31()};
+		return times;
+	}
 
 }

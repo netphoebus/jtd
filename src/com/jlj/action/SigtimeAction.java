@@ -1,5 +1,6 @@
 package com.jlj.action;
 
+import java.net.InetSocketAddress;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -8,6 +9,9 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import mina.TimeServerHandler;
+
+import org.apache.mina.core.session.IoSession;
 import org.apache.struts2.interceptor.RequestAware;
 import org.apache.struts2.interceptor.ServletRequestAware;
 import org.apache.struts2.interceptor.ServletResponseAware;
@@ -16,11 +20,14 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.jlj.model.Commontime;
+import com.jlj.model.Issuedcommand;
+import com.jlj.model.Road;
 import com.jlj.model.Sig;
 import com.jlj.model.Signpublicparam;
 import com.jlj.model.Solution;
 import com.jlj.model.Step;
 import com.jlj.service.ICommontimeService;
+import com.jlj.service.IIssuedcommandService;
 import com.jlj.service.ISigService;
 import com.jlj.service.ISignpublicparamService;
 import com.jlj.service.ISolutionService;
@@ -45,6 +52,7 @@ public class SigtimeAction extends ActionSupport implements RequestAware,
 	private ISolutionService solutionService;
 	private ISignpublicparamService publicparamService;
 	private IStepService stepService;
+	private IIssuedcommandService issuedcommandService;
 
 	private List<Commontime> commontimes;
 	private List<CommontimeVO> commontimeVOs;
@@ -278,8 +286,10 @@ public class SigtimeAction extends ActionSupport implements RequestAware,
 				.println("----------------------------update commontime------------------------------");
 		// 修改数据库
 		commontimeService.update(commontime);
-		// 下发信号机 时间段参数 -from sl
-
+		// 下发信号机 时间段参数
+		sigIp = (String) session.get("sigIp");
+		this.updateCommonTimeBytes(this.getCurrrenSession(sigIp));
+		
 		return NONE;
 	}
 
@@ -293,10 +303,64 @@ public class SigtimeAction extends ActionSupport implements RequestAware,
 		 * map数组元素解释说明 50: 0[解释 id_步序: 执行时间]
 		 */
 		// 修改数据库中commontime中的时间t0-t31中的字段值-from jlj
-		// 下发信号机 步序执行时间 -from sl
+		
+		// 下发信号机 步序执行时间
+		sigIp = (String) session.get("sigIp");
+		this.updateCommonTimeBytes(this.getCurrrenSession(sigIp));
 		return NONE;
 	}
 
+	
+	private void updateCommonTimeBytes(IoSession currrenSession) {
+		//下发信号机  commontime参数
+		if(timeid!=0){
+			commontime = commontimeService.loadById(timeid);
+		}
+		//0-获取新数据
+		int i = commontime.getOrderid();//修改的循环当中的序号head是0-8;tail是8-16
+		int hour = commontime.getHour();//(int)data[10+i*40]
+		int minute = commontime.getMinute();//(int)data[11+i*40]
+		int seconds = commontime.getSeconds();//(int)data[12+i*40]
+		int workingway = commontime.getWorkingway();//(int)data[13+i*40]
+		int workingprogram = commontime.getWorkingprogram();//(int)data[14+i*40]
+		int lstime = commontime.getLstime();//(int)data[15+i*40]
+		int hdtime = commontime.getHdtime();//(int)data[16+i*40]
+		int qchdtime = commontime.getQchdtime();//(int)data[17+i*40]
+		Integer[] worktime = commontime.getTimes();//worktime[]
+		
+		//1-获取数据库中保存的命令
+		Issuedcommand issued1 = issuedcommandService.loadBySigipAndNumber(sigIp,6);//根据sigip和number确定唯一命令
+		Issuedcommand issued2 = issuedcommandService.loadBySigipAndNumber(sigIp,7);
+		String datastr1 ="";
+		String datastr2 ="";
+		if(issued1!=null){
+			datastr1 = issued1.getDatas();
+		}
+		if(issued2!=null){
+			datastr2 = issued2.getDatas();
+		}
+		System.out.println("datastr1="+datastr1+"\ndatastr2="+datastr2);
+		
+		
+		//2-获取的新数据，包装成新命令，并修改数据库“命令表issuedCommand”-from jlj
+		
+		
+		//3-命令下发-需改-from sl
+		currrenSession.write(null);
+	}
+	
+	public IoSession getCurrrenSession(String sigIp)
+	{
+		for(IoSession session : TimeServerHandler.iosessions)
+		{
+			if(((InetSocketAddress)session.getRemoteAddress()).getAddress().getHostAddress().equals(sigIp))
+			{
+				return session;
+			}
+		}
+		return null;
+	}
+	
 	// get、set-------------------------------------------
 
 	// 获得HttpServletResponse对象
@@ -471,6 +535,15 @@ public class SigtimeAction extends ActionSupport implements RequestAware,
 
 	public void setSteptimes(List<StepTimeVO> steptimes) {
 		this.steptimes = steptimes;
+	}
+
+	public IIssuedcommandService getIssuedcommandService() {
+		return issuedcommandService;
+	}
+
+	@Resource
+	public void setIssuedcommandService(IIssuedcommandService issuedcommandService) {
+		this.issuedcommandService = issuedcommandService;
 	}
 
 }

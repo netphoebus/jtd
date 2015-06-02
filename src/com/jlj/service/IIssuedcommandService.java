@@ -44,4 +44,7 @@ public interface IIssuedcommandService {
 
 	public abstract Issuedcommand loadBySigidAndNumber(int number, Integer id);
 
+	public abstract Issuedcommand loadBySigipAndNumber(
+			String sigIp,Integer number);
+
 }

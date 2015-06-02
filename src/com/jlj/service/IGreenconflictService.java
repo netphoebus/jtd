@@ -38,4 +38,6 @@ public interface IGreenconflictService {
 
 	public abstract void updateGreenByCondition(int isct, String name, int gid);
 
+	public abstract List<Greenconflict> getGreensByIpAddress(String sigIp);
+
 }

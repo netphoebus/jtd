@@ -19,11 +19,13 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.jlj.model.Greenconflict;
+import com.jlj.model.Issuedcommand;
 import com.jlj.model.Road;
 import com.jlj.model.Sig;
 import com.jlj.model.Solution;
 import com.jlj.model.Step;
 import com.jlj.service.IGreenconflictService;
+import com.jlj.service.IIssuedcommandService;
 import com.jlj.service.ISigService;
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -40,6 +42,7 @@ public class GreenconflictAction extends ActionSupport implements RequestAware,
 	
 	private IGreenconflictService greenService;
 	private ISigService sigService;
+	private IIssuedcommandService issuedcommandService;
 	
 	private List<Greenconflict> greens;
 
@@ -116,17 +119,50 @@ public class GreenconflictAction extends ActionSupport implements RequestAware,
 		
 		
 		
-		//下发信号机 绿冲突表-from sl
+		//下发
 		sigIp = (String) session.get("sigIp");
-		this.updateGreenconflictBytes(this.getCurrrenSession(sigIp));
+		this.updateGreenconflictBytes(sigIp,this.getCurrrenSession(sigIp));
 		
 		return NONE;
 	}
 
-	private void updateGreenconflictBytes(IoSession currrenSession) {
-		//下发信号机  绿冲突表-from sl
+	private void updateGreenconflictBytes(String sigIp,IoSession currrenSession) {
+		//下发信号机-绿冲突表
+		List<Greenconflict> greens = greenService.getGreensByIpAddress(sigIp);
+		if(greens!=null&&greens.size()==16){
+			for (int i = 0; i < greens.size(); i++) {
+				Greenconflict green1 = greens.get(i);
+				int l00=green1.getL00();//conflict[i][0];
+				int l01=green1.getL00();//conflict[i][1];
+				int l02=green1.getL00();//conflict[i][2];
+				int l03=green1.getL00();//conflict[i][3];
+				int l10=green1.getL00();//conflict[i][4];
+				int l11=green1.getL00();//conflict[i][5];
+				int l12=green1.getL00();//conflict[i][6];
+				int l13=green1.getL00();//conflict[i][7];
+				int l20=green1.getL00();//conflict[i][8];
+				int l21=green1.getL00();//conflict[i][9];
+				int l22=green1.getL00();//conflict[i][10];
+				int l23=green1.getL00();//conflict[i][11];
+				int l30=green1.getL00();//conflict[i][12];
+				int l31=green1.getL00();//conflict[i][13];
+				int l32=green1.getL00();//conflict[i][14];
+				int l33=green1.getL00();//conflict[i][15];
+			}
+		}
+		//1-获取数据库中保存的命令
+		Issuedcommand issued1 = issuedcommandService.loadBySigipAndNumber(sigIp,35);//根据sigip和number确定唯一命令
+		String datastr1 ="";
+		if(issued1!=null){
+			datastr1 = issued1.getDatas();
+		}
+		System.out.println("datastr1="+datastr1);
 		
-		//命令下发-需改
+		
+		//2-获取的新数据，包装成新命令，并修改数据库“命令表issuedCommand”-from jlj
+		
+		
+		//3-命令下发-需改-from sl
 		currrenSession.write(null);
 	}
 	
@@ -207,6 +243,13 @@ public class GreenconflictAction extends ActionSupport implements RequestAware,
 	}
 	public void setSigIp(String sigIp) {
 		this.sigIp = sigIp;
+	}
+	public IIssuedcommandService getIssuedcommandService() {
+		return issuedcommandService;
+	}
+	@Resource
+	public void setIssuedcommandService(IIssuedcommandService issuedcommandService) {
+		this.issuedcommandService = issuedcommandService;
 	}
 	
 	
