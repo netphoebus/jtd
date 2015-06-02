@@ -42,6 +42,7 @@ public class MapAction extends ActionSupport implements RequestAware,
 	private List<Sig> sigs;
 	private Sig sig;
 	private String sigIp;
+	
 	/**
 	 * load加载地图
 	 * 
@@ -49,6 +50,44 @@ public class MapAction extends ActionSupport implements RequestAware,
 	 * @throws Exception
 	 */
 	public String load() throws Exception {
+		System.out.println("---------------1");
+		sigs = sigService.getAllSigs();
+		System.out.println("---------------2");
+		if(sigs!=null&&sigs.size()>0)
+		{
+			for (Sig sig : sigs) {
+				MarkerVO markervo = new MarkerVO();
+				markervo.setId(sig.getMkid());
+				markervo.setAddress(sig.getAddress());
+				markervo.setIp(sig.getIp());
+				markervo.setLat(sig.getLat());
+				markervo.setLng(sig.getLng());
+				markervo.setName(sig.getName());
+				initMarkers.add(markervo);
+			}
+			JSONArray jsonArr = JSONArray.fromObject(initMarkers);
+
+			PrintWriter out;
+			try {
+				response.setContentType("text/html;charset=UTF-8");
+				out = response.getWriter();
+				out.print(jsonArr.toString());
+				out.flush();
+				out.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		return NONE;
+	}
+	
+	/**
+	 * 加载绿波带
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
+	public String loadLines() throws Exception {
 		System.out.println("---------------1");
 		sigs = sigService.getAllSigs();
 		System.out.println("---------------2");
@@ -123,8 +162,6 @@ public class MapAction extends ActionSupport implements RequestAware,
 		long mklid = Long.parseLong(req.getParameter("linemid"));
 		String sids = req.getParameter("sids");
 		String[] arysids = sids.split(",");
-		
-		
 		
 		return NONE;
 	}

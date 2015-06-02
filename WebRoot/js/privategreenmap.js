@@ -52,7 +52,7 @@ google.maps.event.addDomListener(window, "load", initialize);
     mapobj = maphelper.initMap(mapCanvas, myOptions);
 	
 	MarkersInit();
-
+	GreenLinesInit();
 	//google.maps.event.addListener(mapobj, "rightclick", reset);
 
 }
@@ -224,6 +224,49 @@ function MarkersInit()
 	            }  
     	    });  
 }
+
+
+//初始化地图所有标志
+function GreenLinesInit()
+{
+		$.ajax({   
+	            url:'loadLines',//这里是你的action或者servlert的路径地址   
+	            type:'post', //数据发送方式   
+	            dataType:'json', 
+	            async:false,
+	            error: function(msg)
+	            { //失败   
+	            	console.log('post失败');   
+	            },   
+	            success: function(msg)
+	            { //成功
+	            		encodeURI(msg);
+	            		
+	            	 	markermsg = msg;
+	            	 	for(var i=0;i<markermsg.length;i++)
+			    	    {
+			    	    	ips.push(markermsg[i].ip);
+				    	     var marker =  maphelper.markerPoint({
+						  	    id:  markermsg[i].id,
+								lat: markermsg[i].lat,
+						        lng: markermsg[i].lng,
+						        title: '红绿灯',
+						        icon: "images/boot2.png"
+				
+						 	 });
+						  marker.connectSuccess = true;
+						  marker.initOver = true;
+						  marker.ip = markermsg[i].ip;
+						  marker.name = markermsg[i].name;
+						  marker.address = markermsg[i].address;
+						  setMarkerEvents(marker);
+						  initMarkers.push(marker);
+			    	    } 	   
+			    	   
+	            }  
+    	    });  
+}
+
 
 
 //获得信号机基本信息
