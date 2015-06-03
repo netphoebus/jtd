@@ -1,5 +1,7 @@
 package mina;
 
+import java.io.ByteArrayOutputStream;
+
 import org.apache.mina.core.buffer.IoBuffer;
 
 
@@ -85,6 +87,25 @@ public static int str2hexfun(String str){
 		
 		return data;
 	}
+	
+	   public static byte[] decode(String bytes, int j)
+		{
+		 
+		 
+		 byte[] res = new byte[j];
+		 
+		 
+		//将每2位16进制整数组装成一个字节
+		String hexString="0123456789abcdef";
+		
+		
+		 for(int i=0;i<j;i++){
+			 		 
+		 res[i] = (byte) (hexString.indexOf(bytes.charAt(i*2))<<4 | hexString.indexOf(bytes.charAt(i*2+1)));
+		 
+		 }
+		return res;
+		}
 	
 	public static long toLong(byte [] data, boolean bLittleEndian)
 	{

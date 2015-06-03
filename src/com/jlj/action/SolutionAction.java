@@ -8,6 +8,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import mina.DataConvertor;
 import mina.TimeServerHandler;
 
 import org.apache.mina.core.session.IoSession;
@@ -289,10 +290,25 @@ public class SolutionAction extends ActionSupport implements RequestAware,
 	}
 	
 	private void updateSolutionBytes(IoSession currrenSession) {
+		
 		//下发信号机-相位方案
 		//0-获取所有新数据
+		System.out.println("================updateSolutionBytes");
 		Solution solution = solutionService.loadById(soid);
 		int orderid = solution.getOrderid();//(int)data[7]
+		byte[] msendDatas = new byte[524];
+		//1-获取数据库中保存的命令
+		Issuedcommand issued1 = issuedcommandService.loadBySigipAndNumber(sigIp,12+orderid);//根据sigip和number确定唯一命令
+		String datastr1 ="";
+		if(issued1!=null){
+			datastr1 = issued1.getDatas();
+			msendDatas = DataConvertor.decode(datastr1,datastr1.length());
+			msendDatas[6] = (byte) 0x86;
+			msendDatas[7] = (byte) orderid;
+
+		}
+		
+		System.out.println("================updateSolutionBytes222222222222");
 		List<Step> steps = stepService.loadBySoId(soid);
 		if(steps!=null&&steps.size()==64){
 			for (int k = 0; k < steps.size(); k++) {
@@ -305,18 +321,102 @@ public class SolutionAction extends ActionSupport implements RequestAware,
 						int linecolor = road1.getLinecolor();//locatelist.get(k)[a][1]
 						int rightcolor = road1.getRightcolor();//locatelist.get(k)[a][2]
 						int rxcolor = road1.getRxcolor();//locatelist.get(k)[a][3]
+						msendDatas[i*2+10+k*8] = 0;
+						msendDatas[i*2+11+k*8] = 0;
+						switch(leftcolor){
+							case 0:
+									
+								break;
+							case 1:
+								msendDatas[i*2+10+k*8] |= 1<<5;
+								break;
+							case 2:
+								msendDatas[i*2+10+k*8] |= 1<<6;
+								break;
+							case 3:
+								msendDatas[i*2+10+k*8] |= 1<<7;
+								break;
+								
+							}
 						
+						switch(linecolor){
+						case 0:
+								
+							break;
+						case 1:
+							msendDatas[i*2+10+k*8] |= 1<<2;
+							break;
+						case 2:
+							msendDatas[i*2+10+k*8] |= 1<<3;
+							break;
+						case 3:
+							msendDatas[i*2+10+k*8] |= 1<<4;
+							break;
+							
+						}
+						
+						switch(rightcolor){
+						case 0:
+								
+							break;
+						case 1:
+							msendDatas[i*2+11+k*8] |= 1<<5;
+							break;
+						case 2:
+							msendDatas[i*2+11+k*8] |= 1<<6;
+							break;
+						case 3:
+							msendDatas[i*2+11+k*8] |= 1<<7;
+							break;
+							
+						}
+						
+						switch(rxcolor){
+						case 0:
+								
+							break;
+						case 1:
+							msendDatas[i*2+11+k*8] |= 1<<3;
+							break;
+						case 2:
+						
+							break;
+						case 3:
+							msendDatas[i*2+11+k*8] |= 1<<4;
+							break;
+							
+						}
+						
+						switch(rxcolor){
+						case 0:
+								
+							break;
+						case 1:
+							msendDatas[i*2+11+k*8] |= 1<<1;
+							break;
+						case 2:
+						
+							break;
+						case 3:
+							msendDatas[i*2+11+k*8] |= 1<<2;
+							break;
+							
+						}
 					}
 					
 				}
 			}
 		}
-		//1-获取数据库中保存的命令
-		Issuedcommand issued1 = issuedcommandService.loadBySigipAndNumber(sigIp,12);//根据sigip和number确定唯一命令
-		String datastr1 ="";
-		if(issued1!=null){
-			datastr1 = issued1.getDatas();
+		
+		System.out.println("===============================================================");
+		
+		for (int i = 0; i < msendDatas.length; i++) {
+			System.out.print(msendDatas[i]);
 		}
+		System.out.println();
+		System.out.println("===============================================================");
+		
+	
 		System.out.println("datastr1="+datastr1);
 		
 		//2-获取的新数据，包装成新命令，并修改数据库“命令表issuedCommand”-from jlj

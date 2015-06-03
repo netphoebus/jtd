@@ -356,7 +356,7 @@ function saveSolution()
 	}
 	console.log(msg);
 		$.ajax({   
-            url:'updateSolution',//这里是你的action或者servlert的路径地址   
+            url:'update',//这里是你的action或者servlert的路径地址   
             type:'post', //数据发送方式  
             data: { "dates":msg,"soid":currentsoid},  
             traditional: true,  

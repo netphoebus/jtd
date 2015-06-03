@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import mina.DataConvertor;
 import mina.TimeServerHandler;
 
+import org.apache.mina.core.buffer.IoBuffer;
 import org.apache.mina.core.session.IoSession;
 import org.apache.struts2.interceptor.RequestAware;
 import org.apache.struts2.interceptor.ServletRequestAware;
@@ -210,7 +211,7 @@ public class SignpublicparamAction extends ActionSupport implements RequestAware
 		}
 		
 		updateSigPublicparamBytes(sigIp,getCurrrenSession(sigIp));
-		sigpubparamService.update(sigpubparam);//修改
+		//sigpubparamService.update(sigpubparam);//修改
 		return NONE;
 	}
 	
@@ -264,20 +265,21 @@ public class SignpublicparamAction extends ActionSupport implements RequestAware
 				Integer[] specialdays = sigpubparam.getSpecialdays();//SigSpecialTime[][]
 				
 				//1-获取数据库中保存的命令
-				String datastr=issuedcommand.getDatas();//普通参数-原始命令
+				String datastr= issuedcommand.getDatas();//普通参数-原始命令
 				System.out.println("datastr="+datastr);
 				
 				//2-获取的新数据，包装成新命令，并修改数据库“命令表issuedCommand”-from jlj
-				System.out.println("the  data str is"+DataConvertor.bytesToHexString(DataConvertor.toByteArray(datastr)));
-				byte[] msendDatas = datastr.getBytes();
 				
+				byte[] msendDatas = DataConvertor.decode(datastr,140);
 				
+				msendDatas[6] = (byte) 0x82;
+				msendDatas[7] = (byte) 0x01;
 				msendDatas[11] = (byte)qchdtime;
 				msendDatas[12] = (byte)kjhstime;
 				msendDatas[13] = Byte.parseByte(number, 16);
 				msendDatas[15] = Byte.parseByte(comparam, 16);
 				msendDatas[16] = (byte)checkflow;
-				msendDatas[17] = Byte.parseByte(innermark, 16);
+				//msendDatas[17] = Byte.parseByte(innermark, 16);
 				msendDatas[17] = (byte)workingset;
 				for (int i = 0; i < 7; i++) {
 					msendDatas[18] |= days[i]<<(6-i);
@@ -295,15 +297,22 @@ public class SignpublicparamAction extends ActionSupport implements RequestAware
 					msendDatas[58+j*2]   =	getSpecialmonths[j].byteValue();
 					msendDatas[58+j*2+1] = specialdays[j].byteValue() ;
 				}
+//				
+//				System.out.println("===============================================================");
+//				
+//				for (int i = 0; i < msendDatas.length; i++) {
+//					System.out.print(msendDatas[i]);
+//				}
+//				
+//				System.out.println("===============================================================");
+				//String s = msendDatas + "";
 				
-				String s = msendDatas + "";
+				System.out.println("the  send str is"+DataConvertor.bytesToHexString(msendDatas));
 				
-				System.out.println("the  send str is"+DataConvertor.bytesToHexString(DataConvertor.toByteArray(s)));
-				
-				String newdatastr = "";
+				String newdatastr = DataConvertor.toHexString(msendDatas);
 				issuedcommandService.updateObjectById(newdatastr, issuedcommand.getId());
 				//3-命令下发-需改-from sl
-				currrenSession.write(null);
+				currrenSession.write(IoBuffer.wrap(msendDatas));
 			}
 		}
 		
