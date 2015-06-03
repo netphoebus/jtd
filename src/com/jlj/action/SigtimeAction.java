@@ -347,8 +347,12 @@ public class SigtimeAction extends ActionSupport implements RequestAware,
 		Integer[] worktime = commontime.getTimes();//worktime[]
 		
 		//1-获取数据库中保存的命令
-		Issuedcommand issued1 = issuedcommandService.loadBySigipAndNumber(sigIp,6);//根据sigip和number确定唯一命令
-		Issuedcommand issued2 = issuedcommandService.loadBySigipAndNumber(sigIp,7);
+		Sig sig1 = sigService.querySigByIpAddress(sigIp);
+		if(sig1==null){
+			return;
+		}
+		Issuedcommand issued1 = issuedcommandService.loadBySigidAndNumber(sig1.getId(),6);//根据sigip和number确定唯一命令
+		Issuedcommand issued2 = issuedcommandService.loadBySigidAndNumber(sig1.getId(),7);
 		String datastr1 ="";
 		String datastr2 ="";
 		if(issued1!=null){

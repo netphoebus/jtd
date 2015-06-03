@@ -151,7 +151,11 @@ public class GreenconflictAction extends ActionSupport implements RequestAware,
 			}
 		}
 		//1-获取数据库中保存的命令
-		Issuedcommand issued1 = issuedcommandService.loadBySigipAndNumber(sigIp,35);//根据sigip和number确定唯一命令
+		Sig sig1 = sigService.querySigByIpAddress(sigIp);
+		if(sig1==null){
+			return;
+		}
+		Issuedcommand issued1 = issuedcommandService.loadBySigidAndNumber(sig1.getId(),35);//根据sigip和number确定唯一命令
 		String datastr1 ="";
 		if(issued1!=null){
 			datastr1 = issued1.getDatas();
