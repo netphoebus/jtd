@@ -18,6 +18,16 @@ public class DataConvertor {
        
     }
 	
+	 public static byte[] shortToBytes(short num) {  
+	       byte[] b = new byte[2];  
+	         
+	       for (int i = 0; i < 2; i++) {  
+	           b[i] = (byte) (num >>> (i * 8));  
+	       }  
+	         
+	       return b;  
+	    }  
+	
 public static int str2hexfun(String str){
 	  	
 	  	if(str.equals("a")){

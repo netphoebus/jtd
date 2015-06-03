@@ -297,14 +297,27 @@ public class SignpublicparamAction extends ActionSupport implements RequestAware
 					msendDatas[58+j*2]   =	getSpecialmonths[j].byteValue();
 					msendDatas[58+j*2+1] = specialdays[j].byteValue() ;
 				}
-//				
-//				System.out.println("===============================================================");
-//				
-//				for (int i = 0; i < msendDatas.length; i++) {
-//					System.out.print(msendDatas[i]);
-//				}
-//				
-//				System.out.println("===============================================================");
+				
+				 int k = 0;
+				 for( int i = 4; i < msendDatas.length-2; i++){
+					 //System.out.println((msendDatas[i]&0xFF)+"对应"+msendDatas[i]);
+					//System.out.println();
+				  k += msendDatas[i]&0xFF;
+				 }
+				 
+			 
+		         
+			       for (int i = 0; i < 2; i++) {  
+			    	   msendDatas[msendDatas.length-i-1]  = (byte) (k >>> (i * 8));  
+			       }  
+				
+				System.out.println("===============================================================");
+				
+				for (int i = 0; i < msendDatas.length; i++) {
+					System.out.print(msendDatas[i]);
+				}
+				
+				System.out.println("===============================================================");
 				//String s = msendDatas + "";
 				
 				System.out.println("the  send str is"+DataConvertor.bytesToHexString(msendDatas));
@@ -320,6 +333,8 @@ public class SignpublicparamAction extends ActionSupport implements RequestAware
 		
 	}
 
+	
+	
 	public IoSession getCurrrenSession(String sigIp)
 	{
 		for(IoSession session : TimeServerHandler.iosessions)
