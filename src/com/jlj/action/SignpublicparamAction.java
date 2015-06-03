@@ -200,7 +200,7 @@ public class SignpublicparamAction extends ActionSupport implements RequestAware
 		System.out.println(suntimeable);
 		System.out.println(spetimeable);
 		setPublicParamJSP();
-		sigpubparamService.update(sigpubparam);//修改
+		
 		
 		
 		//下发信号机公共参数-from sl
@@ -210,7 +210,7 @@ public class SignpublicparamAction extends ActionSupport implements RequestAware
 		}
 		
 		updateSigPublicparamBytes(sigIp,getCurrrenSession(sigIp));
-		
+		sigpubparamService.update(sigpubparam);//修改
 		return NONE;
 	}
 	
