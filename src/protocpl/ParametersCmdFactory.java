@@ -5,6 +5,7 @@ import java.util.List;
 
 import mina.CmdFactoryBase;
 import mina.CommandBase;
+import mina.DataConvertor;
 import mina.ICmdParser;
 
 import org.apache.mina.core.buffer.IoBuffer;
@@ -107,7 +108,7 @@ public class ParametersCmdFactory extends CmdFactoryBase implements ICmdParser{
 		//获取session中的IP
 		String clientIP = ((InetSocketAddress)session.getRemoteAddress()).getAddress().getHostAddress();
 		//保存信号机的公共参数下发命令的数据-start-from jlj
-		String datastr = data.toString();
+		String datastr = DataConvertor.toHexString(data);
 		System.out.println("公共参数--------------------datastr="+datastr);
 			//根据ip查出信号机
 			Sig sig = sigService.querySigByIpAddress(clientIP);
@@ -285,7 +286,7 @@ public class ParametersCmdFactory extends CmdFactoryBase implements ICmdParser{
 		String clientIP = ((InetSocketAddress)session.getRemoteAddress()).getAddress().getHostAddress();
 		
 		//保存信号机的绿冲突下发命令的数据-start-from jlj
-		String datastr = data.toString();
+		String datastr = DataConvertor.toHexString(data);
 		System.out.println("绿冲突--------------------datastr="+datastr);
 			//根据ip查出信号机
 			Sig sig = sigService.querySigByIpAddress(clientIP);

@@ -20,6 +20,7 @@ import com.jlj.service.IStepService;
 
 import mina.CmdFactoryBase;
 import mina.CommandBase;
+import mina.DataConvertor;
 import mina.ICmdParser;
 import mina.CmdFactoryBase.MONITOR_CMD_TYPE;
 
@@ -86,7 +87,7 @@ public class SunTimeCmdFactory extends CmdFactoryBase implements ICmdParser{
 		Sig sig = sigService.querySigByIpAddress(clientIP);
 		
 		//保存信号机的公共参数下发命令的数据-start-from jlj
-		String datastr = data.toString();
+		String datastr = DataConvertor.toHexString(data);
 		System.out.println("周日参数1--------------------datastr="+datastr);
 			//根据ip查出信号机
 			if(sig!=null){
@@ -198,7 +199,7 @@ public class SunTimeCmdFactory extends CmdFactoryBase implements ICmdParser{
 		Sig sig = sigService.querySigByIpAddress(clientIP);
 		
 		//保存信号机的公共参数下发命令的数据-start-from jlj
-		String datastr = data.toString();
+		String datastr = DataConvertor.toHexString(data);
 		System.out.println("周日参数2--------------------datastr="+datastr);
 			//根据ip查出信号机
 			if(sig!=null){

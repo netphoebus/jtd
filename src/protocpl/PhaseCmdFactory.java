@@ -6,6 +6,7 @@ import java.util.List;
 
 import mina.CmdFactoryBase;
 import mina.CommandBase;
+import mina.DataConvertor;
 import mina.ICmdParser;
 
 import org.apache.mina.core.buffer.IoBuffer;
@@ -163,7 +164,7 @@ public class PhaseCmdFactory extends CmdFactoryBase implements ICmdParser{
 			Sig sig =sigService.querySigByIpAddress(clientIP);
 			
 				//保存信号机的绿冲突下发命令的数据-start-from jlj
-				String datastr = data.toString();
+				String datastr = DataConvertor.toHexString(data);
 				System.out.println("相位方案--------------------datastr="+datastr);
 				//根据ip查出信号机，检查是否为空
 				if(sig!=null){
