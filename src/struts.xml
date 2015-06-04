@@ -134,9 +134,15 @@
     
     <package name="map_ajax" extends="json-default">
 		<action name="addOrUpdate" class="mapAction" method="addOrUpdate"/>	
-		<action name="addLine" class="mapAction" method="addLine"/>	
+		<action name="addOrUpdateLine" class="mapAction" method="addOrUpdateLine"/>	
 		<action name="load" class="mapAction" method="load"/>
 		<action name="delete" class="mapAction" method="delete"/>
+	</package>
+	
+	
+	<package name="greenmap_ajax" extends="json-default">
+		<action name="addOrUpdateLine" class="greenroadAction" method="addOrUpdateLine"/>	
+		<action name="loadLines" class="greenroadAction" method="loadLines"/>	
 	</package>
 	
      <package name="sig_ajax" extends="json-default">

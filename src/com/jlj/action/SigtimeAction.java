@@ -99,6 +99,7 @@ public class SigtimeAction extends ActionSupport implements RequestAware,
 
 	private void setCurrentSteptimes(Commontime commontime, List<Step> steps) {
 		// TODO Auto-generated method stub
+		steptimes = new ArrayList<StepTimeVO>();
 		for (int i = 0; i < steps.size(); i++) {
 			StepTimeVO steptime = new StepTimeVO();
 			switch (i) {
@@ -107,119 +108,134 @@ public class SigtimeAction extends ActionSupport implements RequestAware,
 				steptime.setSecond(commontime.getT0());
 				break;
 			case 1:
-				steptime.setStepname("0");
+				steptime.setStepname("1");
 				steptime.setSecond(commontime.getT1());
 				break;
 			case 2:
-				steptime.setStepname("0");
+				steptime.setStepname("2");
 				steptime.setSecond(commontime.getT2());
 				break;
 			case 3:
-				steptime.setStepname("0");
+				steptime.setStepname("3");
 				steptime.setSecond(commontime.getT3());
 				break;
 			case 4:
-				steptime.setStepname("0");
+				steptime.setStepname("4");
 				steptime.setSecond(commontime.getT4());
 				break;
 			case 5:
-				steptime.setStepname("0");
+				steptime.setStepname("5");
 				steptime.setSecond(commontime.getT5());
 				break;
 			case 6:
-				steptime.setStepname("0");
+				steptime.setStepname("6");
 				steptime.setSecond(commontime.getT6());
 				break;
 			case 7:
-				steptime.setStepname("0");
+				steptime.setStepname("7");
 				steptime.setSecond(commontime.getT7());
 				break;
 			case 8:
-				steptime.setStepname("0");
+				steptime.setStepname("8");
 				steptime.setSecond(commontime.getT8());
 				break;
 			case 9:
-				steptime.setStepname("0");
+				steptime.setStepname("9");
 				steptime.setSecond(commontime.getT9());
 				break;
 			case 10:
-				steptime.setStepname("0");
+				steptime.setStepname("10");
 				steptime.setSecond(commontime.getT10());
 				break;
 			case 11:
-				steptime.setStepname("0");
+				steptime.setStepname("11");
 				steptime.setSecond(commontime.getT11());
 				break;
 			case 12:
-				steptime.setStepname("0");
+				steptime.setStepname("12");
 				steptime.setSecond(commontime.getT12());
 				break;
 			case 13:
-				steptime.setStepname("0");
+				steptime.setStepname("13");
 				steptime.setSecond(commontime.getT13());
 				break;
 			case 14:
-				steptime.setStepname("0");
+				steptime.setStepname("14");
 				steptime.setSecond(commontime.getT14());
 				break;
 			case 15:
-				steptime.setStepname("0");
+				steptime.setStepname("15");
 				steptime.setSecond(commontime.getT15());
 				break;
 			case 16:
-				steptime.setStepname("0");
+				steptime.setStepname("16");
 				steptime.setSecond(commontime.getT16());
 				break;
 			case 17:
-				steptime.setStepname("0");
+				steptime.setStepname("17");
 				steptime.setSecond(commontime.getT17());
 				break;
 			case 18:
-				steptime.setStepname("0");
+				steptime.setStepname("18");
 				steptime.setSecond(commontime.getT18());
 				break;
 			case 19:
+				steptime.setStepname("19");
 				steptime.setSecond(commontime.getT19());
 				break;
 			case 20:
+				steptime.setStepname("20");
 				steptime.setSecond(commontime.getT20());
 				break;
 			case 21:
+				steptime.setStepname("21");
 				steptime.setSecond(commontime.getT21());
 				break;
 			case 22:
+				steptime.setStepname("22");
 				steptime.setSecond(commontime.getT22());
 				break;
 			case 23:
+				steptime.setStepname("23");
 				steptime.setSecond(commontime.getT23());
 				break;
 			case 24:
+				steptime.setStepname("24");
 				steptime.setSecond(commontime.getT24());
 				break;
 			case 25:
+				steptime.setStepname("25");
 				steptime.setSecond(commontime.getT25());
 				break;
 			case 26:
+				steptime.setStepname("26");
 				steptime.setSecond(commontime.getT26());
 				break;
 			case 27:
+				steptime.setStepname("27");
 				steptime.setSecond(commontime.getT27());
 				break;
 			case 28:
+				steptime.setStepname("28");
 				steptime.setSecond(commontime.getT28());
 				break;
 			case 29:
+				steptime.setStepname("29");
 				steptime.setSecond(commontime.getT29());
 				break;
 			case 30:
+				steptime.setStepname("30");
 				steptime.setSecond(commontime.getT30());
 				break;
 			case 31:
+				steptime.setStepname("31");
 				steptime.setSecond(commontime.getT31());
 				break;
 			default:
 				break;
 			}
+			steptime.setId(steps.get(i).getId());
+			steptime.setRoads(steps.get(i).getRoads());
 			steptimes.add(steptime);
 		}
 	}
@@ -318,7 +334,7 @@ public class SigtimeAction extends ActionSupport implements RequestAware,
 		// 需要插入数据库 解析 map-from jlj
 		System.out.println(map);
 		/**
-		 * map数组元素解释说明 50: 0[解释 id_步序: 执行时间]
+		 * map数组元素解释说明 2_0:45[解释 id步序_t0: 执行时间]
 		 */
 		// 修改数据库中commontime中的时间t0-t31中的字段值-from jlj
 		

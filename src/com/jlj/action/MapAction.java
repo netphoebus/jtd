@@ -50,9 +50,7 @@ public class MapAction extends ActionSupport implements RequestAware,
 	 * @throws Exception
 	 */
 	public String load() throws Exception {
-		System.out.println("---------------1");
 		sigs = sigService.getAllSigs();
-		System.out.println("---------------2");
 		if(sigs!=null&&sigs.size()>0)
 		{
 			for (Sig sig : sigs) {

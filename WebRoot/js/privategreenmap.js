@@ -243,6 +243,8 @@ function GreenLinesInit()
 	            		encodeURI(msg);
 	            		
 	            	 	markermsg = msg;
+	            	 	console.log(markermsg);
+	            	 	/*
 	            	 	for(var i=0;i<markermsg.length;i++)
 			    	    {
 			    	    	ips.push(markermsg[i].ip);
@@ -262,7 +264,7 @@ function GreenLinesInit()
 						  setMarkerEvents(marker);
 						  initMarkers.push(marker);
 			    	    } 	   
-			    	   
+			    	   */
 	            }  
     	    });  
 }
@@ -379,7 +381,7 @@ function saveLine()
 			sids = sids +markerids[i]+",";
 		}
 		$.ajax({   
-            url:'addLine',//这里是你的action或者servlert的路径地址   
+            url:'addOrUpdateLine',//这里是你的action或者servlert的路径地址   
             type:'post', //数据发送方式     
  			data: { "linemid":lineId,"sids":sids},
             error: function(msg)

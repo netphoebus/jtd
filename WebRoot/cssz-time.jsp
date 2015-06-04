@@ -380,7 +380,7 @@ $(document).ready(function(e) {
 										序号<s:property value="#status.index"/>
 									</h1>
 									<s:property value="phasename"/>：
-										<input value="${step.second}" name="${step.id}" class="timeinput" style="width: 60px; height: 20px;"/>
+										<input value="${step.second}" name="${step.id}_${step.stepname}" class="timeinput" style="width: 60px; height: 20px;"/>
 									秒	
 									</txt>
 								</li>

@@ -109,7 +109,7 @@ public class GreenroadServiceImp implements IGreenroadService  {
 	 * @see com.jlj.service.imp.IGreenroadService#loadByMkid(long)
 	 */
 	public Greenroad loadByMkid(long mkid) {
-		String queryString = "from Greenroad mo where 1=1 and mo.mkid="+mkid;
+		String queryString = "from Greenroad mo where 1=1 and mo.marklineid="+mkid;
 		return greenroadDao.loadByMkid(queryString);
 	}
 	/* (non-Javadoc)
