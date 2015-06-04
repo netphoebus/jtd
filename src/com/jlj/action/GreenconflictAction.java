@@ -8,6 +8,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import mina.DataConvertor;
 import mina.TimeServerHandler;
 
 import org.apache.mina.core.session.IoSession;
@@ -129,27 +130,7 @@ public class GreenconflictAction extends ActionSupport implements RequestAware,
 	private void updateGreenconflictBytes(String sigIp,IoSession currrenSession) {
 		//下发信号机-绿冲突表
 		List<Greenconflict> greens = greenService.getGreensByIpAddress(sigIp);
-		if(greens!=null&&greens.size()==16){
-			for (int i = 0; i < greens.size(); i++) {
-				Greenconflict green1 = greens.get(i);
-				int l00=green1.getL00();//conflict[i][0];
-				int l01=green1.getL00();//conflict[i][1];
-				int l02=green1.getL00();//conflict[i][2];
-				int l03=green1.getL00();//conflict[i][3];
-				int l10=green1.getL00();//conflict[i][4];
-				int l11=green1.getL00();//conflict[i][5];
-				int l12=green1.getL00();//conflict[i][6];
-				int l13=green1.getL00();//conflict[i][7];
-				int l20=green1.getL00();//conflict[i][8];
-				int l21=green1.getL00();//conflict[i][9];
-				int l22=green1.getL00();//conflict[i][10];
-				int l23=green1.getL00();//conflict[i][11];
-				int l30=green1.getL00();//conflict[i][12];
-				int l31=green1.getL00();//conflict[i][13];
-				int l32=green1.getL00();//conflict[i][14];
-				int l33=green1.getL00();//conflict[i][15];
-			}
-		}
+		
 		//1-获取数据库中保存的命令
 		Sig sig1 = sigService.querySigByIpAddress(sigIp);
 		if(sig1==null){
@@ -162,7 +143,58 @@ public class GreenconflictAction extends ActionSupport implements RequestAware,
 		}
 		System.out.println("datastr1="+datastr1);
 		
+		byte[] msendDatas = DataConvertor.decode(datastr1,256+12);
 		
+		msendDatas[6] = (byte) 0x82;   //报文头
+		msendDatas[7] = (byte) 0x04;   //报文头
+		
+		if(greens!=null&&greens.size()==16){
+			for (int i = 0; i < greens.size(); i++) {
+				Greenconflict green1 = greens.get(i);
+				msendDatas[10+i*16] = green1.getL00().byteValue();//conflict[i][0];
+				msendDatas[11+i*16] = green1.getL00().byteValue();//conflict[i][1];
+				msendDatas[12+i*16] = green1.getL00().byteValue();//conflict[i][2];
+				msendDatas[13+i*16] = green1.getL00().byteValue();//conflict[i][3];
+				msendDatas[14+i*16] = green1.getL00().byteValue();//conflict[i][4];
+				msendDatas[15+i*16] = green1.getL00().byteValue();//conflict[i][5];
+				msendDatas[16+i*16] = green1.getL00().byteValue();//conflict[i][6];
+				msendDatas[17+i*16] = green1.getL00().byteValue();//conflict[i][7];
+				msendDatas[18+i*16] = green1.getL00().byteValue();//conflict[i][8];
+				msendDatas[19+i*16] = green1.getL00().byteValue();//conflict[i][9];
+				msendDatas[20+i*16] = green1.getL00().byteValue();//conflict[i][10];
+				msendDatas[21+i*16] = green1.getL00().byteValue();//conflict[i][11];
+				msendDatas[22+i*16] = green1.getL00().byteValue();//conflict[i][12];
+				msendDatas[23+i*16] = green1.getL00().byteValue();//conflict[i][13];
+				msendDatas[24+i*16] = green1.getL00().byteValue();//conflict[i][14];
+				msendDatas[25+i*16] = green1.getL00().byteValue();//conflict[i][15];
+				
+				
+				
+			}
+		}
+		
+		 int k = 0;
+		 for( int i = 4; i < 256+12-2; i++){
+			 //System.out.println((msendDatas[i]&0xFF)+"对应"+msendDatas[i]);
+			//System.out.println();
+		  k += msendDatas[i]&0xFF;
+		 }
+		
+		 for (int i = 0; i < 2; i++) {  
+	    	   msendDatas[msendDatas.length-i-1]  = (byte) (k >>> (i * 8));  
+	       } 
+		 
+			System.out.println("=========================绿冲突表下发======================================");
+			
+			for (int i = 0; i < msendDatas.length; i++) {
+				System.out.print(msendDatas[i]);
+			}
+			
+			System.out.println("=========================绿冲突表下发======================================");
+			//String s = msendDatas + "";
+			
+			System.out.println("the  send str is"+DataConvertor.bytesToHexString(msendDatas));
+		 
 		//2-获取的新数据，包装成新命令，并修改数据库“命令表issuedCommand”-from jlj
 		
 		
