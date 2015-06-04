@@ -335,7 +335,7 @@ public class SigtimeAction extends ActionSupport implements RequestAware,
 			commontime = commontimeService.loadById(timeid);
 		}
 		//0-获取新数据
-		int i = commontime.getOrderid();//修改的循环当中的序号head是0-8;tail是8-16
+		int i = commontime.getOrderid();//修改的循环当中的序号head是0-7;tail是8-15
 		int hour = commontime.getHour();//(int)data[10+i*40]
 		int minute = commontime.getMinute();//(int)data[11+i*40]
 		int seconds = commontime.getSeconds();//(int)data[12+i*40]
@@ -351,24 +351,38 @@ public class SigtimeAction extends ActionSupport implements RequestAware,
 		if(sig1==null){
 			return;
 		}
-		Issuedcommand issued1 = issuedcommandService.loadBySigidAndNumber(sig1.getId(),6);//根据sigip和number确定唯一命令
-		Issuedcommand issued2 = issuedcommandService.loadBySigidAndNumber(sig1.getId(),7);
-		String datastr1 ="";
-		String datastr2 ="";
-		if(issued1!=null){
-			datastr1 = issued1.getDatas();
+		
+		if(i<8){
+			Issuedcommand issued1 = issuedcommandService.loadBySigidAndNumber(sig1.getId(),6);//根据sigip和number确定唯一命令
+			String datastr1 ="";
+			if(issued1!=null){
+				datastr1 = issued1.getDatas();
+			}
+			System.out.println("datastr1="+datastr1);
+			//2-获取的新数据，包装成新命令，并修改数据库“命令表issuedCommand”-from jlj
+			
+			
+			//3-命令下发-需改-from sl
+			currrenSession.write(null);
+		}else if(i>7&&i<16){
+			Issuedcommand issued2 = issuedcommandService.loadBySigidAndNumber(sig1.getId(),7);
+			
+			String datastr2 ="";
+			
+			if(issued2!=null){
+				datastr2 = issued2.getDatas();
+			}
+			System.out.println("datastr2="+datastr2);
+			
+			
+			//2-获取的新数据，包装成新命令，并修改数据库“命令表issuedCommand”-from jlj
+			
+			
+			//3-命令下发-需改-from sl
+			currrenSession.write(null);
 		}
-		if(issued2!=null){
-			datastr2 = issued2.getDatas();
-		}
-		System.out.println("datastr1="+datastr1+"\ndatastr2="+datastr2);
 		
 		
-		//2-获取的新数据，包装成新命令，并修改数据库“命令表issuedCommand”-from jlj
-		
-		
-		//3-命令下发-需改-from sl
-		currrenSession.write(null);
 	}
 	
 	public IoSession getCurrrenSession(String sigIp)
