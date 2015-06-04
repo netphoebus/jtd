@@ -220,6 +220,7 @@ public class SignpublicparamAction extends ActionSupport implements RequestAware
 		if(sig1!=null){
 			Issuedcommand issuedcommand = issuedcommandService.loadBySigidAndNumber(sig1.getId(),5);//编号5
 			System.out.println("SigPublicparam datas-----------------------="+issuedcommand.getDatas());
+
 			if(issuedcommand!=null){
 //				int Red_Clearance_Time	 	= data[11];
 //				int Yellow_Flash_Time 		= data[12];

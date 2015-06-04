@@ -132,7 +132,7 @@ public class RoadServiceImp implements IRoadService  {
 		roadDao.updateByHql(queryString, paramNames, values);
 	}
 	public List<Road> loadByStepid(Integer id) {
-		String queryString = "from Road mo where mo.step.id=? order by mo.orderid asc";
+		String queryString = "from Road mo where mo.step.id=?";
 		Object[] p = new Object[]{id};
 		return roadDao.getObjectsByCondition(queryString, p);
 	}
