@@ -119,6 +119,41 @@ $(document).ready(function(e) {
 						<form id="sigtimeform" name="sigtimeform" action="sigtimeAction!update"
 									method="post">
 									<s:hidden name="commontime.id"></s:hidden>
+									<s:hidden name="commontime.orderid"></s:hidden>
+									<s:hidden name="commontime.timetype"></s:hidden>
+									<s:hidden name="commontime.signid"></s:hidden>
+									<s:hidden name="commontime.t0"></s:hidden>
+									<s:hidden name="commontime.t1"></s:hidden>
+									<s:hidden name="commontime.t2"></s:hidden>
+									<s:hidden name="commontime.t3"></s:hidden>
+									<s:hidden name="commontime.t4"></s:hidden>
+									<s:hidden name="commontime.t5"></s:hidden>
+									<s:hidden name="commontime.t6"></s:hidden>
+									<s:hidden name="commontime.t7"></s:hidden>
+									<s:hidden name="commontime.t8"></s:hidden>
+									<s:hidden name="commontime.t9"></s:hidden>
+									<s:hidden name="commontime.t10"></s:hidden>
+									<s:hidden name="commontime.t11"></s:hidden>
+									<s:hidden name="commontime.t12"></s:hidden>
+									<s:hidden name="commontime.t13"></s:hidden>
+									<s:hidden name="commontime.t14"></s:hidden>
+									<s:hidden name="commontime.t15"></s:hidden>
+									<s:hidden name="commontime.t16"></s:hidden>
+									<s:hidden name="commontime.t17"></s:hidden>
+									<s:hidden name="commontime.t18"></s:hidden>
+									<s:hidden name="commontime.t19"></s:hidden>
+									<s:hidden name="commontime.t20"></s:hidden>
+									<s:hidden name="commontime.t21"></s:hidden>
+									<s:hidden name="commontime.t22"></s:hidden>
+									<s:hidden name="commontime.t23"></s:hidden>
+									<s:hidden name="commontime.t24"></s:hidden>
+									<s:hidden name="commontime.t25"></s:hidden>
+									<s:hidden name="commontime.t26"></s:hidden>
+									<s:hidden name="commontime.t27"></s:hidden>
+									<s:hidden name="commontime.t28"></s:hidden>
+									<s:hidden name="commontime.t29"></s:hidden>
+									<s:hidden name="commontime.t30"></s:hidden>
+									<s:hidden name="commontime.t31"></s:hidden>
 							<table border="0" cellspacing="0" cellpadding="0">
 								<tr>
 									<td align="right">
