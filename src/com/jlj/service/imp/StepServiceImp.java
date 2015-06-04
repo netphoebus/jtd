@@ -118,7 +118,7 @@ public class StepServiceImp implements IStepService  {
 	}
 	public List<Step> loadBySoId(int soid) {
 		// TODO Auto-generated method stub
-		String queryString = "from Step mo where mod(mo.orderid,2)=1 and mo.solution.id="+soid;
+		String queryString = "from Step mo where mod(mo.orderid,2)=0 and mo.solution.id="+soid;
 		return stepDao.queryList(queryString);
 	}
 	public Step queryStepBySoluid(int orderid, int soluid) {
