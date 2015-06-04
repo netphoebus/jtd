@@ -53,6 +53,7 @@ public class GreenroadAction extends ActionSupport implements RequestAware,
 		if(greenroads!=null&&greenroads.size()>0)
 		{
 			JSONArray jsonArr = JSONArray.fromObject(greenroads);
+			System.out.println(jsonArr);
 			PrintWriter out;
 			try {
 				response.setContentType("text/html;charset=UTF-8");
