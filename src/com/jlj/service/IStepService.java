@@ -43,4 +43,6 @@ public interface IStepService {
 	public abstract void updateByStepid(String phasename, String stepname,
 			Integer id);
 
+	public abstract List<Step> loadBySoIdStep(int soid);
+
 }

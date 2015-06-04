@@ -317,7 +317,7 @@ public class SolutionAction extends ActionSupport implements RequestAware,
 		}
 		
 		System.out.println("================updateSolutionBytes="+issued1.getName());
-		List<Step> steps = stepService.loadBySoId(soid);
+		List<Step> steps = stepService.loadBySoIdStep(soid);
 		if(steps!=null&&steps.size()==64){
 			for (int k = 0; k < steps.size(); k++) {
 				Step step1 = steps.get(k);
@@ -329,8 +329,11 @@ public class SolutionAction extends ActionSupport implements RequestAware,
 						int linecolor = road1.getLinecolor();//locatelist.get(k)[a][1]
 						int rightcolor = road1.getRightcolor();//locatelist.get(k)[a][2]
 						int rxcolor = road1.getRxcolor();//locatelist.get(k)[a][3]
-						msendDatas[i*2+10+k*8] = 0;
-						msendDatas[i*2+11+k*8] = 0;
+						//msendDatas[i*2+10+k*8] = 0;
+						//msendDatas[i*2+11+k*8] = 0;
+						
+						System.out.println("步序是"+k+"方位"+i+"左直右人是"+leftcolor+linecolor+rightcolor+rxcolor);
+						
 						switch(leftcolor){
 							case 0:
 									
@@ -431,20 +434,20 @@ public class SolutionAction extends ActionSupport implements RequestAware,
 		
 		System.out.println("===================相位方案下发============================================");
 		
-		for (int i = 0; i < msendDatas.length; i++) {
-			System.out.print(msendDatas[i]);
-		}
+		//for (int i = 0; i < msendDatas.length; i++) {
+			System.out.print(DataConvertor.toHexString(msendDatas));
+		
 		System.out.println();
 		System.out.println("===================相位方案下发============================================");
 		
 	
-		System.out.println("datastr1="+datastr1);
+		//System.out.println("datastr1="+datastr1);
 		
 		//2-获取的新数据，包装成新命令，并修改数据库“命令表issuedCommand”-from jlj
 		
 		
 		//3-命令下发-需改-from sl
-		currrenSession.write(null);
+		currrenSession.write(msendDatas);
 	}
 	
 	public IoSession getCurrrenSession(String sigIp)

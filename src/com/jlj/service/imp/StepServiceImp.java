@@ -133,4 +133,8 @@ public class StepServiceImp implements IStepService  {
 		Object[] values = new Object[]{phasename,stepname,stepid};
 		stepDao.updateByHql(queryString, paramNames, values);
 	}
+	public List<Step> loadBySoIdStep(int soid) {
+		String queryString = "from Step mo where 1=1 and mo.solution.id="+soid;
+		return stepDao.queryList(queryString);
+	}
 }

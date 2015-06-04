@@ -218,7 +218,7 @@ public class SignpublicparamAction extends ActionSupport implements RequestAware
 	private void updateSigPublicparamBytes(String sigIp,IoSession currrenSession) {
 		Sig sig1 = sigService.querySigByIpAddress(sigIp);
 		if(sig1!=null){
-			Issuedcommand issuedcommand = issuedcommandService.loadBySigidAndNumber(5,sig1.getId());//编号5
+			Issuedcommand issuedcommand = issuedcommandService.loadBySigidAndNumber(sig1.getId(),5);//编号5
 			if(issuedcommand!=null){
 //				int Red_Clearance_Time	 	= data[11];
 //				int Yellow_Flash_Time 		= data[12];
