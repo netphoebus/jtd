@@ -332,6 +332,10 @@ public class SigtimeAction extends ActionSupport implements RequestAware,
 		System.out.println("================");
 		String map = req.getParameter("dates");
 		timeid = Integer.parseInt(req.getParameter("timeid"));
+		if(timeid!=0){
+			commontime = commontimeService.loadById(timeid);
+			
+		}
 		// 需要插入数据库 解析 map-from jlj
 		System.out.println(map);
 		/**
@@ -348,94 +352,100 @@ public class SigtimeAction extends ActionSupport implements RequestAware,
 	
 	private void updateCommonTimeBytes(IoSession currrenSession) {
 		//下发信号机  commontime参数
-		if(timeid!=0){
-			commontime = commontimeService.loadById(timeid);
-		}
-		//0-获取新数据
-		int i = commontime.getOrderid();//修改的循环当中的序号head是0-7;tail是8-15
-		int hour = commontime.getHour();//(int)data[10+i*40]
-		int minute = commontime.getMinute();//(int)data[11+i*40]
-		int seconds = commontime.getSeconds();//(int)data[12+i*40]
-		int workingway = commontime.getWorkingway();//(int)data[13+i*40]
-		int workingprogram = commontime.getWorkingprogram();//(int)data[14+i*40]
-		int lstime = commontime.getLstime();//(int)data[15+i*40]
-		int hdtime = commontime.getHdtime();//(int)data[16+i*40]
-		int qchdtime = commontime.getQchdtime();//(int)data[17+i*40]
-		Integer[] worktime = commontime.getTimes();//worktime[]
-		
-		//1-获取数据库中保存的命令
-		Sig sig1 = sigService.querySigByIpAddress(sigIp);
-		if(sig1==null){
-			return;
-		}
-		String datastr1 ="";
-		if(i<8){
-			Issuedcommand issued1 = issuedcommandService.loadBySigidAndNumber(sig1.getId(),6);//根据sigip和number确定唯一命令
+		if(commontime!=null){
+			System.out.println("---------------------timeid="+commontime.getId());
+			//0-获取新数据
+			int i = commontime.getOrderid();//修改的循环当中的序号head是0-7;tail是8-15
+			System.out.println("1---------------------i="+i);
+			int hour = commontime.getHour();//(int)data[10+i*40]
+			int minute = commontime.getMinute();//(int)data[11+i*40]
+			int seconds = commontime.getSeconds();//(int)data[12+i*40]
+			int workingway = commontime.getWorkingway();//(int)data[13+i*40]
+			int workingprogram = commontime.getWorkingprogram();//(int)data[14+i*40]
+			int lstime = commontime.getLstime();//(int)data[15+i*40]
+			int hdtime = commontime.getHdtime();//(int)data[16+i*40]
+			int qchdtime = commontime.getQchdtime();//(int)data[17+i*40]
+			Integer[] worktime = commontime.getTimes();//worktime[]
 			
-			if(issued1!=null){
-				datastr1 = issued1.getDatas();
+			//1-获取数据库中保存的命令
+			Sig sig1 = sigService.querySigByIpAddress(sigIp);
+			if(sig1==null){
+				return;
 			}
-		}else if(i>7&&i<16){
-			Issuedcommand issued2 = issuedcommandService.loadBySigidAndNumber(sig1.getId(),7);
-			if(issued2!=null){
-				datastr1 = issued2.getDatas();
+			String datastr1 ="";
+			if(i<8){
+				System.out.println("2---------------------i="+i);
+				Issuedcommand issued1 = issuedcommandService.loadBySigidAndNumber(sig1.getId(),6);//根据sigip和number确定唯一命令
+				System.out.println("commontime 1 datas-----------------------="+issued1.getDatas());
+				if(issued1!=null){
+					datastr1 = issued1.getDatas();
+				}
+			}else if(i>7&&i<16){
+				System.out.println("3---------------------i="+i);
+				Issuedcommand issued2 = issuedcommandService.loadBySigidAndNumber(sig1.getId(),7);
+				System.out.println("commontime 2 datas-----------------------="+issued2.getDatas());
+				if(issued2!=null){
+					datastr1 = issued2.getDatas();
+				}
 			}
-		}
-		System.out.println("datastr2="+datastr1);
-		byte[] msendDatas = DataConvertor.decode(datastr1,332);
-		
-		switch(commontime.getTimetype()){
-			case 1:
-				msendDatas[6] = (byte)0x83 ;
-				break;
-			case 2:
-				msendDatas[6] = (byte)0x84;
-				break;
-			case 3:
-				msendDatas[6] = (byte)0x85;
-				break;
-		}
-		
-		
-		msendDatas[6]=i<8?(byte) (0x00):(byte) (0x01);
-		
-		for (int j = 0; j < 8; j++) {
-			msendDatas[10+i*40] = (byte) hour;
-			msendDatas[11+i*40] = (byte) minute;
-			msendDatas[12+i*40] = (byte) seconds;
-			msendDatas[13+i*40] = (byte) workingway;
-			msendDatas[14+i*40] = (byte) workingprogram;
-			msendDatas[15+i*40] = (byte) lstime;
-			msendDatas[16+i*40] = (byte) hdtime;
-			msendDatas[17+i*40] = (byte) qchdtime;
+			System.out.println("datastr2="+datastr1);
+			byte[] msendDatas = DataConvertor.decode(datastr1,332);
 			
-			for (int j2 = 0; j2 < 32; j2++) {
-				msendDatas[18+j2+i*40] = worktime[i].byteValue();
+			switch(commontime.getTimetype()){
+				case 1:
+					msendDatas[6] = (byte)0x83 ;
+					break;
+				case 2:
+					msendDatas[6] = (byte)0x84;
+					break;
+				case 3:
+					msendDatas[6] = (byte)0x85;
+					break;
 			}
-		}
-		
-		 int k = 0;
-		 for( int i1 = 4; i1 < msendDatas.length-2; i1++){
-			 //System.out.println((msendDatas[i]&0xFF)+"对应"+msendDatas[i]);
-			//System.out.println();
-		  k += msendDatas[i1]&0xFF;
-		 }
+			
+			
+			msendDatas[6]=i<8?(byte) (0x00):(byte) (0x01);
+			
+			for (int j = 0; j < 8; j++) {
+				msendDatas[10+i*40] = (byte) hour;
+				msendDatas[11+i*40] = (byte) minute;
+				msendDatas[12+i*40] = (byte) seconds;
+				msendDatas[13+i*40] = (byte) workingway;
+				msendDatas[14+i*40] = (byte) workingprogram;
+				msendDatas[15+i*40] = (byte) lstime;
+				msendDatas[16+i*40] = (byte) hdtime;
+				msendDatas[17+i*40] = (byte) qchdtime;
+				
+				for (int j2 = 0; j2 < 32; j2++) {
+					msendDatas[18+j2+i*40] = worktime[i].byteValue();
+				}
+			}
+			
+			 int k = 0;
+			 for( int i1 = 4; i1 < msendDatas.length-2; i1++){
+				 //System.out.println((msendDatas[i]&0xFF)+"对应"+msendDatas[i]);
+				//System.out.println();
+			  k += msendDatas[i1]&0xFF;
+			 }
+			 
 		 
-	 
-         
-	       for (int i2 = 0; i2 < 2; i2++) {  
-	    	   msendDatas[msendDatas.length-i2-1]  = (byte) (k >>> (i2 * 8));  
-	       }  
+	         
+		       for (int i2 = 0; i2 < 2; i2++) {  
+		    	   msendDatas[msendDatas.length-i2-1]  = (byte) (k >>> (i2 * 8));  
+		       }  
+			
+			System.out.println("=======================时间段参数下发========================================");
+			
+			for (int i3 = 0; i3 < msendDatas.length; i3++) {
+				System.out.print(msendDatas[i3]);
+			}
+			
+			System.out.println("========================时间段参数下发=======================================");
+			
+			currrenSession.write(null);
 		
-		System.out.println("=======================时间段参数下发========================================");
 		
-		for (int i3 = 0; i3 < msendDatas.length; i3++) {
-			System.out.print(msendDatas[i3]);
 		}
-		
-		System.out.println("========================时间段参数下发=======================================");
-		
-		currrenSession.write(null);
 	}
 	
 	public IoSession getCurrrenSession(String sigIp)

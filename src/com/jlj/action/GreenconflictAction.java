@@ -137,6 +137,7 @@ public class GreenconflictAction extends ActionSupport implements RequestAware,
 			return;
 		}
 		Issuedcommand issued1 = issuedcommandService.loadBySigidAndNumber(sig1.getId(),35);//根据sigip和number确定唯一命令
+		System.out.println("greenconflict datas-----------------------="+issued1.getDatas());
 		String datastr1 ="";
 		if(issued1!=null){
 			datastr1 = issued1.getDatas();

@@ -307,6 +307,7 @@ public class SolutionAction extends ActionSupport implements RequestAware,
 		}
 		
 		Issuedcommand issued1 = issuedcommandService.loadBySigidAndNumber(sig1.getId(),12+orderid);//根据sigip和number确定唯一命令
+		System.out.println("solution datas-----------------------="+issued1.getDatas());
 		String datastr1 ="";
 		if(issued1!=null){
 			datastr1 = issued1.getDatas();
@@ -316,7 +317,6 @@ public class SolutionAction extends ActionSupport implements RequestAware,
 
 		}
 		
-		System.out.println("================updateSolutionBytes="+issued1.getName());
 		List<Step> steps = stepService.loadBySoId(soid);
 		if(steps!=null&&steps.size()==64){
 			for (int k = 0; k < steps.size(); k++) {
@@ -442,7 +442,7 @@ public class SolutionAction extends ActionSupport implements RequestAware,
 		
 		//2-获取的新数据，包装成新命令，并修改数据库“命令表issuedCommand”-from jlj
 		
-		
+		System.out.println(currrenSession);
 		//3-命令下发-需改-from sl
 		currrenSession.write(null);
 	}
