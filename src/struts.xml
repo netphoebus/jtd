@@ -144,7 +144,7 @@
 	</package>
 	
 	 <package name="solution_ajax" extends="json-default">
-		<action name="updateSolution" class="solutionAction" method="update"/>
+		<action name="updateSolution" class="solutionAction" method="updateSolution"/>
 	 </package>
 	
 	 <package name="green_ajax" extends="json-default">

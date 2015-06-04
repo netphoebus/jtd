@@ -240,7 +240,7 @@ public class SolutionAction extends ActionSupport implements RequestAware,
 	 * 
 	 * @return
 	 */
-	public String update() throws Exception {
+	public String updateSolution() throws Exception {
 		System.out.println("================");
 		String map = req.getParameter("dates");
 		soid =  Integer.parseInt(req.getParameter("soid"));
@@ -312,7 +312,7 @@ public class SolutionAction extends ActionSupport implements RequestAware,
 
 		}
 		
-		System.out.println("================updateSolutionBytes222222222222");
+		System.out.println("================updateSolutionBytes");
 		List<Step> steps = stepService.loadBySoId(soid);
 		if(steps!=null&&steps.size()==64){
 			for (int k = 0; k < steps.size(); k++) {

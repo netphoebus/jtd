@@ -140,7 +140,7 @@
 <!-- session config 通过工厂方法注入 -->
     <bean id="sessionConfig" factory-bean="ioAcceptor" factory-method="getSessionConfig" >
         <property name="readerIdleTime" value="10"/>
-        <property name="minReadBufferSize" value="512"/>
+        <property name="minReadBufferSize" value="1024"/>
         <property name="maxReadBufferSize" value="10240"/>
     </bean>
 	

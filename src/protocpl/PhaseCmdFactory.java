@@ -154,8 +154,8 @@ public class PhaseCmdFactory extends CmdFactoryBase implements ICmdParser{
 		  		
 		  		locatelist.add(locate);
 		  	}
-			
-			System.out.println("the locatelist is "+locatelist);
+		}
+			//System.out.println("the locatelist is "+locatelist);
 			
 			//---------------------数据库----------------------------
 			//根据ip获取对应的公共参数，保存相位方案以及步序和方向（东南西北、左直右人人）
@@ -277,7 +277,6 @@ public class PhaseCmdFactory extends CmdFactoryBase implements ICmdParser{
 //				road.setRxcolor(locate[road_i][3]);
 //				
 //			}
-		}	
 //		for(int step_i = 0;step_i<2;step_i++){
 //			Step step = new Step();
 //			step.setOrderid();

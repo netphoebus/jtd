@@ -305,8 +305,8 @@ var btn=document.getElementById('show_btn');
 		  <li  onclick="executeCommand(7)">初始化普通时间段8-15</li>
 		  <li  onclick="executeCommand(8)">初始化周日时间段0-7</li>
 		  <li  onclick="executeCommand(9)">初始化周日时间段8-15</li>
-		  <li  onclick="executeCommand(10)">初始化特殊时间段0-7</li>
-		  <li  onclick="executeCommand(12)">初始化特殊时间段8-15</li>
+		  <li  onclick="executeCommand(11)">初始化特殊时间段0-7</li>
+		  <li  onclick="executeCommand(1)">初始化特殊时间段8-15</li>
 		  <li  onclick="javascript:location.href='mapAction!delete'">删除信号机</li>
          </ul>
        </div>
