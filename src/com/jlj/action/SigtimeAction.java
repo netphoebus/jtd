@@ -397,7 +397,7 @@ public class SigtimeAction extends ActionSupport implements RequestAware,
 		}
 		
 		
-		msendDatas[6]=i>7?(byte) (0x00):(byte) (0x01);
+		msendDatas[6]=i<8?(byte) (0x00):(byte) (0x01);
 		
 		for (int j = 0; j < 8; j++) {
 			msendDatas[10+i*40] = (byte) hour;
