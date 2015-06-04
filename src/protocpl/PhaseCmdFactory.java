@@ -168,7 +168,7 @@ public class PhaseCmdFactory extends CmdFactoryBase implements ICmdParser{
 				System.out.println("相位方案--------------------datastr="+datastr);
 				//根据ip查出信号机，检查是否为空
 				if(sig!=null){
-					Issuedcommand issuedcommand = issuedcommandService.loadBySigidAndNumber(12,sig.getId());
+					Issuedcommand issuedcommand = issuedcommandService.loadBySigidAndNumber(sig.getId(),12);
 					if(issuedcommand==null){
 						issuedcommand = new Issuedcommand();
 						issuedcommand.setName("相位方案");

@@ -113,7 +113,7 @@ public class ParametersCmdFactory extends CmdFactoryBase implements ICmdParser{
 			//根据ip查出信号机
 			Sig sig = sigService.querySigByIpAddress(clientIP);
 			if(sig!=null){
-				Issuedcommand issuedcommand = issuedcommandService.loadBySigidAndNumber(5,sig.getId());
+				Issuedcommand issuedcommand = issuedcommandService.loadBySigidAndNumber(sig.getId(),5);
 				if(issuedcommand==null){
 					issuedcommand = new Issuedcommand();
 					issuedcommand.setName("公共参数");
@@ -291,7 +291,7 @@ public class ParametersCmdFactory extends CmdFactoryBase implements ICmdParser{
 			//根据ip查出信号机
 			Sig sig = sigService.querySigByIpAddress(clientIP);
 			if(sig!=null){
-				Issuedcommand issuedcommand = issuedcommandService.loadBySigidAndNumber(35,sig.getId());
+				Issuedcommand issuedcommand = issuedcommandService.loadBySigidAndNumber(sig.getId(),35);
 				if(issuedcommand==null){
 					issuedcommand = new Issuedcommand();
 					issuedcommand.setName("绿冲突");

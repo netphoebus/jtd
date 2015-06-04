@@ -91,7 +91,7 @@ public class SunTimeCmdFactory extends CmdFactoryBase implements ICmdParser{
 		System.out.println("周日参数1--------------------datastr="+datastr);
 			//根据ip查出信号机
 			if(sig!=null){
-				Issuedcommand issuedcommand = issuedcommandService.loadBySigidAndNumber(6,sig.getId());
+				Issuedcommand issuedcommand = issuedcommandService.loadBySigidAndNumber(sig.getId(),6);
 				if(issuedcommand==null){
 					issuedcommand = new Issuedcommand();
 					issuedcommand.setName("周日参数1");
@@ -203,7 +203,7 @@ public class SunTimeCmdFactory extends CmdFactoryBase implements ICmdParser{
 		System.out.println("周日参数2--------------------datastr="+datastr);
 			//根据ip查出信号机
 			if(sig!=null){
-				Issuedcommand issuedcommand = issuedcommandService.loadBySigidAndNumber(6,sig.getId());
+				Issuedcommand issuedcommand = issuedcommandService.loadBySigidAndNumber(sig.getId(),6);
 				if(issuedcommand==null){
 					issuedcommand = new Issuedcommand();
 					issuedcommand.setName("周日参数2");
