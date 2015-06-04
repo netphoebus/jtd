@@ -17,6 +17,7 @@ var options = "";
 
 //绿波带
 var markerids = [];
+var linesmsg = [];
 var dbclickable = true;
 var clickable = false;
 var dots = Array();
@@ -136,13 +137,13 @@ function setMarkerEvents(marker)
 						id:lineId
 				});
 				
-					maphelper.bindInstanceEvent(poly, 'dblclick', function(event,map) {
-					
-					console.log("这条线被打开了");
+					maphelper.bindInstanceEvent(poly, 'dblclick', function(event,map,poly) {
+					console.log(event);
+					console.log(poly);
+					console.log(poly.id+"这条线被打开了");
 	        });
 									
-				
-	 			$("#total_km").empty().text((poly.getLength()/1000).toFixed(3) + "km");  
+	 			//$("#total_km").empty().text((poly.getLength()/1000).toFixed(3) + "km");  
 	 		}
 		});
 		
@@ -242,29 +243,60 @@ function GreenLinesInit()
 	            { //成功
 	            		encodeURI(msg);
 	            		
-	            	 	markermsg = msg;
-	            	 	console.log(markermsg);
-	            	 	/*
-	            	 	for(var i=0;i<markermsg.length;i++)
+	            	 	console.log(msg);
+	            	 	linesmsg = msg;
+	            	 	for(var i=0;i<linesmsg.length;i++)
 			    	    {
-			    	    	ips.push(markermsg[i].ip);
-				    	     var marker =  maphelper.markerPoint({
-						  	    id:  markermsg[i].id,
-								lat: markermsg[i].lat,
-						        lng: markermsg[i].lng,
-						        title: '红绿灯',
-						        icon: "images/boot2.png"
-				
-						 	 });
-						  marker.connectSuccess = true;
-						  marker.initOver = true;
-						  marker.ip = markermsg[i].ip;
-						  marker.name = markermsg[i].name;
-						  marker.address = markermsg[i].address;
-						  setMarkerEvents(marker);
-						  initMarkers.push(marker);
+			    	    	
+			    	    	//处理mlids
+			    	    	var sigmids = linesmsg[i].sigmids.split(",");
+			    	    	for(var j=0;j<sigmids.length-1;j++)
+			    	    	{
+			    	    		for(var k=0;k<initMarkers.length;k++)
+								{
+									if(initMarkers[k].id==parseInt(sigmids[j]))
+									{
+										dots.push(new Array(initMarkers[k].getPosition().kb,initMarkers[k].getPosition().jb));
+									}
+								}
+			    	    	}
+			    	    	  var	 poly = maphelper.polyline({
+										dots:dots,						
+										color:"#008000",
+										weight:16,
+										opacity:0.5,
+										id:linesmsg[i].marklineid
+								});
+								dots = Array();
+								maphelper.bindInstanceEvent(poly, 'dblclick', function(event,map,poly) {
+											console.log(poly);
+									console.log(poly.id+"这条线被打开了");
+					        });
+			    	    	
+			    	    	/*
+			    	    		for(var i=0;i<initMarkers.length;i++)
+								{
+									if(initMarkers[i].id==marker.id)
+									{
+										console.log(initMarkers[i]);
+										dots.push(new Array(initMarkers[i].getPosition().kb,initMarkers[i].getPosition().jb));
+									}
+								}
+			    	    				
+							    	    var	 poly = maphelper.polyline({
+										dots:dots,						
+										color:"#008000",
+										weight:16,
+										opacity:0.5,
+										id:linesmsg[i].marklineid
+								});
+								
+									maphelper.bindInstanceEvent(poly, 'dblclick', function(event,map) {
+									
+									console.log("这条线被打开了");
+					        });
+					        */
 			    	    } 	   
-			    	   */
 	            }  
     	    });  
 }
@@ -352,7 +384,7 @@ function deleteMarker(id)
 
 function Polyline() {
 		alert("点击地图上的信号机");
- 		 dbclickable = false;//双击屏蔽
+ 		
 		 clickable = true;//单击启动
 }
 
@@ -361,7 +393,7 @@ function ClearPoly() {
 	maphelper.clearPoly();
 	maphelper.clearLine();
 	$("#total_km").text("");
-	dbclickable = false;//双击恢复
+
 	clickable = true;//单击恢复
 	
 }
