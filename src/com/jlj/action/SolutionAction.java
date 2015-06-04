@@ -293,15 +293,19 @@ public class SolutionAction extends ActionSupport implements RequestAware,
 		
 		//下发信号机-相位方案
 		//0-获取所有新数据
-		System.out.println("================updateSolutionBytes");
+		
 		Solution solution = solutionService.loadById(soid);
+		System.out.println("================updateSolutionBytes"+solution.getSoluname());
 		int orderid = solution.getOrderid();//(int)data[7]
 		byte[] msendDatas = new byte[524];
 		//1-获取数据库中保存的命令
 		Sig sig1 = sigService.querySigByIpAddress(sigIp);
+		System.out.println(sig1==null);
 		if(sig1==null){
+			System.out.println("sigid="+sig.getId());
 			return;
 		}
+		
 		Issuedcommand issued1 = issuedcommandService.loadBySigidAndNumber(sig1.getId(),12+orderid);//根据sigip和number确定唯一命令
 		String datastr1 ="";
 		if(issued1!=null){
@@ -312,7 +316,7 @@ public class SolutionAction extends ActionSupport implements RequestAware,
 
 		}
 		
-		System.out.println("================updateSolutionBytes");
+		System.out.println("================updateSolutionBytes="+issued1.getName());
 		List<Step> steps = stepService.loadBySoId(soid);
 		if(steps!=null&&steps.size()==64){
 			for (int k = 0; k < steps.size(); k++) {
