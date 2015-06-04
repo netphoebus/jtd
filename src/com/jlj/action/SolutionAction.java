@@ -306,7 +306,7 @@ public class SolutionAction extends ActionSupport implements RequestAware,
 		String datastr1 ="";
 		if(issued1!=null){
 			datastr1 = issued1.getDatas();
-			msendDatas = DataConvertor.decode(datastr1,datastr1.length());
+			msendDatas = DataConvertor.decode(datastr1,524);
 			msendDatas[6] = (byte) 0x86;
 			msendDatas[7] = (byte) orderid;
 
@@ -412,13 +412,26 @@ public class SolutionAction extends ActionSupport implements RequestAware,
 			}
 		}
 		
-		System.out.println("===============================================================");
+		 int k = 0;
+		 for( int i = 4; i < msendDatas.length-2; i++){
+			 //System.out.println((msendDatas[i]&0xFF)+"对应"+msendDatas[i]);
+			//System.out.println();
+		  k += msendDatas[i]&0xFF;
+		 }
+		 
+	 
+         
+	       for (int i = 0; i < 2; i++) {  
+	    	   msendDatas[msendDatas.length-i-1]  = (byte) (k >>> (i * 8));  
+	       }  
+		
+		System.out.println("===================相位方案下发============================================");
 		
 		for (int i = 0; i < msendDatas.length; i++) {
 			System.out.print(msendDatas[i]);
 		}
 		System.out.println();
-		System.out.println("===============================================================");
+		System.out.println("===================相位方案下发============================================");
 		
 	
 		System.out.println("datastr1="+datastr1);

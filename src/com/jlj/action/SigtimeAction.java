@@ -9,6 +9,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import mina.DataConvertor;
 import mina.TimeServerHandler;
 
 import org.apache.mina.core.session.IoSession;
@@ -367,38 +368,74 @@ public class SigtimeAction extends ActionSupport implements RequestAware,
 		if(sig1==null){
 			return;
 		}
-		
+		String datastr1 ="";
 		if(i<8){
 			Issuedcommand issued1 = issuedcommandService.loadBySigidAndNumber(sig1.getId(),6);//根据sigip和number确定唯一命令
-			String datastr1 ="";
+			
 			if(issued1!=null){
 				datastr1 = issued1.getDatas();
 			}
-			System.out.println("datastr1="+datastr1);
-			//2-获取的新数据，包装成新命令，并修改数据库“命令表issuedCommand”-from jlj
-			
-			
-			//3-命令下发-需改-from sl
-			currrenSession.write(null);
 		}else if(i>7&&i<16){
 			Issuedcommand issued2 = issuedcommandService.loadBySigidAndNumber(sig1.getId(),7);
-			
-			String datastr2 ="";
-			
 			if(issued2!=null){
-				datastr2 = issued2.getDatas();
+				datastr1 = issued2.getDatas();
 			}
-			System.out.println("datastr2="+datastr2);
-			
-			
-			//2-获取的新数据，包装成新命令，并修改数据库“命令表issuedCommand”-from jlj
-			
-			
-			//3-命令下发-需改-from sl
-			currrenSession.write(null);
+		}
+		System.out.println("datastr2="+datastr1);
+		byte[] msendDatas = DataConvertor.decode(datastr1,332);
+		
+		switch(commontime.getTimetype()){
+			case 1:
+				msendDatas[6] = (byte)0x83 ;
+				break;
+			case 2:
+				msendDatas[6] = (byte)0x84;
+				break;
+			case 3:
+				msendDatas[6] = (byte)0x85;
+				break;
 		}
 		
 		
+		msendDatas[6]=i>7?(byte) (0x00):(byte) (0x01);
+		
+		for (int j = 0; j < 8; j++) {
+			msendDatas[10+i*40] = (byte) hour;
+			msendDatas[11+i*40] = (byte) minute;
+			msendDatas[12+i*40] = (byte) seconds;
+			msendDatas[13+i*40] = (byte) workingway;
+			msendDatas[14+i*40] = (byte) workingprogram;
+			msendDatas[15+i*40] = (byte) lstime;
+			msendDatas[16+i*40] = (byte) hdtime;
+			msendDatas[17+i*40] = (byte) qchdtime;
+			
+			for (int j2 = 0; j2 < 32; j2++) {
+				msendDatas[18+j2+i*40] = worktime[i].byteValue();
+			}
+		}
+		
+		 int k = 0;
+		 for( int i1 = 4; i1 < msendDatas.length-2; i1++){
+			 //System.out.println((msendDatas[i]&0xFF)+"对应"+msendDatas[i]);
+			//System.out.println();
+		  k += msendDatas[i1]&0xFF;
+		 }
+		 
+	 
+         
+	       for (int i2 = 0; i2 < 2; i2++) {  
+	    	   msendDatas[msendDatas.length-i2-1]  = (byte) (k >>> (i2 * 8));  
+	       }  
+		
+		System.out.println("=======================时间段参数下发========================================");
+		
+		for (int i3 = 0; i3 < msendDatas.length; i3++) {
+			System.out.print(msendDatas[i3]);
+		}
+		
+		System.out.println("========================时间段参数下发=======================================");
+		
+		currrenSession.write(null);
 	}
 	
 	public IoSession getCurrrenSession(String sigIp)
