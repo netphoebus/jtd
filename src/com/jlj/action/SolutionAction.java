@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import mina.DataConvertor;
 import mina.TimeServerHandler;
 
+import org.apache.mina.core.buffer.IoBuffer;
 import org.apache.mina.core.session.IoSession;
 import org.apache.struts2.interceptor.RequestAware;
 import org.apache.struts2.interceptor.ServletRequestAware;
@@ -453,7 +454,7 @@ public class SolutionAction extends ActionSupport implements RequestAware,
 		System.out.println();
 		System.out.println("updateSolutionBytes================相位方案下发============================================");
 		//2-命令下发-from sl
-		currrenSession.write(msendDatas);
+		currrenSession.write(IoBuffer.wrap(msendDatas));
 		
 		return newDatas;
 	}

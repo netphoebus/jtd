@@ -25,6 +25,7 @@ import com.jlj.model.Signpublicparam;
 import com.jlj.service.IIssuedcommandService;
 import com.jlj.service.ISigService;
 import com.jlj.service.ISignpublicparamService;
+import com.jlj.util.Commands;
 import com.opensymphony.xwork2.ActionSupport;
 
 @Component("sigpublicparamAction")
@@ -202,20 +203,17 @@ public class SignpublicparamAction extends ActionSupport implements RequestAware
 	 * @return
 	 */
 	public String update() throws Exception {
-		System.out.println(suntimeable);
-		System.out.println(spetimeable);
 		setPublicParamJSP();
-		
-		
-		
-		//下发信号机公共参数-from sl
 		sigIp = (String) session.get("sigIp");
 		if(sigIp==null){
 			return "opsessiongo";
 		}
+		System.out.println("1-获取界面数据，更新数据库--------------------------------");
 		sigpubparamService.update(sigpubparam);//修改-from lq
+		System.out.println("2-获取数据库数据，下发命令--------------------------------");
 		updateSigPublicparamBytes(sigIp,getCurrrenSession(sigIp));
-		
+		System.out.println("3-调阅新命令和新数据，更新数据库--------------------------------");//("+newDatas+")
+		Commands.executeCommand(5,this.getCurrrenSession(sigIp));//编号5 公共参数调阅
 		return NONE;
 	}
 	
@@ -223,33 +221,7 @@ public class SignpublicparamAction extends ActionSupport implements RequestAware
 		Sig sig1 = sigService.querySigByIpAddress(sigIp);
 		if(sig1!=null){
 			Issuedcommand issuedcommand = issuedcommandService.loadBySigidAndNumber(sig1.getId(),5);//编号5
-			System.out.println("SigPublicparam datas-----------------------="+issuedcommand.getDatas());
-
 			if(issuedcommand!=null){
-//				int Red_Clearance_Time	 	= data[11];
-//				int Yellow_Flash_Time 		= data[12];
-//				int number 					= data[13];
-//				int comparam				= data[15];
-//				int checkflow 				= data[16];
-//				int innermark				= data[17];
-//				int Workingset 				= data[18];
-//				int SigSun 					= data[19];
-//				int SigSunTime[] 			= new int[7];
-//				for (int i = 0; i < SigSunTime.length; i++) {
-//					SigSunTime[i] 			= SigSun&((int)Math.pow(2,i));
-//				}
-//				int gmintime 				= data[26];
-//				int gmaxtime 				= data[27];
-//				int zdbctime 				= data[28];
-//				int countdownmode			= data[29];
-//				int xrfxtime 				= data[42];
-//				int cycle 					= data[43];			
-//				int  xyxr 					= data[44];
-//				int SigSpecialTime[][] 		= new int[24][2];
-//				for( int j =0 ;j < 24;j++){
-//					SigSpecialTime[j][0] 	= data[58+j*2] ;
-//					SigSpecialTime[j][1] 	= data[58+j*2+1] ;
-//				}
 				//0-获取新数据
 				int qchdtime = sigpubparam.getQchdtime();//清场红灯Red_Clearance_Time//data[11]
 				int kjhstime = sigpubparam.getKjhstime();//开机黄闪Yellow_Flash_Time//data[12]
@@ -272,8 +244,7 @@ public class SignpublicparamAction extends ActionSupport implements RequestAware
 				
 				//1-获取数据库中保存的命令
 				String datastr= issuedcommand.getDatas();//普通参数-原始命令
-				System.out.println("datastr="+datastr);
-				
+				System.out.println("SigPublicparam数据库中datas================================"+datastr);
 				//2-获取的新数据，包装成新命令，并修改数据库“命令表issuedCommand”-from jlj
 				
 				byte[] msendDatas = DataConvertor.decode(datastr,140);
@@ -324,13 +295,8 @@ public class SignpublicparamAction extends ActionSupport implements RequestAware
 				}
 				System.out.println("");
 				System.out.println("========================公共参数下发=======================================");
-				//String s = msendDatas + "";
-				
-				System.out.println("the  send str is"+DataConvertor.bytesToHexString(msendDatas));
-				
-				String newdatastr = DataConvertor.toHexString(msendDatas);
-				issuedcommandService.updateObjectById(newdatastr, issuedcommand.getId());
-				//3-命令下发-需改-from sl
+				System.out.println("SigPublicparam the send str is "+DataConvertor.bytesToHexString(msendDatas));
+				//3-命令下发-from sl
 				currrenSession.write(IoBuffer.wrap(msendDatas));
 			}
 		}
