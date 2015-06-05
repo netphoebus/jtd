@@ -58,8 +58,57 @@ public class DiaoYueCmdFactory extends CmdFactoryBase implements ICmdParser{
 
 	public boolean OnAfter_Ack(IoSession session, CommandBase cmd) {
 		// TODO Auto-generated method stub		
-		upload_RealTimeStatus(this.m_oData,session);
+		if(this.m_oData[7]==0){	
+			upload_RealTimeStatus(this.m_oData,session);
+		}else if(this.m_oData[7] == 1){
+			upload_Localtime(this.m_oData,session);
+		}else if(this.m_oData[7] == 2){
+			upload_Malfunction(this.m_oData,session);
+		}
 		return false;
+	}
+	
+	private void send_ack(IoSession session){
+		String Reply_cmd = "FF FF FF FF 01 F0 9F 00 00 08 01 98";
+		String[] cmds = Reply_cmd.split(" ");
+        byte[] aaa = new byte[cmds.length];
+        int i = 0;
+        for (String b : cmds) {
+            if (b.equals("FF")) {
+                aaa[i++] = -1;
+            } else {
+                aaa[i++] = Integer.valueOf(b, 16).byteValue();;
+            }
+        }
+        session.write(IoBuffer.wrap(aaa));
+	}
+	
+	private void upload_Malfunction(byte[] data, IoSession session) {
+		// TODO Auto-generated method stub
+		send_ack(session);
+        	int error = data[10]>>7;        //如果大于0 发生故障   等于0 排除故障
+			int year = (data[10]&0x7F);     //  年
+	        int mounth = data[11];
+	        int day = data[12];
+	        int hour = data[13];
+	        int minute = data[14];
+	        int secound = data[15];	        
+	        int error_code = data[16];  
+        
+	}
+
+	private void upload_Localtime(byte[] data, IoSession session) {
+		// TODO Auto-generated method stub
+		send_ack(session);
+        
+        int year = data[10];
+        int mounth = data[11];
+        int day = data[12];
+        int week = data[13];
+        int hour = data[14];
+        int minute = data[15];
+        int secound = data[16];
+        
 	}
 
 	public void UpdatePushTask() {

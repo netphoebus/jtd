@@ -413,7 +413,7 @@ public class SigtimeAction extends ActionSupport implements RequestAware,
 			}
 			
 			
-			msendDatas[6]=i<8?(byte) (0x00):(byte) (0x01);
+			msendDatas[7]=i<8?(byte) (0x00):(byte) (0x01);
 			
 			for (int j = 0; j < 8; j++) {
 				msendDatas[10+i*40] = (byte) hour;
@@ -448,10 +448,10 @@ public class SigtimeAction extends ActionSupport implements RequestAware,
 			for (int i3 = 0; i3 < msendDatas.length; i3++) {
 				System.out.print(msendDatas[i3]);
 			}
-			
+			System.out.println("");
 			System.out.println("========================时间段参数下发=======================================");
 			
-			currrenSession.write(null);
+			currrenSession.write(msendDatas);
 		
 		
 		}

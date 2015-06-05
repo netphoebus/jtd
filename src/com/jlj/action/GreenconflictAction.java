@@ -174,14 +174,12 @@ public class GreenconflictAction extends ActionSupport implements RequestAware,
 			}
 		}
 		
-		 int k = 0;
-		 for( int i = 4; i < 256+12-2; i++){
-			 //System.out.println((msendDatas[i]&0xFF)+"对应"+msendDatas[i]);
-			//System.out.println();
-		  k += msendDatas[i]&0xFF;
-		 }
+			int k = 0;
+			for( int i = 4; i < 256+12-2; i++){
+				k += msendDatas[i]&0xFF;
+			}
 		
-		 for (int i = 0; i < 2; i++) {  
+			for (int i = 0; i < 2; i++) {  
 	    	   msendDatas[msendDatas.length-i-1]  = (byte) (k >>> (i * 8));  
 	       } 
 		 
@@ -190,17 +188,15 @@ public class GreenconflictAction extends ActionSupport implements RequestAware,
 			for (int i = 0; i < msendDatas.length; i++) {
 				System.out.print(msendDatas[i]);
 			}
-			
+			System.out.println("");
 			System.out.println("=========================绿冲突表下发======================================");
-			//String s = msendDatas + "";
 			
-			System.out.println("the  send str is"+DataConvertor.bytesToHexString(msendDatas));
 		 
 		//2-获取的新数据，包装成新命令，并修改数据库“命令表issuedCommand”-from jlj
 		
 		
 		//3-命令下发-需改-from sl
-		currrenSession.write(null);
+		currrenSession.write(msendDatas);
 	}
 	
 	public IoSession getCurrrenSession(String sigIp)

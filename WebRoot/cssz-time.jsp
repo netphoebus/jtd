@@ -121,7 +121,7 @@ $(document).ready(function(e) {
 									<s:hidden name="commontime.id"></s:hidden>
 									<s:hidden name="commontime.orderid"></s:hidden>
 									<s:hidden name="commontime.timetype"></s:hidden>
-									<s:hidden name="commontime.signid"></s:hidden>
+									<s:hidden name="commontime.sig.id"></s:hidden>
 									<s:hidden name="commontime.t0"></s:hidden>
 									<s:hidden name="commontime.t1"></s:hidden>
 									<s:hidden name="commontime.t2"></s:hidden>
@@ -207,8 +207,8 @@ $(document).ready(function(e) {
 									</td>
 									<td style="margin-left:10px">
 								 
-											<s:select list="solutions"   listValue="soluname" listKey="id"   id="soid"
-						             name="commontime.workingprogram" value="solution.id" cssClass="select4"  onchange="changeSelect()"></s:select> 
+											<s:select list="solutions"   listValue="soluname" listKey="orderid"   id="soid"
+						             name="commontime.workingprogram"  cssClass="select4"  onchange="changeSelect()"></s:select> 
 									</td>
 								</tr>
 								<tr>

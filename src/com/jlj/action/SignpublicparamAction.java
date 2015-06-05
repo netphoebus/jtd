@@ -318,7 +318,7 @@ public class SignpublicparamAction extends ActionSupport implements RequestAware
 				for (int i = 0; i < msendDatas.length; i++) {
 					System.out.print(msendDatas[i]);
 				}
-				
+				System.out.println("");
 				System.out.println("========================公共参数下发=======================================");
 				//String s = msendDatas + "";
 				
