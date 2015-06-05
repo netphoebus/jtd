@@ -151,9 +151,8 @@ public class PhaseCmdFactory extends CmdFactoryBase implements ICmdParser{
 		  		}else{
 		  			locate[i][4] = 0;
 		  		}
-		  		
-		  		locatelist.add(locate);
 		  	}
+			locatelist.add(locate);
 		}
 			//System.out.println("the locatelist is "+locatelist);
 			
