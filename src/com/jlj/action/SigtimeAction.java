@@ -33,6 +33,7 @@ import com.jlj.service.ISigService;
 import com.jlj.service.ISignpublicparamService;
 import com.jlj.service.ISolutionService;
 import com.jlj.service.IStepService;
+import com.jlj.util.Commands;
 import com.jlj.vo.CommontimeVO;
 import com.jlj.vo.StepTimeVO;
 import com.opensymphony.xwork2.ActionSupport;
@@ -317,19 +318,22 @@ public class SigtimeAction extends ActionSupport implements RequestAware,
 	 * @return
 	 */
 	public String update() throws Exception {
-		System.out
-				.println("----------------------------update commontime------------------------------");
+		System.out.println("update1-获取界面数据，更新数据库--------------------------------");
 		// 修改数据库
 		commontimeService.update(commontime);
+		System.out.println("update2-获取数据库数据，下发命令--------------------------------");
 		// 下发信号机 时间段参数
 		sigIp = (String) session.get("sigIp");
 		this.updateCommonTimeBytes(this.getCurrrenSession(sigIp));
-		
+		System.out.println("update3-调阅新命令和新数据，更新数据库--------------------------------");
+		Commands.executeCommand(6,this.getCurrrenSession(sigIp));//commontime 编号6
+		Thread.sleep(100);
+		Commands.executeCommand(7,this.getCurrrenSession(sigIp));//commontime 编号7
 		return NONE;
 	}
 
 	public String updateStepTimes() throws Exception {
-		System.out.println("================");
+		System.out.println("updateStepTimes1-获取界面数据，更新数据库--------------------------------");
 		String map = req.getParameter("dates");
 		timeid = Integer.parseInt(req.getParameter("timeid"));
 		if(timeid!=0){
@@ -343,7 +347,7 @@ public class SigtimeAction extends ActionSupport implements RequestAware,
 		 */
 		// 修改数据库中commontime中的时间t0-t31中的字段值-from jlj
 		String[] steptimes = map.split(",");
-		System.out.println("----------------------整个字符串的长度="+steptimes.length);
+//		System.out.println("----------------------整个字符串的长度="+steptimes.length);
 		for (int i = 0; i < steptimes.length; i++) {
 			String thissteptime = steptimes[i];
 			int stepid = Integer.parseInt(thissteptime.substring(0,thissteptime.indexOf("_")));
@@ -352,9 +356,15 @@ public class SigtimeAction extends ActionSupport implements RequestAware,
 			commontimeService.updateCommontimeSecond(methodname,second,timeid);
 		}
 		
+		System.out.println("updateStepTimes2-获取数据库数据，下发命令--------------------------------");
 		// 下发信号机 步序执行时间
 		sigIp = (String) session.get("sigIp");
 		this.updateCommonTimeBytes(this.getCurrrenSession(sigIp));
+		
+		System.out.println("updateStepTimes3-调阅新命令和新数据，更新数据库--------------------------------");
+		Commands.executeCommand(6,this.getCurrrenSession(sigIp));//commontime 编号6
+		Thread.sleep(100);
+		Commands.executeCommand(7,this.getCurrrenSession(sigIp));//commontime 编号7
 		return NONE;
 	}
 
@@ -362,10 +372,9 @@ public class SigtimeAction extends ActionSupport implements RequestAware,
 	private void updateCommonTimeBytes(IoSession currrenSession) {
 		//下发信号机  commontime参数
 		if(commontime!=null){
-			System.out.println("---------------------timeid="+commontime.getId());
+			System.out.println("updateCommonTimeBytes commontime datas 1 datas================"+commontime.getId());
 			//0-获取新数据
 			int i = commontime.getOrderid();//修改的循环当中的序号head是0-7;tail是8-15
-			System.out.println("1---------------------i="+i);
 			int hour = commontime.getHour();//(int)data[10+i*40]
 			int minute = commontime.getMinute();//(int)data[11+i*40]
 			int seconds = commontime.getSeconds();//(int)data[12+i*40]
@@ -383,16 +392,14 @@ public class SigtimeAction extends ActionSupport implements RequestAware,
 			}
 			String datastr1 ="";
 			if(i<8){
-				System.out.println("2---------------------i="+i);
 				Issuedcommand issued1 = issuedcommandService.loadBySigidAndNumber(sig1.getId(),6);//根据sigip和number确定唯一命令
-				System.out.println("commontime 1 datas-----------------------="+issued1.getDatas());
+				System.out.println("updateCommonTimeBytes commontime datas 1 datas================"+issued1.getDatas());
 				if(issued1!=null){
 					datastr1 = issued1.getDatas();
 				}
 			}else if(i>7&&i<16){
-				System.out.println("3---------------------i="+i);
 				Issuedcommand issued2 = issuedcommandService.loadBySigidAndNumber(sig1.getId(),7);
-				System.out.println("commontime 2 datas-----------------------="+issued2.getDatas());
+				System.out.println("updateCommonTimeBytes commontime datas 2 datas================"+issued2.getDatas());
 				if(issued2!=null){
 					datastr1 = issued2.getDatas();
 				}
