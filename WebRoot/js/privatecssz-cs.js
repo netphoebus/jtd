@@ -2,6 +2,13 @@
 function initPublicParam() {
 	//css部分
 	$("#xyxr").click(function () {
+		if($("#xyxr").val()==0)
+  		{
+  			$("#xyxr").val(1);
+  		}else
+  		{
+  			$("#xyxr").val(0);
+  		}
 		if ($("#xyxr").attr("checked") == "checked") {
 			$("#xr").show();
 		} else {
@@ -9,6 +16,13 @@ function initPublicParam() {
 		}
 	});
 	$("#spetime").click(function () {
+		if($("#spetime").val()==0)
+  		{
+  			$("#spetime").val(1);
+  		}else
+  		{
+  			$("#spetime").val(0);
+  		}
 		if ($("#spetime").attr("checked") == "checked") {
 			$("#spe").show();
 		} else {
@@ -16,6 +30,13 @@ function initPublicParam() {
 		}
 	});
 	$("#suntime").click(function () {
+		if($("#suntime").val()==0)
+  		{
+  			$("#suntime").val(1);
+  		}else
+  		{
+  			$("#suntime").val(0);
+  		}
 		if ($("#suntime").attr("checked") == "checked") {
 			$("#sunt").show();
 		} else {

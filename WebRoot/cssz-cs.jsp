@@ -47,6 +47,38 @@ $(document).ready(function(e) {
   $(".select4").uedSelect({
     width : 150
   });
+  
+  $("#xyxr").click(function () {
+		if($("#xyxr").val()==0)
+  		{
+  			$("#xyxr").val(1);
+  		}else
+  		{
+  			$("#xyxr").val(0);
+  		}
+	});
+	
+	$("#spetime").click(function () {
+		if($("#spetime").val()==0)
+  		{
+  			$("#spetime").val(1);
+  		}else
+  		{
+  			$("#spetime").val(0);
+  		}
+	});
+	
+	$("#suntime").click(function () {
+		if($("#suntime").val()==0)
+  		{
+  			$("#suntime").val(1);
+  		}else
+  		{
+  			$("#suntime").val(0);
+  		}
+	});
+  
+ 
 });
 </script>
 		<script>
@@ -183,7 +215,7 @@ $(document).ready(function(e) {
 								<div id="xr">
 									<div class="csbox">
 										行人请求：
-										<s:textfield name="sigpubparam.xrfxtime" cssClass="dfinput"
+										<s:textfield  name="sigpubparam.xrfxtime" cssClass="dfinput"
 											cssStyle="width:150px;"></s:textfield>
 										秒
 									</div>
@@ -201,7 +233,7 @@ $(document).ready(function(e) {
 							<div>
 								<span class="csbox"> <input type="checkbox"
 										class="checkinput" id="suntime" name="suntimeable"
-										class="checkinput" value="${suntimeable}" /> 周 日</span>
+									 value="${suntimeable}" /> 周 日</span>
 							</div>
 							<div id="sunt">
 								<table width="90%" border="0" cellspacing="0" cellpadding="0">

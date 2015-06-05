@@ -214,7 +214,7 @@ public class SignpublicparamAction extends ActionSupport implements RequestAware
 			return "opsessiongo";
 		}
 		sigpubparamService.update(sigpubparam);//修改-from lq
-		updateSigPublicparamBytes(sigIp,getCurrrenSession(sigIp));
+	//	updateSigPublicparamBytes(sigIp,getCurrrenSession(sigIp));
 		
 		return NONE;
 	}
