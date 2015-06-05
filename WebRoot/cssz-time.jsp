@@ -412,7 +412,7 @@ $(document).ready(function(e) {
 									<!--相位图结束 -->
 									<txt>
 									<h1>
-										序号<s:property value="#status.index"/>
+										相位<s:property value="#status.index"/>
 									</h1>
 									<s:property value="phasename"/>：
 										<input value="${step.second}" name="${step.id}_${step.stepname}" class="timeinput" style="width: 60px; height: 20px;"/>

@@ -113,18 +113,18 @@ $(document).ready(function(e) {
 										</div>
 										<div style="width: 100%; float: left; height: ">
 											<div class="xhu" style="margin-top: 0px;">
-												<img class="${step.id}_2_3" alt="东西方向人行道西面上边" class="l23" src="images/rod/l23${step.roads[3].rxcolor}.png" width="15" />
+												<img class="${step.id}_3_3" alt="北人行道" class="l23" src="images/rod/l33${step.roads[3].rxcolor}.png" width="15" />
 											</div>
 											<div class="xhu" style="margin-left: 135px; margin-top: 0px;">
-												<img class="${step.id}_0_3" alt="东西方向人行道东面上边" class="l03" src="images/rod/l03${step.roads[0].rxcolor}.png" width="15" />
+												<img class="${step.id}_3_3" alt="北人行道" class="l03" src="images/rod/l33${step.roads[3].rxcolor}.png" width="15" />
 											</div>
 										</div>
 										<div style="width: 100%; float: left; height: ">
 											<div class="xhup">
-												<img  class="${step.id}_3_3" alt="南北方向人行道北面左边"  src="images/rod/l33${step.roads[3].rxcolor}.png" width="15" />
+												<img  class="${step.id}_2_3" alt="西人行道"  src="images/rod/l23${step.roads[2].rxcolor}.png" width="15" />
 											</div>
 											<div class="xhup" style="margin-left: 165px;">
-												<img class="${step.id}_3_3" alt="南北方向人行道北面右边" src="images/rod/l33${step.roads[3].rxcolor}.png" width="15" />
+												<img class="${step.id}_0_3" alt="东人行道" src="images/rod/l03${step.roads[0].rxcolor}.png" width="15" />
 											</div>
 										</div>
 										
@@ -225,22 +225,22 @@ $(document).ready(function(e) {
 										<div style="width: 100%; float: left; height: ">
 											<div class="xhup">
 											
-												<img class="${step.id}_1_3"  src="images/rod/l13${step.roads[1].rxcolor}.png" alt="南北方向人行道南面左边" width="15" />
+												<img class="${step.id}_2_3"  src="images/rod/l23${step.roads[2].rxcolor}.png" alt="西人行道" width="15" />
 											</div>
 											<div class="xhup" style="margin-left: 165px;">
 											
-												<img class="${step.id}_1_3"  src="images/rod/l13${step.roads[1].rxcolor}.png" alt="南北方向人行道南面右边" width="15" />
+												<img class="${step.id}_0_3"  src="images/rod/l03${step.roads[0].rxcolor}.png" alt="东人行道" width="15" />
 											</div>
 										</div>
 										<div style="width: 100%; float: left; height: ">
 											<div class="xhu" style="margin-top: 0px;">
 												
-												<img  class="${step.id}_2_3"  src="images/rod/l23${step.roads[2].rxcolor}.png" alt="东西方向人行道西面下边" width="15" />
+												<img  class="${step.id}_1_3"  src="images/rod/l13${step.roads[1].rxcolor}.png" alt="南人行道" width="15" />
 											
 											</div>
 											<div class="xhu" style="margin-left: 135px; margin-top: 0px;">
 											
-												<img class="${step.id}_0_3"  src="images/rod/l03${step.roads[0].rxcolor}.png" alt="东西方向人行道东面下边" width="15" />
+												<img class="${step.id}_1_3"  src="images/rod/l13${step.roads[1].rxcolor}.png" alt="南人行道" width="15" />
 											
 											</div>
 										</div>
@@ -253,7 +253,7 @@ $(document).ready(function(e) {
 									</div>
 									<!--相位图结束 -->
 									<h1>
-										序号<s:property value="#status.index"/>
+										相位<s:property value="#status.index"/>
 									</h1>
 									<button onclick="clearAllLight(${step.id})">清  空</button>
 									<button onclick="allRed(${step.id})">全 红</button>

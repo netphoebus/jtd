@@ -203,12 +203,12 @@ var btn=document.getElementById('show_btn');
        <div style="width:100%; float:left;">
          <div class="xwbox" >
          <li style=" margin-top: 60px; height:29px;">
-         <div style="width: 29px; float:left; height: 29px; margin-left: 195px;"><img alt="东西方向人行道西面上面" class="l23" src="images/rod/l231.png" width="29" height="29" /></div>
-         <div style=" float:left; width: 29px; height: 29px; margin-left: 305px;"><img alt="东西方向人行道东面上面" class="l03" src="images/rod/l031.png" width="29" height="29" /></div>
+         <div style="width: 29px; float:left; height: 29px; margin-left: 195px;"><img alt="北人行道" class="l33" src="images/rod/l330.png" width="29" height="29" /></div>
+         <div style=" float:left; width: 29px; height: 29px; margin-left: 305px;"><img alt="北人行道" class="l33" src="images/rod/l330.png" width="29" height="29" /></div>
          </li>
            <li style="height:29px;">
-             <div style="width: 29px; float:left;  margin-top: 0px; height: 29px; margin-left: 150px;"><img class="l33" alt="南北方向人行道北面右边" src="images/rod/l130.png" width="29" height="29" /></div>
-             <div style="width: 29px; float:left;  margin-top: 0px; height: 29px; margin-left: 390px;"><img class="l33" alt="南北方向人行道北面左边" src="images/rod/l130.png" width="29" height="29" /></div>
+             <div style="width: 29px; float:left;  margin-top: 0px; height: 29px; margin-left: 150px;"><img class="l23" alt="西人行道" src="images/rod/l230.png" width="29" height="29" /></div>
+             <div style="width: 29px; float:left;  margin-top: 0px; height: 29px; margin-left: 390px;"><img class="l03" alt="东人行道" src="images/rod/l030.png" width="29" height="29" /></div>
            </li>
            <li style="height: 270px;">
              <div style="height: 270px; width: 100%; float: left;">
@@ -276,16 +276,16 @@ var btn=document.getElementById('show_btn');
            </li>
            <li style="height:29px;">
              <div style="width: 29px; height: 29px; float:left; margin-left: 150px;">
-             <img class="l13"  src="images/rod/l131.png" alt="南北人行道南面左边" width="29" height="29" /></div>
+             <img class="l23"  src="images/rod/l230.png" alt="西人行道" width="29" height="29" /></div>
              <div style="width: 29px; float:left;  margin-top: 0px; height: 29px; margin-left: 390px;">
-             <img class="l13" src="images/rod/l131.png" alt="南北人行道南面右边" width="29" height="29" /></div>
+             <img class="l03" src="images/rod/l030.png" alt="东人行道" width="29" height="29" /></div>
            </li>
            <ul>
              <li style="height:29px;">
                <div style="width: 29px; height: 29px; float:left; margin-left: 195px;">
-               <img class="l23" src="images/rod/l230.png" alt="东西人行道西面下边" width="29" height="29" /></div>
+               <img class="l13" src="images/rod/l130.png" alt="南人行道" width="29" height="29" /></div>
                <div style=" float:left; width: 29px; height: 29px; margin-left: 305px;">
-               <img class="l03" src="images/rod/l030.png" alt="东西人行道东面下边" width="29" height="29" /></div>
+               <img class="l13" src="images/rod/l130.png" alt="南人行道" width="29" height="29" /></div>
              </li>
            </ul>
          </div>

@@ -17,11 +17,17 @@ $(document).ready(function(){
 			var conflictStr = "";
 		$("div img").click(function(event) {
 	
-			img = $(event.target);
+			var img = $(event.target);
 			var imgsrc = img[0].src;//获得当前焦点的src
+			
+			console.log("imgsrc:-----------------------"+imgsrc);
 			var lastnumber = imgsrc.substring(imgsrc.indexOf(".png")-1,imgsrc.indexOf(".png"));//当前焦点的灯的颜色
+			
+			console.log("lastnumber:-----------------------"+lastnumber);
+			
 			var headnumber = imgsrc.substring(imgsrc.indexOf(".png")-3,imgsrc.indexOf(".png")-1);//当前焦点的路口方位及左转还是右转灯	
-		
+			console.log("headnumber:-----------------------"+headnumber);
+			
 			var headnumber1 = headnumber.substring(0,1);//当前焦点的路口方位
 			var headnumber2 = headnumber.substring(1,2);//当前焦点的灯转向
 			
@@ -93,6 +99,7 @@ $(document).ready(function(){
 					//第二部：分两种情况，一种为 id 一种为 class 解析conflictStr 并逐一找出冲突的灯当前的颜色是否为绿色如果为绿色则返回
 					if(img[0].id==null||img[0].id =="")
 					{
+						//class
 						var imgclass= img[0].classList[0];
 						conflictStart = imgclass.substring(0,1);
 						if(conflictStr!="")
@@ -104,27 +111,36 @@ $(document).ready(function(){
 						
 					}else
 					{
+						//id
 						var imgid = img[0].id;
-						conflictStart = imgid.substring(0,1);
+						console.log("imgid:-------------------------"+imgid);
+						
+						
+						conflictStart = imgid.substring(0,imgid.indexOf("_"));
+						
+						console.log("conflictStart:-------------------------"+conflictStart);
+						
 						if(conflictStr!="")
 						{
-							var strs= new Array(); //定义一数组 
-							strs=conflictStr.split(","); //字符分割 
+							var strs= conflictStr.split(","); //字符分割 
+							console.log("strs:-------------------------"+strs);
 							for (i=0;i<strs.length-1;i++) 
 							{ 
 								var lightKind = strs[i].substring(strs[i].length-1,strs[i].length);
-								var imgNow = null;//当前比较灯
-								var currentLightNumber = 0;
+								console.log("lightKind:-------------------------"+lightKind);
+								var imgNow = null;//当前与之比较的灯
+								var currentLightNumber = 0;//当前与之比较的灯 的种类
 								var srcNow = "";
 								if(lightKind==3)
 								{
 									 imgNow = $("."+conflictStart+strs[i]);
+									 console.log("imgNow:---------------------------"+"."+conflictStart+strs[i]);
 									 srcNow = imgNow[0].currentSrc;
 									 currentLightNumber = srcNow.substring(srcNow.indexOf(".png")-1,srcNow.indexOf(".png"));//当前比较灯的颜色
 								}else
 								{
 									imgNow = $("#"+conflictStart+strs[i]);
-									 srcNow = imgNow[0].currentSrc;
+									srcNow = imgNow[0].currentSrc;
 								    currentLightNumber = srcNow.substring(srcNow.indexOf(".png")-1,srcNow.indexOf(".png"));//当前比较灯的颜色
 								}
 								if(currentLightNumber==1)

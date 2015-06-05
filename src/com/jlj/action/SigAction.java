@@ -83,8 +83,8 @@ public class SigAction extends ActionSupport implements RequestAware,
 		if (trafficlights != trafficlights_next) {
 			trafficlights_next = trafficlights;
 			String jsonString = "{\"success\":\"true\"" + 
-					",\"l03\":\"" + trafficlights_next[0][3] + "\"" + // 东西方向人行道灯东向西
-					",\"l23\":\"" + trafficlights_next[2][3] + "\"" + // 东西方向人行道灯西向东
+					",\"l03\":\"" + trafficlights_next[0][3] + "\"" + // 东人行道
+					",\"l23\":\"" + trafficlights_next[2][3] + "\"" + // 西人行道
 
 					",\"l20\":\"" + trafficlights_next[2][0] + "\"" + // 西边左转灯
 					",\"l21\":\"" + trafficlights_next[2][1] + "\"" + // 西边直行灯
@@ -94,8 +94,8 @@ public class SigAction extends ActionSupport implements RequestAware,
 					",\"l01\":\"" + trafficlights_next[0][1] + "\"" + // 东边直行灯
 					",\"l02\":\"" + trafficlights_next[0][2] + "\"" + // 东边右转灯
 
-					",\"l13\":\"" + trafficlights_next[1][3] + "\"" + // 南北方向人行道南向北
-					",\"l33\":\"" + trafficlights_next[3][3] + "\"" + // 南北方向人行道北向南
+					",\"l13\":\"" + trafficlights_next[1][3] + "\"" + // 南人行道
+					",\"l33\":\"" + trafficlights_next[3][3] + "\"" + // 北人行道
 
 					",\"l32\":\"" + trafficlights_next[3][2] + "\"" + // 北边右转灯
 					",\"l31\":\"" + trafficlights_next[3][1] + "\"" + // 北边直行灯
