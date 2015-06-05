@@ -28,6 +28,7 @@ import com.jlj.model.Step;
 import com.jlj.service.IGreenconflictService;
 import com.jlj.service.IIssuedcommandService;
 import com.jlj.service.ISigService;
+import com.jlj.util.Commands;
 import com.opensymphony.xwork2.ActionSupport;
 
 @Component("greenAction")
@@ -95,7 +96,7 @@ public class GreenconflictAction extends ActionSupport implements RequestAware,
 	 * @return
 	 */
 	public String update() throws Exception {
-		System.out.println("================");
+		System.out.println("1-获取界面数据，更新数据库--------------------------------");
 		String map = req.getParameter("dates");
 		//需要插入数据库 解析 map-from jlj
 		System.out.println(map);
@@ -116,14 +117,11 @@ public class GreenconflictAction extends ActionSupport implements RequestAware,
 			System.out.println(isct+"\t"+name+"\t"+gid);
 			greenService.updateGreenByCondition(isct,name,gid);
 		}
-		
-		
-		
-		
-		//下发
+		System.out.println("2-获取数据库数据，下发命令--------------------------------");
 		sigIp = (String) session.get("sigIp");
 		this.updateGreenconflictBytes(sigIp,this.getCurrrenSession(sigIp));
-		
+		System.out.println("3-调阅新命令和新数据，更新数据库--------------------------------");
+		Commands.executeCommand(35,this.getCurrrenSession(sigIp));//绿冲突 编号35
 		return NONE;
 	}
 

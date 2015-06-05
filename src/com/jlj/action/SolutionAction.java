@@ -288,25 +288,22 @@ public class SolutionAction extends ActionSupport implements RequestAware,
 		System.out.println("2-获取数据库数据，下发命令--------------------------------");
 		//下发命令
 		sigIp = (String) session.get("sigIp");
-		String newDatas = this.updateSolutionBytes(this.getCurrrenSession(sigIp));
+		this.updateSolutionBytes(this.getCurrrenSession(sigIp));
 		
-		System.out.println("3-调阅新命令和新数据("+newDatas+")，更新数据库--------------------------------");
-		int orderid = solutionService.loadById(soid).getOrderid();
-		int commandId = orderid+12;
-		
-		System.out.println("执行命令编号："+commandId + "   " + "信号机链接对象："+this.getCurrrenSession(sigIp));
+		System.out.println("3-调阅新命令和新数据，更新数据库--------------------------------");
+		int commandId = solutionService.loadById(soid).getOrderid()+12;
 		Commands.executeCommand(commandId,this.getCurrrenSession(sigIp));
 		
 		return NONE;
 	}
 	
-	private String updateSolutionBytes(IoSession currrenSession) {
+	private void updateSolutionBytes(IoSession currrenSession) {
 		//0-获取所有数据库中保存的新数据
 		Solution solution = solutionService.loadById(soid);
 		System.out.println("updateSolutionBytes获取所有新数据================"+solution.getSoluname());
 		if(solution==null){
 			System.out.println("updateSolutionBytes solution================ null");
-			return null;
+			return ;
 		}
 		int orderid = solution.getOrderid();//(int)data[7]
 		byte[] msendDatas = new byte[524];
@@ -314,7 +311,7 @@ public class SolutionAction extends ActionSupport implements RequestAware,
 		Sig sig1 = sigService.querySigByIpAddress(sigIp);
 		if(sig1==null){
 			System.out.println("updateSolutionBytes sig1================ null");
-			return null;
+			return ;
 		}
 		
 		Issuedcommand issued1 = issuedcommandService.loadBySigidAndNumber(sig1.getId(),12+orderid);//根据sigip和number确定唯一命令
@@ -327,7 +324,7 @@ public class SolutionAction extends ActionSupport implements RequestAware,
 			msendDatas[7] = (byte) orderid;
 		}else{
 			System.out.println("updateSolutionBytes issued1================ null");
-			return null;
+			return ;
 		}
 		//获取数据库中所有步序，若list长度为64，则取出所有属性
 		List<Step> steps = stepService.loadBySoIdStep(soid);
@@ -448,15 +445,13 @@ public class SolutionAction extends ActionSupport implements RequestAware,
 		System.out.println("updateSolutionBytes================相位方案下发============================================");
 		//包装成新命令
 		//for (int i = 0; i < msendDatas.length; i++) {
-			String newDatas = DataConvertor.toHexString(msendDatas);
-			System.out.print("updateSolutionBytes newDatas================"+newDatas);
+			System.out.print("updateSolutionBytes newDatas================"+DataConvertor.toHexString(msendDatas));
 		
 		System.out.println();
 		System.out.println("updateSolutionBytes================相位方案下发============================================");
 		//2-命令下发-from sl
 		currrenSession.write(IoBuffer.wrap(msendDatas));
 		
-		return newDatas;
 	}
 	
 	public IoSession getCurrrenSession(String sigIp)
