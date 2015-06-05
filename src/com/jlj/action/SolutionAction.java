@@ -341,10 +341,10 @@ public class SolutionAction extends ActionSupport implements RequestAware,
 						int linecolor = road1.getLinecolor();//locatelist.get(k)[a][1]
 						int rightcolor = road1.getRightcolor();//locatelist.get(k)[a][2]
 						int rxcolor = road1.getRxcolor();//locatelist.get(k)[a][3]
-						//msendDatas[i*2+10+k*8] = 0;
-						//msendDatas[i*2+11+k*8] = 0;
+						msendDatas[i*2+10+k*8] = 0;
+						msendDatas[i*2+11+k*8] = 0;
 						
-						System.out.println("updateSolutionBytes================步序是"+k+"方位"+i+"左直右人是"+leftcolor+linecolor+rightcolor+rxcolor);
+//						System.out.println("updateSolutionBytes================步序是"+k+"方位"+i+"左直右人是"+leftcolor+linecolor+rightcolor+rxcolor);
 						
 						switch(leftcolor){
 							case 0:
@@ -425,6 +425,8 @@ public class SolutionAction extends ActionSupport implements RequestAware,
 							break;
 							
 						}
+						
+						System.out.println("the msendDatas"+i*2+10+k*8+" is "+msendDatas[i*2+10+k*8]+"the msendDatas"+i*2+11+k*8+" is "+msendDatas[i*2+11+k*8]);
 					}
 					
 				}
