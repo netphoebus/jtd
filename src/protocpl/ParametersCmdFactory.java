@@ -102,14 +102,14 @@ public class ParametersCmdFactory extends CmdFactoryBase implements ICmdParser{
 		
 	}
 	
-	private void Upload_parameters(IoSession session,byte[] data) throws Exception{
+	public void Upload_parameters(IoSession session,byte[] data) throws Exception{
 		
 		
 		//获取session中的IP
 		String clientIP = ((InetSocketAddress)session.getRemoteAddress()).getAddress().getHostAddress();
-		//保存信号机的公共参数下发命令的数据-start-from jlj
+		//保存信号机的公共参数下发的命令-start-from jlj
 		String datastr = DataConvertor.toHexString(data);
-		System.out.println("公共参数--------------------datastr="+datastr);
+		System.out.println("公共参数命令datastr========================="+datastr);
 			//根据ip查出信号机
 			Sig sig = sigService.querySigByIpAddress(clientIP);
 			if(sig!=null){

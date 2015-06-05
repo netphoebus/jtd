@@ -150,6 +150,9 @@ public class Commands {
 		}
 	}
 	
-	
+	public static void executeCommand(int commandId, IoSession currentSession)
+	{
+		currentSession.write(IoBuffer.wrap(handleCommand(commandId)));
+	}
 
 }

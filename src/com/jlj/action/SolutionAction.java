@@ -19,6 +19,8 @@ import org.apache.struts2.interceptor.SessionAware;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import protocpl.ParametersCmdFactory;
+
 import com.jlj.model.Greenconflict;
 import com.jlj.model.Issuedcommand;
 import com.jlj.model.Road;
@@ -33,6 +35,7 @@ import com.jlj.service.ISigService;
 import com.jlj.service.ISignpublicparamService;
 import com.jlj.service.ISolutionService;
 import com.jlj.service.IStepService;
+import com.jlj.util.Commands;
 import com.jlj.vo.ConflictVO;
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -241,7 +244,7 @@ public class SolutionAction extends ActionSupport implements RequestAware,
 	 * @return
 	 */
 	public String updateSolution() throws Exception {
-		System.out.println("================");
+		System.out.println("1-获取界面数据，更新数据库--------------------------------");
 		String map = req.getParameter("dates");
 		soid =  Integer.parseInt(req.getParameter("soid"));
 		//需要插入数据库 解析 map-from jlj
@@ -281,46 +284,52 @@ public class SolutionAction extends ActionSupport implements RequestAware,
 			System.out.println("stepid="+stepid+",fangxiang="+roadtype+",dengtype="+dengtype+",deng="+deng);
 			roadService.updateByCondition(deng,dengtypestr, roadtype, stepid);
 		}
-		//下发
+		System.out.println("2-获取数据库数据，下发命令--------------------------------");
+		//下发命令
 		sigIp = (String) session.get("sigIp");
-		this.updateSolutionBytes(this.getCurrrenSession(sigIp));
+		String newDatas = this.updateSolutionBytes(this.getCurrrenSession(sigIp));
 		
+		System.out.println("3-调阅新命令和新数据("+newDatas+")，更新数据库--------------------------------");
+		int orderid = solutionService.loadById(soid).getOrderid();
+		int commandId = orderid+12;
+		
+		System.out.println("执行命令编号："+commandId + "   " + "信号机链接对象："+this.getCurrrenSession(sigIp));
+		Commands.executeCommand(commandId,this.getCurrrenSession(sigIp));
 		
 		return NONE;
 	}
 	
-	private void updateSolutionBytes(IoSession currrenSession) {
-		
-		//下发信号机-相位方案
-		//0-获取所有新数据
-		
+	private String updateSolutionBytes(IoSession currrenSession) {
+		//0-获取所有数据库中保存的新数据
 		Solution solution = solutionService.loadById(soid);
-		System.out.println("================updateSolutionBytes"+solution.getSoluname());
+		System.out.println("updateSolutionBytes获取所有新数据================"+solution.getSoluname());
+		if(solution==null){
+			System.out.println("updateSolutionBytes solution================ null");
+			return null;
+		}
 		int orderid = solution.getOrderid();//(int)data[7]
 		byte[] msendDatas = new byte[524];
 		//1-获取数据库中保存的命令
 		Sig sig1 = sigService.querySigByIpAddress(sigIp);
-		System.out.println(sig1==null);
 		if(sig1==null){
-			System.out.println("sigid="+sig.getId());
-			return;
+			System.out.println("updateSolutionBytes sig1================ null");
+			return null;
 		}
 		
 		Issuedcommand issued1 = issuedcommandService.loadBySigidAndNumber(sig1.getId(),12+orderid);//根据sigip和number确定唯一命令
-		System.out.println("solution datas-----------------------="+issued1.getDatas());
+		System.out.println("updateSolutionBytes solution datas================"+issued1.getDatas());
 		String datastr1 ="";
 		if(issued1!=null){
 			datastr1 = issued1.getDatas();
 			msendDatas = DataConvertor.decode(datastr1,524);
 			msendDatas[6] = (byte) 0x86;
 			msendDatas[7] = (byte) orderid;
-
+		}else{
+			System.out.println("updateSolutionBytes issued1================ null");
+			return null;
 		}
-		
-
-		System.out.println("================updateSolutionBytes="+issued1.getName());
+		//获取数据库中所有步序，若list长度为64，则取出所有属性
 		List<Step> steps = stepService.loadBySoIdStep(soid);
-
 		if(steps!=null&&steps.size()==64){
 			for (int k = 0; k < steps.size(); k++) {
 				Step step1 = steps.get(k);
@@ -335,7 +344,7 @@ public class SolutionAction extends ActionSupport implements RequestAware,
 						//msendDatas[i*2+10+k*8] = 0;
 						//msendDatas[i*2+11+k*8] = 0;
 						
-						System.out.println("步序是"+k+"方位"+i+"左直右人是"+leftcolor+linecolor+rightcolor+rxcolor);
+						System.out.println("updateSolutionBytes================步序是"+k+"方位"+i+"左直右人是"+leftcolor+linecolor+rightcolor+rxcolor);
 						
 						switch(leftcolor){
 							case 0:
@@ -429,28 +438,22 @@ public class SolutionAction extends ActionSupport implements RequestAware,
 		  k += msendDatas[i]&0xFF;
 		 }
 		 
-	 
-         
 	       for (int i = 0; i < 2; i++) {  
 	    	   msendDatas[msendDatas.length-i-1]  = (byte) (k >>> (i * 8));  
 	       }  
 		
-		System.out.println("===================相位方案下发============================================");
-		
+		System.out.println("updateSolutionBytes================相位方案下发============================================");
+		//包装成新命令
 		//for (int i = 0; i < msendDatas.length; i++) {
-			System.out.print(DataConvertor.toHexString(msendDatas));
+			String newDatas = DataConvertor.toHexString(msendDatas);
+			System.out.print("updateSolutionBytes newDatas================"+newDatas);
 		
 		System.out.println();
-		System.out.println("===================相位方案下发============================================");
-		
-	
-		//System.out.println("datastr1="+datastr1);
-		
-		//2-获取的新数据，包装成新命令，并修改数据库“命令表issuedCommand”-from jlj
-		
-		System.out.println(currrenSession);
-		//3-命令下发-需改-from sl
+		System.out.println("updateSolutionBytes================相位方案下发============================================");
+		//2-命令下发-from sl
 		currrenSession.write(msendDatas);
+		
+		return newDatas;
 	}
 	
 	public IoSession getCurrrenSession(String sigIp)
