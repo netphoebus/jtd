@@ -82,7 +82,7 @@ public class DiaoYueCmdFactory extends CmdFactoryBase implements ICmdParser{
         }
         session.write(IoBuffer.wrap(aaa));
 	}
-	
+	//上传故障
 	private void upload_Malfunction(byte[] data, IoSession session) {
 		// TODO Auto-generated method stub
 		send_ack(session);
@@ -94,9 +94,10 @@ public class DiaoYueCmdFactory extends CmdFactoryBase implements ICmdParser{
 	        int minute = data[14];
 	        int secound = data[15];	        
 	        int error_code = data[16];  
+	        
         
 	}
-
+	//校时
 	private void upload_Localtime(byte[] data, IoSession session) {
 		// TODO Auto-generated method stub
 		send_ack(session);

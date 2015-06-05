@@ -100,6 +100,10 @@ public class SignpublicparamAction extends ActionSupport implements RequestAware
 				spetimeable = 1;
 				suntimeable = 1;
 				break;
+			default:
+				spetimeable = 0;
+				suntimeable = 0;
+					
 		}
 		
 	}
@@ -209,9 +213,9 @@ public class SignpublicparamAction extends ActionSupport implements RequestAware
 		if(sigIp==null){
 			return "opsessiongo";
 		}
-		
+		sigpubparamService.update(sigpubparam);//修改-from lq
 		updateSigPublicparamBytes(sigIp,getCurrrenSession(sigIp));
-		//sigpubparamService.update(sigpubparam);//修改
+		
 		return NONE;
 	}
 	
