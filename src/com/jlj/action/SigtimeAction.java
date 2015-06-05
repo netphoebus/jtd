@@ -342,6 +342,15 @@ public class SigtimeAction extends ActionSupport implements RequestAware,
 		 * map数组元素解释说明 2_0:45[解释 id步序_t0: 执行时间]
 		 */
 		// 修改数据库中commontime中的时间t0-t31中的字段值-from jlj
+		String[] steptimes = map.split(",");
+		System.out.println("----------------------整个字符串的长度="+steptimes.length);
+		for (int i = 0; i < steptimes.length; i++) {
+			String thissteptime = steptimes[i];
+			int stepid = Integer.parseInt(thissteptime.substring(0,thissteptime.indexOf("_")));
+			String methodname = thissteptime.substring(thissteptime.indexOf("_")+1, thissteptime.indexOf(":"));
+			int second = Integer.parseInt(thissteptime.substring(thissteptime.indexOf(":")+1));
+			commontimeService.updateCommontimeSecond(methodname,second,timeid);
+		}
 		
 		// 下发信号机 步序执行时间
 		sigIp = (String) session.get("sigIp");

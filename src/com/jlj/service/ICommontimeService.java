@@ -45,4 +45,7 @@ public interface ICommontimeService {
 	public abstract List<Commontime> getCommontimesBySigAndTimetype(int sid,
 			Integer timetype);
 
+	public abstract void updateCommontimeSecond(String methodname, int second,
+			int timeid);
+
 }
