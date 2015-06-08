@@ -19,10 +19,10 @@ function autojs()
 {
 	if($("#zdjs").val()=="一天")
 	{
-		setInterval("executeCommand(28)",60*1000*60*24);
+		setInterval("suretime()",60*1000*60*24);
 	}else if($("#zdjs").val()=="一周")
 	{
-		setInterval("executeCommand(28)",60*1000*60*24*7);
+		setInterval("suretime()",60*1000*60*24*7);
 	}
 }
 
@@ -52,4 +52,18 @@ function executeSolutionCommands()
 	            
 }
 
-
+function suretime()
+{
+	$.ajax({   
+            url:'suretime',//这里是你的action或者servlert的路径地址   
+            type:'get', //数据发送方式   
+            error: function(msg)
+            { //失败   
+            	alert('校时失败');   
+            },   
+            success: function(msg)
+            { //成功   
+				alert('校时成功');   
+            }  
+   	    });   
+}

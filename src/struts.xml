@@ -161,5 +161,9 @@
 		<action name="updateStepTimes" class="sigtimeAction" method="updateStepTimes"/>
 	 </package>
 	
+	<package name="signpublicparam_ajax" extends="json-default">
+		<action name="suretime" class="sigpublicparamAction" method="suretime"/>
+	 </package>
+	
 </struts>
 

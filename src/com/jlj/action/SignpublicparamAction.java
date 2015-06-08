@@ -1,6 +1,8 @@
 package com.jlj.action;
 
 import java.net.InetSocketAddress;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -51,6 +53,23 @@ public class SignpublicparamAction extends ActionSupport implements RequestAware
 	private Integer spetimeable;
 	private Integer suntimeable;
 	
+	public String suretime(){
+		System.out.println("1-获取当前时间的各个数据--------------------------------");
+		Calendar nowdate = Calendar.getInstance();
+		int year = nowdate.get(Calendar.YEAR);
+		int month = nowdate.get(Calendar.MONTH)+1;
+		int day = nowdate.get(Calendar.DAY_OF_MONTH);
+		int week = nowdate.get(Calendar.DAY_OF_WEEK);
+		int hour = nowdate.get(Calendar.HOUR_OF_DAY);
+		int minute = nowdate.get(Calendar.MINUTE);
+		int second = nowdate.get(Calendar.SECOND);
+		System.out.println(year+"-"+month+"-"+day+" "+hour+":"+minute+":"+second+" 第"+week+"天");
+//		System.out.println("2-获取数据库数据，下发命令--------------------------------");
+//		updateJiaoShiBytes(sigIp,getCurrrenSession(sigIp));
+//		System.out.println("3-调阅新命令和新数据，更新数据库--------------------------------");
+//		Commands.executeCommand(28,this.getCurrrenSession(sigIp));//编号28 校时调阅
+		return NONE;
+	}
 	//跳转 一般参数页面  
 	public String publicParam() {
 		sigIp = (String) session.get("sigIp");
@@ -307,7 +326,26 @@ public class SignpublicparamAction extends ActionSupport implements RequestAware
 		
 	}
 
-	
+	private void updateJiaoShiBytes(String sigIp,IoSession currrenSession) {
+		Sig sig1 = sigService.querySigByIpAddress(sigIp);
+		if(sig1!=null){
+			Issuedcommand issuedcommand = issuedcommandService.loadBySigidAndNumber(sig1.getId(),28);//编号28
+			if(issuedcommand!=null){
+				//0-获取新数据
+				
+				//1-获取数据库中保存的命令
+				String datastr= issuedcommand.getDatas();//普通参数-原始命令
+				System.out.println("Jiaoshi数据库中datas================================"+datastr);
+				//2-获取的新数据，包装成新命令，并修改数据库“命令表issuedCommand”-from jlj
+				
+				//3-命令下发-from sl
+//				currrenSession.write(IoBuffer.wrap(msendDatas));
+			}
+		}
+		
+		
+		
+	}
 	
 	public IoSession getCurrrenSession(String sigIp)
 	{

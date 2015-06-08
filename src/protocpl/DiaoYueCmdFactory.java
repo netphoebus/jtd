@@ -4,8 +4,18 @@ import java.net.InetSocketAddress;
 
 import org.apache.mina.core.buffer.IoBuffer;
 import org.apache.mina.core.session.IoSession;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.jlj.action.SigAction;
+import com.jlj.model.Issuedcommand;
+import com.jlj.model.Sig;
+import com.jlj.service.ICommontimeService;
+import com.jlj.service.IIssuedcommandService;
+import com.jlj.service.ISigService;
+import com.jlj.service.ISignpublicparamService;
+import com.jlj.service.ISolutionService;
+import com.jlj.service.IStepService;
 
 import mina.CmdFactoryBase;
 import mina.CommandBase;
@@ -14,7 +24,13 @@ import mina.ICmdParser;
 import mina.CmdFactoryBase.MONITOR_CMD_TYPE;
 
 public class DiaoYueCmdFactory extends CmdFactoryBase implements ICmdParser{
-   
+	final static ApplicationContext ac=new ClassPathXmlApplicationContext("beans.xml");
+	final static ISignpublicparamService signpublicparamService = (ISignpublicparamService)ac.getBean("signpublicparamService");
+	final static ISigService sigService = (ISigService)ac.getBean("sigService");
+	final static ICommontimeService commontimeService = (ICommontimeService)ac.getBean("commontimeService");
+	final static ISolutionService solutionService = (ISolutionService)ac.getBean("solutionService");
+	final static IStepService stepService = (IStepService)ac.getBean("stepService");
+	final static IIssuedcommandService issuedcommandService = (IIssuedcommandService)ac.getBean("issuedcommandService");
 	private int locate[][];
 	private int Countdown[];
 	public DiaoYueCmdFactory(byte[] data) {
@@ -101,15 +117,45 @@ public class DiaoYueCmdFactory extends CmdFactoryBase implements ICmdParser{
 	private void upload_Localtime(byte[] data, IoSession session) {
 		// TODO Auto-generated method stub
 		send_ack(session);
+//        //获取信号机数据
+//        int year = data[10];
+//        int mounth = data[11];
+//        int day = data[12];
+//        int week = data[13];
+//        int hour = data[14];
+//        int minute = data[15];
+//        int secound = data[16];
         
-        int year = data[10];
-        int mounth = data[11];
-        int day = data[12];
-        int week = data[13];
-        int hour = data[14];
-        int minute = data[15];
-        int secound = data[16];
-        
+      //获取session中的IP
+		String clientIP = ((InetSocketAddress)session.getRemoteAddress()).getAddress().getHostAddress();
+		Sig sig = sigService.querySigByIpAddress(clientIP);
+		
+		//保存信号机的公共参数下发命令的数据-start-from jlj
+		String datastr = DataConvertor.toHexString(data);
+		System.out.println("校时--------------------datastr="+datastr);
+			//根据ip查出信号机
+			if(sig!=null){
+				Issuedcommand issuedcommand = issuedcommandService.loadBySigidAndNumber(sig.getId(),28);
+				if(issuedcommand==null){
+					issuedcommand = new Issuedcommand();
+					issuedcommand.setName("校时");
+					issuedcommand.setDatas(datastr);
+					issuedcommand.setNumber(28);//编号28
+					issuedcommand.setSig(sig);
+					try {
+						issuedcommandService.add(issuedcommand);
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}else{
+					issuedcommandService.updateObjectById(datastr,issuedcommand.getId());
+				}
+				
+			
+			}
+			
+		//保存信号机的公共参数下发命令的数据-end-from jlj
 	}
 
 	public void UpdatePushTask() {

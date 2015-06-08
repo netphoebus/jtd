@@ -112,7 +112,7 @@ $(document).ready(function(e) {
 							<table border="0" cellspacing="0" cellpadding="0">
 								<tr>
 									<td style="padding-right: 5px;">
-										<input name="" type="button" class="scbtn" onclick="executeCommand(28);" value="校 时" />
+										<input name="" type="button" class="scbtn" onclick="suretime();" value="校 时" />
 									</td>
 									<td style="padding-right: 5px;">
 										<input name="" type="button" class="scbtn"  onclick="autojs()" value="自动校时" />
