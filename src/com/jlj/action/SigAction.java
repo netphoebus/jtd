@@ -73,7 +73,7 @@ public class SigAction extends ActionSupport implements RequestAware,
 			}
 			// 将list转化成JSON对象
 			JSONArray jsonArray = JSONArray.fromObject(sigstatuses);
-			System.out.println(jsonArray.toString());
+//			System.out.println(jsonArray.toString());
 			PrintWriter out;
 			try {
 				response.setCharacterEncoding("UTF-8"); 
