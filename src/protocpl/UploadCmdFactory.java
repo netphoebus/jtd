@@ -23,26 +23,25 @@ public class UploadCmdFactory extends CmdFactoryBase implements ICmdParser{
 		super.Process(session, cmd);
 		if(cmd.getCmdType() == this.expected_cmd)
 		{
-				
-
-			String Reply_cmd = "FF FF FF FF 01 F0 9F 00 00 08 01 98";
-			String[] cmds = Reply_cmd.split(" ");
-	        byte[] aaa = new byte[cmds.length];
-	        int i = 0;
-	        for (String b : cmds) {
-	            if (b.equals("FF")) {
-	                aaa[i++] = -1;
-	            } else {
-	                aaa[i++] = Integer.valueOf(b, 16).byteValue();;
-	            }
-	        }
-	        session.write(IoBuffer.wrap(aaa));
-			
 			OnAfter_Ack(session, cmd);
-			
 		}
 	}
-
+	
+	private void send_ack(IoSession session){
+		String Reply_cmd = "FF FF FF FF 01 F0 9F 00 00 08 01 98";
+		String[] cmds = Reply_cmd.split(" ");
+        byte[] aaa = new byte[cmds.length];
+        int i = 0;
+        for (String b : cmds) {
+            if (b.equals("FF")) {
+                aaa[i++] = -1;
+            } else {
+                aaa[i++] = Integer.valueOf(b, 16).byteValue();;
+            }
+        }
+        session.write(IoBuffer.wrap(aaa));
+	}
+	
 	public int GetByeAckFlag(CommandBase cmd) {
 		// TODO Auto-generated method stub
 		return 0;
@@ -92,6 +91,16 @@ public class UploadCmdFactory extends CmdFactoryBase implements ICmdParser{
 	}
 	
 	private void Upload_fault(IoSession session,byte[] data){
-		
+		int error = data[10]>>7;        //如果大于0 发生故障   等于0 排除故障
+		int year = (data[10]&0x7F);     //  年
+        int mounth = data[11];
+        int day = data[12];
+        int hour = data[13];
+        int minute = data[14];
+        int secound = data[15];	        
+        int error_code = data[16];  
+        
+        System.out.println("故障代码是"+(error_code&0x7f));
+    
 	}
 }

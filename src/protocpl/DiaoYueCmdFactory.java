@@ -46,23 +46,7 @@ public class DiaoYueCmdFactory extends CmdFactoryBase implements ICmdParser{
 		//System.out.println("cmd.getCmdType() is "+cmd.getCmdType() +"this.expected_cmd is "+this.expected_cmd);
 		if(cmd.getCmdType() == this.expected_cmd)
 		{
-			
-
-//			String Reply_cmd = "FF FF FF FF 01 F0 9F 00 00 08 01 98";
-//			String[] cmds = Reply_cmd.split(" ");
-//	        byte[] aaa = new byte[cmds.length];
-//	        int i = 0;
-//	        for (String b : cmds) {
-//	            if (b.equals("FF")) {
-//	                aaa[i++] = -1;
-//	            } else {
-//	                aaa[i++] = Integer.valueOf(b, 16).byteValue();;
-//	            }
-//	        }
-//	        session.write(IoBuffer.wrap(aaa));
-			
 			OnAfter_Ack(session, cmd);
-			
 		}
 		
 	}
@@ -101,7 +85,7 @@ public class DiaoYueCmdFactory extends CmdFactoryBase implements ICmdParser{
 	//上传故障
 	private void upload_Malfunction(byte[] data, IoSession session) {
 		// TODO Auto-generated method stub
-		send_ack(session);
+		//send_ack(session);
         	int error = data[10]>>7;        //如果大于0 发生故障   等于0 排除故障
 			int year = (data[10]&0x7F);     //  年
 	        int mounth = data[11];
@@ -111,6 +95,7 @@ public class DiaoYueCmdFactory extends CmdFactoryBase implements ICmdParser{
 	        int secound = data[15];	        
 	        int error_code = data[16];  
 	        
+	        System.out.println("故障代码是"+(error_code&0x7f));
         
 	}
 	//校时
@@ -232,9 +217,10 @@ public class DiaoYueCmdFactory extends CmdFactoryBase implements ICmdParser{
 	  	for(int i=0;i<7;i++){
 	  		date[i] = data[29+i];
 	  	}
-	  	                
+	  	              
+	  	
 	  		
-	  	System.out.println("本地时间是"+date[1]+"年"+date[2]+"月"+date[3]+"日"+date[4]+"时"+date[5]+"分"+date[6]+"秒"+"星期"+date[0]);
+	  	System.out.println("本地时间是"+date[1]+"年"+date[2]+"月"+date[3]+"日"+date[4]+"时"+date[5]+"分"+date[6]+"秒"+"星期"+date[0]+"故障代码"+(data[41]&0x7f));
 	  	
 	  	
 	  	String clientIP = ((InetSocketAddress)session.getRemoteAddress()).getAddress().getHostAddress();
