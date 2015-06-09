@@ -1,6 +1,14 @@
 package protocpl;
 
 import java.net.InetSocketAddress;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import mina.CmdFactoryBase;
+import mina.CommandBase;
+import mina.DataConvertor;
+import mina.ICmdParser;
 
 import org.apache.mina.core.buffer.IoBuffer;
 import org.apache.mina.core.session.IoSession;
@@ -8,20 +16,16 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.jlj.action.SigAction;
+import com.jlj.model.Devlog;
 import com.jlj.model.Issuedcommand;
 import com.jlj.model.Sig;
 import com.jlj.service.ICommontimeService;
+import com.jlj.service.IDevlogService;
 import com.jlj.service.IIssuedcommandService;
 import com.jlj.service.ISigService;
 import com.jlj.service.ISignpublicparamService;
 import com.jlj.service.ISolutionService;
 import com.jlj.service.IStepService;
-
-import mina.CmdFactoryBase;
-import mina.CommandBase;
-import mina.DataConvertor;
-import mina.ICmdParser;
-import mina.CmdFactoryBase.MONITOR_CMD_TYPE;
 
 public class DiaoYueCmdFactory extends CmdFactoryBase implements ICmdParser{
 	final static ApplicationContext ac=new ClassPathXmlApplicationContext("beans.xml");
@@ -31,6 +35,7 @@ public class DiaoYueCmdFactory extends CmdFactoryBase implements ICmdParser{
 	final static ISolutionService solutionService = (ISolutionService)ac.getBean("solutionService");
 	final static IStepService stepService = (IStepService)ac.getBean("stepService");
 	final static IIssuedcommandService issuedcommandService = (IIssuedcommandService)ac.getBean("issuedcommandService");
+	final static IDevlogService devlogService = (IDevlogService)ac.getBean("devlogService");
 	private int locate[][];
 	private int Countdown[];
 	public DiaoYueCmdFactory(byte[] data) {
@@ -103,15 +108,40 @@ public class DiaoYueCmdFactory extends CmdFactoryBase implements ICmdParser{
 		// TODO Auto-generated method stub
 		send_ack(session);
         	int error = data[10]>>7;        //如果大于0 发生故障   等于0 排除故障
-			int year = (data[10]&0x7F);     //  年
+        if(error>0){
+        	int year = (data[10]&0x7F);     //  年
 	        int mounth = data[11];
 	        int day = data[12];
 	        int hour = data[13];
 	        int minute = data[14];
 	        int secound = data[15];	        
-	        int error_code = data[16];  
-	        
-        
+	        int error_code = data[16]; 
+        	String time = year+"-"+mounth+"-"+day+" "+hour+":"+minute+":"+secound;
+        	//获取session中的IP
+    		String clientIP = ((InetSocketAddress)session.getRemoteAddress()).getAddress().getHostAddress();
+    		Sig sig = sigService.querySigByIpAddress(clientIP);
+        	
+        	
+    		if(sig!=null){
+    			
+            	try {
+            		//录入故障日志
+                	Devlog devlog = new Devlog();
+                	devlog.setSig(sig);
+                	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+					Date errorDate = sdf.parse(time);
+					devlog.setDevtime(errorDate);
+					devlog.setDevevent("故障代码"+error_code);
+					devlogService.add(devlog);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+            	//修改当前信号机故障状态以及故障代码
+    			int sigStatus = 1;
+    			sigService.updateSigStatus(sigStatus,error_code,sig.getId());
+    		}
+        }
 	}
 	//校时
 	private void upload_Localtime(byte[] data, IoSession session) {

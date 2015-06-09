@@ -91,4 +91,16 @@ public class SigServiceImp implements ISigService  {
 	public List<Sig> getAllSigs() {
 		return sigDao.queryList("from Sig ");
 	}
+	public List<Sig> querySigsByUser(int userid) {
+		String queryString = "from Sig mo where mo.userarea.usero.id = ? ";
+		Object[] p =  new Object[]{userid};
+		queryString += " order by mo.name asc ";
+		return sigDao.getObjectsByCondition(queryString, p);
+	}
+	public void updateSigStatus(int sigStatus, int error_code, Integer id) {
+		String queryString = "update Sig mo set mo.iserror=:iserror,mo.errorcode=:errorcode where mo.id=:id ";
+		String[] paramNames = new String[] {"iserror","errorcode","id"};
+		Object[] values = new Object[] {sigStatus,error_code, id};
+		sigDao.updateByHql(queryString, paramNames, values);
+	}
 }

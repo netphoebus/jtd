@@ -34,6 +34,8 @@ public class Sig implements java.io.Serializable {
 	private String lng;
 	private String ip;
 	private Long mkid;
+	private Integer iserror;
+	private Integer errorcode;
 	private Signpublicparam signpublicparam;
 	private List<Devlog> devlogs = new ArrayList<Devlog>();
 	private List<Commontime> commontimes = new ArrayList<Commontime>();
@@ -49,7 +51,7 @@ public class Sig implements java.io.Serializable {
 
 	/** full constructor */
 	public Sig(Userarea userarea, String name, String address, String lat,
-			String lng, String ip, Long mkid,
+			String lng, String ip, Long mkid,Integer iserror,Integer errorcode,
 			Signpublicparam signpublicparam, List<Devlog> devlogs,
 			Sigsystime sigsystime,List<Greenconflict> greenconflicts,List<Commontime> commontimes,
 			List<Solution> solutions,List<Issuedcommand> issuedcommands) {
@@ -60,6 +62,8 @@ public class Sig implements java.io.Serializable {
 		this.lng = lng;
 		this.ip = ip;
 		this.mkid = mkid;
+		this.iserror = iserror;
+		this.errorcode = errorcode;
 		this.signpublicparam = signpublicparam;
 		this.devlogs = devlogs;
 		this.sigsystime = sigsystime;
@@ -206,7 +210,25 @@ public class Sig implements java.io.Serializable {
 	public void setIssuedcommands(List<Issuedcommand> issuedcommands) {
 		this.issuedcommands = issuedcommands;
 	}
-	
 
+	@Column(name = "iserror")
+	public Integer getIserror() {
+		return iserror;
+	}
+
+	public void setIserror(Integer iserror) {
+		this.iserror = iserror;
+	}
+
+	@Column(name = "errorcode")
+	public Integer getErrorcode() {
+		return errorcode;
+	}
+
+	public void setErrorcode(Integer errorcode) {
+		this.errorcode = errorcode;
+	}
+	
+	
 	
 }

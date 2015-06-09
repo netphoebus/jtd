@@ -40,6 +40,11 @@ public interface ISigService {
 
 	public abstract List<Sig> getAllSigs();
 
+	public abstract List<Sig> querySigsByUser(int userid);
+
+	public abstract void updateSigStatus(int sigStatus, int error_code,
+			Integer id);
+
 
 
 }
