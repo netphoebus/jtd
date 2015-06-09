@@ -228,6 +228,14 @@ public class DiaoYueCmdFactory extends CmdFactoryBase implements ICmdParser{
 	  			Countdown[j]=data[27+8+j];
 	  		
 	  	
+	  	int date[] = new int[7];
+	  	for(int i=0;i<7;i++){
+	  		date[i] = data[29+i];
+	  	}
+	  	                
+	  		
+	  	System.out.println("本地时间是"+date[1]+"年"+date[2]+"月"+date[3]+"日"+date[4]+"时"+date[5]+"分"+date[6]+"秒"+"星期"+date[0]);
+	  	
 	  	
 	  	String clientIP = ((InetSocketAddress)session.getRemoteAddress()).getAddress().getHostAddress();
 	  	if(SigAction.curruntSigIp !=  null)

@@ -55,19 +55,18 @@ public class SignpublicparamAction extends ActionSupport implements RequestAware
 	
 	public String suretime(){
 		System.out.println("1-获取当前时间的各个数据--------------------------------");
-		Calendar nowdate = Calendar.getInstance();
-		int year = nowdate.get(Calendar.YEAR);
-		int month = nowdate.get(Calendar.MONTH)+1;
-		int day = nowdate.get(Calendar.DAY_OF_MONTH);
-		int week = nowdate.get(Calendar.DAY_OF_WEEK);
-		int hour = nowdate.get(Calendar.HOUR_OF_DAY);
-		int minute = nowdate.get(Calendar.MINUTE);
-		int second = nowdate.get(Calendar.SECOND);
-		System.out.println(year+"-"+month+"-"+day+" "+hour+":"+minute+":"+second+" 第"+week+"天");
-//		System.out.println("2-获取数据库数据，下发命令--------------------------------");
-//		updateJiaoShiBytes(sigIp,getCurrrenSession(sigIp));
-//		System.out.println("3-调阅新命令和新数据，更新数据库--------------------------------");
-//		Commands.executeCommand(28,this.getCurrrenSession(sigIp));//编号28 校时调阅
+		
+		
+		
+		
+		sigIp = (String) session.get("sigIp");
+		if(sigIp==null){
+			return "opsessiongo";
+		}
+		System.out.println("2-获取数据库数据，下发命令--------------------------------");
+		updateJiaoShiBytes(sigIp,getCurrrenSession(sigIp));
+		System.out.println("3-调阅新命令和新数据，更新数据库--------------------------------");
+		//Commands.executeCommand(28,this.getCurrrenSession(sigIp));//编号28 校时调阅
 		return NONE;
 	}
 	//跳转 一般参数页面  
@@ -329,18 +328,71 @@ public class SignpublicparamAction extends ActionSupport implements RequestAware
 	private void updateJiaoShiBytes(String sigIp,IoSession currrenSession) {
 		Sig sig1 = sigService.querySigByIpAddress(sigIp);
 		if(sig1!=null){
-			Issuedcommand issuedcommand = issuedcommandService.loadBySigidAndNumber(sig1.getId(),28);//编号28
-			if(issuedcommand!=null){
-				//0-获取新数据
+//			Issuedcommand issuedcommand = issuedcommandService.loadBySigidAndNumber(sig1.getId(),28);//编号28
+//			if(issuedcommand!=null){
+//				//0-获取新数据
+//				
+//				//1-获取数据库中保存的命令
+//				String datastr= issuedcommand.getDatas();//普通参数-原始命令
+//				System.out.println("Jiaoshi数据库中datas================================"+datastr);
+				//byte[] msendDatas = DataConvertor.decode(datastr,20);
+				byte[] msendDatas = new byte[20];
+				msendDatas[0] = (byte) 0xff;
+				msendDatas[1] = (byte) 0xff;
+				msendDatas[2] = (byte) 0xff;
+				msendDatas[3] = (byte) 0xff;
+				msendDatas[4] = (byte) 0x01; //有问题
+				msendDatas[5] = (byte) 0xf0; //有问题
+				msendDatas[6] = (byte)0x81 ;
+				msendDatas[7] = 0x00;
+				msendDatas[8] = 0x00;
+				msendDatas[9] = 0x10;
+				Calendar nowdate = Calendar.getInstance();
+					
+				msendDatas[10] = (byte) (nowdate.get(Calendar.YEAR)%2000);
+			    msendDatas[11] = (byte) (nowdate.get(Calendar.MONTH)+1);
+			    msendDatas[12] = (byte) nowdate.get(Calendar.DAY_OF_MONTH);
+			    if(nowdate.get(Calendar.DAY_OF_WEEK )<2){
+			    	msendDatas[13] = 0x07;
+			    }else if(nowdate.get(Calendar.DAY_OF_WEEK )>1){
+			    	msendDatas[13] = (byte)( nowdate.get(Calendar.DAY_OF_WEEK)-1);
+			    }
+			    
+			    
+			    msendDatas[14] = (byte) nowdate.get(Calendar.HOUR_OF_DAY);
+			    msendDatas[15] = (byte) nowdate.get(Calendar.MINUTE);
+			    msendDatas[16] = (byte) nowdate.get(Calendar.SECOND);
 				
-				//1-获取数据库中保存的命令
-				String datastr= issuedcommand.getDatas();//普通参数-原始命令
-				System.out.println("Jiaoshi数据库中datas================================"+datastr);
+				System.out.println("本地时间是"+msendDatas[10]+"年"+msendDatas[11]+"月"+msendDatas[12]+"日"+msendDatas[14]+"时"+msendDatas[15]+"分"+msendDatas[16]+"秒"+"星期"+msendDatas[13]);
+			    
+			    int k = 0;
+				 for( int i1 = 4; i1 < msendDatas.length-2; i1++){
+					 //System.out.println((msendDatas[i]&0xFF)+"对应"+msendDatas[i]);
+					//System.out.println();
+				  k += msendDatas[i1]&0xFF;
+				 }
+				 
+			 
+		         
+			       for (int i2 = 0; i2 < 2; i2++) {  
+			    	   msendDatas[msendDatas.length-i2-1]  = (byte) (k >>> (i2 * 8));  
+			       }  
+				
+				System.out.println("=======================校时下发========================================");
+				
+				for (int i3 = 0; i3 < msendDatas.length; i3++) {
+					System.out.print(msendDatas[i3]);
+				}
+				System.out.println("");
+				System.out.println("========================校时下发=======================================");
+				
+				currrenSession.write(msendDatas);
+				
 				//2-获取的新数据，包装成新命令，并修改数据库“命令表issuedCommand”-from jlj
 				
 				//3-命令下发-from sl
 //				currrenSession.write(IoBuffer.wrap(msendDatas));
-			}
+//			}
 		}
 		
 		
