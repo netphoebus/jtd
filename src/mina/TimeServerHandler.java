@@ -84,6 +84,7 @@ public class TimeServerHandler  implements IoHandler {
 		Sig sig = sigService.querySigByIpAddress(ipAddress);
 		if(sig==null){
 			sig = new Sig();
+			sig.setIserror(0);
 			sig.setIp(ipAddress);
 			Userarea userarea = userareaService.loadById(1);//load未知区域
 			if(userarea==null){

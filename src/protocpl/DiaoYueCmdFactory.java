@@ -1,6 +1,14 @@
 package protocpl;
 
 import java.net.InetSocketAddress;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import mina.CmdFactoryBase;
+import mina.CommandBase;
+import mina.DataConvertor;
+import mina.ICmdParser;
 
 import org.apache.mina.core.buffer.IoBuffer;
 import org.apache.mina.core.session.IoSession;
@@ -8,20 +16,16 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.jlj.action.SigAction;
+import com.jlj.model.Devlog;
 import com.jlj.model.Issuedcommand;
 import com.jlj.model.Sig;
 import com.jlj.service.ICommontimeService;
+import com.jlj.service.IDevlogService;
 import com.jlj.service.IIssuedcommandService;
 import com.jlj.service.ISigService;
 import com.jlj.service.ISignpublicparamService;
 import com.jlj.service.ISolutionService;
 import com.jlj.service.IStepService;
-
-import mina.CmdFactoryBase;
-import mina.CommandBase;
-import mina.DataConvertor;
-import mina.ICmdParser;
-import mina.CmdFactoryBase.MONITOR_CMD_TYPE;
 
 public class DiaoYueCmdFactory extends CmdFactoryBase implements ICmdParser{
 	final static ApplicationContext ac=new ClassPathXmlApplicationContext("beans.xml");
@@ -31,6 +35,7 @@ public class DiaoYueCmdFactory extends CmdFactoryBase implements ICmdParser{
 	final static ISolutionService solutionService = (ISolutionService)ac.getBean("solutionService");
 	final static IStepService stepService = (IStepService)ac.getBean("stepService");
 	final static IIssuedcommandService issuedcommandService = (IIssuedcommandService)ac.getBean("issuedcommandService");
+	final static IDevlogService devlogService = (IDevlogService)ac.getBean("devlogService");
 	private int locate[][];
 	private int Countdown[];
 	public DiaoYueCmdFactory(byte[] data) {
@@ -60,10 +65,6 @@ public class DiaoYueCmdFactory extends CmdFactoryBase implements ICmdParser{
 		// TODO Auto-generated method stub		
 		if(this.m_oData[7]==0){	
 			upload_RealTimeStatus(this.m_oData,session);
-		}else if(this.m_oData[7] == 1){
-			upload_Localtime(this.m_oData,session);
-		}else if(this.m_oData[7] == 2){
-			upload_Malfunction(this.m_oData,session);
 		}
 		return false;
 	}
@@ -82,66 +83,8 @@ public class DiaoYueCmdFactory extends CmdFactoryBase implements ICmdParser{
         }
         session.write(IoBuffer.wrap(aaa));
 	}
-	//上传故障
-	private void upload_Malfunction(byte[] data, IoSession session) {
-		// TODO Auto-generated method stub
-		//send_ack(session);
-        	int error = data[10]>>7;        //如果大于0 发生故障   等于0 排除故障
-			int year = (data[10]&0x7F);     //  年
-	        int mounth = data[11];
-	        int day = data[12];
-	        int hour = data[13];
-	        int minute = data[14];
-	        int secound = data[15];	        
-	        int error_code = data[16];  
-	        
-	        System.out.println("故障代码是"+(error_code&0x7f));
-        
-	}
-	//校时
-	private void upload_Localtime(byte[] data, IoSession session) {
-		// TODO Auto-generated method stub
-		send_ack(session);
-//        //获取信号机数据
-//        int year = data[10];
-//        int mounth = data[11];
-//        int day = data[12];
-//        int week = data[13];
-//        int hour = data[14];
-//        int minute = data[15];
-//        int secound = data[16];
-        
-      //获取session中的IP
-		String clientIP = ((InetSocketAddress)session.getRemoteAddress()).getAddress().getHostAddress();
-		Sig sig = sigService.querySigByIpAddress(clientIP);
-		
-		//保存信号机的公共参数下发命令的数据-start-from jlj
-		String datastr = DataConvertor.toHexString(data);
-		System.out.println("校时--------------------datastr="+datastr);
-			//根据ip查出信号机
-			if(sig!=null){
-				Issuedcommand issuedcommand = issuedcommandService.loadBySigidAndNumber(sig.getId(),28);
-				if(issuedcommand==null){
-					issuedcommand = new Issuedcommand();
-					issuedcommand.setName("校时");
-					issuedcommand.setDatas(datastr);
-					issuedcommand.setNumber(28);//编号28
-					issuedcommand.setSig(sig);
-					try {
-						issuedcommandService.add(issuedcommand);
-					} catch (Exception e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}else{
-					issuedcommandService.updateObjectById(datastr,issuedcommand.getId());
-				}
-				
-			
-			}
-			
-		//保存信号机的公共参数下发命令的数据-end-from jlj
-	}
+
+	
 
 	public void UpdatePushTask() {
 		// TODO Auto-generated method stub

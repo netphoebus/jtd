@@ -2,6 +2,9 @@ package com.jlj.action;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.InetSocketAddress;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -9,7 +12,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import mina.TimeServerHandler;
+import net.sf.json.JSONArray;
 
+import org.apache.mina.core.session.IoSession;
 import org.apache.struts2.interceptor.RequestAware;
 import org.apache.struts2.interceptor.ServletRequestAware;
 import org.apache.struts2.interceptor.ServletResponseAware;
@@ -17,12 +22,11 @@ import org.apache.struts2.interceptor.SessionAware;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import protocpl.ParametersCmdFactory;
-
 import com.jlj.model.Sig;
 import com.jlj.model.SigPara;
 import com.jlj.service.ISigService;
 import com.jlj.util.Commands;
+import com.jlj.vo.SigStatus;
 import com.opensymphony.xwork2.ActionSupport;
 
 @Component("sigAction")
@@ -43,25 +47,74 @@ public class SigAction extends ActionSupport implements RequestAware,
 	private Sig sig;
 	private int id;
 	public static String curruntSigIp;
-	public  int curruntCommandId;
+	public int curruntCommandId;
 	private SigPara sigParas;
 
+	public String sigStatus() {
+		// Usero usero = (Usero)session.get("usero");
+		// int userid = usero.getId();
+		int userid = 1;
+		List<Sig> usersigs = sigService.querySigsByUser(userid);
+		if (usersigs != null && usersigs.size() > 0) {
+			List<SigStatus> sigstatuses = new ArrayList<SigStatus>();
+			for (int i = 0; i < usersigs.size(); i++) {
+				String thestatus="";
+				IoSession theSession =this.getCurrrenSession(usersigs.get(i).getIp());
+				if(theSession==null){
+					thestatus = "<font color=red>断开</font>";
+				}else if(usersigs.get(i).getIserror()==1){
+					thestatus = "<font color=red>故障</font>";
+				}else{
+					thestatus = "正常";
+				}
+				SigStatus sigstatus = new SigStatus(usersigs.get(i)
+						.getName(), thestatus);
+				sigstatuses.add(sigstatus);
+			}
+			// 将list转化成JSON对象
+			JSONArray jsonArray = JSONArray.fromObject(sigstatuses);
+			System.out.println(jsonArray.toString());
+			PrintWriter out;
+			try {
+				response.setCharacterEncoding("UTF-8"); 
+				out = response.getWriter();
+				out.print(jsonArray);
+				out.flush();
+				out.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		return NONE;
+	}
+
+	public IoSession getCurrrenSession(String sigIp)
+	{
+		for(IoSession session : TimeServerHandler.iosessions)
+		{
+			if(((InetSocketAddress)session.getRemoteAddress()).getAddress().getHostAddress().equals(sigIp))
+			{
+				return session;
+			}
+		}
+		return null;
+	}
+	
 	public String toTraffic() {
 		long mkid = Long.parseLong(req.getParameter("mkid"));
 		sig = sigService.loadByMkid(mkid);
 		if (sig != null) {
 			curruntSigIp = sig.getIp();
-			session.put("sigIp", sig.getIp());//从地图中进入信号机，将信号机ip传入session
+			session.put("sigIp", sig.getIp());// 从地图中进入信号机，将信号机ip传入session
 		}
 		return "traffic";
 	}
 
-	
-
 	// 发送简单命令
 	public String doCommand() {
 		String commandIdStr = req.getParameter("commandId");
-		System.out.println("执行命令编号："+commandIdStr + "   " + "信号机链接对象："+TimeServerHandler.iosessions);
+		System.out.println("执行命令编号：" + commandIdStr + "   " + "信号机链接对象："
+				+ TimeServerHandler.iosessions);
 		if (commandIdStr != null) {
 			curruntCommandId = Integer.parseInt(commandIdStr);
 			if (curruntSigIp != null && TimeServerHandler.iosessions != null
@@ -82,8 +135,8 @@ public class SigAction extends ActionSupport implements RequestAware,
 		 */
 		if (trafficlights != trafficlights_next) {
 			trafficlights_next = trafficlights;
-			String jsonString = "{\"success\":\"true\"" + 
-					",\"l03\":\"" + trafficlights_next[0][3] + "\"" + // 东人行道
+			String jsonString = "{\"success\":\"true\"" + ",\"l03\":\""
+					+ trafficlights_next[0][3] + "\"" + // 东人行道
 					",\"l23\":\"" + trafficlights_next[2][3] + "\"" + // 西人行道
 
 					",\"l20\":\"" + trafficlights_next[2][0] + "\"" + // 西边左转灯
@@ -104,12 +157,12 @@ public class SigAction extends ActionSupport implements RequestAware,
 					",\"l11\":\"" + trafficlights_next[1][1] + "\"" + // 南边直行灯
 					",\"l10\":\"" + trafficlights_next[1][0] + "\"" + // 南边左转灯
 					",\"l12\":\"" + trafficlights_next[1][2] + "\"" + // 南边右转灯
-					
+
 					",\"dd\":\"" + trafficlights_next[0] + "\"" + // 东边倒计时
 					",\"nd\":\"" + trafficlights_next[1] + "\"" + // 南边倒计时
 					",\"xd\":\"" + trafficlights_next[2] + "\"" + // 西边倒计时
 					",\"bd\":\"" + trafficlights_next[3] + "\"" + // 北边倒计时
-					
+
 					"}";
 			PrintWriter out;
 			try {
@@ -220,6 +273,5 @@ public class SigAction extends ActionSupport implements RequestAware,
 	public void setCurruntCommandId(int curruntCommandId) {
 		this.curruntCommandId = curruntCommandId;
 	}
-	
-	
+
 }

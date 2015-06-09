@@ -140,6 +140,7 @@ public class MapAction extends ActionSupport implements RequestAware,
 			sig.setName(name);
 			sig.setLat(lat);
 			sig.setLng(lng);
+			sig.setIserror(0);
 			sigService.add(sig);
 		}else
 		{
@@ -149,6 +150,7 @@ public class MapAction extends ActionSupport implements RequestAware,
 			sig1.setName(name);
 			sig1.setLat(lat);
 			sig1.setLng(lng);
+			sig.setIserror(0);
 			sigService.update(sig1);
 		}
 		return NONE;
