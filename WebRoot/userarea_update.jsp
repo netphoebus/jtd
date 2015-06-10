@@ -12,7 +12,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		<title>用户修改密码</title>
+		<title>用户修改</title>
 		<link href="css/style.css" rel="stylesheet" type="text/css" />
 		<link href="css/select.css" rel="stylesheet" type="text/css" />
 		<link href="css/stilearn-helper.css" rel="stylesheet" type="text/css" />
@@ -22,6 +22,8 @@
 
 		<script type="text/javascript" src="js/jquery.idTabs.min.js"></script>
 		<script type="text/javascript" src="js/select-ui.min.js"></script>
+
+		
 
 		<script type="text/javascript">
 $(document).ready(function(e) {
@@ -50,7 +52,7 @@ $(document).ready(function(e) {
 					<ul>
 
 						<li>
-							<a href="#tab4" class="selected">用户修改密码</a>
+							<a href="#tab4" class="selected">用户片区修改</a>
 						</li>
 						<!--
     <li><a href="#tab3">权限分配</a></li> 
@@ -63,18 +65,21 @@ $(document).ready(function(e) {
 
 				<div id="tab4" class="tabson">
 				
-				<form action="useroAction!updatepwd" method="post">
+				<form action="userareaAction!update2" method="post">
 					<ul class="forminfo">
 						<li>
 							<table width="100%" border="0" cellspacing="0" cellpadding="0">
 								<tr>
 									<td width="85">
 										<label>
-											登录名：
+											片区名：
+											<s:hidden name="page"/>
+											<s:hidden name="userarea.id"></s:hidden>
+											<s:hidden name="userid"></s:hidden>
 										</label>
 									</td>
 									<td width="220">
-										<s:property value="#session.usero.username"/>
+										<s:textfield name="userarea.uareaname" cssClass="dfinput" cssStyle="width:200px;" ></s:textfield>
 										<b>*</b>
 									</td>
 									<td>
@@ -89,11 +94,11 @@ $(document).ready(function(e) {
 								<tr>
 									<td width="85">
 										<label>
-											旧密码：
+											精 度：
 										</label>
 									</td>
 									<td width="220">
-										<s:textfield name="oldpwd" cssClass="dfinput"
+										<s:textfield name="userarea.lat" cssClass="dfinput"
 											cssStyle="width:200px;"></s:textfield>
 										<b>*</b>
 									</td>
@@ -108,11 +113,11 @@ $(document).ready(function(e) {
 								<tr>
 									<td width="85">
 										<label>
-											新密码：
+											纬 度：
 										</label>
 									</td>
 									<td width="220">
-										<s:textfield name="newpwd" cssClass="dfinput"
+										<s:textfield name="userarea.lng" cssClass="dfinput"
 											cssStyle="width:200px;"></s:textfield>
 										<b>*</b>
 									</td>
@@ -127,11 +132,11 @@ $(document).ready(function(e) {
 								<tr>
 									<td width="85">
 										<label>
-											再次输入：
+											放大倍数：
 										</label>
 									</td>
 									<td width="220">
-										<s:textfield name="againpwd" cssClass="dfinput"
+										<s:textfield name="userarea.size" cssClass="dfinput"
 											cssStyle="width:200px;"></s:textfield>
 										<b>*</b>
 									</td>
@@ -141,7 +146,19 @@ $(document).ready(function(e) {
 								</tr>
 							</table>
 						</li>
-						
+						<li>
+							<div style="float: left; line-height: 35px;">
+								<label>
+									所属管理员：
+								</label>
+								<div class="vocation">
+									<s:select list="useros" listKey="id"
+										listValue="username" name="userarea.usero.id" cssClass="select1"></s:select>
+								</div>
+								<b>*</b>
+							</div>
+						</li>
+
 
 						<li>
 							<table width="100%" border="0" cellspacing="0" cellpadding="0">
@@ -154,14 +171,7 @@ $(document).ready(function(e) {
 										<input value="保存" type="submit" class="scbtn" />
 									</td>
 								</tr>
-								<tr>
-									<td width="85">
-										&nbsp;
-									</td>
-									<td>
-										<font color="red" size="16"><s:property value="outinfo"/></font>
-									</td>
-								</tr>
+								
 							</table>
 						</li>
 					</ul>

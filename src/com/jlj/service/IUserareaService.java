@@ -34,4 +34,16 @@ public interface IUserareaService {
 	public abstract List<Userarea> queryList(int con, String convalue,
 			int page, int size);
 
+	public abstract int getConditionTotalCount(int userid, String uareaname);
+
+	public abstract int getPageCount(int totalCount, int size);
+
+	public abstract List<Userarea> queryConditionList(int userid,
+			String uareaname, int page, int size);
+
+	public abstract int getConditionTotalCount(String uareaname);
+
+	public abstract List<Userarea> queryConditionList(String uareaname,
+			int page, int size);
+
 }

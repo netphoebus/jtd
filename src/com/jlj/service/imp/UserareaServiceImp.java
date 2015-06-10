@@ -105,5 +105,50 @@ public class UserareaServiceImp implements IUserareaService  {
 //		queryString += " order by mo.id desc ";
 		return userareaDao.pageList(queryString,p,page,size);
 	}
+	public int getConditionTotalCount(int userid, String uareaname) {
+		String queryString = "select count(*) from Userarea mo where mo.usero.id=? ";
+		Object[] p = null;
+		if(uareaname!=null&&!uareaname.equals("")){
+			queryString += "and mo.uareaname like ? "; 
+			p = new Object[]{userid,'%'+uareaname+'%'};
+		}else{
+			p = new Object[]{userid};
+		}
+		return userareaDao.getUniqueResult(queryString,p);
+	}
+	public int getPageCount(int totalCount, int size) {
+		return totalCount%size==0?totalCount/size:(totalCount/size+1);
+	}
+	public List<Userarea> queryConditionList(int userid, String uareaname,
+			int page, int size) {
+		String queryString = "from Userarea mo where mo.usero.id=? ";
+		Object[] p = null;
+		if(uareaname!=null&&!uareaname.equals("")){
+			queryString += "and mo.uareaname like ? "; 
+			p = new Object[]{userid,'%'+uareaname+'%'};
+		}else{
+			p = new Object[]{userid};
+		}
+		return userareaDao.pageList(queryString,p,page,size);
+	}
+	public int getConditionTotalCount(String uareaname) {
+		String queryString = "select count(*) from Userarea mo where 1=1 ";
+		Object[] p = null;
+		if(uareaname!=null&&!uareaname.equals("")){
+			queryString += "and mo.uareaname like ? "; 
+			p = new Object[]{'%'+uareaname+'%'};
+		}
+		return userareaDao.getUniqueResult(queryString,p);
+	}
+	public List<Userarea> queryConditionList(String uareaname, int page,
+			int size) {
+		String queryString = "from Userarea mo where 1=1 ";
+		Object[] p = null;
+		if(uareaname!=null&&!uareaname.equals("")){
+			queryString += "and mo.uareaname like ? "; 
+			p = new Object[]{'%'+uareaname+'%'};
+		}
+		return userareaDao.pageList(queryString,p,page,size);
+	}
 	
 }

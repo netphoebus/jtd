@@ -36,6 +36,37 @@ console.log("userManage----------------");
 	window.location=url;
 }
 
+//分页显示片区管理
+function jumpSonPage(url,page,userid,uareaname){
+console.log("userPianqu----------------");
+	var page=page;
+	if(isNaN(page)){
+		var page2=document.getElementById(page).value;
+		page=parseInt(page2);
+	}
+	
+	var url=url+'?page='+page+'&userid='+userid+'&uareaname='+uareaname;
+	url=encodeURI(url);
+	url=encodeURI(url);
+	window.location=url;
+}
+
+//分页显示片区管理
+function jumpAllPage(url,page,uareaname){
+console.log("pianqu----------------");
+	var page=page;
+	if(isNaN(page)){
+		var page2=document.getElementById(page).value;
+		page=parseInt(page2);
+	}
+	
+	var url=url+'?page='+page+'&uareaname='+uareaname;
+	url=encodeURI(url);
+	url=encodeURI(url);
+	window.location=url;
+}
+
+
 //分页显示操作日志管理
 function jumpOplogPage(url,page,uid,logtype,startdate,enddate){
 	var page=page;
