@@ -16,10 +16,10 @@ var options = "";
 
 
 //绿波带
-var markerids = [];
-var dbclickable = true;
-var clickable = false;
-var dots = Array();
+
+
+
+
 
 
 google.maps.event.addDomListener(window, "load", initialize);
@@ -97,6 +97,7 @@ function addClickEventListener() {
 		  marker.initOver = false;
 		  marker.name = '';
 		  marker.address = '';
+		  marker.dbclickable = false;
 		  initSignal(marker);  
 		  initMarkers.push(marker);
 	}
@@ -144,7 +145,7 @@ function setMarkerEvents(marker)
 {
 		
 		maphelper.bindInstanceEvent(marker, 'dblclick', function(event,map,marker) {
-					if(dbclickable)
+					if(marker.dbclickable)
 					{
 						window.open("sigAction!toTraffic?mkid="+marker.id,"rightFrame");
 					}
@@ -208,7 +209,6 @@ function MarkersInit()
 	            success: function(msg)
 	            { //成功
 	            		encodeURI(msg);
-	            		
 	            	 	markermsg = msg;
 	            	 	for(var i=0;i<markermsg.length;i++)
 			    	    {
@@ -221,6 +221,7 @@ function MarkersInit()
 						        icon: "images/boot2.png"
 				
 						 	 });
+						  marker.dbclickable = true;
 						  marker.connectSuccess = true;
 						  marker.initOver = true;
 						  marker.ip = markermsg[i].ip;
@@ -286,10 +287,11 @@ function saveMarker(id)
 	            { //成功   
 	          		if(infowindow)
 					infowindow.close();
-					alert('信号机绑定成功');   
+					alert('信号机绑定成功');  
+					
 	            }  
     	    });   
-    	    
+    	    initMarkers[i].dbclickable = true;
     	    initMarkers[i].initOver = true;
     	    initMarkers[i].setAnimation(null);
     	    initMarkers[i].name = name;

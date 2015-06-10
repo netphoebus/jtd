@@ -88,7 +88,23 @@ public class GreenroadAction extends ActionSupport implements RequestAware,
 		if(greenroad!=null)
 		{
 			//update
-			
+		}else
+		{
+			greenroad = new Greenroad();
+			greenroad.setMarklineid(mklid);
+			greenroad.setSigmids(smids);
+			greenroadService.add(greenroad);
+		}
+		return NONE;
+	}
+	
+	
+	public String lbd() throws Exception {
+		setAjaxParams();
+		greenroad = greenroadService.loadByMkid(mklid);
+		if(greenroad!=null)
+		{
+			//update
 			
 		}else
 		{
@@ -97,9 +113,7 @@ public class GreenroadAction extends ActionSupport implements RequestAware,
 			greenroad.setSigmids(smids);
 			greenroadService.add(greenroad);
 		}
-		
-		
-		return NONE;
+		return "lbd";
 	}
 
 	/**

@@ -19,6 +19,7 @@ var options = "";
 var markerids = [];
 var linesmsg = [];
 var dbclickable = true;
+var linedbclickable = false;
 var clickable = false;
 var dots = Array();
 var lineId = Date.parse(new Date());//时间做唯一标示表示当前线的ID
@@ -136,13 +137,6 @@ function setMarkerEvents(marker)
 						opacity:0.5,
 						id:lineId
 				});
-				
-					maphelper.bindInstanceEvent(poly, 'dblclick', function(event,map,poly) {
-					console.log(event);
-					console.log(poly);
-					console.log(poly.id+"这条线被打开了");
-	        });
-									
 	 			//$("#total_km").empty().text((poly.getLength()/1000).toFixed(3) + "km");  
 	 		}
 		});
@@ -271,6 +265,8 @@ function GreenLinesInit()
 								maphelper.bindInstanceEvent(poly, 'dblclick', function(event,map,poly) {
 											console.log(poly);
 									console.log(poly.id+"这条线被打开了");
+									self.location='lbd.html'; 
+									
 					        });
 			    	    	
 			    	    	/*
@@ -384,7 +380,6 @@ function deleteMarker(id)
 
 function Polyline() {
 		alert("点击地图上的信号机");
- 		
 		 clickable = true;//单击启动
 }
 
@@ -422,7 +417,8 @@ function saveLine()
             },   
             success: function(msg)
             { //成功   
-					alert("当前绿波带保存成功");  
+				alert("当前绿波带保存成功");  
+				self.location.reload();  //刷新本页
             }  
    	    });   
 	

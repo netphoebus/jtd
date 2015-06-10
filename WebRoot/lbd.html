@@ -1,0 +1,174 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<link href="css/style.css" rel="stylesheet" type="text/css" />
+<link href="css/lbd.css" rel="stylesheet" type="text/css" />
+<link href="css/select.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript" src="js/select-ui.min.js"></script>
+
+<!--[if IE 6]>
+	<script src="js/IE6PNG.js"></script>
+	<script type="text/javascript">
+		IE6PNG.fix('.png');
+	</script>
+<![endif]-->
+<script type="text/javascript">
+$(document).ready(function(e) {
+    $(".select1").uedSelect({
+		width : 200			  
+	});
+	$(".select2").uedSelect({
+		width : 167  
+	});
+	$(".select3").uedSelect({
+		width : 120
+	});
+});
+</script>
+</head>
+
+<body >
+
+<div id="usual1" class="usual" style="margin:15px;"> 
+    
+    <div class="itab">
+  	<ul> 
+    <li><a href="#tab1" class="selected">电缆联动</a></li> 
+   
+  	</ul>
+    </div> 
+
+
+<div style="width:100%; float:left; margin-top:15px;">
+  <div class="lleft lbdinfo ">
+    <div style="float:left; line-height:35px; width:90%;">
+             
+      <label>时段选择：</label>
+             <div class="vocation">
+               <select name="select" class="select1">
+                 <option>普通日</option>
+                 <option>节假日</option>
+                 <option>特殊日</option>
+             </select>
+             </div>
+    </div>
+
+    <div style="float:left; line-height:35px; width:90%; ">
+      <label>时段细分：</label>
+             <div class="vocation">
+               <select name="select3" class="select1">
+                 <option>时段0</option>
+                 <option>时段1</option>
+                 <option>时段2</option>
+               </select>
+             </div>
+              </div>
+              
+             
+              <div style="float:left; line-height:35px;  width:90%;">
+             <label>周　期：</label>
+             <div class="vocation"><span style="margin-right:5px;" >
+               <input type="text" class="dfinput"   style="width:125px;"/>
+             </span></div>
+             秒
+              </div>
+              <div style="width:100%; float:left; margin-top:15px;">
+                <table width="1000"  class="filetable2" >
+                  <thead>
+                    <tr>
+                      <th width="4%" height="40" style="text-align:center; line-height:20px; text-indent:0px;" >编号</th>
+                      <th width="25%" style="text-align:left; line-height:20px; text-indent:10px;">路口名</th>
+                      <th width="14%" style="text-align:left; line-height:20px; text-indent:0px;">距离（米）</th>
+                      <th width="14%"  style="text-align:left; line-height:20px; text-indent:0px;">正向同步相位号</th>
+                      <th width="14%" style="text-align:left; line-height:20px; text-indent:0px;">期望正向速度（Km/h）</th>
+                      <th width="14%" style="text-align:left; line-height:20px; text-indent:0px;">反向同步相位号</th>
+                      <th width="15%" style="text-align:left; line-height:20px; text-indent:0px;">期望反向车速（Km/h）</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td style="text-align:center;">1</td>
+                      <td>人民路-龙池路</td>
+                      <td align="right"><input type="text" class="dfinput" style="width:120px; float:left; "   /></td>
+                      <td><select name="select11" class="select3" >
+                        <option>0</option>
+                        <option>1</option>
+                        <option>2</option>
+                      </select></td>
+                      <td><input type="text" class="dfinput" style="width:120px; "   /></td>
+                      <td><select name="select11" class="select3">
+                        <option>0</option>
+                        <option>1</option>
+                        <option>2</option>
+                      </select></td>
+                      <td><input type="text" class="dfinput" style="width:120px;"   /></td>
+                    </tr>
+                    <tr>
+                      <td style="text-align:center;">2</td>
+                      <td>人民路-东山路</td>
+                      <td align="right"><input type="text" class="dfinput" style="width:120px; float:left;"   /></td>
+                      <td><select name="select11" class="select3">
+                        <option>0</option>
+                        <option>1</option>
+                        <option>2</option>
+                      </select></td>
+                      <td><input type="text" class="dfinput" style="width:120px;"   /></td>
+                      <td><select name="select11" class="select3">
+                        <option>0</option>
+                        <option>1</option>
+                        <option>2</option>
+                      </select></td>
+                      <td><input type="text" class="dfinput" style="width:120px;"   /></td>
+                    </tr>
+                    <tr>
+                      <td style="text-align:center;">3</td>
+                      <td>人民路-迎宾路</td>
+                      <td ><input type="text" class="dfinput" style="width:120px; float:left; "   /></td>
+                      <td>
+                      <select name="select11" class="select3" >
+                        <option>0</option>
+                        <option>1</option>
+                        <option>2</option>
+                      </select>
+                      </td>
+                      <td><input type="text" class="dfinput" style="width:120px; "   /></td>
+                      <td><select name="select11" class="select3">
+                        <option>0</option>
+                        <option>1</option>
+                        <option>2</option>
+                      </select></td>
+                      <td><input type="text" class="dfinput" style="width:120px; "   /></td>
+                    </tr>
+                    <tr>
+                      <td style="text-align:center;">4</td>
+                      <td>人民路-解放路</td>
+                      <td align="right"><input type="text" class="dfinput" style="width:120px; float:left; "   /></td>
+                      <td><select name="select11" class="select3">
+                        <option>0</option>
+                        <option>1</option>
+                        <option>2</option>
+                      </select></td>
+                      <td><input type="text" class="dfinput" style="width:120px; "   /></td>
+                      <td><select name="select11" class="select3">
+                        <option>0</option>
+                        <option>1</option>
+                        <option>2</option>
+                      </select></td>
+                      <td><input type="text" class="dfinput" style="width:120px; "   /></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div style="width: 90%; float: left; margin-top: 20px; color: #999; text-align: center;"> 注：基准路口距离设置为0，其余路口的距离是与基准路口的距离。允许非对称相位
+               
+              </div>
+              <div style="width: 90%; float: left; margin-top: 20px; color: #999; text-align: center;"><input name="input" type="button" class="scbtn" style="margin-top:15px;" value="生成时距图"/>
+              </div>
+              <p>&nbsp;</p>
+  </div>
+</div>
+</body>
+</html>

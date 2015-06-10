@@ -113,7 +113,6 @@ public class CommontimeServiceImp implements ICommontimeService  {
 		
 		String queryString = "from Commontime mo where 1=1 and mo.mkid="+mkid;
 		
-		
 		return commontimeDao.loadByMkid(queryString);
 	}
 	public void updateByConditionOrdinaryid(int hour, int minute, int seconds,
@@ -140,5 +139,31 @@ public class CommontimeServiceImp implements ICommontimeService  {
 		String[] paramNames = new String[] {"second","timeid"};
 		Object[] values = new Object[] {second, timeid};
 		commontimeDao.updateByHql(queryString, paramNames, values);
+	}
+	public Commontime loadByOrderId(Integer orderid) {
+		String queryString = "from Commontime mo where 1=1 and mo.orderid="+orderid;
+		return commontimeDao.loadByMkid(queryString);
+	}
+	public Commontime loadByOrderIdAndTimetype(Integer timetype,Integer orderid) {
+		String queryString = "from Commontime mo where mo.orderid="+orderid+" and  mo.timetype="+timetype;
+		List<Commontime> list = commontimeDao.queryList(queryString);
+		
+		if(list!=null&&list.size()>0)
+		{
+			return list.get(0);
+		}
+		else
+		{
+			return null;
+		}
+			
+	}
+	public void updateCommontimeSecond(String methodname, int second,
+			Integer orderid, Integer timetype) {
+		String queryString = "update Commontime mo set mo.t"+methodname+"=:second where mo.orderid=:orderid and mo.timetype=:timetype";
+		String[] paramNames = new String[] {"second","orderid","timetype"};
+		Object[] values = new Object[] {second, orderid,timetype};
+		commontimeDao.updateByHql(queryString, paramNames, values);
+		
 	}
 }

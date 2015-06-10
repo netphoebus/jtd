@@ -64,8 +64,8 @@ public class SigtimeAction extends ActionSupport implements RequestAware,
 
 	private Sig sig;
 	private Commontime commontime;
-	private Integer timetype;
-	private int timeid;
+	private int orderid;
+	private int timetype;
 	private Solution solution;
 	private Signpublicparam publicparam;
 	private int soid;
@@ -89,9 +89,11 @@ public class SigtimeAction extends ActionSupport implements RequestAware,
 
 			setCommontimeVOs(commontimes);
 			commontime = getCurrentCommontime();
-			steps = getCurrentSolution();
-			setCurrentSteptimes(commontime, steps);
-
+			if(commontime!=null)
+			{
+				steps = getCurrentSolution();
+				setCurrentSteptimes(commontime, steps);
+			}
 			session.put("sigIp", sigIp);// 从地图中进入信号机，将信号机id传入session
 			return "cssz-time";
 		} else {
@@ -247,49 +249,38 @@ public class SigtimeAction extends ActionSupport implements RequestAware,
 		if (req.getParameter("timetype") != null) {
 			timetype = Integer.parseInt(req.getParameter("timetype"));// 获得前台的时间类型
 		}
-		if (req.getParameter("timeid") != null) {
-			timeid = Integer.parseInt(req.getParameter("timeid"));// 获得前台的时间段id
+		if (req.getParameter("orderid") != null) {
+			orderid = Integer.parseInt(req.getParameter("orderid"));// 获得前台的时间段id
 		}
 		if (req.getParameter("soid") != null) {
 			soid = Integer.parseInt(req.getParameter("soid"));// 获得前台sid
 		}
-		// 处理时间类型
-		if (timetype == null || timetype == 0) {
-			timetype = 1;
-		}
+		
 	}
 
 	/**
-	 * 前台显示部分方法 1、select获得所有时间段名称和id 2、获得当前显示的commontime 3、获得当前的solution
+	 * 前台显示部分方法 1、select获得所有时间段名称和orderId 2、获得当前显示的commontime 3、获得当前的solution
 	 */
 	private List<CommontimeVO> setCommontimeVOs(List<Commontime> commontimes) {
 		commontimeVOs = new ArrayList<CommontimeVO>();
-		int i = 0;
 		for (Commontime time : commontimes) {
-			commontimeVOs.add(new CommontimeVO(time.getId(), "时间段" + i++));
+			commontimeVOs.add(new CommontimeVO(time.getOrderid(), "时间段" + time.getOrderid()));
 		}
 		return commontimeVOs;
 	}
 
 	public Commontime getCurrentCommontime() {
-		// 获得当前时间段参数
-		if (timeid == 0) {
-			commontime = commontimes.get(0);
-		} else {
-			commontime = commontimeService.loadById(timeid);
-		}
+		commontime = commontimeService.loadByOrderIdAndTimetype(timetype,orderid);
 		return commontime;
 	}
 
 	public List<Step> getCurrentSolution() {
 		if (soid == 0) {
-			solution = solutionService
-					.loadById(commontime.getWorkingprogram() + 1);// 相位方案0对应数据库中的id=1
+			solution = solutionService.loadById(commontime.getWorkingprogram() + 1);// 相位方案0对应数据库中的id=1
 		} else {
 			solution = solutionService.loadById(soid);
 		}
 		return steps = stepService.loadBySoId(solution.getId());
-
 	}
 
 	/**
@@ -335,11 +326,10 @@ public class SigtimeAction extends ActionSupport implements RequestAware,
 	public String updateStepTimes() throws Exception {
 		System.out.println("updateStepTimes1-获取界面数据，更新数据库--------------------------------");
 		String map = req.getParameter("dates");
-		timeid = Integer.parseInt(req.getParameter("timeid"));
-		if(timeid!=0){
-			commontime = commontimeService.loadById(timeid);
+		setURLParameter();
+		commontime = commontimeService.loadByOrderIdAndTimetype(orderid,timetype);
 			
-		}
+		
 		// 需要插入数据库 解析 map-from jlj
 		System.out.println(map);
 		/**
@@ -353,7 +343,7 @@ public class SigtimeAction extends ActionSupport implements RequestAware,
 			int stepid = Integer.parseInt(thissteptime.substring(0,thissteptime.indexOf("_")));
 			String methodname = thissteptime.substring(thissteptime.indexOf("_")+1, thissteptime.indexOf(":"));
 			int second = Integer.parseInt(thissteptime.substring(thissteptime.indexOf(":")+1));
-			commontimeService.updateCommontimeSecond(methodname,second,timeid);
+			commontimeService.updateCommontimeSecond(methodname,second,orderid,timetype);
 		}
 		
 		System.out.println("updateStepTimes2-获取数据库数据，下发命令--------------------------------");
@@ -545,16 +535,20 @@ public class SigtimeAction extends ActionSupport implements RequestAware,
 		this.commontime = commontime;
 	}
 
-	public void setTimetype(Integer timetype) {
+	public int getOrderid() {
+		return orderid;
+	}
+
+	public void setOrderid(int orderid) {
+		this.orderid = orderid;
+	}
+
+	public int getTimetype() {
+		return timetype;
+	}
+
+	public void setTimetype(int timetype) {
 		this.timetype = timetype;
-	}
-
-	public int getTimeid() {
-		return timeid;
-	}
-
-	public void setTimeid(int timeid) {
-		this.timeid = timeid;
 	}
 
 	public List<CommontimeVO> getCommontimesVO() {
@@ -565,9 +559,7 @@ public class SigtimeAction extends ActionSupport implements RequestAware,
 		this.commontimeVOs = commontimeVOs;
 	}
 
-	public Integer getTimetype() {
-		return timetype;
-	}
+	
 
 	public ISolutionService getSolutionService() {
 		return solutionService;
@@ -651,7 +643,8 @@ public class SigtimeAction extends ActionSupport implements RequestAware,
 	public void setSteptimes(List<StepTimeVO> steptimes) {
 		this.steptimes = steptimes;
 	}
-
+	
+	
 	public IIssuedcommandService getIssuedcommandService() {
 		return issuedcommandService;
 	}
@@ -660,5 +653,5 @@ public class SigtimeAction extends ActionSupport implements RequestAware,
 	public void setIssuedcommandService(IIssuedcommandService issuedcommandService) {
 		this.issuedcommandService = issuedcommandService;
 	}
-
+	
 }
