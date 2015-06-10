@@ -79,43 +79,7 @@ public class MapAction extends ActionSupport implements RequestAware,
 		return NONE;
 	}
 	
-	/**
-	 * 加载绿波带
-	 * 
-	 * @return
-	 * @throws Exception
-	 */
-	public String loadLines() throws Exception {
-		System.out.println("---------------1");
-		sigs = sigService.getAllSigs();
-		System.out.println("---------------2");
-		if(sigs!=null&&sigs.size()>0)
-		{
-			for (Sig sig : sigs) {
-				MarkerVO markervo = new MarkerVO();
-				markervo.setId(sig.getMkid());
-				markervo.setAddress(sig.getAddress());
-				markervo.setIp(sig.getIp());
-				markervo.setLat(sig.getLat());
-				markervo.setLng(sig.getLng());
-				markervo.setName(sig.getName());
-				initMarkers.add(markervo);
-			}
-			JSONArray jsonArr = JSONArray.fromObject(initMarkers);
-
-			PrintWriter out;
-			try {
-				response.setContentType("text/html;charset=UTF-8");
-				out = response.getWriter();
-				out.print(jsonArr.toString());
-				out.flush();
-				out.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-		return NONE;
-	}
+	
 
 	/**
 	 * 添加
@@ -132,7 +96,7 @@ public class MapAction extends ActionSupport implements RequestAware,
 		String lat = req.getParameter("lat");
 		Sig sig1 = sigService.querySigByIpAddress(ip);
 		if(sig1==null){
-			System.out.println("coming null.......");
+			//System.out.println("coming null.......");
 			Sig sig = new Sig();
 			sig.setMkid(mkid);
 			sig.setIp(ip);
@@ -144,27 +108,19 @@ public class MapAction extends ActionSupport implements RequestAware,
 			sigService.add(sig);
 		}else
 		{
-			System.out.println("coming.......");
+			//System.out.println("coming.......");
 			sig1.setMkid(mkid);
 			sig1.setAddress(address);
 			sig1.setName(name);
 			sig1.setLat(lat);
 			sig1.setLng(lng);
-			sig.setIserror(0);
+			sig1.setIserror(0);
 			sigService.update(sig1);
 		}
 		return NONE;
 	}
 	
 	
-	//添加绿波带
-	public String addLine() throws Exception {
-		long mklid = Long.parseLong(req.getParameter("linemid"));
-		String sids = req.getParameter("sids");
-		String[] arysids = sids.split(",");
-		
-		return NONE;
-	}
 
 	/**
 	 * 删除

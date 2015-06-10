@@ -48,4 +48,12 @@ public interface ICommontimeService {
 	public abstract void updateCommontimeSecond(String methodname, int second,
 			int timeid);
 
+	public abstract Commontime loadByOrderId(Integer orderid);
+
+	public abstract Commontime loadByOrderIdAndTimetype(
+			Integer timetype,Integer orderid);
+
+	public abstract void updateCommontimeSecond(String methodname, int second,
+			Integer orderid, Integer timetype);
+
 }

@@ -2,32 +2,33 @@
 function changeTimeSelect()
 {
 	var timetype = $("#timetype").val();
-	var timeid = $("#timeid").val();
-	console.log("sigtimeAction!sigtimes?timetype="+timetype+"&timeid="+timeid);
-	location.href = "sigtimeAction!sigtimes?timetype="+timetype+"&timeid="+timeid;
+	var orderid = $("#orderid").val();
+	console.log("sigtimeAction!sigtimes?timetype="+timetype+"&orderid="+orderid);
+	location.href = "sigtimeAction!sigtimes?timetype="+timetype+"&orderid="+orderid;
 }
 
 function changeSoSelect()
 {
 	var timetype = $("#timetype").val();
-	var timeid = $("#timeid").val();
+	var orderid = $("#orderid").val();
 	var soid = $("#soid").val();
-	console.log("sigtimeAction!sigtimes?timetype="+timetype+"&timeid="+timeid+"&soid="+soid);
-	location.href = "sigtimeAction!sigtimes?timetype="+timetype+"&timeid="+timeid+"&soid="+soid;
+	console.log("sigtimeAction!sigtimes?timetype="+timetype+"&orderid="+orderid+"&soid="+soid);
+	location.href = "sigtimeAction!sigtimes?timetype="+timetype+"&orderid="+orderid+"&soid="+soid;
 }
 
 var msg = "";
 function updateStepTimes()
 {
 	var timeinputs = $(".timeinput");
-	var timeid = $("#timeid").val();
+	var timetype = $("#timetype").val();
+	var orderid = $("#orderid").val();
 	for(var i=0;i<timeinputs.length;i++){
         msg = msg + timeinputs[i].name+":"+ timeinputs[i].value+",";
 	}
 	$.ajax({   
             url:'updateStepTimes',//这里是你的action或者servlert的路径地址   
             type:'post', //数据发送方式  
-            data: { "dates":msg,"timeid":timeid},  
+            data: { "dates":msg,"timetype":timetype,"orderid":orderid},  
             traditional: true,  
             error: function(msg)
             { //失败   
