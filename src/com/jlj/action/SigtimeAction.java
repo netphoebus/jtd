@@ -69,7 +69,9 @@ public class SigtimeAction extends ActionSupport implements RequestAware,
 	private Solution solution;
 	private Signpublicparam publicparam;
 	private int soid;
+	private int signid;
 	private String sigIp;
+	private String map;
 
 	public String sigtimes() {
 		sigIp = (String) session.get("sigIp");
@@ -255,6 +257,16 @@ public class SigtimeAction extends ActionSupport implements RequestAware,
 		if (req.getParameter("soid") != null) {
 			soid = Integer.parseInt(req.getParameter("soid"));// 获得前台sid
 		}
+		if (req.getParameter("signid") != null) {
+			signid = Integer.parseInt(req.getParameter("signid"));// 获得前台sid
+		}
+		if (req.getParameter("dates") != null) {
+			map = req.getParameter("dates");// 获得前台sid
+		}else
+		{
+			map = " ,";
+		}
+		
 		
 	}
 
@@ -270,7 +282,8 @@ public class SigtimeAction extends ActionSupport implements RequestAware,
 	}
 
 	public Commontime getCurrentCommontime() {
-		commontime = commontimeService.loadByOrderIdAndTimetype(timetype,orderid);
+		commontime = commontimeService.loadByOrderIdAndTimetype(timetype,orderid,sig
+				.getId());
 		return commontime;
 	}
 
@@ -325,11 +338,9 @@ public class SigtimeAction extends ActionSupport implements RequestAware,
 
 	public String updateStepTimes() throws Exception {
 		System.out.println("updateStepTimes1-获取界面数据，更新数据库--------------------------------");
-		String map = req.getParameter("dates");
 		setURLParameter();
-		commontime = commontimeService.loadByOrderIdAndTimetype(orderid,timetype);
+		commontime = commontimeService.loadByOrderIdAndTimetype(orderid,timetype,signid);
 			
-		
 		// 需要插入数据库 解析 map-from jlj
 		System.out.println(map);
 		/**
@@ -652,6 +663,22 @@ public class SigtimeAction extends ActionSupport implements RequestAware,
 	@Resource
 	public void setIssuedcommandService(IIssuedcommandService issuedcommandService) {
 		this.issuedcommandService = issuedcommandService;
+	}
+
+	public int getSignid() {
+		return signid;
+	}
+
+	public void setSignid(int signid) {
+		this.signid = signid;
+	}
+
+	public String getMap() {
+		return map;
+	}
+
+	public void setMap(String map) {
+		this.map = map;
 	}
 	
 }

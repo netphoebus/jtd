@@ -22,13 +22,14 @@ function updateStepTimes()
 	var timeinputs = $(".timeinput");
 	var timetype = $("#timetype").val();
 	var orderid = $("#orderid").val();
+	var signid = $("#signid").val();
 	for(var i=0;i<timeinputs.length;i++){
         msg = msg + timeinputs[i].name+":"+ timeinputs[i].value+",";
 	}
 	$.ajax({   
             url:'updateStepTimes',//这里是你的action或者servlert的路径地址   
             type:'post', //数据发送方式  
-            data: { "dates":msg,"timetype":timetype,"orderid":orderid},  
+            data: { "dates":msg,"timetype":timetype,"orderid":orderid,"signid":signid},  
             traditional: true,  
             error: function(msg)
             { //失败   

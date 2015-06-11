@@ -166,4 +166,18 @@ public class CommontimeServiceImp implements ICommontimeService  {
 		commontimeDao.updateByHql(queryString, paramNames, values);
 		
 	}
+	public Commontime loadByOrderIdAndTimetype(Integer timetype,
+			Integer orderid, int signid) {
+		String queryString = "from Commontime mo where mo.orderid="+orderid+" and  mo.timetype="+timetype+" and  mo.sig.id="+signid;
+		List<Commontime> list = commontimeDao.queryList(queryString);
+		
+		if(list!=null&&list.size()>0)
+		{
+			return list.get(0);
+		}
+		else
+		{
+			return null;
+		}
+	}
 }

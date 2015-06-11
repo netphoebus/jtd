@@ -80,13 +80,13 @@ $(document).ready(function(e) {
 								</label>
 								<div class="vocation">
 									<select id="timetype" name="timetype" class="select1" onchange="changeTimeSelect()">
-										<option value="0">
+										<option <s:if test="timetype==0">selected</s:if> value="0">
 											普通日
 										</option>
-										<option value="1">
+										<option <s:if test="timetype==1">selected</s:if> value="1">
 											周日
 										</option>
-										<option value="2">
+										<option <s:if test="timetype==2">selected</s:if> value="2">
 											特殊日
 										</option>
 									</select>
@@ -98,8 +98,24 @@ $(document).ready(function(e) {
 									时间段细分：
 								</label>
 								<div class="vocation">
-									<s:select list="commontimesVO"   listValue="commontimename" listKey="cid"   id="orderid"
-						             name="commontimeVO" value="commontime.orderid" cssClass="select1" onchange="changeTimeSelect()"></s:select>  
+									<select name="select3" id="orderid" class="select1" onchange="changeTimeSelect()">
+						                 <option <s:if test="orderid==0">selected</s:if>  value="0">时间段0</option>
+						                 <option <s:if test="orderid==1">selected</s:if>  value="1">时间段1</option>
+						                 <option <s:if test="orderid==2">selected</s:if> value="2">时间段2</option>
+						                 <option <s:if test="orderid==3">selected</s:if> value="3">时间段3</option>
+						                 <option <s:if test="orderid==4">selected</s:if> value="4">时间段4</option>
+						                 <option <s:if test="orderid==5">selected</s:if> value="5">时间段5</option>
+						                 <option <s:if test="orderid==6">selected</s:if> value="6">时间段6</option>
+						                 <option <s:if test="orderid==7">selected</s:if> value="7">时间段7</option>
+						                 <option <s:if test="orderid==8">selected</s:if> value="8">时间段8</option>
+						                 <option <s:if test="orderid==9">selected</s:if> value="9">时间段9</option>
+						                 <option <s:if test="orderid==10">selected</s:if> value="10">时间段10</option>
+						                 <option <s:if test="orderid==11">selected</s:if> value="11">时间段11</option>
+						                 <option <s:if test="orderid==12">selected</s:if> value="12">时间段12</option>
+						                 <option <s:if test="orderid==13">selected</s:if> value="13">时间段13</option>
+						                 <option <s:if test="orderid==14">selected</s:if> value="14">时间段14</option>
+						                 <option <s:if test="orderid==15">selected</s:if> value="15">时间段15</option>
+						               </select>
 								</div>
 								<b>*</b>
 							</div>
@@ -121,7 +137,7 @@ $(document).ready(function(e) {
 									<s:hidden name="commontime.id"></s:hidden>
 									<s:hidden name="commontime.orderid"></s:hidden>
 									<s:hidden name="commontime.timetype"></s:hidden>
-									<s:hidden name="commontime.sig.id"></s:hidden>
+									<s:hidden id="signid" name="commontime.sig.id"></s:hidden>
 									<s:hidden name="commontime.t0"></s:hidden>
 									<s:hidden name="commontime.t1"></s:hidden>
 									<s:hidden name="commontime.t2"></s:hidden>

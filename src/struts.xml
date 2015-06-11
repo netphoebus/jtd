@@ -140,6 +140,19 @@
 		</action>
 	</package>
 	
+	
+	<package name="greenroad" extends="struts-default">
+		<global-results>
+			<result name="adminLogin">/login.jsp</result>
+			<result name="opsessiongo">/op_sessiongo.jsp</result>
+		</global-results>
+		<action name="greenroadAction" class="greenroadAction">
+			<result name="lbd">/lbd.jsp</result>
+			<result name="greenroad">/greenroad.jsp</result>
+			<result name="error">/error.jsp</result>
+		</action>
+	</package>
+	
 	<package name="realtime_ajax" extends="json-default">  
         <action name="realtime" class="sigAction" method="realtime">  
             <result type="json">  
@@ -181,6 +194,8 @@
 	<package name="signpublicparam_ajax" extends="json-default">
 		<action name="suretime" class="sigpublicparamAction" method="suretime"/>
 	 </package>
+	 
+	 
 	
 </struts>
 

@@ -265,7 +265,7 @@ function GreenLinesInit()
 								maphelper.bindInstanceEvent(poly, 'dblclick', function(event,map,poly) {
 											console.log(poly);
 									console.log(poly.id+"这条线被打开了");
-									self.location='lbd.html'; 
+									self.location='greenroadAction!lbd?mklid='+poly.id; 
 									
 					        });
 			    	    	

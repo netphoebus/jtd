@@ -1,15 +1,24 @@
  $(document).ready(function(){
-
+ 
+ 
+			var searchStr = decodeURI(location.search);
+			var jsonlist = searchStr.substring(searchStr.indexOf("=")+1,searchStr.length);
+			var jsonSigs = JSON.parse(jsonlist);
+			console.log(jsonSigs);
+			
+			
+			
+			
             var sigs = [];//信号机数组
             var canvas =document.getElementById("canvas");
             var context =canvas.getContext("2d");
             var dots = [];//坐标点
             var dotsbak = [];//原坐标点
             var cirleTime = 120;//一个周期的时间
-
+			
 
             var pixdiffX = 38;//像素 X轴差值
-            var pixdiffY = 859;//像素 Y轴差值
+            var pixdiffY = 789;//像素 Y轴差值
             var pixDot = 8;//像素 点位差值
             var pixinitsigWidth = 1800/3;//初始化信号机像素的 三分之一 为一个周期的长度
 
@@ -32,6 +41,7 @@
                     setSigDraggable(i);//设置信号机拖动事件
                 }
                 $("#sigtime"+i).css('margin-left',dots[i].x);
+                $("#sigtime"+i).css('margin-top',pixdiffY+35);
                 $("#sigdistance"+i).css('margin-top',dots[i].y);
                 $("#sigdistance"+i).text((pixdiffY-dots[i].y)*10);//显示与基准点的距离差
                 $("#sigtime"+i).text(dots[i].x-pixdiffX);//显示与基准点的时间差
@@ -204,6 +214,7 @@
                 /**
                  * 信号机构造方法
                  * number:顺序编号
+                 * name:信号机名称
                  * speedzx:正向速度
                  * speedfx:反向速度
                  * distance:距离(与基准点)
@@ -211,9 +222,10 @@
                  * zhengxiang:周期 相位
                  * fanxiang:周期 相位
                  */
-                function Sig(number,speedzx,speedfx,distance,phasenum,zhengxiang,fanxiang)
+                function Sig(number,name,speedzx,speedfx,distance,phasenum,zhengxiang,fanxiang)
                 {
                     this.number = number;
+                    this.name = name;
                     this.speedzx = speedzx*10/36;//公里/h 换算为 m/s
                     this.speedfx = speedfx*10/36;
                     this.distance = distance;
@@ -226,11 +238,11 @@
                 function initSigs()
                 {
                     console.log("----------------initSigs----------");
-                    var sig1 = new Sig(0,40,50,0,[0.33,0.33,0.33],"_a_0","_b_0");
+                    var sig1 = new Sig(0,'test1',40,50,0,[0.33,0.33,0.33],"_a_0","_b_0");//基准点
                     sigs.push(sig1);
-                    var sig2 = new Sig(1,60,60,500,[0.25,0.25,0.25,0.25],"_a_0",null);
+                    var sig2 = new Sig(1,'test2',60,60,500,[0.25,0.25,0.25,0.25],"_a_0",null);
                     sigs.push(sig2);
-                    var sig3 = new Sig(2,80,60,1500,[0.166,0.166,0.166,0.166,0.166,0.166],"_a_0",null);
+                    var sig3 = new Sig(2,'test3',0,0,1500,[0.166,0.166,0.166,0.166,0.166,0.166],"_a_0",null);//最后一个信号机没有正向反向速度
                     sigs.push(sig3);
                 }
 
@@ -242,7 +254,7 @@
                  for(var i=0;i<sigs.length;i++)
                  {
 
-                     var sigdiv=$('<div>'+'sig'+i+'</div>');             //信号机 div
+                     var sigdiv=$('<div>'+'sig'+sigs[i].name+'</div>');             //信号机 div
                      var sigtimediv=$('<div></div>');                      //信号机开始时间 div
                      var sigdistance=$('<div></div>');                      //信号机离基准路口距离
 
@@ -445,7 +457,6 @@
                     $("#sigspeed"+i).text("正向速度:"+parseInt((dots[i].y-dots[i+1].y)*10/(dots[i+1].x-dots[i].x)*36/10));
 
 
-
                     /**
                      * 反向速度
                      */
@@ -518,3 +529,7 @@
             }
 
         });
+        
+     
+        
+        

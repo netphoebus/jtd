@@ -51,7 +51,7 @@ public interface ICommontimeService {
 	public abstract Commontime loadByOrderId(Integer orderid);
 
 	public abstract Commontime loadByOrderIdAndTimetype(
-			Integer timetype,Integer orderid);
+			Integer timetype,Integer orderid, int signid);
 
 	public abstract void updateCommontimeSecond(String methodname, int second,
 			Integer orderid, Integer timetype);

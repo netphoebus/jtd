@@ -15,8 +15,8 @@
 <base href="<%=basePath%>"> 
 <script type="text/javascript" src="js/jquery.js"></script>
 <script type="text/javascript" src="js/jquery-ui.js"></script>
-<link rel="stylesheet" href="css/jquery-ui.css">
-<link rel="stylesheet" href="css/greenroad.css">
+<link rel="stylesheet" href="css/jquery-ui.css"/>
+<link rel="stylesheet" href="css/greenroad.css"/>
 <script type="text/javascript" src="js/privategreenroad.js"></script>
  
     <style>
