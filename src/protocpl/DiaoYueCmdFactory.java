@@ -164,7 +164,9 @@ public class DiaoYueCmdFactory extends CmdFactoryBase implements ICmdParser{
 	  	
 	  		
 	  	System.out.println("本地时间是"+date[1]+"年"+date[2]+"月"+date[3]+"日"+date[4]+"时"+date[5]+"分"+date[6]+"秒"+"星期"+date[0]+"故障代码"+(data[41]&0x7f));
-	  	
+	  	System.out.println("东倒"+data[37]+"南倒"+data[38]+"西倒"+data[39]+"北倒"+data[40]);
+	  	int flow = ((data[43]&0xff)<<24)+((data[44]&0xff)<<16)+((data[45]&0xff)<<8)+((data[46]&0xff));
+	  	System.out.println("车道号"+data[42]+"流量是"+flow);
 	  	
 	  	String clientIP = ((InetSocketAddress)session.getRemoteAddress()).getAddress().getHostAddress();
 	  	if(SigAction.curruntSigIp !=  null)
