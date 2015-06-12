@@ -4,23 +4,23 @@
 			var searchStr = decodeURI(location.search);
 			var jsonlist = searchStr.substring(searchStr.indexOf("=")+1,searchStr.length);
 			var jsonSigs = JSON.parse(jsonlist);
-			console.log(jsonSigs);
 			
 			
 			
 			
+			var jsonsigs = [];
             var sigs = [];//信号机数组
             var canvas =document.getElementById("canvas");
             var context =canvas.getContext("2d");
             var dots = [];//坐标点
             var dotsbak = [];//原坐标点
-            var cirleTime = 120;//一个周期的时间
+            var cirleTime = 10;//一个周期的时间
 			
 
             var pixdiffX = 38;//像素 X轴差值
-            var pixdiffY = 789;//像素 Y轴差值
+            var pixdiffY = 768;//像素 Y轴差值
             var pixDot = 8;//像素 点位差值
-            var pixinitsigWidth = 1800/3;//初始化信号机像素的 三分之一 为一个周期的长度
+            var pixinitsigWidth = 1080/3;//初始化信号机像素的 三分之一 为一个周期的长度
 
             initSigs();//设置信号机
             createDivs();//初始化div
@@ -36,22 +36,24 @@
 
             for(var i=0;i<sigs.length;i++)
             {
+            	var timeX = getSigBeginTime(sigs[i]);
+            	
                 if(i!=0)
                 {
-                    setSigDraggable(i);//设置信号机拖动事件
+                    setSigDraggable(i,timeX);//设置信号机拖动事件
                 }
-                $("#sigtime"+i).css('margin-left',dots[i].x);
+                $("#sigtime"+i).css("margin-left",timeX+pixdiffX);
                 $("#sigtime"+i).css('margin-top',pixdiffY+35);
-                $("#sigdistance"+i).css('margin-top',dots[i].y);
-                $("#sigdistance"+i).text((pixdiffY-dots[i].y)*10);//显示与基准点的距离差
-                $("#sigtime"+i).text(dots[i].x-pixdiffX);//显示与基准点的时间差
+                $("#sigdistance"+i).css('margin-top',dots[i].y-20);
+                $("#sigdistance"+i).text((pixdiffY-dots[i].y)*10+200);//显示与基准点的距离差
+                $("#sigtime"+i).text(timeX);//显示与基准点的时间差
             }
 
 
                 drawLine();
 
 
-                function setSigDraggable(index)
+                function setSigDraggable(index,timeX)
                 {
                     $("#sig"+index).draggable({axis:"x"});
                     $( "#sig"+index ).on( "dragstop", function( event, ui ) {
@@ -61,9 +63,11 @@
                         //一个信号机 移动 两个点改变 正向的点和反向的点
                         dots[index] =   new Dot(dotsbak[index].x+ui.offset.left-pixDot,dots[index].y,"t"+index);
                         dots[index+dots.length/2] =   new Dot(dotsbak[index+dots.length/2].x+ui.offset.left-pixDot,dots[index+dots.length/2].y,"t"+index);
-
-
-                        $("#sigtime"+index).css('margin-left',dots[index].x);
+						
+						
+						
+						
+                        $("#sigtime"+index).css('margin-left',timeX+pixdiffX+ui.offset.left);
 
                         changeSpeed(index);
 
@@ -82,11 +86,11 @@
                             }else
                             {
 
-                                $("#sigtime"+index).text(dots[index].x-pixdiffX);
+                                $("#sigtime"+index).text(timeX+ui.offset.left);
 
 
-                                $("#sigdistance"+index).css('margin-top',dots[index].y);
-                                $("#sigdistance"+index).text((pixdiffY-dots[index].y)*10);
+                                $("#sigdistance"+index).css('margin-top',dots[index].y-20);
+                                $("#sigdistance"+index).text((pixdiffY-dots[index].y)*10+200);
                                 drawLine() ;
                             }
 
@@ -100,11 +104,11 @@
                                     alert("操作错误,请返回");
                                 }else
                                 {
-                                    $("#sigtime"+index).text(dots[index].x-pixdiffX);
+                                    $("#sigtime"+index).text(timeX+ui.offset.left);
 
 
-                                    $("#sigdistance"+index).css('margin-top',dots[index].y);
-                                    $("#sigdistance"+index).text((pixdiffY-dots[index].y)*10);
+                                    $("#sigdistance"+index).css('margin-top',dots[index].y-20);
+                                    $("#sigdistance"+index).text((pixdiffY-dots[index].y)*10+200);
                                     drawLine() ;
                                 }
                             }
@@ -115,11 +119,11 @@
                                     alert("操作错误,请返回");
                                 }else
                                 {
-                                    $("#sigtime"+index).text(dots[index].x-pixdiffX);
+                                    $("#sigtime"+index).text(timeX+ui.offset.left);
 
 
-                                    $("#sigdistance"+index).css('margin-top',dots[index].y);
-                                    $("#sigdistance"+index).text((pixdiffY-dots[index].y)*10);
+                                    $("#sigdistance"+index).css('margin-top',dots[index].y-20);
+                                    $("#sigdistance"+index).text((pixdiffY-dots[index].y)*10+200);
                                     drawLine() ;
                                 }
                             }
@@ -213,8 +217,10 @@
 
                 /**
                  * 信号机构造方法
+                 * id:编号
                  * number:顺序编号
                  * name:信号机名称
+                 * circle:周期
                  * speedzx:正向速度
                  * speedfx:反向速度
                  * distance:距离(与基准点)
@@ -222,28 +228,39 @@
                  * zhengxiang:周期 相位
                  * fanxiang:周期 相位
                  */
-                function Sig(number,name,speedzx,speedfx,distance,phasenum,zhengxiang,fanxiang)
+                function Sig(id,number,name,circle,speedzx,speedfx,distance,phasenum,zhengxiang,fanxiang)
                 {
+                	this.id = id;
                     this.number = number;
                     this.name = name;
+                    this.circle = circle;
                     this.speedzx = speedzx*10/36;//公里/h 换算为 m/s
                     this.speedfx = speedfx*10/36;
                     this.distance = distance;
                     this.phasenum = phasenum;
                     this.zhengxiang = zhengxiang;// _a_  0 : 周期  相位
-                    this.fanxiang = fanxiang;// _b_  0 : 周期  相位
+                    this.fanxiang = fanxiang;// _c_  0 : 周期  相位
                 }
 
 
                 function initSigs()
                 {
                     console.log("----------------initSigs----------");
-                    var sig1 = new Sig(0,'test1',40,50,0,[0.33,0.33,0.33],"_a_0","_b_0");//基准点
+                    /*
+                    var sig1 = new Sig(1,0,'test1',20,40,50,0,[0.33,0.33,0.33],"_a_0","_c_0");//基准点
                     sigs.push(sig1);
-                    var sig2 = new Sig(1,'test2',60,60,500,[0.25,0.25,0.25,0.25],"_a_0",null);
+                    var sig2 = new Sig(2,1,'test2',22,60,60,500,[0.25,0.25,0.25,0.25],"_a_0",null);
                     sigs.push(sig2);
-                    var sig3 = new Sig(2,'test3',0,0,1500,[0.166,0.166,0.166,0.166,0.166,0.166],"_a_0",null);//最后一个信号机没有正向反向速度
+                    var sig3 = new Sig(3,2,'test3'23,,0,0,1500,[0.166,0.166,0.166,0.166,0.166,0.166],"_a_0",null);//最后一个信号机没有正向反向速度
                     sigs.push(sig3);
+                    */
+                    for(var i =0;i<jsonSigs.length;i++)
+                    {
+                    	var jsonSig = jsonSigs[i];
+                    	var sig = new Sig(jsonSig.sigid,parseInt(jsonSig.signumber),jsonSig.signame,parseInt(jsonSig.sigcircle),jsonSig.zxspeed,jsonSig.fxspeed,jsonSig.distance,jsonSig.pharseArray,jsonSig.zxpharse,jsonSig.fxpharse);//基准点
+                    	sigs.push(sig);
+                    }
+                    console.log(sigs);
                 }
 
             //构建sig div
@@ -254,7 +271,7 @@
                  for(var i=0;i<sigs.length;i++)
                  {
 
-                     var sigdiv=$('<div>'+'sig'+sigs[i].name+'</div>');             //信号机 div
+                     var sigdiv=$('<div>'+sigs[i].name+'</div>');             //信号机 div
                      var sigtimediv=$('<div></div>');                      //信号机开始时间 div
                      var sigdistance=$('<div></div>');                      //信号机离基准路口距离
 
@@ -282,6 +299,16 @@
                          var tdiv=$('<div>'+'t'+j+'</div>');            //创建一个子div
                          tdiv.addClass("initsigt");
                          tdiv.attr('id',sigs[i].number+'_b_'+j);//给子div设置id
+                         //childdiv.addclass('childdiv');          //添加css样式
+                         tdiv.appendTo(sigdiv);            //将子div添加到父div中
+                     }
+                     
+                     //相位周期c div
+                     for(var j=0;j<sigs[i].phasenum.length;j++)
+                     {
+                         var tdiv=$('<div>'+'t'+j+'</div>');            //创建一个子div
+                         tdiv.addClass("initsigt");
+                         tdiv.attr('id',sigs[i].number+'_c_'+j);//给子div设置id
                          //childdiv.addclass('childdiv');          //添加css样式
                          tdiv.appendTo(sigdiv);            //将子div添加到父div中
                      }
@@ -320,7 +347,6 @@
                 for(var i=0;i<sigs.length;i++)
                 {
                     //初始化信号机div 在坐标轴的位置
-
                     //基准点坐标  x-pixdiffX y-pixdiffY(测试下来正好对应 坐标轴的左下角0的位置s)
                     if(i==0)
                     {
@@ -347,10 +373,13 @@
                             $("#"+sigs[i].number+"_a_"+j).css("width",phasewidth);
                             $("#"+sigs[i].number+"_b_"+j).css("background","#07FCE5");
                             $("#"+sigs[i].number+"_b_"+j).css("width",phasewidth);
+                             $("#"+sigs[i].number+"_c_"+j).css("background","#07FCE5");
+                            $("#"+sigs[i].number+"_c_"+j).css("width",phasewidth);
                         }else
                         {
                             $("#"+sigs[i].number+"_a_"+j).css("width",phasewidth);
                             $("#"+sigs[i].number+"_b_"+j).css("width",phasewidth);
+                            $("#"+sigs[i].number+"_c_"+j).css("width",phasewidth);
                         }
                     }
                 }
@@ -372,7 +401,7 @@
 
                     $("#sigspeed"+i).css("margin-top", mtop);
                     $("#sigspeed"+i).css("margin-left",mleft);
-                    $("#sigspeed"+i).text("正向速度:"+(dots[i].y-dots[i+1].y)*10/(dots[i+1].x-dots[i].x)*36/10);
+                    $("#sigspeed"+i).text("正:"+(dots[i].y-dots[i+1].y)*10/(dots[i+1].x-dots[i].x)*36/10);
 
                 }
 
@@ -388,7 +417,7 @@
 
                     $("#sigspeed"+i).css("margin-top", mtop);
                     $("#sigspeed"+i).css("margin-left",mleft);
-                    $("#sigspeed"+i).text("反向速度:"+(dots[i].y-dots[i+1].y)*10/(dots[i].x-dots[i+1].x)*36/10);
+                    $("#sigspeed"+i).text("反:"+(dots[i].y-dots[i+1].y)*10/(dots[i].x-dots[i+1].x)*36/10);
                 }
                 return;
 
@@ -408,14 +437,13 @@
                     time = time + (sigs[j].distance-sigs[j-1].distance)/sigs[j-1].speedzx;// 当前的距离 除去 上一个信号机设置的正向速度
                 }
 
-                var number = sig.zhengxiang.substring(1,sig.zhengxiang.length);//相位编号
-
+                var number = sig.zhengxiang.substring(sig.zhengxiang.length-1,sig.zhengxiang.length);//相位编号
+				console.log("number:"+number);
                 var timeT = 0;//相位时间
                 for(var z=1;z<=number;z++)
                 {
                     timeT = timeT+sig.phasenum[z-1]*cirleTime;
                 }
-
                 time = time-timeT;
                 return time;
             }
@@ -454,7 +482,7 @@
 
                     $("#sigspeed"+i).css("margin-top", mtop);
                     $("#sigspeed"+i).css("margin-left",mleft);
-                    $("#sigspeed"+i).text("正向速度:"+parseInt((dots[i].y-dots[i+1].y)*10/(dots[i+1].x-dots[i].x)*36/10));
+                    $("#sigspeed"+i).text("正:"+parseInt((dots[i].y-dots[i+1].y)*10/(dots[i+1].x-dots[i].x)*36/10));
 
 
                     /**
@@ -467,7 +495,7 @@
 
                     $("#sigspeed"+i).css("margin-top", mtop);
                     $("#sigspeed"+i).css("margin-left",mleft);
-                    $("#sigspeed"+i).text("反向速度:"+parseInt((dots[i].y-dots[i+1].y)*10/(dots[i].x-dots[i+1].x)*36/10));
+                    $("#sigspeed"+i).text("反:"+parseInt((dots[i].y-dots[i+1].y)*10/(dots[i].x-dots[i+1].x)*36/10));
                 }else
                 {
                     //下部分
@@ -481,7 +509,7 @@
 
                     $("#sigspeed"+i).css("margin-top", mtopDown_zx);
                     $("#sigspeed"+i).css("margin-left",mleftDown_zx);
-                    $("#sigspeed"+i).text("正向速度:"+parseInt((dots[i].y-dots[i+1].y)*10/(dots[i+1].x-dots[i].x)*36/10));
+                    $("#sigspeed"+i).text("正:"+parseInt((dots[i].y-dots[i+1].y)*10/(dots[i+1].x-dots[i].x)*36/10));
 
                     /**
                      * 反向速度
@@ -494,7 +522,7 @@
 
                     $("#sigspeed"+i).css("margin-top", mtopDown_fx);
                     $("#sigspeed"+i).css("margin-left",mleftDown_fx);
-                    $("#sigspeed"+i).text("反向速度:"+parseInt((dots[i].y-dots[i+1].y)*10/(dots[i].x-dots[i+1].x)*36/10));
+                    $("#sigspeed"+i).text("反:"+parseInt((dots[i].y-dots[i+1].y)*10/(dots[i].x-dots[i+1].x)*36/10));
 
 
                     //上部分
@@ -507,7 +535,7 @@
 
                     $("#sigspeed"+j).css("margin-top", mtopUp_zx);
                     $("#sigspeed"+j).css("margin-left",mleftUp_zx);
-                    $("#sigspeed"+j).text("正向速度:"+parseInt((dots[j].y-dots[j+1].y)*10/(dots[j+1].x-dots[j].x)*36/10));
+                    $("#sigspeed"+j).text("正:"+parseInt((dots[j].y-dots[j+1].y)*10/(dots[j+1].x-dots[j].x)*36/10));
 
 
 
@@ -521,7 +549,7 @@
 
                     $("#sigspeed"+j).css("margin-top", mtopUp_fx);
                     $("#sigspeed"+j).css("margin-left",mleftUp_fx);
-                    $("#sigspeed"+j).text("反向速度:"+parseInt((dots[j].y-dots[j+1].y)*10/(dots[j].x-dots[j+1].x)*36/10));
+                    $("#sigspeed"+j).text("反:"+parseInt((dots[j].y-dots[j+1].y)*10/(dots[j].x-dots[j+1].x)*36/10));
 
                 }
 

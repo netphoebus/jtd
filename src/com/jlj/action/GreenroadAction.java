@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -58,6 +59,7 @@ public class GreenroadAction extends ActionSupport implements RequestAware,
 	private String smids;
 	private int orderid;
 	private int timetype;
+	private int maxCircleTime;
 
 	/**
 	 * 加载绿波带
@@ -113,6 +115,68 @@ public class GreenroadAction extends ActionSupport implements RequestAware,
 			greenroadService.add(greenroad);
 		}
 		return NONE;
+	}
+	
+	/**
+	 * 跳转至绿波带设置时距图 页面
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
+	public String lbd() throws Exception {
+		setURLParameter();
+		greenroad = greenroadService.loadByMkid(mklid);
+		if (greenroad != null) {
+			setSigVOS(greenroad);
+			maxCircleTime = setMaxCircle(sigVOs);
+			return "lbd";
+		} else {
+			return "error";
+		}
+
+	}
+	
+	/**
+	 * 设置最大周期
+	 * @param sigVOs2
+	 * @return
+	 */
+	private int setMaxCircle(List<SigGreenRoadVO> sigs) {
+		// TODO Auto-generated method stub
+		List<Integer> circles = new ArrayList<Integer>();
+		int max = 0;
+		if(sigs!=null&&sigs.size()>0)
+		{
+			for(SigGreenRoadVO sig:sigs)
+			{
+				circles.add(sig.getCircleTime());
+			}
+			max = Collections.max(circles);
+		}
+		return max;
+	}
+
+	/**
+	 * 设置sigVOs 运输类
+	 * @param greenroad
+	 */
+	private void setSigVOS(Greenroad greenroad) {
+		sigVOs = new ArrayList<SigGreenRoadVO>();
+		String[] mkids = greenroad.getSigmids().split(",");
+		for (int i = 0; i < mkids.length; i++) {
+			sig = sigService.loadByMkid(Long.parseLong(mkids[i]));
+			if (sig != null) {
+				sigVO = new SigGreenRoadVO();
+				sigVO.setId(sig.getId());
+				sigVO.setName(sig.getName());
+				commontime = commontimeService.loadByOrderIdAndTimetype(
+						timetype, orderid, sig.getId());
+				if (commontime != null) {
+					sigVO = setCurrentSigVOParam(sigVO);//设置 单个sigVO的复杂属性
+				}
+				sigVOs.add(sigVO);
+			}
+		}
 	}
 
 	/**
@@ -172,28 +236,7 @@ public class GreenroadAction extends ActionSupport implements RequestAware,
 		return sigVO;
 	}
 
-	/**
-	 * 设置sigVOs 运输类
-	 * @param greenroad
-	 */
-	private void setSigVOS(Greenroad greenroad) {
-		sigVOs = new ArrayList<SigGreenRoadVO>();
-		String[] mkids = greenroad.getSigmids().split(",");
-		for (int i = 0; i < mkids.length; i++) {
-			sig = sigService.loadByMkid(Long.parseLong(mkids[i]));
-			if (sig != null) {
-				sigVO = new SigGreenRoadVO();
-				sigVO.setId(sig.getId());
-				sigVO.setName(sig.getName());
-				commontime = commontimeService.loadByOrderIdAndTimetype(
-						timetype, orderid, sig.getId());
-				if (commontime != null) {
-					sigVO = setCurrentSigVOParam(sigVO);//设置 单个sigVO的复杂属性
-				}
-				sigVOs.add(sigVO);
-			}
-		}
-	}
+	
 
 	
 	/**
@@ -204,9 +247,7 @@ public class GreenroadAction extends ActionSupport implements RequestAware,
 	 * @return
 	 */
 	private double getNowPro(int i, int circleRealTime, Commontime commontime) {
-
 		double pharseTime = commontime.getHdtime() + commontime.getQchdtime();
-
 		switch (i) {
 		case 0:
 			pharseTime = pharseTime + commontime.getT0();
@@ -665,23 +706,7 @@ public class GreenroadAction extends ActionSupport implements RequestAware,
 		return circleTime;
 	}
 
-	/**
-	 * 跳转至绿波带设置时距图 页面
-	 * 
-	 * @return
-	 * @throws Exception
-	 */
-	public String lbd() throws Exception {
-		setURLParameter();
-		greenroad = greenroadService.loadByMkid(mklid);
-		if (greenroad != null) {
-			setSigVOS(greenroad);
-			return "lbd";
-		} else {
-			return "error";
-		}
-
-	}
+	
 
 	/**
 	 * 设置时距图完成后跳转至 时距图
@@ -886,5 +911,14 @@ public class GreenroadAction extends ActionSupport implements RequestAware,
 		this.sigVO = sigVO;
 	}
 
+	public int getMaxCircleTime() {
+		return maxCircleTime;
+	}
+
+	public void setMaxCircleTime(int maxCircleTime) {
+		this.maxCircleTime = maxCircleTime;
+	}
+	
+	
 
 }
