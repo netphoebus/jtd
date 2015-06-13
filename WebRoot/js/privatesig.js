@@ -31,57 +31,64 @@ function topSetting()
 	alert("这里是高级设置~");
 }
 
-function executeAllCmdCommands()
-{
-	 executeCommand(1);
-	 alert("执行命令1");
-	 executeCommand(5);
-	  alert("执行命令5");
-	 executeCommand(6);
-	  alert("执行命令6");
-	 executeCommand(7);
-	  alert("执行命令7");
-	 executeCommand(8);
-	  alert("执行命令8");
-	 executeCommand(9);
-	 alert("执行命令8");
-	 executeCommand(10);
-	 alert("执行命令8");
-	 executeCommand(11);
-	 alert("执行命令8");
-	 executeCommand(12);
-	 alert("执行命令8");
-	 executeCommand(13);
-	 alert("执行命令8");
-	 executeCommand(14);
-	 alert("执行命令8");
-	 executeCommand(15);
-	 alert("执行命令8");
-	 executeCommand(16);
-	 alert("执行命令8");
-	 executeCommand(17);
-	 alert("执行命令8");
-	 executeCommand(18);
-	 alert("执行命令8");
-	 executeCommand(19);
-	 alert("执行命令8");
-	 executeCommand(20);
-	 alert("执行命令8");
-	 executeCommand(21);
-	 alert("执行命令8");
-	 executeCommand(22);
-	 alert("执行命令8");
-	 executeCommand(23);
-	 alert("执行命令8");
-	 executeCommand(24);
-	 alert("执行命令8");
-	 executeCommand(25);
-	 alert("执行命令8");
-	 executeCommand(26);
-	 alert("执行命令8");
-	 executeCommand(27);
-	            
-}
+
+
+
+
+$(document).ready(function(){
+	
+	$("#manyCommands").click(function() 
+	{ 
+				alert("所有参数开始初始化..");
+				$("#divProgressbar").progressbar({value: 0}); 
+				$( "#divProgressbar" ).progressbar({
+				  max: 240
+				});
+				var index = 0;//计数器
+				var commandNumber = 0;
+		    	var interval = setInterval(updateProgressbarValue, 1000);
+		 		function updateProgressbarValue()
+		 		{
+		 			if(index==0)
+		 			{
+		 				commandNumber = 1 ;
+		 				executeCommand(1);
+		 				index = index+1;
+		 				commandNumber = 4;
+		 				
+		 			}else
+		 			{
+		 				commandNumber = commandNumber+1;
+		 				executeCommand(commandNumber);
+		 				index = index+1;
+		 			}
+		 			console.log("commandNumber:"+commandNumber);
+			        var newValue = $("#divProgressbar").progressbar("option", "value") + 10; //读取进度条现有值并计算出新值
+			        if(newValue==240)
+			        {
+			        	 $("#divProgressbar").progressbar({value: 0}); 
+			        	 clearInterval(interval);
+			        	 $("#divProgressbar").hide();
+			        	 alert("执行了"+index+"条命令");
+			        	 alert("最后的命令编号为:"+commandNumber);
+			        	 index= 0;
+			        	 commandNumber = 0;
+			        	 alert("所有参数开始初始化完成。");
+			        }else
+			        {
+			        	 $("#divProgressbar").progressbar("option", "value", newValue);  //设置进度条新值  
+			        }
+			       
+   		 		}
+				
+	});
+	   
+               
+});
+
+
+
+
 
 function executeSolutionCommands()
 {

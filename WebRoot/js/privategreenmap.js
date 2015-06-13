@@ -263,8 +263,6 @@ function GreenLinesInit()
 								});
 								dots = Array();
 								maphelper.bindInstanceEvent(poly, 'dblclick', function(event,map,poly) {
-											console.log(poly);
-									console.log(poly.id+"这条线被打开了");
 									self.location='greenroadAction!lbd?mklid='+poly.id; 
 									
 					        });
@@ -407,10 +405,11 @@ function saveLine()
 		{
 			sids = sids +markerids[i]+",";
 		}
+		console.log(lineId,sids);
 		$.ajax({   
             url:'addOrUpdateLine',//这里是你的action或者servlert的路径地址   
             type:'post', //数据发送方式     
- 			data: { "linemid":lineId,"sids":sids},
+ 			data: { "mklid":lineId,"sids":sids},
             error: function(msg)
             { //失败   
             		alert("当前绿波带保存失败"); 

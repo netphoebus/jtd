@@ -147,8 +147,9 @@ $(document).ready(function(e) {
 							周 期：
 						</label>
 						<div class="vocation">
-							<span style="margin-right: 5px;"> <input type="text"
-									id="circleTime" class="dfinput" style="width: 125px;" /> </span>
+							<span style="margin-right: 5px;"> 
+									<s:textfield id="circleTime" name="maxCircleTime" cssClass="dfinput" style="width: 125px;"></s:textfield>
+									</span>
 						</div>
 						秒
 					</div>
@@ -194,6 +195,9 @@ $(document).ready(function(e) {
 
 
 								<s:iterator value="sigVOs" var="sigVO" status="status">
+									<input type="hidden" alt="可用相位所占周期比例" id="<s:property value="id"/>_pro" value="<s:property value="pharsePros"/>"/>
+									<input type="hidden" alt="姓名" id="<s:property value="id"/>_signame" value="<s:property value="name"/>"/>
+									<input type="hidden" alt="周期" id="<s:property value="id"/>_circle" value="<s:property value="circleTime"/>"/>
 									<tr>
 										<td style="text-align: center;">
 											<s:property value="id" />
@@ -205,7 +209,7 @@ $(document).ready(function(e) {
 											<s:property value="name" />
 										</td>
 										<td align="right">
-											<input id="<s:property value="id"/>_distance" type="text"
+											<input alt="离基准点的距离" id="<s:property value="id"/>_distance" type="text"
 												class="dfinput" style="width: 120px; float: left;" />
 										</td>
 										<td>
@@ -223,8 +227,8 @@ $(document).ready(function(e) {
 										<td>
 
 											<s:if test="#status.last">
-                      	最后一个路口无需设置正向速度
-                      </s:if>
+						                      	最后一个路口无需设置正向速度
+						                    </s:if>
 											<s:else>
 												<input type="text" alt="正向速度"
 													id="<s:property value="id"/>_zxspeed" class="dfinput"
