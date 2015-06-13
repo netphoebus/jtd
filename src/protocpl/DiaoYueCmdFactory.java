@@ -1,13 +1,10 @@
 package protocpl;
 
 import java.net.InetSocketAddress;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import mina.CmdFactoryBase;
 import mina.CommandBase;
-import mina.DataConvertor;
 import mina.ICmdParser;
 
 import org.apache.mina.core.buffer.IoBuffer;
@@ -16,11 +13,11 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.jlj.action.SigAction;
-import com.jlj.model.Devlog;
-import com.jlj.model.Issuedcommand;
+import com.jlj.model.Flow;
 import com.jlj.model.Sig;
 import com.jlj.service.ICommontimeService;
 import com.jlj.service.IDevlogService;
+import com.jlj.service.IFlowService;
 import com.jlj.service.IIssuedcommandService;
 import com.jlj.service.ISigService;
 import com.jlj.service.ISignpublicparamService;
@@ -36,8 +33,12 @@ public class DiaoYueCmdFactory extends CmdFactoryBase implements ICmdParser{
 	final static IStepService stepService = (IStepService)ac.getBean("stepService");
 	final static IIssuedcommandService issuedcommandService = (IIssuedcommandService)ac.getBean("issuedcommandService");
 	final static IDevlogService devlogService = (IDevlogService)ac.getBean("devlogService");
+	final static IFlowService flowService = (IFlowService)ac.getBean("flowService");
+	
 	private int locate[][];
 	private int Countdown[];
+	private static int flag = 0;
+	private static int flow_returnid;
 	public DiaoYueCmdFactory(byte[] data) {
 		super(data);
 		// TODO Auto-generated constructor stub
@@ -174,7 +175,122 @@ public class DiaoYueCmdFactory extends CmdFactoryBase implements ICmdParser{
 	  		SigAction.trafficlights = locate;
 	  		SigAction.Countdown = Countdown;
 	  	}
+	  	//0-计数器flag=1；判断器isnext=0；
+	  	int isnext=0;
+	  	//0:东左 1：东直 2：东右 3：南左 4：南直 5：南右 6：西左 7：西直 8:西右 9：北左 10：北直 11：北右
+	  	int whichroad = data[42];
+	  	if(whichroad<flag){
+	  		isnext =1;
+	  		flag = whichroad;
+	  	}
+	  	flag++;
+	  	if(whichroad==11){
+	  		flag=0;
+	  	}
 	  	
+	  	//1-根据ip地址获取信号机id
+	  	//2-根据sigid和车道号的编号插入车流量信息
+	  	
+	  	Sig sig = sigService.querySigByIpAddress(clientIP);
+	  	if(sig!=null){
+	  		if(isnext==1){
+	  			//新插入记录
+	  			Flow flowobj = new Flow();
+	  			flowobj.setSig(sig);
+	  			switch (whichroad) {
+				case 0:
+					flowobj.setDleft(flow);
+					break;
+				case 1:
+					flowobj.setDline(flow);
+					break;
+				case 2:
+					flowobj.setDright(flow);
+					break;
+				case 3:
+					flowobj.setNleft(flow);
+					break;
+				case 4:
+					flowobj.setNline(flow);
+					break;
+				case 5:
+					flowobj.setNright(flow);
+					break;
+				case 6:
+					flowobj.setXleft(flow);
+					break;
+				case 7:
+					flowobj.setXline(flow);
+					break;
+				case 8:
+					flowobj.setXright(flow);
+					break;
+				case 9:
+					flowobj.setBleft(flow);
+					break;
+				case 10:
+					flowobj.setBline(flow);
+					break;
+				case 11:
+					flowobj.setBright(flow);
+					break;
+				default:
+					break;
+				}
+	  			flowobj.setTime(new Date());
+	  			try {
+	  				flow_returnid = flowService.addReturn(flowobj);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+	  		}else{
+	  			//更新记录
+	  			String flowziduan="";
+	  			switch (whichroad) {
+				case 0:
+					flowziduan="dleft";
+					break;
+				case 1:
+					flowziduan="dline";
+					break;
+				case 2:
+					flowziduan="dright";
+					break;
+				case 3:
+					flowziduan="nleft";
+					break;
+				case 4:
+					flowziduan="nline";
+					break;
+				case 5:
+					flowziduan="nright";
+					break;
+				case 6:
+					flowziduan="xleft";
+					break;
+				case 7:
+					flowziduan="xline";
+					break;
+				case 8:
+					flowziduan="xright";
+					break;
+				case 9:
+					flowziduan="bleft";
+					break;
+				case 10:
+					flowziduan="bline";
+					break;
+				case 11:
+					flowziduan="bright";
+					break;
+				default:
+					break;
+				}
+	  			flowService.updateFlowByCondition(flowziduan,flow,flow_returnid);
+	  			
+	  		}
+	  	}
 	  }
 	
 }
