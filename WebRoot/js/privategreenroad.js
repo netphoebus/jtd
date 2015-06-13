@@ -1,11 +1,28 @@
  $(document).ready(function(){
  
  
-			var searchStr = decodeURI(location.search);
+			var searchStrURL = decodeURI(location.search);
+		    var searchStrArray = searchStrURL.slice(1).split("&");
+		    console.log(searchStrURL);
+			var cirleTime = 0;
+			var timetype = 0;
+			var orderid = 0;
+			var searchStr = '';
+			if(searchStrArray.length>1)
+			{
+				console.log(searchStrArray);
+				searchStr = searchStrArray[0].split("=")[1];
+				cirleTime = parseInt(searchStrArray[1].split("=")[1]);
+				timetype =  parseInt(searchStrArray[2].split("=")[1]);
+				orderid =  parseInt(searchStrArray[3].split("=")[1]);
+				console.log(cirleTime,timetype,orderid);
+			}
+			else
+			{
+				searchStr = searchStrArray[0].split("=")[1];
+			}
 			var jsonlist = searchStr.substring(searchStr.indexOf("=")+1,searchStr.length);
 			var jsonSigs = JSON.parse(jsonlist);
-			
-			
 			
 			var jsonsigs = [];
             var sigs = [];//信号机数组
@@ -13,7 +30,6 @@
             var context =canvas.getContext("2d");
             var dots = [];//坐标点
             var dotsbak = [];//原坐标点
-            var cirleTime = 10;//一个周期的时间
 			
 
             var pixdiffX = 38;//像素 X轴差值
@@ -42,8 +58,8 @@
                 $("#sigtime"+i).css("margin-left",timeX+pixdiffX);
                 $("#sigtime"+i).css('margin-top',pixdiffY+35);
                 $("#sigdistance"+i).css('margin-top',dots[i].y-20);
-                $("#sigdistance"+i).text((pixdiffY-dots[i].y)*10+200);//显示与基准点的距离差
-                $("#sigtime"+i).text(timeX);//显示与基准点的时间差
+                $("#sigdistance"+i).text( parseInt((pixdiffY-dots[i].y)*10+200));//显示与基准点的距离差
+                $("#sigtime"+i).text( parseInt(timeX));//显示与基准点的时间差
             }
 
 
@@ -83,11 +99,11 @@
                             }else
                             {
 
-                                $("#sigtime"+index).text(timeX+ui.offset.left);
+                                $("#sigtime"+index).text( parseInt(timeX+ui.offset.left));
 
 
                                 $("#sigdistance"+index).css('margin-top',dots[index].y-20);
-                                $("#sigdistance"+index).text((pixdiffY-dots[index].y)*10+200);
+                                $("#sigdistance"+index).text( parseInt((pixdiffY-dots[index].y)*10+200));
                                 drawLine() ;
                             }
 
@@ -101,11 +117,11 @@
                                     alert("操作错误,请返回");
                                 }else
                                 {
-                                    $("#sigtime"+index).text(timeX+ui.offset.left);
+                                    $("#sigtime"+index).text( parseInt(timeX+ui.offset.left));
 
 
                                     $("#sigdistance"+index).css('margin-top',dots[index].y-20);
-                                    $("#sigdistance"+index).text((pixdiffY-dots[index].y)*10+200);
+                                    $("#sigdistance"+index).text( parseInt((pixdiffY-dots[index].y)*10+200));
                                     drawLine() ;
                                 }
                             }
@@ -116,11 +132,11 @@
                                     alert("操作错误,请返回");
                                 }else
                                 {
-                                    $("#sigtime"+index).text(timeX+ui.offset.left);
+                                    $("#sigtime"+index).text( parseInt(timeX+ui.offset.left));
 
 
                                     $("#sigdistance"+index).css('margin-top',dots[index].y-20);
-                                    $("#sigdistance"+index).text((pixdiffY-dots[index].y)*10+200);
+                                    $("#sigdistance"+index).text( parseInt((pixdiffY-dots[index].y)*10+200));
                                     drawLine() ;
                                 }
                             }
@@ -399,7 +415,22 @@
 
                     $("#sigspeed"+i).css("margin-top", mtop);
                     $("#sigspeed"+i).css("margin-left",mleft);
-                    $("#sigspeed"+i).text("正:"+(dots[i].y-dots[i+1].y)*10/(dots[i+1].x-dots[i].x)*36/10);
+                     if(dots[i].y-dots[i+1].y<0)
+                     {
+                     	alert("距离设置不正确,请重新调整距离");
+                     }else
+                     {
+                     	   if(dots[i+1].x-dots[i].x<0)
+                    {
+                    	alert("相位对应冲突,请重新调整相位");
+	                    }else
+	                    {
+	                    	  $("#sigspeed"+i).text("正:"+ parseInt((dots[i].y-dots[i+1].y)*10/(dots[i+1].x-dots[i].x)*36/10));
+	                    }
+                     	
+                     }
+                 
+                  
 
                 }
 
@@ -411,11 +442,26 @@
                     var mleft = (dots[i].x+dots[i+1].x)/2;
                     var mtop = (dots[i].y+dots[i+1].y)/2;
 
-                    //console.log("反向速度"+(dots[i].y-dots[i+1].y)*10/(dots[i].x-dots[i+1].x));
 
                     $("#sigspeed"+i).css("margin-top", mtop);
                     $("#sigspeed"+i).css("margin-left",mleft);
-                    $("#sigspeed"+i).text("反:"+(dots[i].y-dots[i+1].y)*10/(dots[i].x-dots[i+1].x)*36/10);
+                    
+                    if(dots[i].y-dots[i+1].y<0)
+                     {
+                     	alert("距离设置不正确,请重新调整距离");
+                     }else
+                     {
+                     	   if(dots[i].y-dots[i+1].y<0||dots[i].x-dots[i+1].x<0)
+		                    {
+		                    	alert("相位对应冲突,请重新调整相位");
+		                    }else
+		                    {
+		                    	 $("#sigspeed"+i).text("反:"+  parseInt((dots[i].y-dots[i+1].y)*10/(dots[i].x-dots[i+1].x)*36/10)     );
+		                    }
+                     	
+                     }
+                    
+                   
                 }
                 return;
 

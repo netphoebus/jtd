@@ -17,6 +17,9 @@ var sig =  {"sigid":0,"signame":"test","zxspeed":50,"fxspeed":50,"distance":0,"p
 
 function initGreenRoad()
 {
+	var timetype = $("#timetype").val();
+	var orderid = $("#orderid").val();
+	var maxCircleTime = $("#maxCircleTime").val();
 	var circleTime = $("#circleTime").val();
 	var zxselect = $(".zxselect");
 	var fxselect = $(".fxselect");
@@ -24,7 +27,6 @@ function initGreenRoad()
 	
 	var number = -1;
 	zxselect.each( function(){
-		  
           console.log($(this).val());//注：1_0 1:表示信号机id，0:表示当前相位
           var sigid = parseInt($(this).val().split("_")[0]);//获得信号机id
           console.log("number:"+number);
@@ -90,7 +92,7 @@ function initGreenRoad()
      });
      
      
-     var url = "greenroad.jsp?jsonlist="+JSON.stringify(jsonlist);
+     var url = "greenroad.jsp?jsonlist="+JSON.stringify(jsonlist)+"&maxCircleTime="+maxCircleTime+"&timetype="+timetype+"&orderid="+orderid;
      url = encodeURI(url);
   	 self.location = url;
 }

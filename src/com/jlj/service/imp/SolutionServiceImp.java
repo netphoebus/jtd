@@ -130,7 +130,7 @@ public class SolutionServiceImp implements ISolutionService  {
 	}
 	
 	public List<Solution> loadByPubid(Integer pubid) {
-		String queryString = "from Solution mo where 1=1 and mo.sig.id ="+pubid;
+		String queryString = "from Solution mo where 1=1 and mo.sig.id ="+pubid+" order by mo.orderid asc";
 		return solutionDao.queryList(queryString);
 	}
 	public Solution getSolutionBySignidAndOrderid(Integer signid, int soluorderid) {

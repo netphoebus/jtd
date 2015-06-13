@@ -172,6 +172,7 @@ public class GreenroadAction extends ActionSupport implements RequestAware,
 				commontime = commontimeService.loadByOrderIdAndTimetype(
 						timetype, orderid, sig.getId());
 				if (commontime != null) {
+					
 					sigVO = setCurrentSigVOParam(sigVO);//设置 单个sigVO的复杂属性
 				}
 				sigVOs.add(sigVO);
