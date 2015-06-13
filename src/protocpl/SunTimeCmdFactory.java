@@ -59,18 +59,18 @@ public class SunTimeCmdFactory extends CmdFactoryBase implements ICmdParser{
 		// TODO Auto-generated method stub
 		//this.m_oData
 		
-		String Reply_cmd = "FF FF FF FF 01 F0 9F 00 00 08 01 98";
-		String[] cmds = Reply_cmd.split(" ");
-        byte[] aaa = new byte[cmds.length];
-        int i = 0;
-        for (String b : cmds) {
-            if (b.equals("FF")) {
-                aaa[i++] = -1;
-            } else {
-                aaa[i++] = Integer.valueOf(b, 16).byteValue();;
-            }
-        }
-        session.write(IoBuffer.wrap(aaa));
+//		String Reply_cmd = "FF FF FF FF 01 F0 9F 00 00 08 01 98";
+//		String[] cmds = Reply_cmd.split(" ");
+//        byte[] aaa = new byte[cmds.length];
+//        int i = 0;
+//        for (String b : cmds) {
+//            if (b.equals("FF")) {
+//                aaa[i++] = -1;
+//            } else {
+//                aaa[i++] = Integer.valueOf(b, 16).byteValue();;
+//            }
+//        }
+//        session.write(IoBuffer.wrap(aaa));
 		
 		if(this.m_oData[7]==0){
 			Upload_SunTimeHead(session,this.m_oData);

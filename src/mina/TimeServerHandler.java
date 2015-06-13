@@ -46,7 +46,7 @@ public class TimeServerHandler  implements IoHandler {
 
 		CmdFactoryBase cmdFactory = CmdFactoryBase.SelectCmdFactory(session, msg);
 
-		System.out.println("ente messageReceived"+DataConvertor.bytesToHexString(DataConvertor.toByteArray(msg)));
+		System.out.println("enter messageReceived"+DataConvertor.bytesToHexString(DataConvertor.toByteArray(msg)));
 
 			if(cmdFactory != null){
 				CommandBase cmd = cmdFactory.CreateCommand(session, msg);
@@ -61,7 +61,7 @@ public class TimeServerHandler  implements IoHandler {
 	
 	public void messageSent(IoSession arg0, Object arg1) throws Exception {
 		// TODO Auto-generated method stub
-		 System.out.println("发送信息:"+arg1.toString()+"到"+arg0.getRemoteAddress().toString()); 
+		 //System.out.println("发送信息:"+arg1.toString()+"到"+arg0.getRemoteAddress().toString()); 
 	}
 
 	public void sessionClosed(IoSession arg0) throws Exception {
@@ -105,18 +105,18 @@ public class TimeServerHandler  implements IoHandler {
 
 	public void sessionOpened(IoSession session) throws Exception {
 		// TODO Auto-generated method stub
-		System.out.println( "opened " );  
-			String[] cmds = cmd_diaoyue1.split(" ");
-	        byte[] aaa = new byte[cmds.length];
-	        int i = 0;
-	        for (String b : cmds) {
-	            if (b.equals("FF")) {
-	                aaa[i++] = -1;
-	            } else {
-	                aaa[i++] = Integer.valueOf(b, 16).byteValue();;
-	            }
-	        }
-	        session.write(IoBuffer.wrap(aaa));
+		System.out.println( "opened " +session.getRemoteAddress().toString());  
+//			String[] cmds = cmd_diaoyue1.split(" ");
+//	        byte[] aaa = new byte[cmds.length];
+//	        int i = 0;
+//	        for (String b : cmds) {
+//	            if (b.equals("FF")) {
+//	                aaa[i++] = -1;
+//	            } else {
+//	                aaa[i++] = Integer.valueOf(b, 16).byteValue();;
+//	            }
+//	        }
+//	        session.write(IoBuffer.wrap(aaa));
 	        
 	}
 	 

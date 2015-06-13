@@ -59,21 +59,21 @@ public class ParametersCmdFactory extends CmdFactoryBase implements ICmdParser{
 		// TODO Auto-generated method stub
 		//this.m_oData
 		
-		System.out.println("the 6 is"+this.m_oData[6]+"the 7 is"+this.m_oData[7]);
+	//	System.out.println("the 6 is"+this.m_oData[6]+"the 7 is"+this.m_oData[7]);
 		
 
-		String Reply_cmd = "FF FF FF FF 01 F0 9F 00 00 08 01 98";
-		String[] cmds = Reply_cmd.split(" ");
-        byte[] aaa = new byte[cmds.length];
-        int i = 0;
-        for (String b : cmds) {
-            if (b.equals("FF")) {
-                aaa[i++] = -1;
-            } else {
-                aaa[i++] = Integer.valueOf(b, 16).byteValue();;
-            }
-        }
-        session.write(IoBuffer.wrap(aaa));
+//		String Reply_cmd = "FF FF FF FF 01 F0 9F 00 00 08 01 98";
+//		String[] cmds = Reply_cmd.split(" ");
+//        byte[] aaa = new byte[cmds.length];
+//        int i = 0;
+//        for (String b : cmds) {
+//            if (b.equals("FF")) {
+//                aaa[i++] = -1;
+//            } else {
+//                aaa[i++] = Integer.valueOf(b, 16).byteValue();;
+//            }
+//        }
+//        session.write(IoBuffer.wrap(aaa));
 		
 		if(this.m_oData[7]==0){
 			Upload_fault(session,this.m_oData);
@@ -109,7 +109,7 @@ public class ParametersCmdFactory extends CmdFactoryBase implements ICmdParser{
 		String clientIP = ((InetSocketAddress)session.getRemoteAddress()).getAddress().getHostAddress();
 		//保存信号机的公共参数下发的命令-start-from jlj
 		String datastr = DataConvertor.toHexString(data);
-		System.out.println("公共参数命令datastr========================="+datastr);
+		System.out.println("公共参数命令长度是========================="+data.length);
 			//根据ip查出信号机
 			Sig sig = sigService.querySigByIpAddress(clientIP);
 			if(sig!=null){
@@ -159,7 +159,7 @@ public class ParametersCmdFactory extends CmdFactoryBase implements ICmdParser{
 		//检查公共参数表是否有该ip地址：若无，插入新数据；若有，修改原数据
 		Signpublicparam signpublicparam = signpublicparamService.getPublicparamByIp(clientIP);
 		if(signpublicparam==null){
-			System.out.println("-------------------------------signpublicparam add");
+			//System.out.println("-------------------------------signpublicparam add");
 			signpublicparam = new Signpublicparam();
 			signpublicparam.setIp(clientIP);
 			signpublicparam.setQchdtime(Red_Clearance_Time);//清场红灯

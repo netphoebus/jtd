@@ -83,10 +83,19 @@ public class CmdFactoryBase implements ICmdParser {
 	public static MONITOR_CMD_TYPE getCommandType(byte[] data) {
 		
 		//int command = data[7] & 0xFF;
+		
+		
 		int sum = 0;
+		int flag_ff = 0;
 		for(int i = 0;i<4;i++){
 			if(data[i] == -1)
 				sum++;
+		}
+		
+		for (int i = 0; i < data.length; i++) {
+			if(data[i] == -1){
+				
+			}
 		}
 		
 		if(sum == 4){

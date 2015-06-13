@@ -49,6 +49,20 @@ public class CommonTimeCmdFactory extends CmdFactoryBase implements ICmdParser{
 		if(cmd.getCmdType() == this.expected_cmd)
 		{
 				
+//			String Reply_cmd = "FF FF FF FF 01 F0 9F 00 00 08 01 98";
+//			String[] cmds = Reply_cmd.split(" ");
+//	        byte[] aaa = new byte[cmds.length];
+//	        int i = 0;
+//	        for (String b : cmds) {
+//	            if (b.equals("FF")) {
+//	                aaa[i++] = -1;
+//	            } else {
+//	                aaa[i++] = Integer.valueOf(b, 16).byteValue();;
+//	            }
+//	        }
+//	        session.write(IoBuffer.wrap(aaa));
+			
+			
 			OnAfter_Ack(session, cmd);
 			
 		}
@@ -67,19 +81,7 @@ public class CommonTimeCmdFactory extends CmdFactoryBase implements ICmdParser{
 		//1-查询公共参数表，然后把这些commontime的列表与父表对应
 		
 
-		String Reply_cmd = "FF FF FF FF 01 F0 9F 00 00 08 01 98";
-		String[] cmds = Reply_cmd.split(" ");
-        byte[] aaa = new byte[cmds.length];
-        int i = 0;
-        for (String b : cmds) {
-            if (b.equals("FF")) {
-                aaa[i++] = -1;
-            } else {
-                aaa[i++] = Integer.valueOf(b, 16).byteValue();;
-            }
-        }
-        session.write(IoBuffer.wrap(aaa));
-		
+	
 		String clientIP = ((InetSocketAddress)session.getRemoteAddress()).getAddress().getHostAddress();
 		Sig sig = sigService.querySigByIpAddress(clientIP);
 		
@@ -100,7 +102,7 @@ public class CommonTimeCmdFactory extends CmdFactoryBase implements ICmdParser{
 		String clientIP = ((InetSocketAddress)session.getRemoteAddress()).getAddress().getHostAddress();
 		//保存信号机的公共参数下发命令的数据-start-from jlj
 		String datastr = DataConvertor.toHexString(data);
-		System.out.println("普通日参数1--------------------datastr="+datastr);
+		System.out.println("普通日参数0-7长度是--------------------="+data.length);
 			//根据ip查出信号机
 			if(sig!=null){
 				Issuedcommand issuedcommand = issuedcommandService.loadBySigidAndNumber(sig.getId(),6);
@@ -223,7 +225,7 @@ public class CommonTimeCmdFactory extends CmdFactoryBase implements ICmdParser{
 		String clientIP = ((InetSocketAddress)session.getRemoteAddress()).getAddress().getHostAddress();
 		//保存信号机的公共参数下发命令的数据-start-from jlj
 		String datastr = DataConvertor.toHexString(data);
-		System.out.println("普通日参数2--------------------datastr="+datastr);
+		System.out.println("普通日参数8-15长度是--------------------="+data.length);
 			//根据ip查出信号机
 			if(sig!=null){
 				Issuedcommand issuedcommand = issuedcommandService.loadBySigidAndNumber(sig.getId(),7);

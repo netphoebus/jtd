@@ -60,18 +60,18 @@ public class SpecialTimeFactory extends CmdFactoryBase implements ICmdParser{
 		//this.m_oData
 		
 
-		String Reply_cmd = "FF FF FF FF 01 F0 9F 00 00 08 01 98";
-		String[] cmds = Reply_cmd.split(" ");
-        byte[] aaa = new byte[cmds.length];
-        int i = 0;
-        for (String b : cmds) {
-            if (b.equals("FF")) {
-                aaa[i++] = -1;
-            } else {
-                aaa[i++] = Integer.valueOf(b, 16).byteValue();;
-            }
-        }
-        session.write(IoBuffer.wrap(aaa));
+//		String Reply_cmd = "FF FF FF FF 01 F0 9F 00 00 08 01 98";
+//		String[] cmds = Reply_cmd.split(" ");
+//        byte[] aaa = new byte[cmds.length];
+//        int i = 0;
+//        for (String b : cmds) {
+//            if (b.equals("FF")) {
+//                aaa[i++] = -1;
+//            } else {
+//                aaa[i++] = Integer.valueOf(b, 16).byteValue();;
+//            }
+//        }
+//        session.write(IoBuffer.wrap(aaa));
 		
 		if(this.m_oData[7]==0){
 			Upload_SpecialTimeHead(session,this.m_oData);
@@ -91,7 +91,7 @@ public class SpecialTimeFactory extends CmdFactoryBase implements ICmdParser{
 		
 		//保存信号机的公共参数下发命令的数据-start-from jlj
 		String datastr = DataConvertor.toHexString(data);
-		System.out.println("特殊日参数1--------------------datastr="+datastr);
+		System.out.println("特殊日参数0-7长度是--------------------="+data.length);
 			//根据ip查出信号机
 			if(sig!=null){
 				Issuedcommand issuedcommand = issuedcommandService.loadBySigidAndNumber(sig.getId(),6);
@@ -203,7 +203,7 @@ public class SpecialTimeFactory extends CmdFactoryBase implements ICmdParser{
 		
 		//保存信号机的公共参数下发命令的数据-start-from jlj
 		String datastr = DataConvertor.toHexString(data);
-		System.out.println("特殊日参数2--------------------datastr="+datastr);
+		System.out.println("普通日参数8-15长度是--------------------="+data.length);
 			//根据ip查出信号机
 			if(sig!=null){
 				Issuedcommand issuedcommand = issuedcommandService.loadBySigidAndNumber(sig.getId(),6);

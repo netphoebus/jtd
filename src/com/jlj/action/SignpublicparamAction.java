@@ -317,7 +317,15 @@ public class SignpublicparamAction extends ActionSupport implements RequestAware
 				System.out.println("========================公共参数下发=======================================");
 				System.out.println("SigPublicparam the send str is "+DataConvertor.bytesToHexString(msendDatas));
 				//3-命令下发-from sl
-				currrenSession.write(IoBuffer.wrap(msendDatas));
+				
+				byte sendtest[] = new byte[msendDatas.length+1];
+				sendtest[0] = 0x01;
+				for (int i = 0; i < msendDatas.length; i++) {
+					sendtest[i+1] = msendDatas[i];
+				}
+				currrenSession.write(sendtest);
+				
+				//currrenSession.write(IoBuffer.wrap(msendDatas));
 			}
 		}
 		
@@ -372,7 +380,6 @@ public class SignpublicparamAction extends ActionSupport implements RequestAware
 				  k += msendDatas[i1]&0xFF;
 				 }
 				 
-			 
 		         
 			       for (int i2 = 0; i2 < 2; i2++) {  
 			    	   msendDatas[msendDatas.length-i2-1]  = (byte) (k >>> (i2 * 8));  
@@ -386,7 +393,7 @@ public class SignpublicparamAction extends ActionSupport implements RequestAware
 				System.out.println("");
 				System.out.println("========================校时下发=======================================");
 				
-				currrenSession.write(msendDatas);
+				
 				
 				//2-获取的新数据，包装成新命令，并修改数据库“命令表issuedCommand”-from jlj
 				

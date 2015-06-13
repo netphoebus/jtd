@@ -299,7 +299,7 @@ var btn=document.getElementById('show_btn');
 
        <li onclick="javascript:location.href='sigpublicparamAction!publicParam'">设置参数</li>
 		<li  onclick="javascript:location.href='greenAction!green'">高级设置</li>
-		 <li  onclick="executeCommand(2)">所有参数</li>
+		 <li  onclick="executeAllCmdCommands()">所有参数</li>
 		  <li  onclick="executeCommand(5)">初始化公共参数</li>
 		  <li  onclick="executeCommand(6)">初始化普通时间段0-7</li>
 		  <li  onclick="executeCommand(7)">初始化普通时间段8-15</li>

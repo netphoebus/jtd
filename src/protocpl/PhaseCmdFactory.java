@@ -42,23 +42,23 @@ public class PhaseCmdFactory extends CmdFactoryBase implements ICmdParser{
 	
 	@Override
 	public void Process(IoSession session, CommandBase cmd){
-		System.out.println("cmd.getCmdType() is "+cmd.getCmdType() +"this.expected_cmd is "+this.expected_cmd);
+	//	System.out.println("cmd.getCmdType() is "+cmd.getCmdType() +"this.expected_cmd is "+this.expected_cmd);
 		if(cmd.getCmdType() == this.expected_cmd)
 		{
 				
-
-			String Reply_cmd = "FF FF FF FF 01 F0 9F 00 00 08 01 98";
-			String[] cmds = Reply_cmd.split(" ");
-	        byte[] aaa = new byte[cmds.length];
-	        int i = 0;
-	        for (String b : cmds) {
-	            if (b.equals("FF")) {
-	                aaa[i++] = -1;
-	            } else {
-	                aaa[i++] = Integer.valueOf(b, 16).byteValue();;
-	            }
-	        }
-	        session.write(IoBuffer.wrap(aaa));
+//
+//			String Reply_cmd = "FF FF FF FF 01 F0 9F 00 00 08 01 98";
+//			String[] cmds = Reply_cmd.split(" ");
+//	        byte[] aaa = new byte[cmds.length];
+//	        int i = 0;
+//	        for (String b : cmds) {
+//	            if (b.equals("FF")) {
+//	                aaa[i++] = -1;
+//	            } else {
+//	                aaa[i++] = Integer.valueOf(b, 16).byteValue();;
+//	            }
+//	        }
+//	        session.write(IoBuffer.wrap(aaa));
 			
 			OnAfter_Ack(session, cmd);
 			
@@ -99,7 +99,7 @@ public class PhaseCmdFactory extends CmdFactoryBase implements ICmdParser{
 		
 		//data[7]  相位方案序号
 	
-		System.out.println("长度是"+data.length);
+		System.out.println("相位方案"+data[7]+"长度是"+data.length);
 		
 		ArrayList<int[][]> locatelist = new ArrayList<int[][]>();
 		

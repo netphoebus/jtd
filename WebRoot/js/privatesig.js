@@ -31,6 +31,58 @@ function topSetting()
 	alert("这里是高级设置~");
 }
 
+function executeAllCmdCommands()
+{
+	 executeCommand(1);
+	 alert("执行命令1");
+	 executeCommand(5);
+	  alert("执行命令5");
+	 executeCommand(6);
+	  alert("执行命令6");
+	 executeCommand(7);
+	  alert("执行命令7");
+	 executeCommand(8);
+	  alert("执行命令8");
+	 executeCommand(9);
+	 alert("执行命令8");
+	 executeCommand(10);
+	 alert("执行命令8");
+	 executeCommand(11);
+	 alert("执行命令8");
+	 executeCommand(12);
+	 alert("执行命令8");
+	 executeCommand(13);
+	 alert("执行命令8");
+	 executeCommand(14);
+	 alert("执行命令8");
+	 executeCommand(15);
+	 alert("执行命令8");
+	 executeCommand(16);
+	 alert("执行命令8");
+	 executeCommand(17);
+	 alert("执行命令8");
+	 executeCommand(18);
+	 alert("执行命令8");
+	 executeCommand(19);
+	 alert("执行命令8");
+	 executeCommand(20);
+	 alert("执行命令8");
+	 executeCommand(21);
+	 alert("执行命令8");
+	 executeCommand(22);
+	 alert("执行命令8");
+	 executeCommand(23);
+	 alert("执行命令8");
+	 executeCommand(24);
+	 alert("执行命令8");
+	 executeCommand(25);
+	 alert("执行命令8");
+	 executeCommand(26);
+	 alert("执行命令8");
+	 executeCommand(27);
+	            
+}
+
 function executeSolutionCommands()
 {
 	 executeCommand(12);
