@@ -46,7 +46,7 @@ $(document).ready(function(){
 				});
 				var index = 0;//计数器
 				var commandNumber = 0;
-		    	var interval = setInterval(updateProgressbarValue, 1000);
+		    	var interval = setInterval(updateProgressbarValue, 1500);
 		 		function updateProgressbarValue()
 		 		{
 		 			if(index==0)
