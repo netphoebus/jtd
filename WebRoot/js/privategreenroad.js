@@ -7,7 +7,6 @@
 			
 			
 			
-			
 			var jsonsigs = [];
             var sigs = [];//信号机数组
             var canvas =document.getElementById("canvas");
@@ -31,13 +30,11 @@
             setSpeedDivs(dots);//设置 速度
 
             console.log(dots);
-
             dotsbak = dots.slice();//复制js数组
 
             for(var i=0;i<sigs.length;i++)
             {
             	var timeX = getSigBeginTime(sigs[i]);
-            	
                 if(i!=0)
                 {
                     setSigDraggable(i,timeX);//设置信号机拖动事件
@@ -194,7 +191,7 @@
                         var dot = new Dot($("#"+sigs[i].number+sigs[i].fanxiang).offset().left-pixDot,$("#"+sigs[i].number+sigs[i].fanxiang).offset().top-pixDot,"t"+i);
                         dotCommon = dot;
                         dots.push(dot);
-                }
+                	}
                     else
                     {
                         var time = getSigBackTime(sigs[i]);
@@ -258,6 +255,7 @@
                     {
                     	var jsonSig = jsonSigs[i];
                     	var sig = new Sig(jsonSig.sigid,parseInt(jsonSig.signumber),jsonSig.signame,parseInt(jsonSig.sigcircle),jsonSig.zxspeed,jsonSig.fxspeed,jsonSig.distance,jsonSig.pharseArray,jsonSig.zxpharse,jsonSig.fxpharse);//基准点
+                    	console.log("jsonSig.fxpharse:"+jsonSig.fxpharse);
                     	sigs.push(sig);
                     }
                     console.log(sigs);
@@ -373,7 +371,7 @@
                             $("#"+sigs[i].number+"_a_"+j).css("width",phasewidth);
                             $("#"+sigs[i].number+"_b_"+j).css("background","#07FCE5");
                             $("#"+sigs[i].number+"_b_"+j).css("width",phasewidth);
-                             $("#"+sigs[i].number+"_c_"+j).css("background","#07FCE5");
+                            $("#"+sigs[i].number+"_c_"+j).css("background","#07FCE5");
                             $("#"+sigs[i].number+"_c_"+j).css("width",phasewidth);
                         }else
                         {
@@ -440,11 +438,12 @@
                 var number = sig.zhengxiang.substring(sig.zhengxiang.length-1,sig.zhengxiang.length);//相位编号
 				console.log("number:"+number);
                 var timeT = 0;//相位时间
-                for(var z=1;z<=number;z++)
+                for(var z=1;z<=parseInt(number);z++)
                 {
                     timeT = timeT+sig.phasenum[z-1]*cirleTime;
                 }
                 time = time-timeT;
+                console.log("sig"+sig.number+":",time,timeT);
                 return time;
             }
 

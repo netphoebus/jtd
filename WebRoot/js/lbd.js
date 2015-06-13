@@ -38,7 +38,7 @@ function initGreenRoad()
           var zxpharse = "_a_"+$(this).val().split("_")[1];//获得信号机 周期拼接相位//String
           if(number==0)
           {
-          	 var fxpharse = ""+$(this).val().split("_")[1];//获得信号机 周期拼接相位//String
+          	 var fxpharse = "_c_"+$(this).val().split("_")[1];//获得信号机 周期拼接相位//String
           }else
           {
           	 var fxpharse = null;
@@ -84,7 +84,7 @@ function initGreenRoad()
      
      
      fxselect.each( function(){
-		 var fxpharse = "_b_"+$(this).val().split("_")[1];//获得信号机 周期拼接相位
+		 var fxpharse = "_c_"+$(this).val().split("_")[1];//获得信号机 周期拼接相位
          jsonlist[0].fxpharse = fxpharse;
          
      });

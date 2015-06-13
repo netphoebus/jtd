@@ -13,17 +13,19 @@ request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+pa
 <link href="css/style.css" rel="stylesheet" type="text/css" />
 <link href="css/select.css" rel="stylesheet" type="text/css" />
 <link href="css/stilearn-helper.css" rel="stylesheet" type="text/css" />
-
-<script type="text/javascript" src="js/jquery.1.4.2-min.js"></script>
-
+<link href="css/jquery-ui.css" rel="stylesheet" type="text/css" />
 
 <script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript" src="js/jquery-ui.js"></script>
 <script src="js/stilearn-base.js"></script>
 <script src="js/holder.js"></script>
 
 <script type="text/javascript" src="js/jquery.idTabs.min.js"></script>
 <script type="text/javascript" src="js/select-ui.min.js"></script>
 <script type="text/javascript" src="editor/kindeditor.js"></script>
+
+
+
 <script type="text/javascript" src="js/privatesig.js"></script>
 <script type="text/javascript">
 function test()
@@ -173,8 +175,10 @@ $(document).ready(function($){
 		tabEvent:"mouseover",
 		tabStyle:"normal"
 	});
-	
+               
+   
 });
+
 </script>
 <script>
 function show_div(){
@@ -183,7 +187,6 @@ var btn=document.getElementById('show_btn');
 	if(obj.style.display=='none'){
 		obj.style.display='block';
 		btn.innerHTML='自　动';
-		
 		
 	}else{
 		obj.style.display='none';
@@ -299,7 +302,7 @@ var btn=document.getElementById('show_btn');
 
        <li onclick="javascript:location.href='sigpublicparamAction!publicParam'">设置参数</li>
 		<li  onclick="javascript:location.href='greenAction!green'">高级设置</li>
-		 <li  onclick="executeCommand(2)">所有参数</li>
+		  <li  id="manyCommands">所有参数</li>
 		  <li  onclick="executeCommand(5)">初始化公共参数</li>
 		  <li  onclick="executeCommand(6)">初始化普通时间段0-7</li>
 		  <li  onclick="executeCommand(7)">初始化普通时间段8-15</li>
@@ -339,20 +342,20 @@ var btn=document.getElementById('show_btn');
        
          <ul class="toolbar1" style="margin-left:80px; ">
            
-       	 <li  onclick="executeCommand(29)">黄 闪</li>
-         <li  onclick="executeCommand(30)">关 灯</li>
-         <li  onclick="executeCommand(31)">全 红</li>
-         <li  onclick="executeCommand(29)">锁 定</li>
-         <li style="background:none; border: solid 1px #fff; "><select name="select" class="select2">
+       	 <li  onclick="executeCommand(29)">黄 闪<br /></li>
+         <li  onclick="executeCommand(30)">关 灯<br /></li>
+         <li  onclick="executeCommand(31)">全 红<br /></li>
+         <li  onclick="executeCommand(29)">锁 定<br /></li>
+         <li style="background:none; border: solid 1px #fff; ">&quot;<select name="select" class="select2">
               <option>指定相位运行</option>
               <option>相位001</option>
               <option>相位021</option>
-            </select></li>
+            </select><br /></li>
          </ul>
          
        </div>
        
-       
+        <div id="divProgressbar"></div>
      </div>
 
     
