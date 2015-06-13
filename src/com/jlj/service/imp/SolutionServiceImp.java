@@ -133,4 +133,10 @@ public class SolutionServiceImp implements ISolutionService  {
 		String queryString = "from Solution mo where 1=1 and mo.sig.id ="+pubid;
 		return solutionDao.queryList(queryString);
 	}
+	public Solution getSolutionBySignidAndOrderid(Integer signid, int soluorderid) {
+		String queryString="from Solution mo where mo.sig.id=:signid and mo.orderid=:soluorderid";
+		String[] paramNames=new String[]{"signid","soluorderid"};
+		Object[] values=new Object[]{signid,soluorderid};
+		return solutionDao.queryByNamedParam(queryString,paramNames,values);
+	}
 }

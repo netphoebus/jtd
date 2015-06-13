@@ -42,4 +42,7 @@ public interface ISolutionService {
 
 	public abstract List<Solution> loadByPubid(Integer pubid);
 
+	public abstract Solution getSolutionBySignidAndOrderid(Integer id,
+			int soluorderid);
+
 }

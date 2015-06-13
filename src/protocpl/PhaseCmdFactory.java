@@ -157,14 +157,15 @@ public class PhaseCmdFactory extends CmdFactoryBase implements ICmdParser{
 			//System.out.println("the locatelist is "+locatelist);
 			
 			//---------------------数据库----------------------------
-			//根据ip获取对应的公共参数，保存相位方案以及步序和方向（东南西北、左直右人人）
+			//1-根据ip获取对应的信号机
+			//2-根据信号机id和相位编号orderid判断该相位是否保存
+			//3-若无，保存相位方案以及步序和方向（东南西北、左直右人人）；若有，更新数据。
 			//获取session中的IP
 			String clientIP = ((InetSocketAddress)session.getRemoteAddress()).getAddress().getHostAddress();
 			Sig sig =sigService.querySigByIpAddress(clientIP);
 			
-				//保存信号机的绿冲突下发命令的数据-start-from jlj
+				//保存信号机的相位方案下发命令的数据-start-from jlj
 				String datastr = DataConvertor.toHexString(data);
-				System.out.println("相位方案--------------------datastr="+datastr);
 				//根据ip查出信号机，检查是否为空
 				if(sig!=null){
 					Issuedcommand issuedcommand = issuedcommandService.loadBySigidAndNumber(sig.getId(),12);
@@ -185,17 +186,17 @@ public class PhaseCmdFactory extends CmdFactoryBase implements ICmdParser{
 					
 				
 				}
-				//保存信号机的绿冲突下发命令的数据-end-from jlj
+				//保存信号机的相位方案下发命令的数据-end-from jlj
 			
 			if(sig!=null){
-				
-				List<Solution> solutions = solutionService.getSolutionsBySignidOrder(sig.getId());
-				if(solutions==null||solutions.size()==0){
+				int soluorderid = (int)data[7];
+				Solution thissolu = solutionService.getSolutionBySignidAndOrderid(sig.getId(),soluorderid);
+				if(thissolu==null){
 					if(locatelist.size()==64){
 						Solution solution = new Solution();
-						solution.setOrderid((int)data[7]);//?
+						solution.setOrderid((int)data[7]);
 						solution.setSig(sig);
-						solution.setSoluname("相位方案"+data[7]);//?
+						solution.setSoluname("相位方案"+data[7]);
 						try {
 							solutionService.add(solution);
 						} catch (Exception e) {
@@ -238,10 +239,7 @@ public class PhaseCmdFactory extends CmdFactoryBase implements ICmdParser{
 					if(locatelist.size()==64){
 						//更新数据库
 							String soluname="相位方案"+data[7];//?
-							int soluid = 0;
-							if(solutions!=null&&solutions.size()>0){
-								soluid = solutions.get(0).getId();
-							}
+							int soluid = thissolu.getId();
 							solutionService.updateBySoluid(soluname,soluid);
 							
 							//保存该相位方案的所有相位步序
