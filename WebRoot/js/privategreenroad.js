@@ -211,7 +211,7 @@
                     else
                     {
                         var time = getSigBackTime(sigs[i]);
-                        var dot = new Dot(dotCommon.x-time, pixdiffY-sigs[i].distance/10);
+                        var dot = new Dot(dotCommon.x-time, pixdiffY-sigs[i].distance/10+20);//相位本身存在高度
                         dots.push(dot);
                     }
                 }
@@ -429,9 +429,6 @@
 	                    }
                      	
                      }
-                 
-                  
-
                 }
 
                 /**
@@ -458,10 +455,7 @@
 		                    {
 		                    	 $("#sigspeed"+i).text("反:"+  parseInt((dots[i].y-dots[i+1].y)*10/(dots[i].x-dots[i+1].x)*36/10)     );
 		                    }
-                     	
                      }
-                    
-                   
                 }
                 return;
 
@@ -481,15 +475,19 @@
                     time = time + (sigs[j].distance-sigs[j-1].distance)/sigs[j-1].speedzx;// 当前的距离 除去 上一个信号机设置的正向速度
                 }
 
-                var number = sig.zhengxiang.substring(sig.zhengxiang.length-1,sig.zhengxiang.length);//相位编号
-				console.log("number:"+number);
+                var phasenumber = sig.zhengxiang.substring(sig.zhengxiang.length-1,sig.zhengxiang.length);//相位编号
+				console.log("phasenumber:"+phasenumber);
                 var timeT = 0;//相位时间
-                for(var z=1;z<=parseInt(number);z++)
+                for(var z=1;z<=parseInt(phasenumber);z++)
                 {
                     timeT = timeT+sig.phasenum[z-1]*cirleTime;
                 }
-                time = time-timeT;
-                console.log("sig"+sig.number+":",time,timeT);
+                console.log("sig"+sig.number+":",time,timeT,cirleTime,time-timeT);
+                time = (time-timeT+cirleTime)%cirleTime;
+                var circleNumber = (time-timeT+cirleTime)/cirleTime;
+            
+                console.log("开始时间："+time,"开始周期:"+circleNumber);
+                //（距离/速度 - 前几个相位的执行时间 + 周期时间）%周期；
                 return time;
             }
 
