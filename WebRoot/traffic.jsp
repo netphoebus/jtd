@@ -1,35 +1,33 @@
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib uri="/struts-tags" prefix="s"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="/struts-tags" prefix="s" %> 
 <%
-	String path = request.getContextPath();
-	String basePath = request.getScheme() + "://"
-			+ request.getServerName() + ":" + request.getServerPort()
-			+ path + "/";
+String path = request.getContextPath(); String basePath =
+request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		<title>无标题文档</title>
-		<link href="css/style.css" rel="stylesheet" type="text/css" />
-		<link href="css/select.css" rel="stylesheet" type="text/css" />
-		<link href="css/stilearn-helper.css" rel="stylesheet" type="text/css" />
-		<link href="css/jquery-ui.css" rel="stylesheet" type="text/css" />
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<link href="css/style.css" rel="stylesheet" type="text/css" />
+<link href="css/select.css" rel="stylesheet" type="text/css" />
+<link href="css/stilearn-helper.css" rel="stylesheet" type="text/css" />
+<link href="css/jquery-ui.css" rel="stylesheet" type="text/css" />
 
-		<script type="text/javascript" src="js/jquery.js"></script>
-		<script type="text/javascript" src="js/jquery-ui.js"></script>
-		<script src="js/stilearn-base.js"></script>
-		<script src="js/holder.js"></script>
+<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript" src="js/jquery-ui.js"></script>
+<script src="js/stilearn-base.js"></script>
+<script src="js/holder.js"></script>
 
-		<script type="text/javascript" src="js/jquery.idTabs.min.js"></script>
-		<script type="text/javascript" src="js/select-ui.min.js"></script>
-		<script type="text/javascript" src="editor/kindeditor.js"></script>
+<script type="text/javascript" src="js/jquery.idTabs.min.js"></script>
+<script type="text/javascript" src="js/select-ui.min.js"></script>
+<script type="text/javascript" src="editor/kindeditor.js"></script>
 
 
 
-		<script type="text/javascript" src="js/privatesig.js"></script>
-		<script type="text/javascript">
+<script type="text/javascript" src="js/privatesig.js"></script>
+<script type="text/javascript">
 function test()
 {
 	console.log("coming");
@@ -90,14 +88,14 @@ function test()
 
 </script>
 
-		<script type="text/javascript">
+<script type="text/javascript">
     KE.show({
         id : 'content7',
         cssPath : './index.css'
     });
   </script>
-
-		<script type="text/javascript">
+  
+<script type="text/javascript">
 $(document).ready(function(e) {
     $(".select1").uedSelect({
 		width : 200			  
@@ -110,7 +108,7 @@ $(document).ready(function(e) {
 	});
 });
 </script>
-		<script type="text/javascript">
+<script type="text/javascript">
 $(document).ready(function(){
   $(".click").click(function(){
   $(".tip").fadeIn(200);
@@ -124,7 +122,7 @@ $(document).ready(function(){
 
 });
 </script>
-		<script type="text/javascript">
+<script type="text/javascript">
 $(document).ready(function(){
   $(".click2").click(function(){
   $(".tip2").fadeIn(200);
@@ -138,7 +136,7 @@ $(document).ready(function(){
 
 });
 </script>
-		<script type="text/javascript">
+<script type="text/javascript">
 $(document).ready(function(){
   $(".click4").click(function(){
   $(".tip4").fadeIn(200);
@@ -152,7 +150,7 @@ $(document).ready(function(){
 
 });
 </script>
-		<script type="text/javascript">
+<script type="text/javascript">
 $(document).ready(function(){
   $(".click3").click(function(){
   $(".tip3").fadeIn(200);
@@ -166,8 +164,8 @@ $(document).ready(function(){
 
 });
 </script>
-		<script type="text/javascript" src="js/jquery.tabso_yeso.js"></script>
-		<script type="text/javascript">
+<script type="text/javascript" src="js/jquery.tabso_yeso.js"></script>
+<script type="text/javascript">
 $(document).ready(function($){
 	
 	
@@ -182,7 +180,7 @@ $(document).ready(function($){
 });
 
 </script>
-		<script>
+<script>
 function show_div(){
  var obj=document.getElementById('test_div');
 var btn=document.getElementById('show_btn');
@@ -199,507 +197,269 @@ var btn=document.getElementById('show_btn');
 </script>
 
 
-	</head>
+</head>
 
-	<body>
-		<div class="formbody">
+<body>   
+<div class="formbody" >
 
-			<div class="tabson" style="margin-top: 0px;">
-				<ul class="toolbar" style="width: 100%; margin-bottom: 10px;">
-					<li style="padding-left: 5px;">
-						信号机基本信息 | IP:
-						<s:property value="sig.ip" />
-						&nbsp;&nbsp;&nbsp;地址:
-						<s:property value="sig.address" />
-						&nbsp;&nbsp;&nbsp;名称:
-						<s:property value="sig.name" />
-					</li>
-				</ul>
-				<div style="width: 100%; float: left;">
-					<div class="xwbox">
-						<li style="margin-top: 60px; height: 29px;">
-							<div
-								style="width: 29px; float: left; height: 29px; margin-left: 195px;">
-								<img alt="北人行道" class="l33" src="images/rod/l330.png" width="29"
-									height="29" />
-							</div>
-							<div
-								style="float: left; width: 29px; height: 29px; margin-left: 305px;">
-								<img alt="北人行道" class="l33" src="images/rod/l330.png" width="29"
-									height="29" />
-							</div>
-						</li>
-						<li style="height: 29px;">
-							<div
-								style="width: 29px; float: left; margin-top: 0px; height: 29px; margin-left: 150px;">
-								<img class="l23" alt="西人行道" src="images/rod/l230.png" width="29"
-									height="29" />
-							</div>
-							<div
-								style="width: 29px; float: left; margin-top: 0px; height: 29px; margin-left: 390px;">
-								<img class="l03" alt="东人行道" src="images/rod/l030.png" width="29"
-									height="29" />
-							</div>
-						</li>
-						<li style="height: 270px;">
-							<div style="height: 270px; width: 100%; float: left;">
-								<div
-									style="width: 33px; height: 126px; float: left; margin-top: 25px; margin-left: 205px; overflow: hidden; background: url(images/rod/trabg1.png ) no-repeat center;">
-									<table width="33" border="0" cellspacing="0" cellpadding="0">
-										<tr>
-											<td height="8">
-											</td>
-										</tr>
-										<tr>
-											<td height="25" align="center">
-												<span id="dd"
-													style="font-family: Adobe 黑体 Std R; font-size: 18px; color: #FFF;"></span>
-											</td>
-										</tr>
-										<tr>
-											<td height="28" align="center">
-												<img id="l02" src="images/rod/l020.png" alt="东向西右拐"
-													width="25" height="25" />
-											</td>
-										</tr>
-										<tr>
-											<td height="27" align="center">
-												<img id="l01" src="images/rod/l010.png" alt="东向西直行"
-													width="25" height="25" />
-											</td>
-										</tr>
-										<tr>
-											<td height="27" align="center">
-												<img id="l00" src="images/rod/l000.png" alt="东向西左拐"
-													width="25" height="25" />
-											</td>
-										</tr>
-									</table>
-								</div>
-								<div
-									style="width: 126px; height: 33px; float: left; margin-top: 230px; margin-left: 10px; background: url(images/rod/trabg2.png) no-repeat;">
-									<table width="126" border="0" cellspacing="0" cellpadding="0">
-										<tr>
-											<td width="30" align="center">
-												<span id="bd"
-													style="font-family: Adobe 黑体 Std R; font-size: 18px; color: #FFF; line-height: 33px;"></span>
-											</td>
-											<td width="28" align="center">
-												<img id="l32" src="images/rod/l320.png" alt="北向南右拐"
-													width="25" height="25" />
-											</td>
-											<td width="28" align="center">
-												<img id="l31" src="images/rod/l310.png" alt="北向南直行"
-													width="25" height="25" />
-											</td>
-											<td width="30" align="center">
-												<img id="l30" src="images/rod/l300.png" alt="北向南左拐"
-													width="25" height="25" />
-											</td>
-											<td width="4" height="33"></td>
-										</tr>
-									</table>
-								</div>
-								<div
-									style="width: 126px; height: 33px; float: left; margin-top: 0px; margin-left: 0px; background: url(images/rod/trabg2.png) no-repeat;">
-									<table width="126" border="0" cellspacing="0" cellpadding="0">
-										<tr>
-											<td width="4" height="33"></td>
-											<td width="28" align="center">
-												<img id="l10" src="images/rod/l100.png" alt="南向北左拐"
-													width="25" height="25" />
-											</td>
-											<td width="28" align="center">
-												<img id="l11" src="images/rod/l110.png" alt="南向北直行"
-													width="25" height="25" />
-											</td>
-											<td width="30" align="center">
-												<img id="l12" src="images/rod/l120.png" alt="南向北右拐"
-													width="25" height="25" />
-											</td>
-											<td width="30" align="center">
-												<span id="nd"
-													style="font-family: Adobe 黑体 Std R; font-size: 18px; color: #FFF; line-height: 33px;"></span>
-											</td>
-										</tr>
-									</table>
-								</div>
-								<div
-									style="width: 33px; height: 126px; float: left; margin-top: 130px; margin-left: 10px; overflow: hidden; background: url(images/rod/trabg1.png ) no-repeat center;">
-									<table width="33" border="0" cellspacing="0" cellpadding="0">
-										<tr>
-											<td height="8"></td>
-										</tr>
-										<tr>
-											<td height="28" align="center">
-												<img id="l20" src="images/rod/l200.png" alt="西向东左拐"
-													width="25" height="25" />
-											</td>
-										</tr>
-										<tr>
-											<td height="27" align="center">
-												<img id="l21" src="images/rod/l210.png" alt="西向东直行"
-													width="25" height="25" />
-											</td>
-										</tr>
-										<tr>
-											<td height="27" align="center">
-												<img id="l22" src="images/rod/l220.png" alt="西向东右拐"
-													width="25" height="25" />
-											</td>
-										</tr>
-										<tr>
-											<td height="25" align="center">
-												<span id="xd"
-													style="font-family: Adobe 黑体 Std R; font-size: 18px; color: #FFF;"></span>
-											</td>
-										</tr>
-									</table>
-								</div>
-							</div>
-						</li>
-						<li style="height: 29px;">
-							<div
-								style="width: 29px; height: 29px; float: left; margin-left: 150px;">
-								<img class="l23" src="images/rod/l230.png" alt="西人行道" width="29"
-									height="29" />
-							</div>
-							<div
-								style="width: 29px; float: left; margin-top: 0px; height: 29px; margin-left: 390px;">
-								<img class="l03" src="images/rod/l030.png" alt="东人行道" width="29"
-									height="29" />
-							</div>
-						</li>
-						<ul>
-							<li style="height: 29px;">
-								<div
-									style="width: 29px; height: 29px; float: left; margin-left: 195px;">
-									<img class="l13" src="images/rod/l130.png" alt="南人行道"
-										width="29" height="29" />
-								</div>
-								<div
-									style="float: left; width: 29px; height: 29px; margin-left: 305px;">
-									<img class="l13" src="images/rod/l130.png" alt="南人行道"
-										width="29" height="29" />
-								</div>
-							</li>
-						</ul>
-					</div>
-				</div>
-				<div style="width: 100%; float: left; margin-bottom: 10px;">
-					<ul class="toolbar">
-						<li onclick="javascript:location.href='cssz.html'"
-							style="cursor: auto;">
-							<span><img src="images/boot.png" alt="" width="24"
-									height="24" />
-							</span>设 置 :
-						</li>
-					</ul>
-					<ul class="toolbar1">
+     <div class="tabson" style="margin-top:0px;" ><ul class="toolbar" style="width:100%; margin-bottom:10px;"><li style="padding-left:5px;">信号机基本信息 |　IP:<s:property value="sig.ip"/>&nbsp;&nbsp;&nbsp;地址:<s:property value="sig.address"/>&nbsp;&nbsp;&nbsp;名称:<s:property value="sig.name" />　</li></ul>
+       <div style="width:100%; float:left;">
+         <div class="xwbox" >
+         <li style=" margin-top: 60px; height:29px;">
+         <div style="width: 29px; float:left; height: 29px; margin-left: 195px;"><img alt="北人行道" class="l33" src="images/rod/l330.png" width="29" height="29" /></div>
+         <div style=" float:left; width: 29px; height: 29px; margin-left: 305px;"><img alt="北人行道" class="l33" src="images/rod/l330.png" width="29" height="29" /></div>
+         </li>
+           <li style="height:29px;">
+             <div style="width: 29px; float:left;  margin-top: 0px; height: 29px; margin-left: 150px;"><img class="l23" alt="西人行道" src="images/rod/l230.png" width="29" height="29" /></div>
+             <div style="width: 29px; float:left;  margin-top: 0px; height: 29px; margin-left: 390px;"><img class="l03" alt="东人行道" src="images/rod/l030.png" width="29" height="29" /></div>
+           </li>
+           <li style="height: 270px;">
+             <div style="height: 270px; width: 100%; float: left;">
+               <div style="width: 33px; height: 126px; float: left; margin-top: 25px; margin-left: 205px; overflow: hidden; background: url(images/rod/trabg1.png ) no-repeat center;">
+                 <table width="33" border="0" cellspacing="0" cellpadding="0">
+                   <tr>
+                     <td height="8"> </td>
+                   </tr>
+                   <tr>
+                     <td height="25" align="center"><span id="dd" style="font-family: Adobe 黑体 Std R; font-size: 18px; color: #FFF;"></span></td>
+                   </tr>
+                   <tr>
+                     <td height="28" align="center"><img id="l02" src="images/rod/l020.png" alt="东向西右拐" width="25" height="25" /></td>
+                   </tr>
+                   <tr>
+                     <td height="27" align="center"><img id="l01" src="images/rod/l010.png"  alt="东向西直行" width="25" height="25" /></td>
+                   </tr>
+                   <tr>
+                     <td height="27" align="center"><img id="l00" src="images/rod/l000.png" alt="东向西左拐" width="25" height="25" /></td>
+                   </tr>
+                 </table>
+               </div>
+                <div style="width: 126px; height: 33px; float: left; margin-top: 230px; margin-left: 10px; background: url(images/rod/trabg2.png) no-repeat;">
+                 <table width="126" border="0" cellspacing="0" cellpadding="0">
+                   <tr>
+                   	 <td width="30" align="center"><span id="bd" style="font-family: Adobe 黑体 Std R; font-size: 18px; color: #FFF; line-height: 33px;"></span></td>
+                     <td width="28" align="center"><img id="l32" src="images/rod/l320.png" alt="北向南右拐" width="25" height="25" /></td>
+                     <td width="28" align="center"><img  id="l31" src="images/rod/l310.png" alt="北向南直行" width="25" height="25" /></td>
+                     <td width="30" align="center"><img  id="l30" src="images/rod/l300.png" alt="北向南左拐" width="25" height="25" /></td>
+                   	 <td width="4" height="33"></td>
+                   </tr>
+                 </table>
+               </div>
+              <div style="width: 126px; height: 33px; float: left; margin-top: 0px; margin-left: 0px; background: url(images/rod/trabg2.png) no-repeat;">
+                 <table width="126" border="0" cellspacing="0" cellpadding="0">
+                   <tr>
+                     <td width="4" height="33"></td>
+                     <td width="28" align="center"><img id="l10" src="images/rod/l100.png" alt="南向北左拐" width="25" height="25" /></td>
+                     <td width="28" align="center"><img id="l11" src="images/rod/l110.png" alt="南向北直行" width="25" height="25" /></td>
+                     <td width="30" align="center"><img id="l12" src="images/rod/l120.png" alt="南向北右拐" width="25" height="25" /></td>
+                      <td width="30" align="center"><span id="nd" style="font-family: Adobe 黑体 Std R; font-size: 18px; color: #FFF; line-height: 33px;"></span></td>
+                   </tr>
+                 </table>
+               </div>
+               <div style="width: 33px; height: 126px; float: left; margin-top: 130px; margin-left: 10px; overflow: hidden; background: url(images/rod/trabg1.png ) no-repeat center;">
+                 <table width="33" border="0" cellspacing="0" cellpadding="0">
+                   <tr>
+                     <td height="8"></td>
+                   </tr>
+                   <tr>
+                     <td height="28" align="center"><img id="l20" src="images/rod/l200.png" alt="西向东左拐" width="25" height="25" /></td>
+                   </tr>
+                   <tr>
+                     <td height="27" align="center"><img id="l21" src="images/rod/l210.png" alt="西向东直行" width="25" height="25" /></td>
+                   </tr>
+                   <tr>
+                     <td height="27" align="center"><img id="l22" src="images/rod/l220.png" alt="西向东右拐" width="25" height="25" /></td>
+                   </tr>
+                   <tr>
+                     <td height="25" align="center"><span id="xd" style="font-family: Adobe 黑体 Std R; font-size: 18px; color: #FFF;"></span></td>
+                   </tr>
+                 </table>
+               </div>
+             </div>
+           </li>
+           <li style="height:29px;">
+             <div style="width: 29px; height: 29px; float:left; margin-left: 150px;">
+             <img class="l23"  src="images/rod/l230.png" alt="西人行道" width="29" height="29" /></div>
+             <div style="width: 29px; float:left;  margin-top: 0px; height: 29px; margin-left: 390px;">
+             <img class="l03" src="images/rod/l030.png" alt="东人行道" width="29" height="29" /></div>
+           </li>
+           <ul>
+             <li style="height:29px;">
+               <div style="width: 29px; height: 29px; float:left; margin-left: 195px;">
+               <img class="l13" src="images/rod/l130.png" alt="南人行道" width="29" height="29" /></div>
+               <div style=" float:left; width: 29px; height: 29px; margin-left: 305px;">
+               <img class="l13" src="images/rod/l130.png" alt="南人行道" width="29" height="29" /></div>
+             </li>
+           </ul>
+         </div>
+       </div>
+       <div style="width:100%; float:left; margin-bottom:10px;">
+         <ul class="toolbar" >
+           <li onclick="javascript:location.href='cssz.html'" style="cursor: auto;"><span><img src="images/boot.png" alt="" width="24" height="24" /></span>设 置 :</li>
+         </ul>
+         <ul class="toolbar1">
+           
 
+       <li onclick="javascript:location.href='sigpublicparamAction!publicParam'">设置参数</li>
+		<li  onclick="javascript:location.href='greenAction!green'">高级设置</li>
 
-						<li
-							onclick="javascript:location.href='sigpublicparamAction!publicParam'">
-							设置参数
-						</li>
-						<li onclick="javascript:location.href='greenAction!green'">
-							高级设置
-						</li>
+		  <!--<li  id="manyCommands">所有参数</li>  -->
+		  <li  onclick="executeCommand(2)">所有参数</li>
+		  <li  onclick="executeCommand(5)">初始化公共参数</li>
+		  <li  onclick="executeCommand(6)">初始化普通时间段0-7</li>
+		  <li  onclick="executeCommand(7)">初始化普通时间段8-15</li>
+		  <li  onclick="executeCommand(8)">初始化周日时间段0-7</li>
+		  <li  onclick="executeCommand(9)">初始化周日时间段8-15</li>
+		  <li  onclick="executeCommand(3)">初始化特殊时间段0-7</li>
+		  <li  onclick="executeCommand(1)">初始化特殊时间段8-15</li>
+		  <li  onclick="javascript:location.href='mapAction!delete'">删除信号机</li>
+         </ul>
+       </div>
+       <div style="width:100%; float:left; margin-bottom:10px;">
+         <ul class="toolbar" >
+           <li style="cursor: auto;"><span><img src="images/car.png" alt="" width="24" height="24" /></span>查 看 :</li>
+         </ul>
+         <ul class="toolbar1">
+       <li class="click2">汽车流量</li>
+       <li class="click3">故障信息</li>
+       <li class="click4">操作日志</li>
+         </ul>
+         
+       </div>
+       
+       <div style="width:100%; float:left; margin-bottom:10px;">
+         <ul class="toolbar" >
+           <li style="cursor: auto;"><span><img src="images/13.png" alt="" width="24" height="23" /></span>控 制 :</li>
+         </ul>
+         <ul class="toolbar1">
+       <li id="show_btn" onclick="show_div()">手　动</li>
+      
+       
 
-						<li id="manyCommands">
-							所有参数
-						</li>
-						<li onclick="executeCommand(5)">
-							初始化公共参数
-						</li>
-						<li onclick="executeCommand(6)">
-							初始化普通时间段0-7
-						</li>
-						<li onclick="executeCommand(7)">
-							初始化普通时间段8-15
-						</li>
-						<li onclick="executeCommand(8)">
-							初始化周日时间段0-7
-						</li>
-						<li onclick="executeCommand(9)">
-							初始化周日时间段8-15
-						</li>
-						<li onclick="executeCommand(3)">
-							初始化特殊时间段0-7
-						</li>
-						<li onclick="executeCommand(1)">
-							初始化特殊时间段8-15
-						</li>
-						<li onclick="javascript:location.href='mapAction!delete'">
-							删除信号机
-						</li>
-					</ul>
-				</div>
-				<div style="width: 100%; float: left; margin-bottom: 10px;">
-					<ul class="toolbar">
-						<li style="cursor: auto;">
-							<span><img src="images/car.png" alt="" width="24"
-									height="24" />
-							</span>查 看 :
-						</li>
-					</ul>
-					<ul class="toolbar1">
-						<li class="click2">
-							汽车流量
-						</li>
-						<li class="click3">
-							故障信息
-						</li>
-						<li class="click4">
-							操作日志
-						</li>
-					</ul>
+         </ul>
+         
+       </div>
+       
+       <div id="test_div" style="width:100%; float:left; display:none; margin-bottom:15px; ">
+       
+         <ul class="toolbar1" style="margin-left:80px; ">
+           
+       	 <li  onclick="executeCommand(29)">黄 闪<br /></li>
+         <li  onclick="executeCommand(30)">关 灯<br /></li>
+         <li  onclick="executeCommand(31)">全 红<br /></li>
+         <li  onclick="executeCommand(29)">锁 定<br /></li>
+         <li style="background:none; border: solid 1px #fff; ">&quot;<select name="select" class="select2">
+              <option>指定相位运行</option>
+              <option>相位001</option>
+              <option>相位021</option>
+            </select><br /></li>
+         </ul>
+         
+       </div>
+       
+        <div id="divProgressbar"></div>
+     </div>
 
-				</div>
+    
+</div>
 
-				<div style="width: 100%; float: left; margin-bottom: 10px;">
-					<ul class="toolbar">
-						<li style="cursor: auto;">
-							<span><img src="images/13.png" alt="" width="24"
-									height="23" />
-							</span>控 制 :
-						</li>
-					</ul>
-					<ul class="toolbar1">
-						<li id="show_btn" onclick="show_div()">
-							手 动
-						</li>
+ <div class="tip">
+   	 <div class="tiptop"><span>信号设置</span><a></a></div>
+        
+      <div class="tipinfo">
+        
+        <div class="tipright" style="line-height:25px;">
+        <p>路口名称：<input type="text" class="dfinput2"  style="width:150px;"/></p>
+        <p>路口编码：<input type="text" class="dfinput2"  style="width:150px;"/></p>
+        <p>路口地址：<input type="text" class="dfinput2"  style="width:150px;"/></p>
+        <p>路口端口：<input type="text" class="dfinput2"  style="width:150px;"/></p>
+        <p>中心端口：<input type="text" class="dfinput2"  style="width:150px;"/></p>
+        <p ><table width="50%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td width="20">&nbsp;</td>
+    <td width="66"><btn class="forminfobtn2">保存路口信息</btn></td>
+    <td width="66"><btn class="forminfobtn">连接</btn></td>
+    <td width="203"><btn class="forminfobtn">断开</btn></td>
+    <td >&nbsp;</td>
+  </tr>
+</table>
+ <p style=" margin-top:5px;">工作方式：<input type="text" class="dfinput2"  style="width:150px;"/></p>
+  <p>工 作 日 ：<input type="text" class="dfinput2"  style="width:150px;"/></p>
+  <p><table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td width="44%" align="left">工作方案：
+      <input type="text" class="dfinput2"  style="width:30px;"/></td>
+    <td width="56%">时 间 段 ：
+      <input type="text" class="dfinput2"  style="width:30px;"/></td>
+    </tr>
+</table>
+  <p><table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td width="44%" align="left">步　　序：
+      <input type="text" class="dfinput2"  style="width:30px;"/></td>
+    <td width="56%">剩余时间：
+      <input type="text" class="dfinput2"  style="width:30px;"/></td>
+    </tr>
+</table>
+<p>故障信息：</p>
+ <div style="width:240px; height:100px; overflow:auto;"><cite>该信号灯运行正常，无故障。如果是请点击确定按钮 ，否则请点取消。该信号灯运行正常，无故障。如果是请点击确定按钮 ，否则请点取消。该信号灯运行正常，无故障。如果是请点击确定按钮 ，否则请点取消。该信号灯运行正常，无故障。如果是请点击确定按钮 ，否则请点取消。该信号灯运行正常，无故障。如果是请点击确定按钮 ，否则请点取消。该信号灯运行正常，无故障。如果是请点击确定按钮 ，否则请点取消。</cite></div>
+        
+        </div>
+        
+        <div class="tipleft">
+        <p>运行状态：未连接....</p>
+        <div style="width:500px; height:400px; float:left; overflow:hidden;"><img src="images/img/fw.jpg" width="500" height="400" /></div>
+        </div>
+     </div>
+ 
+    
+  </div>
+  
+  
+  
+   <div class="tip2">
+   	 <div class="tiptop2"><span>月车流量查询</span><a></a></div>
+        
+      <div class="tipinfo2">
+        <div class="tipright" style="width:680px; padding-right:5px;">
+        <ul class="tabbtn" id="normaltab">
+		<li class="current"><a href="#">流量信息列表</a></li>
+		<li><a href="#">流量报表折线图</a></li>
+		<li><a href="#">流量报表柱状图</a></li>
+		</ul><!--tabbtn end-->
+	<div class="tabcon" id="normalcon">
+		<div class="sublist">
+			<ul>
+				<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td>1</td>
+  </tr>
+</table>
 
-
-
-					</ul>
-
-				</div>
-
-				<div id="test_div"
-					style="width: 100%; float: left; display: none; margin-bottom: 15px;">
-
-					<ul class="toolbar1" style="margin-left: 80px;">
-
-						<li onclick="executeCommand(29)">
-							黄 闪
-							<br />
-						</li>
-						<li onclick="executeCommand(30)">
-							关 灯
-							<br />
-						</li>
-						<li onclick="executeCommand(31)">
-							全 红
-							<br />
-						</li>
-						<li onclick="executeCommand(29)">
-							锁 定
-							<br />
-						</li>
-						<li style="background: none; border: solid 1px #fff;">
-							&quot;
-							<select name="select" class="select2">
-								<option>
-									指定相位运行
-								</option>
-								<option>
-									相位001
-								</option>
-								<option>
-									相位021
-								</option>
-							</select>
-							<br />
-						</li>
-					</ul>
-
-				</div>
-
-				<div id="divProgressbar"></div>
-			</div>
-
-
-		</div>
-
-		<div class="tip">
-			<div class="tiptop">
-				<span>信号设置</span><a></a>
-			</div>
-
-			<div class="tipinfo">
-
-				<div class="tipright" style="line-height: 25px;">
-					<p>
-						路口名称：
-						<input type="text" class="dfinput2" style="width: 150px;" />
-					</p>
-					<p>
-						路口编码：
-						<input type="text" class="dfinput2" style="width: 150px;" />
-					</p>
-					<p>
-						路口地址：
-						<input type="text" class="dfinput2" style="width: 150px;" />
-					</p>
-					<p>
-						路口端口：
-						<input type="text" class="dfinput2" style="width: 150px;" />
-					</p>
-					<p>
-						中心端口：
-						<input type="text" class="dfinput2" style="width: 150px;" />
-					</p>
-					<p>
-					<table width="50%" border="0" cellspacing="0" cellpadding="0">
-						<tr>
-							<td width="20">
-								&nbsp;
-							</td>
-							<td width="66">
-								<btn class="forminfobtn2">
-								保存路口信息
-								</btn>
-							</td>
-							<td width="66">
-								<btn class="forminfobtn">
-								连接
-								</btn>
-							</td>
-							<td width="203">
-								<btn class="forminfobtn">
-								断开
-								</btn>
-							</td>
-							<td>
-								&nbsp;
-							</td>
-						</tr>
-					</table>
-					<p style="margin-top: 5px;">
-						工作方式：
-						<input type="text" class="dfinput2" style="width: 150px;" />
-					</p>
-					<p>
-						工 作 日 ：
-						<input type="text" class="dfinput2" style="width: 150px;" />
-					</p>
-					<p>
-					<table width="100%" border="0" cellspacing="0" cellpadding="0">
-						<tr>
-							<td width="44%" align="left">
-								工作方案：
-								<input type="text" class="dfinput2" style="width: 30px;" />
-							</td>
-							<td width="56%">
-								时 间 段 ：
-								<input type="text" class="dfinput2" style="width: 30px;" />
-							</td>
-						</tr>
-					</table>
-					<p>
-					<table width="100%" border="0" cellspacing="0" cellpadding="0">
-						<tr>
-							<td width="44%" align="left">
-								步 序：
-								<input type="text" class="dfinput2" style="width: 30px;" />
-							</td>
-							<td width="56%">
-								剩余时间：
-								<input type="text" class="dfinput2" style="width: 30px;" />
-							</td>
-						</tr>
-					</table>
-					<p>
-						故障信息：
-					</p>
-					<div style="width: 240px; height: 100px; overflow: auto;">
-						<cite>该信号灯运行正常，无故障。如果是请点击确定按钮
-							，否则请点取消。该信号灯运行正常，无故障。如果是请点击确定按钮 ，否则请点取消。该信号灯运行正常，无故障。如果是请点击确定按钮
-							，否则请点取消。该信号灯运行正常，无故障。如果是请点击确定按钮 ，否则请点取消。该信号灯运行正常，无故障。如果是请点击确定按钮
-							，否则请点取消。该信号灯运行正常，无故障。如果是请点击确定按钮 ，否则请点取消。</cite>
-					</div>
-
-				</div>
-
-				<div class="tipleft">
-					<p>
-						运行状态：未连接....
-					</p>
-					<div
-						style="width: 500px; height: 400px; float: left; overflow: hidden;">
-						<img src="images/img/fw.jpg" width="500" height="400" />
-					</div>
-				</div>
-			</div>
-
-
-		</div>
-
-
-
-		<div class="tip2">
-			<div class="tiptop2">
-				<span>月车流量查询</span><a></a>
-			</div>
-
-			<div class="tipinfo2">
-				<div class="tipright" style="width: 680px; padding-right: 5px;">
-					<ul class="tabbtn" id="normaltab">
-						<li class="current">
-							<a href="#">流量信息列表</a>
-						</li>
-						<li>
-							<a href="#">流量报表折线图</a>
-						</li>
-						<li>
-							<a href="#">流量报表柱状图</a>
-						</li>
-					</ul>
-					<!--tabbtn end-->
-					<div class="tabcon" id="normalcon">
-						<div class="sublist">
-							<ul>
-								<table width="100%" border="0" cellspacing="0" cellpadding="0">
-									<tr>
-										<td>
-											1
-										</td>
-									</tr>
-								</table>
-
-							</ul>
-						</div>
-						<!--tabcon end-->
-						<div class="sublist">
-							<ul>
-								<table width="100%" border="0" cellspacing="0" cellpadding="0">
-									<tr>
-										<td>
-											2
-										</td>
-									</tr>
-								</table>
-							</ul>
-						</div>
-						<!--tabcon end-->
-						<div class="sublist">
-							<ul>
-								<table width="100%" border="0" cellspacing="0" cellpadding="0">
-									<tr>
-										<td>
-											<img src="images/img/z.png" width="680" height="270" />
-										</td>
-									</tr>
-								</table>
-							</ul>
-						</div>
-						<!--tabcon end-->
-
-					</div>
-					<!--tabcon end-->
-				</div>
-				<div class="tipleft" style="width: 180px; line-height: 35px;">
+			</ul>
+		</div><!--tabcon end-->
+		<div class="sublist">
+			<ul>
+				<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td>2</td>
+  </tr>
+</table>
+                </ul>
+		</div><!--tabcon end-->
+		<div class="sublist">
+			<ul>
+				<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><img src="images/img/z.png" width="680" height="270" /></td>
+  </tr>
+</table>
+</ul>
+		</div><!--tabcon end-->
+		
+	</div><!--tabcon end-->
+        </div>
+        <div class="tipleft" style="width: 180px; line-height: 35px;">
 					<p>
 						查询条件：
 					</p>
@@ -732,7 +492,11 @@ var btn=document.getElementById('show_btn');
 								日期：
 							</td>
 							<td>
-								<s:select list="#{2015:'2015',2016:'2016',2017:'2017',2018:'2018',2019:'2019',2020:'2020'}" name="year" listKey="key" listValue="value" cssClass="select2"></s:select>
+								<s:select list="#
+
+{2015:'2015',2016:'2016',2017:'2017',2018:'2018',2019:'2019',2020:'2020'}" name="year" listKey="key" listValue="value" 
+
+cssClass="select2"></s:select>
 							</td>
 						</tr>
 					</table>
@@ -744,7 +508,11 @@ var btn=document.getElementById('show_btn');
 								月 份：
 							</td>
 							<td>
-								<s:select list="#{1:'1',2:'2',3:'3',4:'4',5:'5',6:'6',7:'7',8:'8',9:'9',10:'10',11:'11',12:'12'}" name="month" listKey="key" listValue="value" cssClass="select2"></s:select>
+								<s:select list="#
+
+{1:'1',2:'2',3:'3',4:'4',5:'5',6:'6',7:'7',8:'8',9:'9',10:'10',11:'11',12:'12'}" name="month" listKey="key" 
+
+listValue="value" cssClass="select2"></s:select>
 							</td>
 						</tr>
 					</table>
@@ -760,275 +528,156 @@ var btn=document.getElementById('show_btn');
 
 		</div>
 
-
-
-
-		<div class="tip3">
-			<div class="tiptop3">
-				<span>故障信息</span><a></a>
-			</div>
-
-			<div class="tipinfo3">
-				<table class="tablelist">
-					<thead>
-						<tr>
-							<th width="5%">
-								<input name="input" type="checkbox" value="" checked="checked" />
-							</th>
-							<th width="10%">
-								日期
-								<i class="sort"><img src="images/px.gif" alt="" />
-								</i>
-							</th>
-							<th width="9%">
-								时间
-							</th>
-							<th width="11%">
-								设备
-							</th>
-							<th width="65%">
-								事件
-							</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td>
-								<input name="input" type="checkbox" value="" />
-							</td>
-							<td>
-								2015-12-12
-							</td>
-							<td>
-								10:12:08
-							</td>
-							<td>
-								<div id="u5" jquery171015793810490029025="20">
-									<div id="u6" jquery171015793810490029025="21">
-										<p>
-											T42
-										</p>
-									</div>
-								</div>
-							</td>
-							<td>
-								信号机--联机
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<input name="input" type="checkbox" value="" />
-							</td>
-							<td>
-								2015-12-12
-							</td>
-							<td>
-								10:12:08
-							</td>
-							<td>
-								T11
-							</td>
-							<td>
-								&nbsp;
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<input name="input" type="checkbox" value="" />
-							</td>
-							<td>
-								2015-12-12
-							</td>
-							<td>
-								10:12:08
-							</td>
-							<td>
-								<div id="u9" jquery171015793810490029025="20">
-									<div id="u10" jquery171015793810490029025="21">
-										<p>
-											T44
-										</p>
-									</div>
-								</div>
-							</td>
-							<td>
-								&nbsp;
-							</td>
-						</tr>
-					</tbody>
-				</table>
-				<ul class="forminfo" style="line-height: 40px; font-size: 14px;">
-					<table width="98%" border="0" align="center" cellpadding="2"
-						cellspacing="1" bgcolor="#93CDF3" style="margin-top: 8px">
-						<tr align="right" bgcolor="#EEF4EA">
-							<td height="34" align="center" bgcolor="#FFFFFF">
-								&nbsp;
-							</td>
-							<td height="34" colspan="6" align="center" bgcolor="#FFFFFF">
-								记录数：3&nbsp;&nbsp;&nbsp;
-								<a href="javascript:jumpPage(1)" target="main">首页</a>&nbsp;&nbsp;
-								<a href="javascript:jumpPage(2)" target="main">上一页</a>&nbsp;&nbsp;&nbsp;
-								<a href="javascript:jumpPage(4)" target="main">下一页</a>&nbsp;&nbsp;&nbsp;
-								<a href="javascript:jumpPage(5)" target="main">尾页</a>&nbsp;&nbsp;&nbsp;
-								<input type='button' class="exit" onclick="" value='转到' />
-								&nbsp;
-								<!-- 
+  
+  
+  
+  
+  <div class="tip3">
+   	 <div class="tiptop3"><span>故障信息</span><a></a></div>
+        
+      <div class="tipinfo3">
+       <table class="tablelist">
+         <thead>
+       <tr>
+         <th width="5%"><input name="input" type="checkbox" value="" checked="checked"/></th>
+         <th width="10%">日期<i class="sort"><img src="images/px.gif" alt="" /></i></th>
+         <th width="9%">时间</th>
+         <th width="11%">设备</th>
+         <th width="65%">事件</th>
+       </tr>
+     </thead>
+     <tbody>
+       <tr>
+         <td><input name="input" type="checkbox" value="" /></td>
+         <td>2015-12-12 </td>
+         <td>10:12:08</td>
+         <td><div id="u5" jquery171015793810490029025="20">
+           <div id="u6" jquery171015793810490029025="21">
+             <p>T42</p>
+           </div>
+         </div></td>
+         <td>信号机--联机</td>
+       </tr>
+       <tr>
+         <td><input name="input" type="checkbox" value="" /></td>
+         <td>2015-12-12 </td>
+         <td>10:12:08</td>
+         <td>T11</td>
+         <td>&nbsp;</td>
+       </tr>
+       <tr>
+         <td><input name="input" type="checkbox" value="" /></td>
+         <td>2015-12-12 </td>
+         <td>10:12:08</td>
+         <td><div id="u9" jquery171015793810490029025="20">
+           <div id="u10" jquery171015793810490029025="21">
+             <p>T44</p>
+           </div>
+         </div></td>
+         <td>&nbsp;</td>
+       </tr>
+     </tbody>
+ </table>
+ <ul class="forminfo" style="line-height:40px; font-size:14px;">
+     <table width="98%" border="0" align="center" cellpadding="2" cellspacing="1" bgcolor="#93CDF3" style="margin-top:8px">
+       <tr align="right" bgcolor="#EEF4EA">
+         <td  height="34" align="center" bgcolor="#FFFFFF">&nbsp;</td>
+         <td height="34" colspan="6" align="center" bgcolor="#FFFFFF">记录数：3&nbsp;&nbsp;&nbsp; <a href="javascript:jumpPage(1)" target="main">首页</a>&nbsp;&nbsp; <a href="javascript:jumpPage(2)" target="main">上一页</a>&nbsp;&nbsp;&nbsp; <a href="javascript:jumpPage(4)" target="main">下一页</a>&nbsp;&nbsp;&nbsp; <a href="javascript:jumpPage(5)" target="main">尾页</a>&nbsp;&nbsp;&nbsp;
+           <input type='button'  class="exit" onclick="" value='转到' />
+           &nbsp;
+           <!-- 
             <select size="1" name="page">
               <option selected="selected">第1页</option>
               <option>第2页</option>
               <option>第3页</option>
               </select>
             -->
-								当前页：
-								<input onpaste="return false" onkeypress="checkPage();"
-									id="page" type="text" name="page" value="3" size="2"
-									style="width: 25px; height: 20px; line-height: 18px; BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; FONT-SIZE: 13px; BORDER-LEFT: #cccccc 1px solid; COLOR: #000000; BORDER-BOTTOM: #cccccc 1px solid; FONT-FAMILY: 宋体; BACKGROUND-COLOR: #ffffff;" />
-								/共5页
-							</td>
-						</tr>
-					</table>
-				</ul>
-			</div>
-
-
-		</div>
+           当前页：
+           <input onpaste="return false" onkeypress="checkPage();" id="page" type="text" name="page" value="3" size="2" style="ime-mode=disabled;width:25px; height:20px;line-height:18px; BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; FONT-SIZE: 13px; BORDER-LEFT: #cccccc 1px solid; COLOR: #000000; BORDER-BOTTOM: #cccccc 1px solid; FONT-FAMILY: 宋体; BACKGROUND-COLOR: #ffffff;"/>
+           /共5页</td>
+       </tr>
+     </table>
+   </ul>
+        </div>
+        
+    
+  </div>
 
 
 
-		<div class="tip4">
-			<div class="tiptop4">
-				<span>操作日志</span><a></a>
-			</div>
-
-			<div class="tipinfo3">
-				<table class="tablelist">
-					<thead>
-						<tr>
-							<th width="5%">
-								<input name="input" type="checkbox" value="" checked="checked" />
-							</th>
-							<th width="16%">
-								时间
-								<i class="sort"><img src="images/px.gif" alt="" />
-								</i>
-							</th>
-							<th width="11%">
-								登录IP
-							</th>
-							<th width="45%">
-								操作事件
-							</th>
-							<th width="23%">
-								操作用户
-							</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td>
-								<input name="input" type="checkbox" value="" />
-							</td>
-							<td>
-								2015-12-12 10:12:08
-							</td>
-							<td>
-								192.168.1.43
-							</td>
-							<td>
-								<div id="u5" jquery171015793810490029025="20">
-									<div id="u6" jquery171015793810490029025="21">
-										<p>
-											用户登录
-										</p>
-									</div>
-								</div>
-							</td>
-							<td>
-								admin
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<input name="input" type="checkbox" value="" />
-							</td>
-							<td>
-								2015-12-12 10:12:08
-							</td>
-							<td>
-								192.168.1.43
-							</td>
-							<td>
-								<div id="u7" jquery171015793810490029025="20">
-									<div id="u8" jquery171015793810490029025="21">
-										<p>
-											视频设备管理-查询所在服务器上的所有视频设备
-										</p>
-									</div>
-								</div>
-							</td>
-							<td>
-								admin
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<input name="input" type="checkbox" value="" />
-							</td>
-							<td>
-								2015-12-12 10:12:08
-							</td>
-							<td>
-								192.168.1.43
-							</td>
-							<td>
-								<div id="u9" jquery171015793810490029025="20">
-									<div id="u10" jquery171015793810490029025="21">
-										<p>
-											用户登录
-										</p>
-									</div>
-								</div>
-							</td>
-							<td>
-								admin
-							</td>
-						</tr>
-					</tbody>
-				</table>
-				<ul class="forminfo" style="line-height: 40px; font-size: 14px;">
-					<table width="98%" border="0" align="center" cellpadding="2"
-						cellspacing="1" bgcolor="#93CDF3" style="margin-top: 8px">
-						<tr align="right" bgcolor="#EEF4EA">
-							<td height="34" align="center" bgcolor="#FFFFFF">
-								&nbsp;
-							</td>
-							<td height="34" colspan="6" align="center" bgcolor="#FFFFFF">
-								记录数：3&nbsp;&nbsp;&nbsp;
-								<a href="javascript:jumpPage(1)" target="main">首页</a>&nbsp;&nbsp;
-								<a href="javascript:jumpPage(2)" target="main">上一页</a>&nbsp;&nbsp;&nbsp;
-								<a href="javascript:jumpPage(4)" target="main">下一页</a>&nbsp;&nbsp;&nbsp;
-								<a href="javascript:jumpPage(5)" target="main">尾页</a>&nbsp;&nbsp;&nbsp;
-								<input type='button' class="exit" onclick="" value='转到' />
-								&nbsp;
-								<!-- 
+<div class="tip4">
+   	 <div class="tiptop4"><span>操作日志</span><a></a></div>
+        
+      <div class="tipinfo3">
+            <table class="tablelist">
+         <thead>
+       <tr>
+         <th width="5%"><input name="input" type="checkbox" value="" checked="checked"/></th>
+         <th width="16%">时间<i class="sort"><img src="images/px.gif" alt="" /></i></th>
+         <th width="11%">登录IP</th>
+         <th width="45%">操作事件</th>
+         <th width="23%">操作用户</th>
+       </tr>
+     </thead>
+     <tbody>
+       <tr>
+         <td><input name="input" type="checkbox" value="" /></td>
+         <td>2015-12-12 10:12:08</td>
+         <td>192.168.1.43</td>
+         <td><div id="u5" jquery171015793810490029025="20">
+           <div id="u6" jquery171015793810490029025="21">
+             <p>用户登录</p>
+           </div>
+         </div></td>
+         <td>admin</td>
+       </tr>
+       <tr>
+         <td><input name="input" type="checkbox" value="" /></td>
+         <td>2015-12-12 10:12:08</td>
+         <td>192.168.1.43</td>
+         <td><div id="u7" jquery171015793810490029025="20">
+           <div id="u8" jquery171015793810490029025="21">
+             <p>视频设备管理-查询所在服务器上的所有视频设备</p>
+           </div>
+         </div></td>
+         <td>admin</td>
+       </tr>
+       <tr>
+         <td><input name="input" type="checkbox" value="" /></td>
+         <td>2015-12-12 10:12:08</td>
+         <td>192.168.1.43</td>
+         <td><div id="u9" jquery171015793810490029025="20">
+           <div id="u10" jquery171015793810490029025="21">
+             <p>用户登录</p>
+           </div>
+         </div></td>
+         <td>admin</td>
+       </tr>
+     </tbody>
+ </table>
+   <ul class="forminfo" style="line-height:40px; font-size:14px;">
+     <table width="98%" border="0" align="center" cellpadding="2" cellspacing="1" bgcolor="#93CDF3" style="margin-top:8px">
+       <tr align="right" bgcolor="#EEF4EA">
+         <td  height="34" align="center" bgcolor="#FFFFFF">&nbsp;</td>
+         <td height="34" colspan="6" align="center" bgcolor="#FFFFFF">记录数：3&nbsp;&nbsp;&nbsp; <a href="javascript:jumpPage(1)" target="main">首页</a>&nbsp;&nbsp; <a href="javascript:jumpPage(2)" target="main">上一页</a>&nbsp;&nbsp;&nbsp; <a href="javascript:jumpPage(4)" target="main">下一页</a>&nbsp;&nbsp;&nbsp; <a href="javascript:jumpPage(5)" target="main">尾页</a>&nbsp;&nbsp;&nbsp;
+           <input type='button'  class="exit" onclick="" value='转到' />
+           &nbsp;
+           <!-- 
             <select size="1" name="page">
               <option selected="selected">第1页</option>
               <option>第2页</option>
               <option>第3页</option>
               </select>
             -->
-								当前页：
-								<input onpaste="return false" onkeypress="checkPage();"
-									id="page" type="text" name="page" value="3" size="2"
-									style="width: 25px; height: 20px; line-height: 18px; BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; FONT-SIZE: 13px; BORDER-LEFT: #cccccc 1px solid; COLOR: #000000; BORDER-BOTTOM: #cccccc 1px solid; FONT-FAMILY: 宋体; BACKGROUND-COLOR: #ffffff;" />
-								/共5页
-							</td>
-						</tr>
-					</table>
-				</ul>
-			</div>
-
-
-		</div>
-	</body>
+           当前页：
+           <input onpaste="return false" onkeypress="checkPage();" id="page" type="text" name="page" value="3" size="2" style="ime-mode=disabled;width:25px; height:20px;line-height:18px; BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; FONT-SIZE: 13px; BORDER-LEFT: #cccccc 1px solid; COLOR: #000000; BORDER-BOTTOM: #cccccc 1px solid; FONT-FAMILY: 宋体; BACKGROUND-COLOR: #ffffff;"/>
+           /共5页</td>
+       </tr>
+     </table>
+   </ul>
+      </div>
+        
+    
+  </div>
+</body>
 </html>

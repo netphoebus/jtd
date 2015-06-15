@@ -192,8 +192,7 @@ $(document).ready(function(e) {
 								</tr>
 							</thead>
 							<tbody>
-
-
+								<s:hidden id="maxCircleTime" name="maxCircleTime"></s:hidden>
 								<s:iterator value="sigVOs" var="sigVO" status="status">
 									<input type="hidden" alt="可用相位所占周期比例" id="<s:property value="id"/>_pro" value="<s:property value="pharsePros"/>"/>
 									<input type="hidden" alt="姓名" id="<s:property value="id"/>_signame" value="<s:property value="name"/>"/>
