@@ -46,7 +46,7 @@ public class TimeServerHandler  implements IoHandler {
 
 		CmdFactoryBase cmdFactory = CmdFactoryBase.SelectCmdFactory(session, msg);
 
-		System.out.println("enter messageReceived"+DataConvertor.bytesToHexString(DataConvertor.toByteArray(msg)));
+		//System.out.println("enter messageReceived"+DataConvertor.bytesToHexString(DataConvertor.toByteArray(msg)));
 
 			if(cmdFactory != null){
 				CommandBase cmd = cmdFactory.CreateCommand(session, msg);
@@ -117,7 +117,7 @@ public class TimeServerHandler  implements IoHandler {
 //	            }
 //	        }
 //	        session.write(IoBuffer.wrap(aaa));
-	        
+//	        
 	}
 	 
 }
