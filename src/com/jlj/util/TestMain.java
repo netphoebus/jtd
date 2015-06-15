@@ -12,7 +12,7 @@ public class TestMain {
 		/*
 		 * test greenroad getUsefulPhase
 		 */
-		String s = "0_1_0.5";
+		/*String s = "0_1_0.5";
 		String phaseString = "20,0,20";
 		if(phaseString.substring(0, 1)!=null&&!phaseString.substring(0, 1).equals("0"))
 		{
@@ -26,7 +26,10 @@ public class TestMain {
 			{
 				System.out.println(usefulPhase[i]);
 			}
-		}
+		}*/
+		
+		
+		System.out.println(124%100);
 	}
 
 }

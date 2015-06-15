@@ -62,7 +62,7 @@ public class GreenroadAction extends ActionSupport implements RequestAware,
 	private int maxCircleTime;
 
 	/**
-	 * 加载绿波带
+	 * 地图加载绿波带
 	 * 
 	 * @throws Exception
 	 */
