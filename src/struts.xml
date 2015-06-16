@@ -195,6 +195,9 @@
 		<action name="suretime" class="sigpublicparamAction" method="suretime"/>
 	 </package>
 	 
+	 <package name="greenroad_ajax" extends="struts-default">
+		<action name="setPharseTime" class="greenroadAction" method="setPharseTime"/>
+	</package>
 	 
 	
 </struts>

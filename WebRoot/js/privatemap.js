@@ -18,10 +18,6 @@ var options = "";
 //绿波带
 
 
-
-
-
-
 google.maps.event.addDomListener(window, "load", initialize);
 
  function initialize() {

@@ -30,7 +30,7 @@ public class Commontime implements java.io.Serializable {
 	private Integer hour;
 	private Integer minute;
 	private Integer seconds;
-	private Integer workingway;
+	private Integer workingway;//0表示普通控制方式，1表示黄闪，2表示关灯，3表示协调控制（绿波带），4表示感应控制，5表示中心控制，6未定义；
 	private Integer workingprogram;
 	private Integer lstime;
 	private Integer hdtime;

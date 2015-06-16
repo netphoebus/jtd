@@ -193,17 +193,27 @@ $(document).ready(function(e) {
 									cssStyle="width:150px;"></s:textfield>
 									</td>
 								</tr>
+								
 								<tr>
 									<td align="right">
 										<label style="margin-right: 20px">
 											秒
 										</label>
 									</td>
+									
 									<td>
-										<s:textfield name="commontime.seconds" cssClass="dfinput"
-									cssStyle="width:150px;"></s:textfield>
+										<s:if test="commontime.workingway==3">
+										<s:textfield name="commontime.seconds" id="seconds" cssClass="dfinput"
+									cssStyle="width:150px;"  readonly="true"></s:textfield>
+									</s:if>
+									<s:else>
+										<s:textfield name="commontime.seconds" id="seconds" cssClass="dfinput"
+									cssStyle="width:150px;" readonly="false"></s:textfield>
+									</s:else>
 									</td>
+									
 								</tr>
+								
 								<tr>
 									<td align="right">
 										<label style="margin-right: 20px">
@@ -211,8 +221,8 @@ $(document).ready(function(e) {
 										</label>
 									</td>
 									<td >
-										<s:select list="#{1:'无电缆联动',2:'其他控制方式'}"
-								name="commontime.workingway" listKey="key" listValue="value" cssClass="select4"></s:select>
+										<s:select list="#{0:'普通控制方式',1:'黄闪',2:'关灯',3:'协调控制',4:'感应控制',5:'中心控制',6:'未定义'}"
+								name="commontime.workingway" listKey="key" listValue="value" cssClass="select4" id="control" onchange="changeControl()"></s:select>
 									</td>
 								</tr>
 								<tr>

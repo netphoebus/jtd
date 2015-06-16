@@ -54,6 +54,9 @@ public interface ICommontimeService {
 			Integer timetype,Integer orderid, int signid);
 
 	public abstract void updateCommontimeSecond(String methodname, int second,
-			Integer orderid, Integer timetype);
+			Integer orderid, Integer timetype, int signid);
+
+	public abstract void updateCommontime(int hour, int minute, int seconds,
+			int workingway, int orderid, int timetype, int sid);
 
 }

@@ -7,7 +7,7 @@
 			+ request.getServerName() + ":" + request.getServerPort()
 			+ path + "/";
 %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -153,6 +153,18 @@ $(document).ready(function(e) {
 						</div>
 						秒
 					</div>
+					
+					<div style="float: left; line-height: 35px; width: 90%;">
+						<label>
+							开始时间：
+						</label>
+						<div class="vocation">
+							<span style="margin-right: 5px;"> 
+								<input type="time" name="begintime" class="dfinput" id="begintime" style="width: 125px;"/>
+									</span>
+						</div>
+					</div>
+					
 					<div style="width: 100%; float: left; margin-top: 15px;">
 						<table width="1000" class="filetable2">
 							<thead>
@@ -204,7 +216,7 @@ $(document).ready(function(e) {
 										<td style="text-align: center;">
 											<s:property value="circleTime" />
 										</td>
-										<td style="text-align: center;">
+										<td style="text-align: center;">u
 											<s:property value="name" />
 										</td>
 										<td align="right">

@@ -33,7 +33,7 @@
     </style>
 </head>
 <body>
-<input type="button" value="设置相位时间" style="height:20px;margin-left:500px;"/>
+<input type="button" id="setPharseTime" value="设置相位时间"  style="height:20px;margin-left:500px;"/>
 <div id="topdiv" style="position: relative;">
             <canvas id="canvas" width="1600px" height="900px" style="">
                 Your browser does not support the canvas element.

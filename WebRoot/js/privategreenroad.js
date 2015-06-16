@@ -7,6 +7,7 @@
 			var cirleTime = 0;
 			var timetype = 0;
 			var orderid = 0;
+			var begintime = '';
 			var searchStr = '';
 			if(searchStrArray.length>1)
 			{
@@ -15,7 +16,8 @@
 				cirleTime = parseInt(searchStrArray[1].split("=")[1]);
 				timetype =  parseInt(searchStrArray[2].split("=")[1]);
 				orderid =  parseInt(searchStrArray[3].split("=")[1]);
-				console.log(cirleTime,timetype,orderid);
+				begintime =  searchStrArray[4].split("=")[1];
+				console.log(cirleTime,timetype,orderid,begintime);
 			}
 			else
 			{
@@ -482,11 +484,11 @@
                 {
                     timeT = timeT+sig.phasenum[z-1]*cirleTime;
                 }
+                /*
                 console.log("sig"+sig.number+":",time,timeT,cirleTime,time-timeT);
                 time = (time-timeT+cirleTime)%cirleTime;
-                var circleNumber = (time-timeT+cirleTime)/cirleTime;
-            
-                console.log("开始时间："+time,"开始周期:"+circleNumber);
+                var circleNumber = (time-timeT+cirleTime)/cirleTime;*/
+           	    time = time-timeT;
                 //（距离/速度 - 前几个相位的执行时间 + 周期时间）%周期；
                 return time;
             }
@@ -598,6 +600,36 @@
 
 
             }
+            
+            $("#setPharseTime").click(function(){
+            	var sids = "";
+            	var msg = "";
+            	
+            	for(var i=0;i<sigs.length;i++)
+            	{
+            		if(!isNaN($("#sigtime"+i).text()))
+            		{
+            			 msg = msg + sigs[i].id+":"+  parseInt($("#sigtime"+i).text())+",";
+            		}
+            	}
+            	
+            	console.log(orderid,timetype,begintime,msg);
+            	$.ajax({   
+		            url:'setPharseTime',//这里是你的action或者servlert的路径地址   
+		            type:'post', //数据发送方式  
+		            data: { "orderid":orderid,"timetype":timetype,"begintime":begintime,"dates":msg},  
+		            error: function(msg)
+		            { //失败   
+		            	alert('发送命令失败');   
+		            },   
+		            success: function(msg)
+		            { //成功   
+						alert('设置成功');   
+		            }  
+		   	    });  
+            	
+            	
+            });
 
         });
         

@@ -29,7 +29,7 @@ public class TestMain {
 		}*/
 		
 		
-		System.out.println(124%100);
+		System.out.println(3689/3600);
 	}
 
 }

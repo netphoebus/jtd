@@ -24,6 +24,7 @@ function initGreenRoad()
 	var zxselect = $(".zxselect");
 	var fxselect = $(".fxselect");
 	var test = $("#asdasdasd");
+	var begintime =  $("#begintime").val();
 	
 	var number = -1;
 	zxselect.each( function(){
@@ -91,8 +92,7 @@ function initGreenRoad()
          
      });
      
-     
-     var url = "greenroad.jsp?jsonlist="+JSON.stringify(jsonlist)+"&maxCircleTime="+maxCircleTime+"&timetype="+timetype+"&orderid="+orderid;
+     var url = "greenroad.jsp?jsonlist="+JSON.stringify(jsonlist)+"&maxCircleTime="+maxCircleTime+"&timetype="+timetype+"&orderid="+orderid+"&begintime="+begintime;
      url = encodeURI(url);
   	 self.location = url;
 }

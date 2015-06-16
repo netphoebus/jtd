@@ -60,6 +60,8 @@ public class GreenroadAction extends ActionSupport implements RequestAware,
 	private int orderid;
 	private int timetype;
 	private int maxCircleTime;
+	private String map;
+	private String begintime;
 
 	/**
 	 * 地图加载绿波带
@@ -134,6 +136,57 @@ public class GreenroadAction extends ActionSupport implements RequestAware,
 			return "error";
 		}
 
+	}
+	
+	
+	/**
+	 * 时距图设置电缆联动和相位开始时间
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
+	public String setPharseTime() throws Exception {
+		setURLParameter();
+		System.out.println(map+" "+begintime+" "+orderid+" "+timetype);
+		int hour = 0;
+		int minute = 0;
+		int seconds = 0;
+		int workingway =3;
+		/**
+		 * map数组元素解释说明 1:0[解释 sid信号机id: 开始时间]
+		 * 开始时间是秒 90 120 或其他 
+		 * 需处理 commontime :hour minute seconds  workingway 0表示普通控制方式，1表示黄闪，2表示关灯，3表示协调控制（绿波带），4表示感应控制，5表示中心控制，6未定义;
+		 * 
+		 */
+		String[] sigctimes = map.split(",");
+		for (int i = 0; i < sigctimes.length; i++) {
+			String[] sig_time = sigctimes[i].split(":");
+			int sid = Integer.parseInt(sig_time[0]);
+			int add_second = Integer.parseInt(sig_time[1]);
+			commontime = commontimeService.loadByOrderIdAndTimetype(timetype, orderid, sid);
+			if(!begintime.equals("0")&&!begintime.equals("")&&begintime.length()>0&&begintime.indexOf(":")!=-1)
+			{
+				hour = Integer.parseInt(begintime.split(":")[0]);
+				minute =  Integer.parseInt(begintime.split(":")[1]);
+			}else
+			{
+				hour = commontime.getHour();
+				minute = commontime.getMinute();
+			}
+			if(add_second>3600)
+			{
+				hour = hour + add_second/3600;
+				minute = minute + add_second%60;
+				seconds = seconds + add_second%3600;
+			}else
+			{
+				minute = minute + add_second/60;
+				seconds = seconds + add_second%60;
+			}
+			commontimeService.updateCommontime(hour,minute,seconds,workingway,orderid,timetype,sid);
+		}
+		// 下发信号机 时间段参数
+		return NONE;
 	}
 	
 	/**
@@ -756,6 +809,15 @@ public class GreenroadAction extends ActionSupport implements RequestAware,
 		if (req.getParameter("orderid") != null) {
 			orderid = Integer.parseInt(req.getParameter("orderid"));// 获得前台的时间段id
 		}
+		if (req.getParameter("dates") != null) {
+			map = req.getParameter("dates");// 获得前台sid
+		}else
+		{
+			map = "";
+		}
+		if (req.getParameter("begintime") != null) {
+			begintime = req.getParameter("begintime");// 获得前台sid
+		}
 	}
 
 	/**
@@ -919,6 +981,25 @@ public class GreenroadAction extends ActionSupport implements RequestAware,
 	public void setMaxCircleTime(int maxCircleTime) {
 		this.maxCircleTime = maxCircleTime;
 	}
+
+	public String getMap() {
+		return map;
+	}
+
+	public void setMap(String map) {
+		this.map = map;
+	}
+
+	public String getBegintime() {
+		return begintime;
+	}
+
+	public void setBegintime(String begintime) {
+		this.begintime = begintime;
+	}
+
+	
+
 	
 	
 

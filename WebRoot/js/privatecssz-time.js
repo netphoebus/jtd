@@ -16,6 +16,18 @@ function changeSoSelect()
 	location.href = "sigtimeAction!sigtimes?timetype="+timetype+"&orderid="+orderid+"&soid="+soid;
 }
 
+function changeControl()
+{
+	var index = $("#control").val();
+	if(index==3)
+	{
+		$("#seconds").attr("readonly",true);
+	}else
+	{
+		$("#seconds").attr("readonly",false);
+	}
+}
+
 var msg = "";
 function updateStepTimes()
 {

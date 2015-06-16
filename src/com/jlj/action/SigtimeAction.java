@@ -266,8 +266,6 @@ public class SigtimeAction extends ActionSupport implements RequestAware,
 		{
 			map = " ,";
 		}
-		
-		
 	}
 
 	/**
@@ -324,6 +322,7 @@ public class SigtimeAction extends ActionSupport implements RequestAware,
 	public String update() throws Exception {
 		System.out.println("update1-获取界面数据，更新数据库--------------------------------");
 		// 修改数据库
+		
 		commontimeService.update(commontime);
 		System.out.println("update2-获取数据库数据，下发命令--------------------------------");
 		// 下发信号机 时间段参数
@@ -351,10 +350,9 @@ public class SigtimeAction extends ActionSupport implements RequestAware,
 //		System.out.println("----------------------整个字符串的长度="+steptimes.length);
 		for (int i = 0; i < steptimes.length; i++) {
 			String thissteptime = steptimes[i];
-			int stepid = Integer.parseInt(thissteptime.substring(0,thissteptime.indexOf("_")));
 			String methodname = thissteptime.substring(thissteptime.indexOf("_")+1, thissteptime.indexOf(":"));
 			int second = Integer.parseInt(thissteptime.substring(thissteptime.indexOf(":")+1));
-			commontimeService.updateCommontimeSecond(methodname,second,orderid,timetype);
+			commontimeService.updateCommontimeSecond(methodname,second,orderid,timetype,signid);
 		}
 		
 		System.out.println("updateStepTimes2-获取数据库数据，下发命令--------------------------------");
@@ -460,7 +458,6 @@ public class SigtimeAction extends ActionSupport implements RequestAware,
 			System.out.println("========================时间段参数下发=======================================");
 			
 			currrenSession.write(msendDatas);
-		
 		
 		}
 	}
