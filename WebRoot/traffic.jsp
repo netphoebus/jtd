@@ -303,8 +303,8 @@ var btn=document.getElementById('show_btn');
        <li onclick="javascript:location.href='sigpublicparamAction!publicParam'">设置参数</li>
 		<li  onclick="javascript:location.href='greenAction!green'">高级设置</li>
 
-		  <!--<li  id="manyCommands">所有参数</li>  -->
-		  <li  onclick="executeCommand(2)">所有参数</li>
+		  <li  id="manyCommands">所有参数</li> 
+		  <!--<li  onclick="executeCommand(2)">所有参数</li> -->
 		  <li  onclick="executeCommand(5)">初始化公共参数</li>
 		  <li  onclick="executeCommand(6)">初始化普通时间段0-7</li>
 		  <li  onclick="executeCommand(7)">初始化普通时间段8-15</li>
@@ -348,18 +348,19 @@ var btn=document.getElementById('show_btn');
          <li  onclick="executeCommand(30)">关 灯<br /></li>
          <li  onclick="executeCommand(31)">全 红<br /></li>
          <li  onclick="executeCommand(29)">锁 定<br /></li>
-         <li style="background:none; border: solid 1px #fff; ">&quot;<select name="select" class="select2">
-              <option>指定相位运行</option>
+         <!--  
+         <li style="background:none; border: solid 1px #fff; "><select name="select" class="select2">
+              <option>指定相位</option>
               <option>相位001</option>
               <option>相位021</option>
-            </select><br /></li>
+            </select><br />
+            </li>
+             <li>指定相位运行<br /></li>
+             -->
          </ul>
-         
        </div>
-       
         <div id="divProgressbar"></div>
      </div>
-
     
 </div>
 

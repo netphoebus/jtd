@@ -18,7 +18,7 @@
 		<action name="toolkitAction" class="toolkitAction">
 		</action>
 		<action name="useroAction" class="useroAction">
-			<result name="loginSucc">/index.jsp</result>
+			<result name="loginSucc">/main.html</result>
 		
 			<result name="list">/usero_manage.jsp</result>
 			<result name="load">/usero_update.jsp</result>
@@ -165,6 +165,8 @@
 		<action name="addOrUpdate" class="mapAction" method="addOrUpdate"/>	
 		<action name="addOrUpdateLine" class="mapAction" method="addOrUpdateLine"/>	
 		<action name="load" class="mapAction" method="load"/>
+		<action name="loadArea" class="mapAction" method="loadArea"/>
+		<action name="loadAreas" class="mapAction" method="loadAreas"/>
 		<action name="delete" class="mapAction" method="delete"/>
 	</package>
 	
@@ -195,10 +197,12 @@
 		<action name="suretime" class="sigpublicparamAction" method="suretime"/>
 	 </package>
 	 
-	 <package name="greenroad_ajax" extends="struts-default">
+	 <package name="greenroad_ajax" extends="json-default">
 		<action name="setPharseTime" class="greenroadAction" method="setPharseTime"/>
 	</package>
 	 
-	
+	<package name="area_ajax" extends="json-default">
+		<action name="addArea" class="userareaAction" method="addArea"/>
+	</package>
 </struts>
 

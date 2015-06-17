@@ -67,11 +67,11 @@ SessionAware,ServletResponseAware,ServletRequestAware {
 			String loginfail="用户名或密码输入有误";
 			request.put("loginFail", loginfail);
 			return "adminLogin";
-		}else if(validate==null||!validate.equalsIgnoreCase(code)){
+		}/*else if(validate==null||!validate.equalsIgnoreCase(code)){
 			String loginfail="验证码输入有误";
 			request.put("loginFail", loginfail);
 			return "adminLogin";
-		}else{
+		}*/else{
 			session.put("usero", usero);
 			return "loginSucc";
 		}
@@ -163,8 +163,6 @@ SessionAware,ServletResponseAware,ServletRequestAware {
 			}
 		}
 	}
-	
-	
 	
 	
 	// 获得HttpServletResponse对象

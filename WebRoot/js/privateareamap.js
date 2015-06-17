@@ -1,10 +1,7 @@
-
 var maphelper = null;//封装操作对象
 var infowindow = null;//信息窗口
 var mapobj = null;//地图对象
 var markerZoom = 12;//标记红绿灯地图所在级别
-var lng = "";//经度
-var lat = "";//维度
 var mapClickEventListener = null;
 var markers = [];
 var initMarkers = [];
@@ -14,18 +11,19 @@ var markersJson = '';
 var user=null;
 var ips=[];
 var options = "";
-var areaid = 0;//当前区域
-var ulimit = 10;//用户权限
+
+var dbclick = false;
+
 
 
 google.maps.event.addDomListener(window, "load", initialize);
 
  function initialize() {
-		AreaInit();
-	    var mapCanvas = document.getElementById("map_canvas");
+
+	   var mapCanvas = document.getElementById("map_canvas");
 		var myOptions = {
 		zoom: markerZoom,   
-		center: new Array(lng, lat),  
+		center: new Array(119.69663500785828, 31.369760901943426),  
 		disableDefaultUI: false,   
 		navigationControl: true,   
 		navigationControlOptions: {position: google.maps.ControlPosition.RIGHT_TOP},    
@@ -45,39 +43,42 @@ google.maps.event.addDomListener(window, "load", initialize);
     maphelper = new mapHelper();
     mapobj = maphelper.initMap(mapCanvas, myOptions);
     
-	if(ulimit<=0)
-	{
-		AreasInit();
-	}
-	MarkersInit();
+    
+
+	maphelper.bindInstanceEvent(mapobj, 'zoom_changed', function(event){
+		$("#ZOOM").val(maphelper.getZoom());
+	});		
 	
+	maphelper.bindInstanceEvent(mapobj, 'dblclick', function(event){
+		if(dbclick)
+		{
+			$("#CLAT").val(event.latLng.lat());
+			$("#CLNG").val(event.latLng.lng());
+		}
+
+	});
+	
+	//MarkersInit();
+
 	//google.maps.event.addListener(mapobj, "rightclick", reset);
 
 }
 
 //初始化select
 function addOption(){  
-
 		for(var i=0;i<ips.length;i++){   
 		  	options = options+"+<option value=" +ips[i] + ">" + ips[i] + "</option>"
 		}   
     }  
 
 
-function reset() {
-
-    for (var i=0;i<markers.length;i++) {
-      markers[i].setMap(null);
-    }
-    markers = [];
+function addArea() {
+  dbclick = true;
+  alert("双击地图位置作为区域中心点.");
  }
 
-function ClearPoly() {
-	maphelper.clearInstanceEvent(mapobj, 'click');//删除实例其所有事件侦听器或指定侦听器.
-}
 
 function addClickEventListener() {
-		alert("单击地图添加信号机..");
         if (!mapClickEventListener) {
           mapClickEventListener = google.maps.event.addListener(mapobj, 'click', function (event) {
             addMarker(event.latLng, true);
@@ -90,7 +91,7 @@ function addClickEventListener() {
 		  	    id:  markerId++,
 				lat: latlng.lat(),
 		        lng: latlng.lng(),
-		        title: '红绿灯',
+		        title: '中心点',
 		        icon: "images/boot2.png"
 
 		  });
@@ -155,7 +156,6 @@ function setMarkerEvents(marker)
 	
 		maphelper.bindInstanceEvent(marker, 'mouseover', function(event,map,marker) {
 		
-			//if(marker.isConnect&&!marker.isInitMarker)
 			if(marker.initOver)
 			{
 			  	getMarkerWindow = new google.maps.InfoWindow({  content: getMarkerContent(marker) });
@@ -179,6 +179,7 @@ function setMarkerEvents(marker)
 			}
 		 	
 		 
+		 
 		});
 		
 	maphelper.bindInstanceEvent(marker, 'mouseout', function(event,map,marker) {
@@ -189,6 +190,7 @@ function setMarkerEvents(marker)
 	maphelper.bindInstanceEvent(marker, 'dragend', function(event,map,marker) {
 		 	marker.setPosition(event.latLng);
 		 });
+
 
 	
 }
@@ -201,7 +203,6 @@ function MarkersInit()
 	            type:'post', //数据发送方式   
 	            dataType:'json', 
 	            async:false,
-	            data: { "areaid":areaid},
 	            error: function(msg)
 	            { //失败   
 	            	console.log('post失败');   
@@ -237,54 +238,6 @@ function MarkersInit()
 }
 
 
-//初始化当前区域
-function AreaInit()
-{
-		$.ajax({   
-	            url:'loadArea',//这里是你的action或者servlert的路径地址   
-	            type:'post', //数据发送方式   
-	            dataType:'json', 
-	            async:false,
-	            error: function(msg)
-	            { //失败   
-	            	console.log('post失败');   
-	            },   
-	            success: function(msg)
-	            { //成功
-	            		encodeURI(msg);
-						console.log(msg);	
-						$("#areaname").val(msg.areaname);
-						lng = msg.lng;
-						lat = msg.lat;
-						ulimit = msg.ulimit;
-						markerZoom = msg.size;
-						areaid = msg.id;
-	            }  
-    	    });  
-}
-
-
-//初始化当前用户的所有区域
-function AreasInit()
-{
-		$.ajax({   
-	            url:'loadAreas',//这里是你的action或者servlert的路径地址   
-	            type:'post', //数据发送方式   
-	            dataType:'json', 
-	            async:false,
-	            error: function(msg)
-	            { //失败   
-	            	console.log('post失败');   
-	            },   
-	            success: function(msg)
-	            { //成功
-	            		encodeURI(msg);
-						console.log(msg);	
-	            }  
-    	    });  
-}
-
-
 //获得信号机基本信息
 function getMarkerContent(marker)
 {
@@ -311,79 +264,48 @@ function setMarkerContent(marker)
 
 
 //添加单个信号机标记
-function saveMarker(id)
+function saveArea()
 {
-	console.log(" saveMarker areaid:"+areaid);
-	for(var i=0;i<initMarkers.length;i++)
+	var areaname = $('#areaname').val();
+	var lat = $("#CLAT").val();
+	var lng = $("#CLNG").val();
+	var zoom = $("#ZOOM").val();
+	if(lat==""||lng=="")
 	{
-		if(initMarkers[i].id == id)
-		{
-			var ip = $('#ipSelect').val();
-			var address = $('#address').val();
-			var name = $('#name').val();
-			var lat = initMarkers[i].getPosition().jb;
-			var lng = initMarkers[i].getPosition().kb;
-			
-			$.ajax({   
-	            url:'addOrUpdate',//这里是你的action或者servlert的路径地址   
-	            type:'post', //数据发送方式     
-	 			data: {"mkid":id,"ip":ip,"address":address,"name":name,"lat":lat,"lng":lng,"areaid":areaid},
-	            error: function(msg)
-	            { //失败   
-	            	alert('信号机增加失败');   
-	            },   
-	            success: function(msg)
-	            { //成功   
-	          		if(infowindow)
-					infowindow.close();
-					alert('信号机绑定成功');  
-					
-	            }  
-    	    });   
-    	    initMarkers[i].dbclickable = true;
-    	    initMarkers[i].initOver = true;
-    	    initMarkers[i].setAnimation(null);
-    	    initMarkers[i].name = name;
-    	    initMarkers[i].address = address;
-    	    initMarkers[i].ip = ip;
-		}
-	}
-}
-
-
-//删除单个信号机标记
-function deleteMarker(id)
-{
-	for(var i=0;i<initMarkers.length;i++)
+		alert("请添加区域..");
+		return ;
+	}if(areaname=="")
 	{
-	
-		if(initMarkers[i].id == id)
-		{
-			$.ajax({   
-	            url:'delete',//这里是你的action或者servlert的路径地址   
-	            type:'post', //数据发送方式     
-	 			data: { "id":id},
-	            error: function(msg)
-	            { //失败   
-	            	alert('信号机删除失败');   
-	            },   
-	            success: function(msg)
-	            { //成功   
-	            	alert('信号机删除成功');   
-	            }  
-    	    });   
-    	   	 initMarkers[i].setMap(null);
-	         initMarkers.splice(i,1);
-		}
+		alert("请填写区域名称..");
+		return ;
 	}
+	if(zoom==""||zoom==0)
+	{
+		alert("当前地图级别不正确..");
+		return ;
+	}
+	console.log(areaname,lat,lng,zoom);
+	$.ajax({   
+           url:'addArea',//这里是你的action或者servlert的路径地址   
+           type:'post', //数据发送方式     
+			data: { "lat":lat,"lng":lng,"zoom":zoom,"uareaname":areaname},
+           error: function(msg)
+           { //失败   
+           	alert('区域添加失败');   
+           },   
+           success: function(msg)
+           { //成功   
+			alert('区域添加成功');  
+			dbclick = false;
+           }  
+  	    });   
+    	    
+    	 
 }
 
 
-function Polyline() {
-		alert("点击地图上的信号机");
- 		 dbclickable = false;//双击屏蔽
-		 clickable = true;//单击启动
-}
+
+
 
 
 

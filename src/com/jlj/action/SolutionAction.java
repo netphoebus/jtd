@@ -72,7 +72,6 @@ public class SolutionAction extends ActionSupport implements RequestAware,
 	
 	public String solutions()
 	{
-
 			sigIp = (String) session.get("sigIp");
 			if(sigIp==null){
 				return "opsessiongo";

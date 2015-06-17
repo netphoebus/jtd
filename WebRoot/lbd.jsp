@@ -216,7 +216,7 @@ $(document).ready(function(e) {
 										<td style="text-align: center;">
 											<s:property value="circleTime" />
 										</td>
-										<td style="text-align: center;">u
+										<td style="text-align: center;">
 											<s:property value="name" />
 										</td>
 										<td align="right">
@@ -299,7 +299,6 @@ $(document).ready(function(e) {
 						注：基准路口距离设置为0，其余路口的距离是与基准路口的距离。允许非对称相位
 						<input type="hidden" id="mklid"
 							value="<s:property value="mklid"/>" />
-							
 					</div>
 					<div
 						style="width: 90%; float: left; margin-top: 20px; color: #999; text-align: center;">
@@ -311,6 +310,5 @@ $(document).ready(function(e) {
 					</p>
 				</div>
 			</div>
-			<s:debug></s:debug>
 	</body>
 </html>

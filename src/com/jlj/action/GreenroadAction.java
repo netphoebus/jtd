@@ -114,7 +114,6 @@ public class GreenroadAction extends ActionSupport implements RequestAware,
 	 * @throws Exception
 	 */
 	public String addOrUpdateLine() throws Exception {
-		setURLParameter();
 		greenroad = greenroadService.loadByMkid(mklid);
 		if (greenroad != null) {
 			// update
@@ -134,7 +133,6 @@ public class GreenroadAction extends ActionSupport implements RequestAware,
 	 * @throws Exception
 	 */
 	public String lbd() throws Exception {
-		setURLParameter();
 		greenroad = greenroadService.loadByMkid(mklid);
 		if (greenroad != null) {
 			setSigVOS(greenroad);
@@ -154,7 +152,6 @@ public class GreenroadAction extends ActionSupport implements RequestAware,
 	 * @throws Exception
 	 */
 	public String setPharseTime() throws Exception {
-		setURLParameter();
 		System.out.println(map+" "+begintime+" "+orderid+" "+timetype);
 		int hour = 0;
 		int minute = 0;

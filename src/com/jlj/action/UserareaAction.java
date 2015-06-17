@@ -44,9 +44,15 @@ SessionAware,ServletResponseAware,ServletRequestAware {
 	private int pageCount;
 	private int totalCount;
 	//条件
-	
 	private int userid;
 	private String uareaname;
+	
+	//地图片区
+	private String lng;
+	private String lat;
+	private int zoom;
+	private Usero usero;
+	
 	/**
 	 * 用户片区
 	 */
@@ -161,6 +167,49 @@ SessionAware,ServletResponseAware,ServletRequestAware {
 		userareaService.update(userarea);
 		outinfo="恭喜您，修改片区成功！";
 		return this.list();
+	}
+	
+	
+	/**
+	 * 地图增加片区
+	 * @throws Exception 
+	 */
+	public String addArea() throws Exception
+	{
+		usero = (Usero) session.get("usero");
+		if(usero==null){
+			return "opsessiongo";
+		}else
+		{
+			userarea = new Userarea();
+			userarea.setLat(lat);
+			userarea.setLng(lng);
+			userarea.setSize(zoom);
+			userarea.setUareaname(uareaname);
+			userarea.setUsero((Usero)session.get("usero"));
+			userareaService.add(userarea);
+			return null;
+		}
+	}
+	
+	
+	/**
+	 * 处理从url链接中传过来的参数
+	 */
+	public void setURLParameter() {
+		if (req.getParameter("lat") != null) {
+			lat = req.getParameter("lat");
+		}
+		if (req.getParameter("lng") != null) {
+			lng = req.getParameter("lng");
+		}
+		if (req.getParameter("zoom") != null) {
+			zoom = Integer.parseInt(req.getParameter("zoom"));
+		}
+		if (req.getParameter("uareaname") != null) {
+			uareaname = req.getParameter("uareaname");
+		}
+		System.out.println(lat+" "+lng+" "+zoom+" "+uareaname);
 	}
 	
 	// 获得HttpServletResponse对象
@@ -281,6 +330,38 @@ SessionAware,ServletResponseAware,ServletRequestAware {
 
 	public void setUseros(List<Usero> useros) {
 		this.useros = useros;
+	}
+
+	public String getLng() {
+		return lng;
+	}
+
+	public void setLng(String lng) {
+		this.lng = lng;
+	}
+
+	public String getLat() {
+		return lat;
+	}
+
+	public void setLat(String lat) {
+		this.lat = lat;
+	}
+
+	public int getZoom() {
+		return zoom;
+	}
+
+	public void setZoom(int zoom) {
+		this.zoom = zoom;
+	}
+
+	public Usero getUsero() {
+		return usero;
+	}
+
+	public void setUsero(Usero usero) {
+		this.usero = usero;
 	}
 	
 	

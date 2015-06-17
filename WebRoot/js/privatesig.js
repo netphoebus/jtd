@@ -42,14 +42,20 @@ $(document).ready(function(){
 				alert("所有参数开始初始化..");
 				$("#divProgressbar").progressbar({value: 0}); 
 				$( "#divProgressbar" ).progressbar({
-				  max: 240
+				  max: 250
 				});
 				var index = 0;//计数器
 				var commandNumber = 0;
 		    	var interval = setInterval(updateProgressbarValue, 1500);
 		 		function updateProgressbarValue()
 		 		{
-		 			if(index==0)
+		 			console.log(index);
+		 			if(index == 25)
+		 			{
+		 				executeCommand(35);
+		 				commandNumber = 35;
+		 			}
+		 			else if(index==0)
 		 			{
 		 				commandNumber = 1 ;
 		 				executeCommand(1);
@@ -61,10 +67,11 @@ $(document).ready(function(){
 		 				commandNumber = commandNumber+1;
 		 				executeCommand(commandNumber);
 		 				index = index+1;
+			 			
 		 			}
 		 			console.log("commandNumber:"+commandNumber);
 			        var newValue = $("#divProgressbar").progressbar("option", "value") + 10; //读取进度条现有值并计算出新值
-			        if(newValue==240)
+			        if(newValue==260)
 			        {
 			        	 $("#divProgressbar").progressbar({value: 0}); 
 			        	 clearInterval(interval);
@@ -78,37 +85,12 @@ $(document).ready(function(){
 			        {
 			        	 $("#divProgressbar").progressbar("option", "value", newValue);  //设置进度条新值  
 			        }
-			       
    		 		}
 				
 	});
                
 });
 
-
-
-
-
-function executeSolutionCommands()
-{
-	 executeCommand(12);
-	 executeCommand(13);
-	 executeCommand(14);
-	 executeCommand(15);
-	 executeCommand(16);
-	 executeCommand(17);
-	 executeCommand(18);
-	 executeCommand(19);
-	 executeCommand(20);
-	 executeCommand(21);
-	 executeCommand(22);
-	 executeCommand(23);
-	 executeCommand(24);
-	 executeCommand(25);
-	 executeCommand(26);
-	 executeCommand(27);
-	            
-}
 
 function suretime()
 {

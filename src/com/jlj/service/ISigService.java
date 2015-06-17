@@ -45,6 +45,8 @@ public interface ISigService {
 	public abstract void updateSigStatus(int sigStatus, int error_code,
 			Integer id);
 
+	public abstract List<Sig> querySigsByUserarea(Integer id);
+
 
 
 }

@@ -1,4 +1,13 @@
-﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+﻿<%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="/struts-tags" prefix="s"%>
+<%
+	String path = request.getContextPath();
+	String basePath = request.getScheme() + "://"
+			+ request.getServerName() + ":" + request.getServerPort()
+			+ path + "/";
+%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -35,21 +44,17 @@
        
     <div class="loginbox png">
 <div style="padding-top:40px; padding-left:120px; font-size:20px; color:#FFF;">信号机中心管理控制平台</div>
+<form action="useroAction!login" method="post">
     <ul>
-    <li><input name="" type="text" class="loginuser" value="admin" onclick="JavaScript:this.value=''"/></li>
-    <li><input name="" type="text" class="loginpwd" value="密码" onclick="JavaScript:this.value=''"/></li>
-    <li><input name="" type="button" class="loginbtn" value="登录"  onclick="javascript:window.location='main.html'"  /><label><input name="" type="checkbox" value="" checked="checked" style="margin-bottom:8px;" />记住密码</label></li>
+    <li><input name="username" type="text" class="loginuser" value="${loginFail}" onclick="JavaScript:this.value=''"/></li>
+    <li><input name="password" type="text" class="loginpwd" value="密码" onclick="JavaScript:this.value=''"/></li>
+    <li><input type="submit" type="button" class="loginbtn" value="登录"/><label>
+    <input name="" type="checkbox" value="" checked="checked" style="margin-bottom:8px;" />记住密码</label></li>
     </ul>
-    
-    
+</form>    
     </div>
-    
     </div>
-    
-    
-    
     <div class="loginbm png">技术支持：477937204@qq.com </div>
-	
     
 </body>
 </html>

@@ -78,7 +78,6 @@ public class SigtimeAction extends ActionSupport implements RequestAware,
 		if (sigIp == null) {
 			return "opsessiongo";
 		}
-		setURLParameter();
 		sig = sigService.querySigByIpAddress(sigIp);
 		if (sig != null) {
 			commontimes = commontimeService.getCommontimesBySigAndTimetype(sig
@@ -246,7 +245,9 @@ public class SigtimeAction extends ActionSupport implements RequestAware,
 		}
 	}
 
-	// 设置从url链接中传过来的参数
+	/**
+	 * 设置从url链接中传过来的参数
+	 */
 	public void setURLParameter() {
 		if (req.getParameter("timetype") != null) {
 			timetype = Integer.parseInt(req.getParameter("timetype"));// 获得前台的时间类型
@@ -337,7 +338,6 @@ public class SigtimeAction extends ActionSupport implements RequestAware,
 
 	public String updateStepTimes() throws Exception {
 		System.out.println("updateStepTimes1-获取界面数据，更新数据库--------------------------------");
-		setURLParameter();
 		commontime = commontimeService.loadByOrderIdAndTimetype(orderid,timetype,signid);
 			
 		// 需要插入数据库 解析 map-from jlj

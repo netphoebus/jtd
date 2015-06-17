@@ -22,15 +22,13 @@
 <script type="text/javascript" src="js/privatemap.js"></script>
 
 <body >
-	<!--
-	经度<input  type="text" name="CLNG" id="CLNG" value="" size="17"/><br/>
-	维度<input  type="text" name="CLAT" id="CLAT" value="" size="17"/><br/>
-	当前地图级别<input  type="text" name="ZOOM" id="ZOOM" value="8" size="17"/><br/>
-
-<input  type="button" onclick="saveMarkers();" value="保存信号机位置" style="margin-left:48%;margin-top:10px;width:88px;height:20px;  background:url(images/topbtn02.fw.png); color:#FFF; border-bottom:#039 1px solid; border-right:#039 1px solid;"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;		
- -->  
+ 	
    <input  type="button" onclick="ClearPoly()" value="取消添加信号机" style="margin-left:20px;margin-top:10px;width:100px;height:20px;  background:url(images/topbtn02.fw.png); color:#FFF; border-bottom:#039 1px solid; border-right:#039 1px solid;"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
    <input type="button" onclick="addClickEventListener()" value=" 添加信号机 " style="margin-left:20px;margin-top:10px;width:100px;height:20px; background:url(images/topbtn02.fw.png); color:#FFF; border-bottom:#039 1px solid; border-right:#039 1px solid;"/>	
+ 	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;当前区域： &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" name="areaname" id="areaname" class="dfinputarea" size="17" readonly="readonly"/>
+ 	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 可选区域:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<select id="areaid" name="select4" class="dfinputarea" >
+												
+											</select>
    <div id="map_canvas" style="margin:4px ;width:98%; height:760px;border:2px solid #cfdfe4">
    		地图加载失败....
    </div>

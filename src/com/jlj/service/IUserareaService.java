@@ -46,4 +46,6 @@ public interface IUserareaService {
 	public abstract List<Userarea> queryConditionList(String uareaname,
 			int page, int size);
 
+	public abstract List<Userarea> queryList(Integer id);
+
 }

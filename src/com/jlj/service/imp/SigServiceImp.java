@@ -103,4 +103,9 @@ public class SigServiceImp implements ISigService  {
 		Object[] values = new Object[] {sigStatus,error_code, id};
 		sigDao.updateByHql(queryString, paramNames, values);
 	}
+	public List<Sig> querySigsByUserarea(Integer id) {
+		String queryString = "from Sig mo where mo.userarea.id = ? ";
+		Object[] p =  new Object[]{id};
+		return sigDao.getObjectsByCondition(queryString, p);
+	}
 }

@@ -150,5 +150,11 @@ public class UserareaServiceImp implements IUserareaService  {
 		}
 		return userareaDao.pageList(queryString,p,page,size);
 	}
+	public List<Userarea> queryList(Integer id) {
+		// TODO Auto-generated method stub
+		String queryString = "from Userarea mo where mo.usero.id=?";
+		Object[] p = new Object[]{id};;
+		return userareaDao.getObjectsByCondition(queryString, p);
+	}
 	
 }
