@@ -19,7 +19,6 @@
 		</action>
 		<action name="useroAction" class="useroAction">
 			<result name="loginSucc">/main.html</result>
-		
 			<result name="list">/usero_manage.jsp</result>
 			<result name="load">/usero_update.jsp</result>
 			<result name="updatepwd">/usero_update_password.jsp</result>
@@ -39,7 +38,6 @@
 			<result name="list">/userarea_manage.jsp</result>
 			<result name="load">/pianqu_update.jsp</result>
 			<result name="load2">/userarea_update.jsp</result>
-			
 			<result name="invalid.token">/op_failure.jsp</result>
 			<interceptor-ref name="defaultStack" />
             <interceptor-ref name="token" >
@@ -80,6 +78,10 @@
 	</package>
 	
 	<package name="map" extends="struts-default">
+		<global-results>
+			<result name="adminLogin">/login.jsp</result>
+			<result name="opsessiongo">/op_sessiongo.jsp</result>
+		</global-results>
 		<action name="mapAction" class="mapAction">
 			<result name="map">/smap.jsp</result>
 		</action>
@@ -128,6 +130,18 @@
 		</action>
 	</package>
 	
+		
+	<package name="promotion" extends="struts-default">
+		<global-results>
+			<result name="adminLogin">/login.jsp</result>
+			<result name="opsessiongo">/op_sessiongo.jsp</result>
+		</global-results>
+		<action name="promotionAction" class="promotionAction">
+			<result name="cssz-sj">/cssz-sj.jsp</result>
+			<result name="error">/error.jsp</result>
+		</action>
+	</package>
+	
 	
 	<package name="sigtime" extends="struts-default">
 		<global-results>
@@ -162,6 +176,10 @@
     </package>  
     
     <package name="map_ajax" extends="json-default">
+    	<global-results>
+			<result name="adminLogin">/login.jsp</result>
+			<result name="opsessiongo">/op_sessiongo.jsp</result>
+		</global-results>
 		<action name="addOrUpdate" class="mapAction" method="addOrUpdate"/>	
 		<action name="addOrUpdateLine" class="mapAction" method="addOrUpdateLine"/>	
 		<action name="load" class="mapAction" method="load"/>

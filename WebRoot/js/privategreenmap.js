@@ -203,7 +203,7 @@ function MarkersInit()
 	            data: { "areaid":areaid},
 	            error: function(msg)
 	            { //失败   
-	            	console.log('post失败');   
+	            	console.log('MarkersInit post失败');   
 	            },   
 	            success: function(msg)
 	            { //成功
@@ -244,7 +244,7 @@ function AreaInit()
 	            data: { "areaid":areaid},
 	            error: function(msg)
 	            { //失败   
-	            	console.log('post失败');   
+	            	console.log('AreaInit post失败');   
 	            },   
 	            success: function(msg)
 	            { //成功
@@ -268,7 +268,6 @@ function AreaInit()
 //初始化当前用户的所有区域
 function AreasInit()
 {
-	console.log("AreasInit coming////");
 		$.ajax({   
 	            url:'loadAreas',//这里是你的action或者servlert的路径地址   
 	            type:'post', //数据发送方式   
@@ -276,7 +275,7 @@ function AreasInit()
 	            async:false,
 	            error: function(msg)
 	            { //失败   
-	            	console.log('post失败');   
+	            	console.log('AreasInit post失败');   
 	            },   
 	            success: function(msg)
 	            { //成功

@@ -259,7 +259,7 @@ function AreaInit()
 	            data: { "areaid":areaid},
 	            error: function(msg)
 	            { //失败   
-	            	console.log('post失败');   
+	            	alert('加载失败,有可能是登陆时间过长用户名失效,请重新登陆');   
 	            },   
 	            success: function(msg)
 	            { //成功

@@ -65,8 +65,8 @@ $(document).ready(function(e) {
     <div class="itab">
   	<ul> 
     	<li>
-							<a href="map.jsp">其他高级设置</a>
-						</li>
+								<a href="promotionAction!promotion">信号机升级</a>
+							</li>
      
     <li><a href="greenAction!green"  class="selected">绿冲突表</a></li> 
   	</ul>

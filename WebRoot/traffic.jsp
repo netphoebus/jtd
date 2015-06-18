@@ -301,7 +301,7 @@ var btn=document.getElementById('show_btn');
            
 
        <li onclick="javascript:location.href='sigpublicparamAction!publicParam'">设置参数</li>
-		<li  onclick="javascript:location.href='greenAction!green'">高级设置</li>
+		<li  onclick="javascript:location.href='promotionAction!promotion'">高级设置</li>
 
 		  <li  id="manyCommands">所有参数</li> 
 		  <!--<li  onclick="executeCommand(2)">所有参数</li> -->
