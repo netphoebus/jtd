@@ -58,3 +58,22 @@ function saveGreen()
             }  
    	    });  
 }
+
+
+function check()
+{
+		  var   reg= /^[0-9]*[1-9][0-9]*$/;//正整数
+		  if( !reg.test($("#centerPort").val()) )
+		  {	
+		  	alert("输入端口号不正确.");
+		  	return false;
+		  }
+		 console.log( reg.test($("#centerPort").val()) );
+}
+
+
+
+
+
+
+
