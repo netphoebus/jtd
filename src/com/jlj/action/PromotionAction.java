@@ -1,14 +1,13 @@
 package com.jlj.action;
 
+import java.net.InetAddress;
 import java.net.InetSocketAddress;
-import java.util.List;
+import java.net.UnknownHostException;
 import java.util.Map;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import mina.DataConvertor;
 import mina.TimeServerHandler;
 
 import org.apache.mina.core.session.IoSession;
@@ -19,16 +18,6 @@ import org.apache.struts2.interceptor.SessionAware;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import com.jlj.model.Greenconflict;
-import com.jlj.model.Issuedcommand;
-import com.jlj.model.Road;
-import com.jlj.model.Sig;
-import com.jlj.model.Solution;
-import com.jlj.model.Step;
-import com.jlj.service.IGreenconflictService;
-import com.jlj.service.IIssuedcommandService;
-import com.jlj.service.ISigService;
-import com.jlj.util.Commands;
 import com.opensymphony.xwork2.ActionSupport;
 
 @Component("promotionAction")
@@ -42,11 +31,39 @@ public class PromotionAction extends ActionSupport implements RequestAware,
 	private javax.servlet.http.HttpServletResponse response;
 	private javax.servlet.http.HttpServletRequest req;
 	
+	private String centerIp;
+	private String centerPort;
 	
-	public String promotion()
+	
+	/**
+	 * 跳转至升级界面
+	 * @return
+	 * @throws UnknownHostException 
+	 */
+	public String promotion() throws UnknownHostException
 	{
+		String address = InetAddress.getLocalHost().getHostAddress();   
+		System.out.println(address);
+		if(address!=null&&!address.equals(""))
+		{
+			centerIp = address;
+		}
+		
 		
 		return "cssz-sj";
+	}
+	
+	
+	/**
+	 * 升级及下发
+	 * @return
+	 */
+	public String promotionSig()
+	{
+		System.out.println("正在升级.....");
+		System.out.println(centerIp);
+		System.out.println(centerPort);
+		return null;
 	}
 	/**
 	 * 添加
@@ -107,6 +124,26 @@ public class PromotionAction extends ActionSupport implements RequestAware,
 
 	public void setSession(Map<String, Object> session) {
 		this.session = session;
+	}
+
+
+	public String getCenterIp() {
+		return centerIp;
+	}
+
+
+	public void setCenterIp(String centerIp) {
+		this.centerIp = centerIp;
+	}
+
+
+	public String getCenterPort() {
+		return centerPort;
+	}
+
+
+	public void setCenterPort(String centerPort) {
+		this.centerPort = centerPort;
 	}
 
 	

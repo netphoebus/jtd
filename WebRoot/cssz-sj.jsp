@@ -66,15 +66,17 @@ $(document).ready(function(e) {
 							</li>
 						</ul>
 					</div>
+					<form id="promotionform" name="promotionform" action="promotionAction!promotionSig"
+			method="post" >
 					<div id="tab1" class="tabson">
 						<div class="csbox">
 							<table border="0" cellspacing="0" cellpadding="0">
 								<tr>
 									<td style="padding-right: 5px;">
-										<input name="" type="button" class="scbtn" onclick="suretime();" value="升  级" />
+										<input name="" type="submit" onclick="return check();" class="scbtn" value="升  级" />
 									</td>
 									<td style="padding-right: 5px;">
-										<input name="" type="button" class="scbtn"  onclick="autojs()" value="自动升级" />
+										<input name="" type="submit" class="scbtn"  value="自动升级" />
 									</td>
 									<td>
 										<div class="vocation">
@@ -93,26 +95,26 @@ $(document).ready(function(e) {
 
 						</div>
 
-
+					
 						<div style="width: 30%; padding-top: 15px; padding-bottom: 15px; float: left;">
 							<div class="csbox">
 								FTP服务&nbsp;&nbsp;&nbsp;IP&nbsp;&nbsp;&nbsp;&nbsp：
-								<s:textfield name="sigpubparam.kjhstime" cssClass="dfinput"
-									cssStyle="width:150px;"></s:textfield>
+								<s:textfield name="centerIp" id="centerIp" cssClass="dfinput"
+									cssStyle="width:150px;" readonly="true"></s:textfield>
 								
 							</div>
 
 							<div class="csbox">
 								FTP服务端口号：
-								<s:textfield name="sigpubparam.qchdtime" cssClass="dfinput"
+								<s:textfield name="centerPort" id="centerPort" cssClass="dfinput"
 									cssStyle="width:150px;"></s:textfield>
 								
 							</div>
 
-							
+					
 							</div>
 						</div>
-
+		</form>
 					</div>
 
 				</div>
