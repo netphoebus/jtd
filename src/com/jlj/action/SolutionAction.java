@@ -65,10 +65,16 @@ public class SolutionAction extends ActionSupport implements RequestAware,
 	
 	private Solution solution;
 	private Signpublicparam sigpubparam;
-	private int soid;
+	
 	private Sig sig;
 	private ConflictVO conflictVO;
 	private String sigIp;
+	
+	/*
+	 * url param
+	 */
+	private int soid;
+	private String dates;
 	
 	public String solutions()
 	{
@@ -245,10 +251,8 @@ public class SolutionAction extends ActionSupport implements RequestAware,
 	 */
 	public String updateSolution() throws Exception {
 		System.out.println("1-获取界面数据，更新数据库--------------------------------");
-		String map = req.getParameter("dates");
-		soid =  Integer.parseInt(req.getParameter("soid"));
 		//需要插入数据库 解析 map-from jlj
-		System.out.println(map);
+		System.out.println(dates);
 		/**
 		 * map数组元素解释说明
 		 * 4_0_3:1[解释 id_方向_灯: 灯色]
@@ -258,7 +262,7 @@ public class SolutionAction extends ActionSupport implements RequestAware,
 		 * : 
 		 * 1  [3：红 2：黄 1：绿 0：灭 null：未知]
 		 */
-		String[] solus = map.split(",");
+		String[] solus = dates.split(",");
 		for (int i = 0; i < solus.length; i++) {
 			int stepid= Integer.parseInt(solus[i].substring(0, solus[i].indexOf("_")));
 			int roadtype = Integer.parseInt(solus[i].substring(solus[i].indexOf("_")+1, solus[i].lastIndexOf("_")));
@@ -628,6 +632,14 @@ public class SolutionAction extends ActionSupport implements RequestAware,
 	@Resource
 	public void setIssuedcommandService(IIssuedcommandService issuedcommandService) {
 		this.issuedcommandService = issuedcommandService;
+	}
+
+	public String getDates() {
+		return dates;
+	}
+
+	public void setDates(String dates) {
+		this.dates = dates;
 	}
 
 	

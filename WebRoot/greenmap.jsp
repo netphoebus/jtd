@@ -29,9 +29,15 @@
 
 <input  type="button" onclick="saveMarkers();" value="保存信号机位置" style="margin-left:48%;margin-top:10px;width:88px;height:20px;  background:url(images/topbtn02.fw.png); color:#FFF; border-bottom:#039 1px solid; border-right:#039 1px solid;"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;		
  -->  
+ <div style="float：left;width:660px;">
    <input type="button" onclick="Polyline()" value=" 添加绿波带 " style="margin-left:20px;margin-top:10px;width:100px;height:20px; background:url(images/topbtn02.fw.png); color:#FFF; border-bottom:#039 1px solid; border-right:#039 1px solid;"/>
-   <span id="total_km"></span>
     <input type="button" onclick="saveLine()" value="保存当前绿波带 " style="margin-left:20px;margin-top:10px;width:100px;height:20px; background:url(images/topbtn02.fw.png); color:#FFF; border-bottom:#039 1px solid; border-right:#039 1px solid;"/>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;当前区域： &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" name="areaname" id="areaname" class="dfinputarea" size="17" readonly="readonly"/>
+ 	 </div>
+ 	 <div id="areasdiv" style="display:none;float：right;width:360px;margin-left:260px;margin-top:10px;">
+ 	&nbsp;&nbsp; 可选区域&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<select id="areaid" name="select4" class="dfinputarea" onchange="changeArea();">
+											</select>
+											</div>
    <div id="map_canvas" style="margin:4px ;width:98%; height:760px;border:2px solid #cfdfe4">
    		地图加载失败....
    </div>

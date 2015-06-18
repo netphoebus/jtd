@@ -71,7 +71,8 @@ public class SigtimeAction extends ActionSupport implements RequestAware,
 	private int soid;
 	private int signid;
 	private String sigIp;
-	private String map;
+	
+	private String dates;
 
 	public String sigtimes() {
 		sigIp = (String) session.get("sigIp");
@@ -261,12 +262,6 @@ public class SigtimeAction extends ActionSupport implements RequestAware,
 		if (req.getParameter("signid") != null) {
 			signid = Integer.parseInt(req.getParameter("signid"));// 获得前台sid
 		}
-		if (req.getParameter("dates") != null) {
-			map = req.getParameter("dates");// 获得前台sid
-		}else
-		{
-			map = " ,";
-		}
 	}
 
 	/**
@@ -341,12 +336,12 @@ public class SigtimeAction extends ActionSupport implements RequestAware,
 		commontime = commontimeService.loadByOrderIdAndTimetype(orderid,timetype,signid);
 			
 		// 需要插入数据库 解析 map-from jlj
-		System.out.println(map);
+		System.out.println(dates);
 		/**
 		 * map数组元素解释说明 2_0:45[解释 id步序_t0: 执行时间]
 		 */
 		// 修改数据库中commontime中的时间t0-t31中的字段值-from jlj
-		String[] steptimes = map.split(",");
+		String[] steptimes = dates.split(",");
 //		System.out.println("----------------------整个字符串的长度="+steptimes.length);
 		for (int i = 0; i < steptimes.length; i++) {
 			String thissteptime = steptimes[i];
@@ -670,12 +665,14 @@ public class SigtimeAction extends ActionSupport implements RequestAware,
 		this.signid = signid;
 	}
 
-	public String getMap() {
-		return map;
+	public String getDates() {
+		return dates;
 	}
 
-	public void setMap(String map) {
-		this.map = map;
+	public void setDates(String dates) {
+		this.dates = dates;
 	}
+
+
 	
 }

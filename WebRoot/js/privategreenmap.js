@@ -12,7 +12,9 @@ var markersJson = '';
 var user=null;
 var ips=[];
 var options = "";
-
+var areaid = 0;//当前区域
+var ulimit = 10;//用户权限
+var searchStrURL = decodeURI(location.search);
 
 
 //绿波带
@@ -29,7 +31,13 @@ var poly = null;
 google.maps.event.addDomListener(window, "load", initialize);
 
  function initialize() {
-
+		if(searchStrURL!=null&&searchStrURL!="")
+		{
+			var areaidstr = searchStrURL.substring(searchStrURL.indexOf("=")+1,searchStrURL.length);
+			areaid = parseInt(areaidstr);
+			console.log(areaid);
+		}
+		AreaInit();
 	   var mapCanvas = document.getElementById("map_canvas");
 		var myOptions = {
 		zoom: markerZoom,   
@@ -52,8 +60,13 @@ google.maps.event.addDomListener(window, "load", initialize);
 
     maphelper = new mapHelper();
     mapobj = maphelper.initMap(mapCanvas, myOptions);
+	if(ulimit<=0)
+	{
 	
+		AreasInit();
+	}
 	MarkersInit();
+	console.log("initialize ulimit:"+ulimit);
 	GreenLinesInit();
 	//google.maps.event.addListener(mapobj, "rightclick", reset);
 
@@ -187,6 +200,7 @@ function MarkersInit()
 	            type:'post', //数据发送方式   
 	            dataType:'json', 
 	            async:false,
+	            data: { "areaid":areaid},
 	            error: function(msg)
 	            { //失败   
 	            	console.log('post失败');   
@@ -219,7 +233,69 @@ function MarkersInit()
 	            }  
     	    });  
 }
+//初始化当前区域
+function AreaInit()
+{
+		$.ajax({   
+	            url:'loadArea',//这里是你的action或者servlert的路径地址   
+	            type:'post', //数据发送方式   
+	            dataType:'json', 
+	            async:false,
+	            data: { "areaid":areaid},
+	            error: function(msg)
+	            { //失败   
+	            	console.log('post失败');   
+	            },   
+	            success: function(msg)
+	            { //成功
+	            		encodeURI(msg);
+						$("#areaname").val(msg.areaname);
+						lng = msg.lng;
+						lat = msg.lat;
+						ulimit = msg.ulimit;
+						markerZoom = msg.size;
+						areaid = msg.id;
+						console.log("AreaInit areaid"+areaid,"AreaInit ulimit"+ulimit);
+						if(ulimit==0)
+						{
+							$("#areasdiv").show();
+						}
+	            }  
+    	    });  
+}
 
+
+//初始化当前用户的所有区域
+function AreasInit()
+{
+	console.log("AreasInit coming////");
+		$.ajax({   
+	            url:'loadAreas',//这里是你的action或者servlert的路径地址   
+	            type:'post', //数据发送方式   
+	            dataType:'json', 
+	            async:false,
+	            error: function(msg)
+	            { //失败   
+	            	console.log('post失败');   
+	            },   
+	            success: function(msg)
+	            { //成功
+	            	encodeURI(msg);
+	            	$("#areaid option").remove();
+					for(var i=0;i<msg.length;i++)
+	            	{
+	            		if(areaid==msg[i].id)
+	            		{
+	            				$("#areaid").append("<option value=" + msg[i].id + "  selected>" + msg[i].areaname + "</option>");
+	            		}else
+	            		{
+	            				$("#areaid").append("<option value=" + msg[i].id + ">" + msg[i].areaname + "</option>");
+	            		}
+		            
+	            	} 
+	            }  
+    	    });  
+}
 
 //初始化地图所有标志
 function GreenLinesInit()
@@ -254,6 +330,7 @@ function GreenLinesInit()
 									}
 								}
 			    	    	}
+			    	    	console.log("GreenLinesInit  dots"+dots);
 			    	    	  var	 poly = maphelper.polyline({
 										dots:dots,						
 										color:"#008000",
@@ -425,4 +502,8 @@ function saveLine()
 	
 }
 
+function changeArea()
+{
+	location.href = "greenmap.jsp?areaid="+parseInt($("#areaid").val());
+}
 

@@ -63,14 +63,27 @@ public class GreenroadAction extends ActionSupport implements RequestAware,
 	private Sig sig;
 	private SigGreenRoadVO sigVO;
 	private int id;
+	
+
+	
+	private String begintime;
+	
+	/*
+	 * 绿波带地图
+	 */
+	private String sids;
 	private Long mklid;
-	private String smids;
+	private int areaid;
+	
+	
+	/*
+	 * 绿波带页面
+	 */
 	private int orderid;
 	private int timetype;
 	private int maxCircleTime;
-	private String map;
-	private String begintime;
-
+	private String dates;
+	
 	/**
 	 * 地图加载绿波带
 	 * 
@@ -120,7 +133,7 @@ public class GreenroadAction extends ActionSupport implements RequestAware,
 		} else {
 			greenroad = new Greenroad();
 			greenroad.setMarklineid(mklid);
-			greenroad.setSigmids(smids);
+			greenroad.setSigmids(sids);
 			greenroadService.add(greenroad);
 		}
 		return NONE;
@@ -152,7 +165,7 @@ public class GreenroadAction extends ActionSupport implements RequestAware,
 	 * @throws Exception
 	 */
 	public String setPharseTime() throws Exception {
-		System.out.println(map+" "+begintime+" "+orderid+" "+timetype);
+		System.out.println(dates+" "+begintime+" "+orderid+" "+timetype);
 		int hour = 0;
 		int minute = 0;
 		int seconds = 0;
@@ -163,7 +176,7 @@ public class GreenroadAction extends ActionSupport implements RequestAware,
 		 * 需处理 commontime :hour minute seconds  workingway 0表示普通控制方式，1表示黄闪，2表示关灯，3表示协调控制（绿波带），4表示感应控制，5表示中心控制，6未定义;
 		 * 
 		 */
-		String[] sigctimes = map.split(",");
+		String[] sigctimes = dates.split(",");
 		for (int i = 0; i < sigctimes.length; i++) {
 			String[] sig_time = sigctimes[i].split(":");
 			int sid = Integer.parseInt(sig_time[0]);
@@ -919,22 +932,11 @@ public class GreenroadAction extends ActionSupport implements RequestAware,
 		if (req.getParameter("mklid") != null) {
 			mklid = Long.parseLong(req.getParameter("mklid"));
 		}
-		if (req.getParameter("sids") != null) {
-			smids = req.getParameter("sids");
-		} else {
-			smids = "";
-		}
 		if (req.getParameter("timetype") != null) {
 			timetype = Integer.parseInt(req.getParameter("timetype"));// 获得前台的时间类型
 		}
 		if (req.getParameter("orderid") != null) {
 			orderid = Integer.parseInt(req.getParameter("orderid"));// 获得前台的时间段id
-		}
-		if (req.getParameter("dates") != null) {
-			map = req.getParameter("dates");// 获得前台sid
-		}else
-		{
-			map = "";
 		}
 		if (req.getParameter("begintime") != null) {
 			begintime = req.getParameter("begintime");// 获得前台sid
@@ -1005,13 +1007,6 @@ public class GreenroadAction extends ActionSupport implements RequestAware,
 		this.mklid = mklid;
 	}
 
-	public String getSmids() {
-		return smids;
-	}
-
-	public void setSmids(String smids) {
-		this.smids = smids;
-	}
 
 	public List<Greenroad> getGreenroads() {
 		return greenroads;
@@ -1103,13 +1098,6 @@ public class GreenroadAction extends ActionSupport implements RequestAware,
 		this.maxCircleTime = maxCircleTime;
 	}
 
-	public String getMap() {
-		return map;
-	}
-
-	public void setMap(String map) {
-		this.map = map;
-	}
 
 	public String getBegintime() {
 		return begintime;
@@ -1128,8 +1116,23 @@ public class GreenroadAction extends ActionSupport implements RequestAware,
 		this.issuedcommandService = issuedcommandService;
 	}
 
-	
+	public String getSids() {
+		return sids;
+	}
 
+	public void setSids(String sids) {
+		this.sids = sids;
+	}
+
+	public int getAreaid() {
+		return areaid;
+	}
+
+	public void setAreaid(int areaid) {
+		this.areaid = areaid;
+	}
+
+	
 	
 	
 
