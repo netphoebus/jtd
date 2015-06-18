@@ -50,6 +50,29 @@ SessionAware,ServletResponseAware,ServletRequestAware {
 	private int sigid;
 	private String devevent;
 	private List<Sig> sigs;
+	
+	public String plist() throws Exception{
+		//----------------------------------查询设备日志-------------------------------------
+		String ipAddress = (String)session.get("sigIp");
+		if(ipAddress==null||ipAddress.equals("")){
+			return NONE;
+		}
+		if(page<1){
+			page=1;
+		}
+		//总记录数
+		
+			totalCount=devlogService.getSigTotalCount(ipAddress);
+			//总页数
+			pageCount=devlogService.getPageCount(totalCount,size);
+			if(pageCount!=0&&page>pageCount){
+				page=pageCount;
+			}
+			//所有当前页记录对象
+			devlogs=devlogService.querySigList(ipAddress,page,size);
+		return "siglist";
+	}
+	
 	/**
 	 * 日志管理
 	 */

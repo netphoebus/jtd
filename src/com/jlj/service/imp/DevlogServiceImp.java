@@ -114,5 +114,15 @@ public class DevlogServiceImp implements IDevlogService  {
 		}
 		return devlogDao.pageList(queryString, p, page, size);
 	}
+	public int getSigTotalCount(String ipAddress) {
+		String queryString = "select count(*) from Devlog mo where mo.sig.ip=? ";
+		Object[] p = new Object[]{ipAddress};
+		return devlogDao.getUniqueResult(queryString, p);
+	}
+	public List<Devlog> querySigList(String ipAddress, int page, int size) {
+		String queryString = "from Devlog mo where mo.sig.ip=? ";
+		Object[] p = new Object[]{ipAddress};
+		return devlogDao.pageList(queryString, p, page, size);
+	}
 	
 }

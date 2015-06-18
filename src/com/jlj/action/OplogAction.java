@@ -62,6 +62,32 @@ SessionAware,ServletResponseAware,ServletRequestAware {
 	private String startdate2;
 	private String enddate2;
 	private List<Sig> sigs;
+	
+	public String plist(){
+		String ipAddress = (String)session.get("sigIp");
+		if(ipAddress==null||ipAddress.equals("")){
+			return NONE;
+		}
+		
+		if(page<1){
+			page=1;
+		}
+			//总记录数
+			totalCount=oplogService.getSigidTotalCount(ipAddress);
+			//总页数
+			pageCount=oplogService.getPageCount(totalCount,size);
+			if(pageCount!=0&&page>pageCount){
+				page=pageCount;
+			}
+			//所有当前页记录对象
+			oplogs=oplogService.querySigidList(ipAddress,page,size);
+//			System.out.println(oplogs.get(0).getSigip());
+			
+		
+		return "siglist";
+	}
+	
+	
 	/**
 	 * 日志管理
 	 */

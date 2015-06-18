@@ -41,4 +41,8 @@ public interface IOplogService {
 	public abstract List<Oplog> queryList(int page,
 			int size);
 
+	public abstract int getSigidTotalCount(String ipAddress);
+
+	public abstract List<Oplog> querySigidList(String ipAddress, int page, int size);
+
 }

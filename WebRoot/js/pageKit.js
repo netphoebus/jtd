@@ -8,6 +8,20 @@ function changeImage()
 }
 
 //分页显示
+function jumpNullPage(url,page){
+	var page=page;
+	if(isNaN(page)){
+		var page2=document.getElementById(page).value;
+		page=parseInt(page2);
+	}
+	
+	var url=url+'?page='+page;
+	url=encodeURI(url);
+	url=encodeURI(url);
+	window.location=url;
+}
+
+//分页显示
 function jumpPage(url,page,con,convalue,status,pid){
 console.log("enter1");
 	var page=page;

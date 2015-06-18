@@ -39,4 +39,9 @@ public interface IDevlogService {
 	public abstract List<Devlog> queryConditionList(int sigid, String devevent,
 			String startdate, String enddate, int page, int size);
 
+	public abstract int getSigTotalCount(String ipAddress);
+
+	public abstract List<Devlog> querySigList(String ipAddress, int page,
+			int size);
+
 }

@@ -321,8 +321,8 @@ var btn=document.getElementById('show_btn');
          </ul>
          <ul class="toolbar1">
        <li class="click2">汽车流量</li>
-       <li class="click3">故障信息</li>
-       <li class="click4">操作日志</li>
+       <li class="click3"><a href="devlogAction!plist">故障信息</a></li>
+       <li class="click4"><a href="oplogAction!plist">操作日志</a></li>
          </ul>
          
        </div>
@@ -532,7 +532,7 @@ listValue="value" cssClass="select2"></s:select>
   
   
   
-  
+  <!-- 
   <div class="tip3">
    	 <div class="tiptop3"><span>故障信息</span><a></a></div>
         
@@ -586,13 +586,13 @@ listValue="value" cssClass="select2"></s:select>
          <td height="34" colspan="6" align="center" bgcolor="#FFFFFF">记录数：3&nbsp;&nbsp;&nbsp; <a href="javascript:jumpPage(1)" target="main">首页</a>&nbsp;&nbsp; <a href="javascript:jumpPage(2)" target="main">上一页</a>&nbsp;&nbsp;&nbsp; <a href="javascript:jumpPage(4)" target="main">下一页</a>&nbsp;&nbsp;&nbsp; <a href="javascript:jumpPage(5)" target="main">尾页</a>&nbsp;&nbsp;&nbsp;
            <input type='button'  class="exit" onclick="" value='转到' />
            &nbsp;
-           <!-- 
+           
             <select size="1" name="page">
               <option selected="selected">第1页</option>
               <option>第2页</option>
               <option>第3页</option>
               </select>
-            -->
+            
            当前页：
            <input onpaste="return false" onkeypress="checkPage();" id="page" type="text" name="page" value="3" size="2" style="ime-mode=disabled;width:25px; height:20px;line-height:18px; BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; FONT-SIZE: 13px; BORDER-LEFT: #cccccc 1px solid; COLOR: #000000; BORDER-BOTTOM: #cccccc 1px solid; FONT-FAMILY: 宋体; BACKGROUND-COLOR: #ffffff;"/>
            /共5页</td>
@@ -603,17 +603,17 @@ listValue="value" cssClass="select2"></s:select>
         
     
   </div>
+ -->
 
-
-
+<!-- 
 <div class="tip4">
    	 <div class="tiptop4"><span>操作日志</span><a></a></div>
-        
+      <s:action name="oplogAction!plist"></s:action>  
       <div class="tipinfo3">
             <table class="tablelist">
          <thead>
        <tr>
-         <th width="5%"><input name="input" type="checkbox" value="" checked="checked"/></th>
+         <th width="5%">序号</th>
          <th width="16%">时间<i class="sort"><img src="images/px.gif" alt="" /></i></th>
          <th width="11%">登录IP</th>
          <th width="45%">操作事件</th>
@@ -621,64 +621,70 @@ listValue="value" cssClass="select2"></s:select>
        </tr>
      </thead>
      <tbody>
+     <s:iterator value="%{#request.oplogs}" var="oplog" status="index">
        <tr>
-         <td><input name="input" type="checkbox" value="" /></td>
-         <td>2015-12-12 10:12:08</td>
-         <td>192.168.1.43</td>
-         <td><div id="u5" jquery171015793810490029025="20">
-           <div id="u6" jquery171015793810490029025="21">
-             <p>用户登录</p>
-           </div>
-         </div></td>
-         <td>admin</td>
+         <td><s:property value="#index.count"/></td>
+         <td>
+         	<s:date name="optime" format="yyyy-MM-dd HH:mm:ss"/>
+         </td>
+         <td>
+			<s:property value="usero.uip"/>
+		 </td>
+         <td>
+			<s:if test="iptype==1">
+				登录
+			</s:if>
+			<s:else>
+				其他
+			</s:else>
+		</td>
+         <td>
+			<s:property value="usero.username"/>
+		</td>
        </tr>
-       <tr>
-         <td><input name="input" type="checkbox" value="" /></td>
-         <td>2015-12-12 10:12:08</td>
-         <td>192.168.1.43</td>
-         <td><div id="u7" jquery171015793810490029025="20">
-           <div id="u8" jquery171015793810490029025="21">
-             <p>视频设备管理-查询所在服务器上的所有视频设备</p>
-           </div>
-         </div></td>
-         <td>admin</td>
-       </tr>
-       <tr>
-         <td><input name="input" type="checkbox" value="" /></td>
-         <td>2015-12-12 10:12:08</td>
-         <td>192.168.1.43</td>
-         <td><div id="u9" jquery171015793810490029025="20">
-           <div id="u10" jquery171015793810490029025="21">
-             <p>用户登录</p>
-           </div>
-         </div></td>
-         <td>admin</td>
-       </tr>
+     </s:iterator>
      </tbody>
  </table>
-   <ul class="forminfo" style="line-height:40px; font-size:14px;">
-     <table width="98%" border="0" align="center" cellpadding="2" cellspacing="1" bgcolor="#93CDF3" style="margin-top:8px">
-       <tr align="right" bgcolor="#EEF4EA">
-         <td  height="34" align="center" bgcolor="#FFFFFF">&nbsp;</td>
-         <td height="34" colspan="6" align="center" bgcolor="#FFFFFF">记录数：3&nbsp;&nbsp;&nbsp; <a href="javascript:jumpPage(1)" target="main">首页</a>&nbsp;&nbsp; <a href="javascript:jumpPage(2)" target="main">上一页</a>&nbsp;&nbsp;&nbsp; <a href="javascript:jumpPage(4)" target="main">下一页</a>&nbsp;&nbsp;&nbsp; <a href="javascript:jumpPage(5)" target="main">尾页</a>&nbsp;&nbsp;&nbsp;
-           <input type='button'  class="exit" onclick="" value='转到' />
-           &nbsp;
-           <!-- 
-            <select size="1" name="page">
-              <option selected="selected">第1页</option>
-              <option>第2页</option>
-              <option>第3页</option>
-              </select>
-            -->
-           当前页：
-           <input onpaste="return false" onkeypress="checkPage();" id="page" type="text" name="page" value="3" size="2" style="ime-mode=disabled;width:25px; height:20px;line-height:18px; BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; FONT-SIZE: 13px; BORDER-LEFT: #cccccc 1px solid; COLOR: #000000; BORDER-BOTTOM: #cccccc 1px solid; FONT-FAMILY: 宋体; BACKGROUND-COLOR: #ffffff;"/>
-           /共5页</td>
-       </tr>
-     </table>
-   </ul>
+   <ul class="forminfo" style="line-height: 40px; font-size: 14px;">
+						<table width="98%" border="0" align="center" cellpadding="2"
+							cellspacing="1" bgcolor="#93CDF3" style="margin-top: 8px">
+							<tr align="right" bgcolor="#EEF4EA">
+								<td height="34" align="center" bgcolor="#FFFFFF">
+									&nbsp;
+								</td>
+								<td height="34" colspan="6" align="center" bgcolor="#FFFFFF">
+									记录数：<s:property value="totalCount" />&nbsp;&nbsp;&nbsp;
+									<a
+										href="javascript:jumpOplogPage('oplogAction!list',<s:property value="1"/>,<s:property value="uid"/>,<s:property value="logtype"/>,'<s:property value="startdate"/>','<s:property value="enddate"/>');"
+										target="main">首页</a>&nbsp;&nbsp;
+									<a
+										href="javascript:jumpOplogPage('oplogAction!list',<s:property value="page-1"/>,<s:property value="uid"/>,<s:property value="logtype"/>,'<s:property value="startdate"/>','<s:property value="enddate"/>');"
+										target="main">上一页</a>&nbsp;&nbsp;&nbsp;
+									<a
+										href="javascript:jumpOplogPage('oplogAction!list',<s:property value="page+1"/>,<s:property value="uid"/>,<s:property value="logtype"/>,'<s:property value="startdate"/>','<s:property value="enddate"/>');"
+										target="main">下一页</a>&nbsp;&nbsp;&nbsp;
+									<a
+										href="javascript:jumpOplogPage('oplogAction!list',<s:property value="pageCount"/>,<s:property value="uid"/>,<s:property value="logtype"/>,'<s:property value="startdate"/>','<s:property value="enddate"/>');"
+										target="main">尾页</a>&nbsp;&nbsp;&nbsp;
+									<input type='button' class="exit"
+										onclick="jumpOplogPage('oplogAction!list',document.getElementById('page').value,<s:property value="uid"/>,<s:property value="logtype"/>,'<s:property value="startdate"/>','<s:property value="enddate"/>');"
+										value='转到' />
+									&nbsp; 当前页：
+									<input onpaste="return false" onkeypress="checkPage();"
+										id="page" type="text" name="page"
+										value="<s:property value="page"/>" size="2"
+										style="width: 25px; height: 20px; line-height: 18px; BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; FONT-SIZE: 13px; BORDER-LEFT: #cccccc 1px solid; COLOR: #000000; BORDER-BOTTOM: #cccccc 1px solid; FONT-FAMILY: 宋体; BACKGROUND-COLOR: #ffffff;" />
+									/共
+									<s:property value="pageCount" />
+									页
+								</td>
+							</tr>
+						</table>
+					</ul>
       </div>
         
     
   </div>
+   -->
 </body>
 </html>
