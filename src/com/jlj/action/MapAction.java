@@ -53,6 +53,9 @@ public class MapAction extends ActionSupport implements RequestAware,
 	private String sigIp;
 	private Usero usero;
 	private Userarea userarea;
+	/*
+	 * 区域
+	 */
 	private int areaid;
 	
 	
@@ -87,7 +90,7 @@ public class MapAction extends ActionSupport implements RequestAware,
 			userareas = userareaService.queryList(usero.getId());
 			if(userareas.size()>0)
 			{
-				userarea = userareas.get(0);
+				userarea = getCurrentUserarea(usero,areaid);
 				UserareaVO areaVO = new UserareaVO();
 				areaVO.setAreaname(userarea.getUareaname());
 				areaVO.setId(userarea.getId());
@@ -226,6 +229,10 @@ public class MapAction extends ActionSupport implements RequestAware,
 					userarea = area;
 					break;
 				}
+			}
+			if(userarea==null)
+			{
+				userarea = userareas.get(0);
 			}
 		}
 		return userarea;

@@ -1,4 +1,3 @@
-
 var maphelper = null;//封装操作对象
 var infowindow = null;//信息窗口
 var mapobj = null;//地图对象
@@ -16,12 +15,20 @@ var ips=[];
 var options = "";
 var areaid = 0;//当前区域
 var ulimit = 10;//用户权限
-
+var searchStrURL = decodeURI(location.search);
+		    	
 
 google.maps.event.addDomListener(window, "load", initialize);
 
- function initialize() {
+function initialize() {
+		if(searchStrURL!=null&&searchStrURL!="")
+		{
+			var areaidstr = searchStrURL.substring(searchStrURL.indexOf("=")+1,searchStrURL.length);
+			areaid = parseInt(areaidstr);
+		}
 		AreaInit();
+		console.log(searchStrURL);
+		
 	    var mapCanvas = document.getElementById("map_canvas");
 		var myOptions = {
 		zoom: markerZoom,   
@@ -196,6 +203,7 @@ function setMarkerEvents(marker)
 //初始化地图所有标志
 function MarkersInit()
 {
+	console.log("MarkersInit coming....");
 		$.ajax({   
 	            url:'load',//这里是你的action或者servlert的路径地址   
 	            type:'post', //数据发送方式   
@@ -208,6 +216,7 @@ function MarkersInit()
 	            },   
 	            success: function(msg)
 	            { //成功
+	            console.log("MarkersInit success coming....");
 	            		encodeURI(msg);
 	            	 	markermsg = msg;
 	            	 	for(var i=0;i<markermsg.length;i++)
@@ -221,6 +230,7 @@ function MarkersInit()
 						        icon: "images/boot2.png"
 				
 						 	 });
+						 	  console.log(maphelper);  
 						  marker.dbclickable = true;
 						  marker.connectSuccess = true;
 						  marker.initOver = true;
@@ -229,7 +239,8 @@ function MarkersInit()
 						  marker.address = markermsg[i].address;
 						  setMarkerEvents(marker);
 						  initMarkers.push(marker);
-			    	    } 	   
+			    	    } 	 
+			    	    console.log(initMarkers);  
 			    	   
 	            }  
     	    });  
@@ -245,6 +256,7 @@ function AreaInit()
 	            type:'post', //数据发送方式   
 	            dataType:'json', 
 	            async:false,
+	            data: { "areaid":areaid},
 	            error: function(msg)
 	            { //失败   
 	            	console.log('post失败');   
@@ -252,13 +264,16 @@ function AreaInit()
 	            success: function(msg)
 	            { //成功
 	            		encodeURI(msg);
-						console.log(msg);	
 						$("#areaname").val(msg.areaname);
 						lng = msg.lng;
 						lat = msg.lat;
 						ulimit = msg.ulimit;
 						markerZoom = msg.size;
 						areaid = msg.id;
+						if(ulimit==0)
+						{
+							$("#areasdiv").show();
+						}
 	            }  
     	    });  
 }
@@ -278,12 +293,22 @@ function AreasInit()
 	            },   
 	            success: function(msg)
 	            { //成功
-	            		encodeURI(msg);
-						console.log(msg);	
+	            	encodeURI(msg);
+	            	$("#areaid option").remove();
+					for(var i=0;i<msg.length;i++)
+	            	{
+	            		if(areaid==msg[i].id)
+	            		{
+	            				$("#areaid").append("<option value=" + msg[i].id + "  selected>" + msg[i].areaname + "</option>");
+	            		}else
+	            		{
+	            				$("#areaid").append("<option value=" + msg[i].id + ">" + msg[i].areaname + "</option>");
+	            		}
+		            
+	            	} 
 	            }  
     	    });  
 }
-
 
 //获得信号机基本信息
 function getMarkerContent(marker)
@@ -378,12 +403,13 @@ function deleteMarker(id)
 	}
 }
 
-
 function Polyline() {
 		alert("点击地图上的信号机");
- 		 dbclickable = false;//双击屏蔽
 		 clickable = true;//单击启动
 }
 
-
+function changeArea()
+{
+	location.href = "map.jsp?areaid="+parseInt($("#areaid").val());
+}
 
