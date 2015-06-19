@@ -77,7 +77,9 @@ public class SigtimeAction extends ActionSupport implements RequestAware,
 	public String sigtimes() {
 		sigIp = (String) session.get("sigIp");
 		if (sigIp == null) {
-			return "opsessiongo";
+			String errorMsg="IP地址失效,请重新进去信号机,进行设置";
+			request.put("errorMsg", errorMsg);
+			return "index";
 		}
 		sig = sigService.querySigByIpAddress(sigIp);
 		if (sig != null) {
@@ -99,7 +101,9 @@ public class SigtimeAction extends ActionSupport implements RequestAware,
 			session.put("sigIp", sigIp);// 从地图中进入信号机，将信号机id传入session
 			return "cssz-time";
 		} else {
-			return "error";// 预留没有查询到相应公共参数时跳转的提示页面
+			String errorMsg="未获得时间参数信息,请确保数据不为空.";
+			request.put("errorMsg", errorMsg);
+			return "index";
 		}
 	}
 

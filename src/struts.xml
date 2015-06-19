@@ -80,7 +80,7 @@
 	<package name="map" extends="struts-default">
 		<global-results>
 			<result name="adminLogin">/login.jsp</result>
-			<result name="opsessiongo">/op_sessiongo.jsp</result>
+			<result name="index">/index.jsp</result>
 		</global-results>
 		<action name="mapAction" class="mapAction">
 			<result name="map">/smap.jsp</result>
@@ -98,7 +98,7 @@
 	<package name="sigpublicparam" extends="struts-default">
 		<global-results>
 			<result name="adminLogin">/login.jsp</result>
-			<result name="opsessiongo">/op_sessiongo.jsp</result>
+			<result name="index">/index.jsp</result>
 		</global-results>
 		<action name="sigpublicparamAction" class="sigpublicparamAction">
 			<result name="cssz-cs">/cssz-cs.jsp</result>
@@ -110,7 +110,7 @@
 	<package name="solution" extends="struts-default">
 		<global-results>
 			<result name="adminLogin">/login.jsp</result>
-			<result name="opsessiongo">/op_sessiongo.jsp</result>
+			<result name="index">/index.jsp</result>
 		</global-results>
 		<action name="solutionAction" class="solutionAction">
 			<result name="cssz-fa">/cssz-fa.jsp</result>
@@ -122,7 +122,7 @@
 	<package name="green" extends="struts-default">
 		<global-results>
 			<result name="adminLogin">/login.jsp</result>
-			<result name="opsessiongo">/op_sessiongo.jsp</result>
+			<result name="index">/index.jsp</result>
 		</global-results>
 		<action name="greenAction" class="greenAction">
 			<result name="cssz-ct">/cssz-ct.jsp</result>
@@ -134,7 +134,7 @@
 	<package name="promotion" extends="struts-default">
 		<global-results>
 			<result name="adminLogin">/login.jsp</result>
-			<result name="opsessiongo">/op_sessiongo.jsp</result>
+			<result name="index">/index.jsp</result>
 		</global-results>
 		<action name="promotionAction" class="promotionAction">
 			<result name="cssz-sj">/cssz-sj.jsp</result>
@@ -146,7 +146,7 @@
 	<package name="sigtime" extends="struts-default">
 		<global-results>
 			<result name="adminLogin">/login.jsp</result>
-			<result name="opsessiongo">/op_sessiongo.jsp</result>
+			<result name="index">/index.jsp</result>
 		</global-results>
 		<action name="sigtimeAction" class="sigtimeAction">
 			<result name="cssz-time">/cssz-time.jsp</result>
@@ -158,7 +158,7 @@
 	<package name="greenroad" extends="struts-default">
 		<global-results>
 			<result name="adminLogin">/login.jsp</result>
-			<result name="opsessiongo">/op_sessiongo.jsp</result>
+			<result name="index">/index.jsp</result>
 		</global-results>
 		<action name="greenroadAction" class="greenroadAction">
 			<result name="lbd">/lbd.jsp</result>
@@ -176,10 +176,6 @@
     </package>  
     
     <package name="map_ajax" extends="json-default">
-    	<global-results>
-			<result name="adminLogin">/login.jsp</result>
-			<result name="opsessiongo">/op_sessiongo.jsp</result>
-		</global-results>
 		<action name="addOrUpdate" class="mapAction" method="addOrUpdate"/>	
 		<action name="addOrUpdateLine" class="mapAction" method="addOrUpdateLine"/>	
 		<action name="load" class="mapAction" method="load"/>

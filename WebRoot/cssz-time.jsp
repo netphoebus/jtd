@@ -128,6 +128,7 @@ $(document).ready(function(e) {
 									</li>
 								</ul>
 							</div>
+							<b>*</b>注意：请按相位顺序设置执行时间.
 						</li>
 					</ul>
 					<div style="width: 100%; float: left;">

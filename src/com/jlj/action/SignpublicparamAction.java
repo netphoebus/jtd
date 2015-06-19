@@ -61,7 +61,9 @@ public class SignpublicparamAction extends ActionSupport implements RequestAware
 		
 		sigIp = (String) session.get("sigIp");
 		if(sigIp==null){
-			return "opsessiongo";
+			String errorMsg="IP地址失效,请重新进去信号机,进行设置";
+			request.put("errorMsg", errorMsg);
+			return "index";
 		}
 		System.out.println("2-获取数据库数据，下发命令--------------------------------");
 		updateJiaoShiBytes(sigIp,getCurrrenSession(sigIp));
@@ -73,7 +75,9 @@ public class SignpublicparamAction extends ActionSupport implements RequestAware
 	public String publicParam() {
 		sigIp = (String) session.get("sigIp");
 		if(sigIp==null){
-			return "opsessiongo";
+			String errorMsg="IP地址失效,请重新进去信号机,进行设置";
+			request.put("errorMsg", errorMsg);
+			return "index";
 		}
 		//根据IP来查询信号机公共参数
 		sigpubparam = sigpubparamService.loadBySigIp(sigIp);
@@ -92,7 +96,9 @@ public class SignpublicparamAction extends ActionSupport implements RequestAware
 			return "cssz-cs";
 		}else
 		{
-			return "error";//预留没有查询到相应公共参数时跳转的提示页面
+			String errorMsg="未获得一般参数信息，请确保数据不为空";
+			request.put("errorMsg", errorMsg);
+			return "index";
 		}
 				
 	}
@@ -224,7 +230,9 @@ public class SignpublicparamAction extends ActionSupport implements RequestAware
 		setPublicParamJSP();
 		sigIp = (String) session.get("sigIp");
 		if(sigIp==null){
-			return "opsessiongo";
+			String errorMsg="IP地址失效,请重新进去信号机,进行设置";
+			request.put("errorMsg", errorMsg);
+			return "index";
 		}
 		System.out.println("1-获取界面数据，更新数据库--------------------------------");
 		sigpubparamService.update(sigpubparam);//修改-from lq

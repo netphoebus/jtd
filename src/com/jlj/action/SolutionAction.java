@@ -80,7 +80,9 @@ public class SolutionAction extends ActionSupport implements RequestAware,
 	{
 			sigIp = (String) session.get("sigIp");
 			if(sigIp==null){
-				return "opsessiongo";
+				String errorMsg="IP地址失效,请重新进去信号机,进行设置";
+				request.put("errorMsg", errorMsg);
+				return "index";
 			}
 			sig = sigService.querySigByIpAddress(sigIp);
 			if(sig!=null)
@@ -100,7 +102,9 @@ public class SolutionAction extends ActionSupport implements RequestAware,
 				return "cssz-fa";
 			}else
 			{
-				return "error";//预留没有查询到相应公共参数时跳转的提示页面
+				String errorMsg="未获得相位方案信息,请确保数据不为空.";
+				request.put("errorMsg", errorMsg);
+				return "index";
 			}
 
 	}

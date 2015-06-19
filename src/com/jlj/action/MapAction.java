@@ -84,7 +84,7 @@ public class MapAction extends ActionSupport implements RequestAware,
 	{
 		usero = (Usero) session.get("usero");
 		if(usero==null){
-			return "opsessiongo";
+			return null;
 		}else
 		{
 			userareas = userareaService.queryList(usero.getId());
@@ -124,7 +124,7 @@ public class MapAction extends ActionSupport implements RequestAware,
 	public String load() throws Exception {
 		usero = (Usero) session.get("usero");
 		if(usero==null){
-			return "opsessiongo";
+			return null;
 		}
 		userarea = getCurrentUserarea(usero,areaid);
 		if(userarea!=null)
@@ -168,7 +168,7 @@ public class MapAction extends ActionSupport implements RequestAware,
 	{
 		usero = (Usero) session.get("usero");
 		if(usero==null){
-			return "opsessiongo";
+			return null;
 		}else
 		{
 			userareas = userareaService.queryList(usero.getId());
@@ -281,7 +281,6 @@ public class MapAction extends ActionSupport implements RequestAware,
 		return NONE;
 	}
 	
-	
 
 	/**
 	 * 删除
@@ -291,7 +290,9 @@ public class MapAction extends ActionSupport implements RequestAware,
 	public String delete() {
 		sigIp = (String) session.get("sigIp");
 		if(sigIp==null){
-			return "opsessiongo";
+			String errorMsg="IP地址失效,请重新进去信号机,进行设置";
+			request.put("errorMsg", errorMsg);
+			return "index";
 		}
 		sig = sigService.querySigByIpAddress(sigIp);
 		sig.setMkid(null);

@@ -93,7 +93,7 @@ $(document).ready(function(e) {
 										<s:select list="solutions" name="solution.id"  id="solutions"
 							listKey="id" listValue="soluname" value="solution.id" onchange="changeSolution()" cssClass="select1"></s:select>
 									</div>
-									<b>*</b>
+									&nbsp;&nbsp;&nbsp;&nbsp;<b>*</b>注意：请按顺序操作相位.
 								</div>
 							</li>
 						</ul>

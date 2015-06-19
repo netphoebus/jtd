@@ -291,7 +291,7 @@ function saveArea()
 			data: { "lat":lat,"lng":lng,"zoom":zoom,"uareaname":areaname},
            error: function(msg)
            { //失败   
-           	alert('区域添加失败');   
+           		alert('区域添加失败');   
            },   
            success: function(msg)
            { //成功   

@@ -178,7 +178,8 @@ SessionAware,ServletResponseAware,ServletRequestAware {
 	{
 		usero = (Usero) session.get("usero");
 		if(usero==null){
-			return "opsessiongo";
+			
+			return null;
 		}else
 		{
 			userarea = new Userarea();

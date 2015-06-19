@@ -20,12 +20,9 @@ $(document).ready(function(){
 			{
 				$("#"+id).attr("src","img/cross.png");
 				updateCTs[id] = 1;
-				
 			}
 			console.log(updateCTs);
 		});
-		
-	
 });
 
 
@@ -33,7 +30,6 @@ function saveGreen()
 {
 	console.log(updateCTs);
 	var msg = "";
-	
 	for(var prop in updateCTs){
     if(updateCTs.hasOwnProperty(prop)){
         console.log('key is ' + prop +' and value is' + updateCTs[prop]);
@@ -62,13 +58,13 @@ function saveGreen()
 
 function check()
 {
-		  var   reg= /^[0-9]*[1-9][0-9]*$/;//正整数
-		  if( !reg.test($("#centerPort").val()) )
-		  {	
-		  	alert("输入端口号不正确.");
-		  	return false;
-		  }
-		 console.log( reg.test($("#centerPort").val()) );
+	  var   reg= /^[0-9]*[1-9][0-9]*$/;//正整数
+	  if( !reg.test($("#centerPort").val()) )
+	  {	
+	  	alert("输入端口号不正确.");
+	  	return false;
+	  }
+	 console.log( reg.test($("#centerPort").val()) );
 }
 
 

@@ -152,7 +152,9 @@ public class GreenroadAction extends ActionSupport implements RequestAware,
 			maxCircleTime = setMaxCircle(sigVOs);
 			return "lbd";
 		} else {
-			return "error";
+			String errorMsg="没有获得相应绿波带信息,请确保数据不为空.";
+			request.put("errorMsg", errorMsg);
+			return "index";
 		}
 
 	}

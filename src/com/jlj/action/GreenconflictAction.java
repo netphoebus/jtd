@@ -55,7 +55,9 @@ public class GreenconflictAction extends ActionSupport implements RequestAware,
 	{
 		sigIp = (String) session.get("sigIp");
 		if(sigIp==null){
-			return "opsessiongo";
+			String errorMsg="IP地址失效,请重新进去信号机,进行设置";
+			request.put("errorMsg", errorMsg);
+			return "index";
 		}
 		sig = sigService.querySigByIpAddress(sigIp);
 		if(sig!=null)
@@ -68,7 +70,9 @@ public class GreenconflictAction extends ActionSupport implements RequestAware,
 			return "cssz-ct";
 		}else
 		{
-			return "error";//预留没有查询到相应公共参数时跳转的提示页面
+			String errorMsg="未能获得绿冲突表信息,有可能数据为空.";
+			request.put("errorMsg", errorMsg);
+			return "index";
 		}
 	}
 	/**
