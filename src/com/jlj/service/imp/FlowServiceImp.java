@@ -141,4 +141,49 @@ public class FlowServiceImp implements IFlowService  {
 		flowDao.updateByHql(queryString, paramNames, values);
 		
 	}
+	//车流量
+	public int getConditionTotalCount(int sigid, String time1, String time2) {
+		String queryString = "select count(*) from Flow mo where mo.sig.id=? ";
+		Object[] p = null;
+		if(time1!=null&&!time1.equals("")){
+			queryString += " and mo.time >='"+time1+"'";
+		}
+		if(time2!=null&&!time2.equals("")){
+			queryString += " and mo.time <='"+time2+"'";
+		}
+		p = new Object[]{sigid};
+		
+//		queryString += " order by mo.id desc ";
+		return flowDao.getUniqueResult(queryString,p);
+	}
+	public List<Flow> queryConditionList(int sigid, String time1, String time2, int page,
+			int size) {
+		String queryString = "from Flow mo where mo.sig.id=? ";
+		Object[] p = null;
+		if(time1!=null&&!time1.equals("")){
+			queryString += " and mo.time >='"+time1+"'";
+		}
+		if(time2!=null&&!time2.equals("")){
+			queryString += " and mo.time <='"+time2+"'";
+		}
+		p = new Object[]{sigid};
+//		queryString += " order by mo.id desc ";
+		return flowDao.pageList(queryString, p, page, size);
+	}
+	public int getPageCount(int totalCount, int size) {
+		return totalCount%size==0?totalCount/size:(totalCount/size+1);
+	}
+	public int getTotalCount() {
+		String queryString = "select count(*) from Flow mo where 1=1 ";
+		Object[] p = null;
+//		queryString += " order by mo.id desc ";
+		return flowDao.getUniqueResult(queryString,p);
+	}
+	
+	public List<Flow> queryList(int page, int size) {
+		String queryString = "from Flow mo where 1=1 ";
+		Object[] p = null;
+//		queryString += " order by mo.id desc ";
+		return flowDao.pageList(queryString,p,page,size);
+	}
 }

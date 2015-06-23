@@ -45,4 +45,15 @@ public interface IFlowService {
 	public abstract void updateFlowByCondition(String flowziduan, int flow,
 			int flow_returnid);
 
+	public abstract int getConditionTotalCount(int sigid, String time1, String time2);
+
+	public abstract int getPageCount(int totalCount, int size);
+
+	public abstract List<Flow> queryConditionList(int sigid, String time1, String time2,
+			int page, int size);
+
+	public abstract int getTotalCount();
+
+	public abstract List<Flow> queryList(int page, int size);
+
 }

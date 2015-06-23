@@ -320,7 +320,7 @@ var btn=document.getElementById('show_btn');
            <li style="cursor: auto;"><span><img src="images/car.png" alt="" width="24" height="24" /></span>查 看 :</li>
          </ul>
          <ul class="toolbar1">
-       <li class="click2">汽车流量</li>
+       <li class="click2"><a href="flowAction!list">汽车流量</a></li>
        <li class="click3"><a href="devlogAction!plist">故障信息</a></li>
        <li class="click4"><a href="oplogAction!plist">操作日志</a></li>
          </ul>
@@ -417,8 +417,8 @@ var btn=document.getElementById('show_btn');
   </div>
   
   
-  
-   <div class="tip2">
+  <!-- 
+     <div class="tip2">
    	 <div class="tiptop2"><span>月车流量查询</span><a></a></div>
         
       <div class="tipinfo2">
@@ -427,7 +427,7 @@ var btn=document.getElementById('show_btn');
 		<li class="current"><a href="#">流量信息列表</a></li>
 		<li><a href="#">流量报表折线图</a></li>
 		<li><a href="#">流量报表柱状图</a></li>
-		</ul><!--tabbtn end-->
+		</ul>
 	<div class="tabcon" id="normalcon">
 		<div class="sublist">
 			<ul>
@@ -438,7 +438,7 @@ var btn=document.getElementById('show_btn');
 </table>
 
 			</ul>
-		</div><!--tabcon end-->
+		</div>
 		<div class="sublist">
 			<ul>
 				<table width="100%" border="0" cellspacing="0" cellpadding="0">
@@ -447,7 +447,7 @@ var btn=document.getElementById('show_btn');
   </tr>
 </table>
                 </ul>
-		</div><!--tabcon end-->
+		</div>
 		<div class="sublist">
 			<ul>
 				<table width="100%" border="0" cellspacing="0" cellpadding="0">
@@ -456,9 +456,9 @@ var btn=document.getElementById('show_btn');
   </tr>
 </table>
 </ul>
-		</div><!--tabcon end-->
+		</div>
 		
-	</div><!--tabcon end-->
+	</div>
         </div>
         <div class="tipleft" style="width: 180px; line-height: 35px;">
 					<p>
@@ -532,7 +532,7 @@ listValue="value" cssClass="select2"></s:select>
   
   
   
-  <!-- 
+  
   <div class="tip3">
    	 <div class="tiptop3"><span>故障信息</span><a></a></div>
         
