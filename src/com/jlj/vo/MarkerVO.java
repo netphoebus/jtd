@@ -7,7 +7,8 @@ public class MarkerVO {
 	private String address;
 	private String lat;
 	private String lng;
-	private String ip;
+	//private String ip;
+	private String number;
 	
 	
 	public Long getId() {
@@ -40,12 +41,19 @@ public class MarkerVO {
 	public void setLng(String lng) {
 		this.lng = lng;
 	}
-	public String getIp() {
+	/*public String getIp() {
 		return ip;
 	}
 	public void setIp(String ip) {
 		this.ip = ip;
+	}*/
+	public String getNumber() {
+		return number;
 	}
+	public void setNumber(String number) {
+		this.number = number;
+	}
+	
 	
 	
 	

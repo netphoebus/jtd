@@ -40,4 +40,6 @@ public interface IGreenconflictService {
 
 	public abstract List<Greenconflict> getGreensByIpAddress(String sigIp);
 
+	public abstract List<Greenconflict> getGreensBySigNumber(String sigNumber);
+
 }

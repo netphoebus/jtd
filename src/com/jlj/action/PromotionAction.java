@@ -86,11 +86,11 @@ public class PromotionAction extends ActionSupport implements RequestAware,
 
 
 	
-	public IoSession getCurrrenSession(String sigIp)
+	public IoSession getCurrrenSession(String sigNumber)
 	{
 		for(IoSession session : TimeServerHandler.iosessions)
 		{
-			if(((InetSocketAddress)session.getRemoteAddress()).getAddress().getHostAddress().equals(sigIp))
+			if(session.getAttribute("number").equals(sigNumber))
 			{
 				return session;
 			}

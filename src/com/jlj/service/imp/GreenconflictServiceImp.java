@@ -118,5 +118,10 @@ public class GreenconflictServiceImp implements IGreenconflictService  {
 		Object[] p = new Object[]{sigIp};
 		return greenconflictDao.getObjectsByCondition(queryString, p);
 	}
+	public List<Greenconflict> getGreensBySigNumber(String sigNumber) {
+		String queryString = "from Greenconflict mo where mo.sig.number = ? order by mo.id desc";
+		Object[] p = new Object[]{sigNumber};
+		return greenconflictDao.getObjectsByCondition(queryString, p);
+	}
 	
 }

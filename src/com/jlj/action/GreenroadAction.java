@@ -207,12 +207,12 @@ public class GreenroadAction extends ActionSupport implements RequestAware,
 			// 下发信号机 时间段参数
 			Sig sig = sigService.loadById(sid);
 			if(sig!=null){
-				String sigIp = sig.getAddress();
-				this.updateCommonTimeBytes(sig,this.getCurrrenSession(sigIp));
+				String sigNumber = sig.getNumber();
+				this.updateCommonTimeBytes(sig,this.getCurrrenSession(sigNumber));
 				System.out.println("setPharseTime-调阅新命令和新数据，更新数据库--------------------------------");
-				Commands.executeCommand(6,this.getCurrrenSession(sigIp));//commontime 编号6
+				Commands.executeCommand(6,this.getCurrrenSession(sigNumber));//commontime 编号6
 				Thread.sleep(100);
-				Commands.executeCommand(7,this.getCurrrenSession(sigIp));//commontime 编号7
+				Commands.executeCommand(7,this.getCurrrenSession(sigNumber));//commontime 编号7
 				Thread.sleep(100);
 			}
 		}
@@ -220,11 +220,11 @@ public class GreenroadAction extends ActionSupport implements RequestAware,
 		return NONE;
 	}
 	
-	public IoSession getCurrrenSession(String sigIp)
+	public IoSession getCurrrenSession(String sigNumber)
 	{
 		for(IoSession session : TimeServerHandler.iosessions)
 		{
-			if(((InetSocketAddress)session.getRemoteAddress()).getAddress().getHostAddress().equals(sigIp))
+			if(session.getAttribute("number").equals(sigNumber))
 			{
 				return session;
 			}
@@ -254,7 +254,7 @@ public class GreenroadAction extends ActionSupport implements RequestAware,
 			}
 			String datastr1 ="";
 			if(i<8){
-				Issuedcommand issued1 = issuedcommandService.loadBySigidAndNumber(sig1.getId(),6);//根据sigip和number确定唯一命令
+				Issuedcommand issued1 = issuedcommandService.loadBySigidAndNumber(sig1.getId(),6);//根据sigid和number确定唯一命令
 				System.out.println("updateCommonTimeBytes commontime datas 1 datas================"+issued1.getDatas());
 				if(issued1!=null){
 					datastr1 = issued1.getDatas();

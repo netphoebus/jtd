@@ -10,7 +10,7 @@ var markermsg = [];
 
 var markersJson = '';
 var user=null;
-var ips=[];
+var numbers=[];
 var options = "";
 var areaid = 0;//当前区域
 var ulimit = 10;//用户权限
@@ -212,7 +212,7 @@ function MarkersInit()
 	            	 	markermsg = msg;
 	            	 	for(var i=0;i<markermsg.length;i++)
 			    	    {
-			    	    	ips.push(markermsg[i].ip);
+			    	    	numbers.push(markermsg[i].number);
 				    	     var marker =  maphelper.markerPoint({
 						  	    id:  markermsg[i].id,
 								lat: markermsg[i].lat,
@@ -223,7 +223,7 @@ function MarkersInit()
 						 	 });
 						  marker.connectSuccess = true;
 						  marker.initOver = true;
-						  marker.ip = markermsg[i].ip;
+						  marker.number = markermsg[i].number;
 						  marker.name = markermsg[i].name;
 						  marker.address = markermsg[i].address;
 						  setMarkerEvents(marker);
@@ -377,7 +377,7 @@ function GreenLinesInit()
 function getMarkerContent(marker)
 {
 	return '<div  id="content"><h1 id="">当前信号机</h1><div id="bodyContent">' 
-	+ '<br><div style="margin-top:0.8px">&nbsp;ip&nbsp;地&nbsp;&nbsp;址&nbsp;&nbsp;：<input id="getip" value="'+marker.ip+'" name="signal_ipaddress" type="text"  width="25px"/></div>' 
+	+ '<br><div style="margin-top:0.8px">&nbsp;信号机&nbsp;编&nbsp;&nbsp;号&nbsp;&nbsp;：<input id="getnumber" value="'+marker.number+'" name="signal_number" type="text"  width="25px"/></div>' 
 	+ '<br><div style="margin-top:0.8px">信号机地址：<input  id="address" value="'+marker.name+'" name="signal_address" type="text"    width="25px"/></div>' 
 	+ '<br><div style="margin-top:0.8px">信号机名称：<input id="name" value="'+marker.address+'" name="signal_name" type="text"   width="25px"/></div>' 
 	'</div>' ;
@@ -392,7 +392,7 @@ function saveMarker(id)
 	{
 		if(initMarkers[i].id == id)
 		{
-			var ip = $('#ipSelect').val();
+			var number = $('#numberSelect').val();
 			var address = $('#address').val();
 			var name = $('#name').val();
 			var lat = initMarkers[i].getPosition().jb;
@@ -401,7 +401,7 @@ function saveMarker(id)
 			$.ajax({   
 	            url:'addOrUpdate',//这里是你的action或者servlert的路径地址   
 	            type:'post', //数据发送方式     
-	 			data: { "id":id,"ip":ip,"address":address,"name":name,"lat":lat,"lng":lng},
+	 			data: { "id":id,"number":number,"address":address,"name":name,"lat":lat,"lng":lng},
 	            error: function(msg)
 	            { //失败   
 	            	alert('信号机增加失败');   
@@ -418,7 +418,7 @@ function saveMarker(id)
     	    initMarkers[i].setAnimation(null);
     	    initMarkers[i].name = name;
     	    initMarkers[i].address = address;
-    	    initMarkers[i].ip = ip;
+    	    initMarkers[i].number = number;
 		}
 	}
 }

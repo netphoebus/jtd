@@ -50,7 +50,8 @@ public class MapAction extends ActionSupport implements RequestAware,
 	
 	
 	private Sig sig;
-	private String sigIp;
+	//private String sigIp;//2015-6-24 修改项目 改为使用signumber（信号机编号）来标识信号机唯一性
+	private String sigNumber;
 	private Usero usero;
 	private Userarea userarea;
 	/*
@@ -66,7 +67,8 @@ public class MapAction extends ActionSupport implements RequestAware,
 	private int id;
 	private Long mkid;
 	private String address;
-	private String ip;
+	//private String number;
+	private String number;
 	private String lng;
 	private String lat;
 	
@@ -137,7 +139,7 @@ public class MapAction extends ActionSupport implements RequestAware,
 				MarkerVO markervo = new MarkerVO();
 				markervo.setId(sig.getMkid());
 				markervo.setAddress(sig.getAddress());
-				markervo.setIp(sig.getIp());
+				markervo.setNumber(sig.getNumber());
 				markervo.setLat(sig.getLat());
 				markervo.setLng(sig.getLng());
 				markervo.setName(sig.getName());
@@ -240,29 +242,14 @@ public class MapAction extends ActionSupport implements RequestAware,
 
 	/**
 	 * 添加
-	 * 
 	 * @return
 	 * @throws Exception信号机
 	 */
 	public String addOrUpdate() throws Exception {
-		Sig sig1 = sigService.querySigByIpAddress(ip);
+		Sig sig1 = sigService.querySigByNumber(number);
 		userarea = userareaService.loadById(areaid);
 		if(sig1==null){
-			
-			//System.out.println("coming null.......");
-			Sig sig = new Sig();
-			if(userarea!=null)
-			{
-				sig.setUserarea(userarea);
-			}
-			sig.setMkid(mkid);
-			sig.setIp(ip);
-			sig.setAddress(address);
-			sig.setName(name);
-			sig.setLat(lat);
-			sig.setLng(lng);
-			sig.setIserror(0);
-			sigService.add(sig);
+			return NONE;
 		}else
 		{
 			//System.out.println("coming.......");
@@ -288,13 +275,23 @@ public class MapAction extends ActionSupport implements RequestAware,
 	 * @return
 	 */
 	public String delete() {
-		sigIp = (String) session.get("sigIp");
+		/*
+		 * 项目调整
+		 * sigIp 改为 sigNumber 2015-06-24
+		 */
+		/*	sigIp = (String) session.get("sigIp");
 		if(sigIp==null){
 			String errorMsg="IP地址失效,请重新进去信号机,进行设置";
 			request.put("errorMsg", errorMsg);
 			return "index";
+		}*/
+		sigNumber = (String) session.get("sigNumber");
+		if(sigNumber==null){
+			String errorMsg="链接失效,请重新进去信号机,进行设置";
+			request.put("errorMsg", errorMsg);
+			return "index";
 		}
-		sig = sigService.querySigByIpAddress(sigIp);
+		sig = sigService.querySigByNumber(sigNumber);
 		sig.setMkid(null);
 		sig.setAddress(null);
 		sig.setName(null);
@@ -335,9 +332,6 @@ public class MapAction extends ActionSupport implements RequestAware,
 		if (req.getParameter("mkid") != null) {
 			mkid = Long.parseLong(req.getParameter("mkid"));
 		}
-		if (req.getParameter("ip") != null) {
-			ip = req.getParameter("ip");
-		}
 		if (req.getParameter("lat") != null) {
 			lat = req.getParameter("lat");
 		}
@@ -347,7 +341,6 @@ public class MapAction extends ActionSupport implements RequestAware,
 		if (req.getParameter("areaid") != null) {
 			areaid = Integer.parseInt(req.getParameter("areaid"));
 		}
-		System.out.println(address+""+ name+""+ mkid+""+ip +""+lat +""+lng +""+areaid);
 	}
 
 	
@@ -410,13 +403,13 @@ public class MapAction extends ActionSupport implements RequestAware,
 		this.sig = sig;
 	}
 
-	public String getSigIp() {
+	/*public String getSigIp() {
 		return sigIp;
 	}
 
 	public void setSigIp(String sigIp) {
 		this.sigIp = sigIp;
-	}
+	}*/
 
 
 	public Usero getUsero() {
@@ -501,13 +494,13 @@ public class MapAction extends ActionSupport implements RequestAware,
 		this.address = address;
 	}
 
-	public String getIp() {
+	/*public String getIp() {
 		return ip;
 	}
 
 	public void setIp(String ip) {
 		this.ip = ip;
-	}
+	}*/
 
 	public String getLng() {
 		return lng;
@@ -531,6 +524,22 @@ public class MapAction extends ActionSupport implements RequestAware,
 
 	public void setUserareaVOs(List<UserareaVO> userareaVOs) {
 		this.userareaVOs = userareaVOs;
+	}
+
+	public String getSigNumber() {
+		return sigNumber;
+	}
+
+	public void setSigNumber(String sigNumber) {
+		this.sigNumber = sigNumber;
+	}
+
+	public String getNumber() {
+		return number;
+	}
+
+	public void setNumber(String number) {
+		this.number = number;
 	}
 
 	

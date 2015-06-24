@@ -49,24 +49,35 @@ public class GreenconflictAction extends ActionSupport implements RequestAware,
 	private List<Greenconflict> greens;
 
 	private Sig sig;
-	private String sigIp;
+	//private String sigIp;//2015-6-24 修改项目 改为使用signumber（信号机编号）来标识信号机唯一性
+	private String sigNumber;
 	
 	public String green()
 	{
-		sigIp = (String) session.get("sigIp");
+		/*
+		 * 项目调整
+		 * sigIp 改为 sigNumber 2015-06-24
+		 */
+		/*	sigIp = (String) session.get("sigIp");
 		if(sigIp==null){
 			String errorMsg="IP地址失效,请重新进去信号机,进行设置";
 			request.put("errorMsg", errorMsg);
 			return "index";
+		}*/
+		sigNumber = (String) session.get("sigNumber");
+		if(sigNumber==null){
+			String errorMsg="链接失效,请重新进去信号机,进行设置";
+			request.put("errorMsg", errorMsg);
+			return "index";
 		}
-		sig = sigService.querySigByIpAddress(sigIp);
+		sig = sigService.querySigByNumber(sigNumber);
 		if(sig!=null)
 		{
 			greens = greenService.loadBySid(sig.getId());
 		}
 		if(greens!=null&&greens.size()>0)
 		{
-			session.put("sigIp", sigIp);//从地图中进入信号机，将信号机id传入session
+			session.put("sigNumber", sigNumber);//从地图中进入信号机，将信号机id传入session
 			return "cssz-ct";
 		}else
 		{
@@ -122,19 +133,19 @@ public class GreenconflictAction extends ActionSupport implements RequestAware,
 			greenService.updateGreenByCondition(isct,name,gid);
 		}
 		System.out.println("2-获取数据库数据，下发命令--------------------------------");
-		sigIp = (String) session.get("sigIp");
-		this.updateGreenconflictBytes(sigIp,this.getCurrrenSession(sigIp));
+		sigNumber = (String) session.get("sigNumber");
+		this.updateGreenconflictBytes(sigNumber,this.getCurrrenSession(sigNumber));
 		System.out.println("3-调阅新命令和新数据，更新数据库--------------------------------");
-		Commands.executeCommand(35,this.getCurrrenSession(sigIp));//绿冲突 编号35
+		Commands.executeCommand(35,this.getCurrrenSession(sigNumber));//绿冲突 编号35
 		return NONE;
 	}
 
-	private void updateGreenconflictBytes(String sigIp,IoSession currrenSession) {
+	private void updateGreenconflictBytes(String sigNumber,IoSession currrenSession) {
 		//下发信号机-绿冲突表
-		List<Greenconflict> greens = greenService.getGreensByIpAddress(sigIp);
+		List<Greenconflict> greens = greenService.getGreensBySigNumber(sigNumber);
 		
 		//1-获取数据库中保存的命令
-		Sig sig1 = sigService.querySigByIpAddress(sigIp);
+		Sig sig1 = sigService.querySigByNumber(sigNumber);
 		if(sig1==null){
 			return;
 		}
@@ -201,11 +212,11 @@ public class GreenconflictAction extends ActionSupport implements RequestAware,
 		currrenSession.write(msendDatas);
 	}
 	
-	public IoSession getCurrrenSession(String sigIp)
+	public IoSession getCurrrenSession(String sigNumber)
 	{
 		for(IoSession session : TimeServerHandler.iosessions)
 		{
-			if(((InetSocketAddress)session.getRemoteAddress()).getAddress().getHostAddress().equals(sigIp))
+			if(session.getAttribute("number").equals(sigNumber))
 			{
 				return session;
 			}
@@ -273,18 +284,24 @@ public class GreenconflictAction extends ActionSupport implements RequestAware,
 	public void setSigService(ISigService sigService) {
 		this.sigService = sigService;
 	}
-	public String getSigIp() {
+	/*public String getSigIp() {
 		return sigIp;
 	}
 	public void setSigIp(String sigIp) {
 		this.sigIp = sigIp;
-	}
+	}*/
 	public IIssuedcommandService getIssuedcommandService() {
 		return issuedcommandService;
 	}
 	@Resource
 	public void setIssuedcommandService(IIssuedcommandService issuedcommandService) {
 		this.issuedcommandService = issuedcommandService;
+	}
+	public String getSigNumber() {
+		return sigNumber;
+	}
+	public void setSigNumber(String sigNumber) {
+		this.sigNumber = sigNumber;
 	}
 	
 	

@@ -64,8 +64,12 @@ SessionAware,ServletResponseAware,ServletRequestAware {
 	private List<Sig> sigs;
 	
 	public String plist(){
-		String ipAddress = (String)session.get("sigIp");
+		/*	String ipAddress = (String)session.get("sigIp");
 		if(ipAddress==null||ipAddress.equals("")){
+			return NONE;
+		}*/
+		String number = (String)session.get("number");
+		if(number==null||number.equals("")){
 			return NONE;
 		}
 		
@@ -73,14 +77,14 @@ SessionAware,ServletResponseAware,ServletRequestAware {
 			page=1;
 		}
 			//总记录数
-			totalCount=oplogService.getSigidTotalCount(ipAddress);
+			totalCount=oplogService.getSigidTotalCount(number);
 			//总页数
 			pageCount=oplogService.getPageCount(totalCount,size);
 			if(pageCount!=0&&page>pageCount){
 				page=pageCount;
 			}
 			//所有当前页记录对象
-			oplogs=oplogService.querySigidList(ipAddress,page,size);
+			oplogs=oplogService.querySigidList(number,page,size);
 //			System.out.println(oplogs.get(0).getSigip());
 			
 		

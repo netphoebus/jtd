@@ -70,18 +70,29 @@ public class SigtimeAction extends ActionSupport implements RequestAware,
 	private Signpublicparam publicparam;
 	private int soid;
 	private int signid;
-	private String sigIp;
+	//private String sigIp;//2015-6-24 修改项目 改为使用signumber（信号机编号）来标识信号机唯一性
+	private String sigNumber;
 	
 	private String dates;
 
 	public String sigtimes() {
-		sigIp = (String) session.get("sigIp");
-		if (sigIp == null) {
+		/*
+		 * 项目调整
+		 * sigIp 改为 sigNumber 2015-06-24
+		 */
+		/*	sigIp = (String) session.get("sigIp");
+		if(sigIp==null){
 			String errorMsg="IP地址失效,请重新进去信号机,进行设置";
 			request.put("errorMsg", errorMsg);
 			return "index";
+		}*/
+		sigNumber = (String) session.get("sigNumber");
+		if(sigNumber==null){
+			String errorMsg="链接失效,请重新进去信号机,进行设置";
+			request.put("errorMsg", errorMsg);
+			return "index";
 		}
-		sig = sigService.querySigByIpAddress(sigIp);
+		sig = sigService.querySigByNumber(sigNumber);
 		if (sig != null) {
 			commontimes = commontimeService.getCommontimesBySigAndTimetype(sig
 					.getId(), timetype);// 直接获得当前所有时间段
@@ -98,7 +109,7 @@ public class SigtimeAction extends ActionSupport implements RequestAware,
 				steps = getCurrentSolution();
 				setCurrentSteptimes(commontime, steps);
 			}
-			session.put("sigIp", sigIp);// 从地图中进入信号机，将信号机id传入session
+			session.put("sigNumber", sigNumber);// 从地图中进入信号机，将信号机id传入session
 			return "cssz-time";
 		} else {
 			String errorMsg="未获得时间参数信息,请确保数据不为空.";
@@ -326,12 +337,12 @@ public class SigtimeAction extends ActionSupport implements RequestAware,
 		commontimeService.update(commontime);
 		System.out.println("update2-获取数据库数据，下发命令--------------------------------");
 		// 下发信号机 时间段参数
-		sigIp = (String) session.get("sigIp");
-		this.updateCommonTimeBytes(this.getCurrrenSession(sigIp));
+		sigNumber = (String) session.get("sigNumber");
+		this.updateCommonTimeBytes(this.getCurrrenSession(sigNumber));
 		System.out.println("update3-调阅新命令和新数据，更新数据库--------------------------------");
-		Commands.executeCommand(6,this.getCurrrenSession(sigIp));//commontime 编号6
+		Commands.executeCommand(6,this.getCurrrenSession(sigNumber));//commontime 编号6
 		Thread.sleep(100);
-		Commands.executeCommand(7,this.getCurrrenSession(sigIp));//commontime 编号7
+		Commands.executeCommand(7,this.getCurrrenSession(sigNumber));//commontime 编号7
 		return NONE;
 	}
 
@@ -356,13 +367,13 @@ public class SigtimeAction extends ActionSupport implements RequestAware,
 		
 		System.out.println("updateStepTimes2-获取数据库数据，下发命令--------------------------------");
 		// 下发信号机 步序执行时间
-		sigIp = (String) session.get("sigIp");
-		this.updateCommonTimeBytes(this.getCurrrenSession(sigIp));
+		sigNumber = (String) session.get("sigNumber");
+		this.updateCommonTimeBytes(this.getCurrrenSession(sigNumber));
 		
 		System.out.println("updateStepTimes3-调阅新命令和新数据，更新数据库--------------------------------");
-		Commands.executeCommand(6,this.getCurrrenSession(sigIp));//commontime 编号6
+		Commands.executeCommand(6,this.getCurrrenSession(sigNumber));//commontime 编号6
 		Thread.sleep(100);
-		Commands.executeCommand(7,this.getCurrrenSession(sigIp));//commontime 编号7
+		Commands.executeCommand(7,this.getCurrrenSession(sigNumber));//commontime 编号7
 		return NONE;
 	}
 
@@ -384,7 +395,7 @@ public class SigtimeAction extends ActionSupport implements RequestAware,
 			Integer[] worktime = commontime.getTimes();//worktime[]
 			
 			//1-获取数据库中保存的命令
-			Sig sig1 = sigService.querySigByIpAddress(sigIp);
+			Sig sig1 = sigService.querySigByNumber(sigNumber);
 			if(sig1==null){
 				return;
 			}
@@ -461,11 +472,11 @@ public class SigtimeAction extends ActionSupport implements RequestAware,
 		}
 	}
 	
-	public IoSession getCurrrenSession(String sigIp)
+	public IoSession getCurrrenSession(String sigNumber)
 	{
 		for(IoSession session : TimeServerHandler.iosessions)
 		{
-			if(((InetSocketAddress)session.getRemoteAddress()).getAddress().getHostAddress().equals(sigIp))
+			if(session.getAttribute("number").equals(sigNumber))
 			{
 				return session;
 			}
@@ -635,13 +646,13 @@ public class SigtimeAction extends ActionSupport implements RequestAware,
 		this.steps = steps;
 	}
 
-	public String getSigIp() {
+/*	public String getSigIp() {
 		return sigIp;
 	}
 
 	public void setSigIp(String sigIp) {
 		this.sigIp = sigIp;
-	}
+	}*/
 
 	public List<StepTimeVO> getSteptimes() {
 		return steptimes;
@@ -677,6 +688,14 @@ public class SigtimeAction extends ActionSupport implements RequestAware,
 		this.dates = dates;
 	}
 
+	public String getSigNumber() {
+		return sigNumber;
+	}
 
+	public void setSigNumber(String sigNumber) {
+		this.sigNumber = sigNumber;
+	}
+
+	
 	
 }

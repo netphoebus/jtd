@@ -46,10 +46,11 @@ public class SigAction extends ActionSupport implements RequestAware,
 	private ISigService sigService;
 	private Sig sig;
 	private int id;
-	//public static String curruntSigIp;
+	//public static String curruntSigIp;//2015-6-24 修改项目 改为使用signumber（信号机编号）来标识信号机唯一性
 	public static String curruntSigNumber;
 	public int curruntCommandId;
 	private SigPara sigParas;
+	private Long mkid;
 
 	public String sigStatus() {
 		// Usero usero = (Usero)session.get("usero");
@@ -60,7 +61,7 @@ public class SigAction extends ActionSupport implements RequestAware,
 			List<SigStatus> sigstatuses = new ArrayList<SigStatus>();
 			for (int i = 0; i < usersigs.size(); i++) {
 				String thestatus="";
-				IoSession theSession =this.getCurrrenSession(usersigs.get(i).getIp());
+				IoSession theSession =this.getCurrrenSession(usersigs.get(i).getNumber());
 				if(theSession==null){
 					thestatus = "<font color=red>断开</font>";
 				}else if(usersigs.get(i).getIserror()==1){
@@ -89,11 +90,11 @@ public class SigAction extends ActionSupport implements RequestAware,
 		return NONE;
 	}
 
-	public IoSession getCurrrenSession(String sigIp)
+	public IoSession getCurrrenSession(String sigNumber)
 	{
 		for(IoSession session : TimeServerHandler.iosessions)
 		{
-			if(((InetSocketAddress)session.getRemoteAddress()).getAddress().getHostAddress().equals(sigIp))
+			if(session.getAttribute("number").equals(sigNumber))
 			{
 				return session;
 			}
@@ -102,7 +103,6 @@ public class SigAction extends ActionSupport implements RequestAware,
 	}
 	
 	public String toTraffic() {
-		long mkid = Long.parseLong(req.getParameter("mkid"));
 		sig = sigService.loadByMkid(mkid);
 		if (sig != null) {
 			//curruntSigIp = sig.getIp();
@@ -276,5 +276,15 @@ public class SigAction extends ActionSupport implements RequestAware,
 	public void setCurruntCommandId(int curruntCommandId) {
 		this.curruntCommandId = curruntCommandId;
 	}
+
+	public Long getMkid() {
+		return mkid;
+	}
+
+	public void setMkid(Long mkid) {
+		this.mkid = mkid;
+	}
+	
+	
 
 }

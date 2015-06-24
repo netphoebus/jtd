@@ -53,8 +53,12 @@ SessionAware,ServletResponseAware,ServletRequestAware {
 	
 	public String plist() throws Exception{
 		//----------------------------------查询设备日志-------------------------------------
-		String ipAddress = (String)session.get("sigIp");
+	/*	String ipAddress = (String)session.get("sigIp");
 		if(ipAddress==null||ipAddress.equals("")){
+			return NONE;
+		}*/
+		String number = (String)session.get("number");
+		if(number==null||number.equals("")){
 			return NONE;
 		}
 		if(page<1){
@@ -62,14 +66,14 @@ SessionAware,ServletResponseAware,ServletRequestAware {
 		}
 		//总记录数
 		
-			totalCount=devlogService.getSigTotalCount(ipAddress);
+			totalCount=devlogService.getSigTotalCount(number);
 			//总页数
 			pageCount=devlogService.getPageCount(totalCount,size);
 			if(pageCount!=0&&page>pageCount){
 				page=pageCount;
 			}
 			//所有当前页记录对象
-			devlogs=devlogService.querySigList(ipAddress,page,size);
+			devlogs=devlogService.querySigList(number,page,size);
 		return "siglist";
 	}
 	

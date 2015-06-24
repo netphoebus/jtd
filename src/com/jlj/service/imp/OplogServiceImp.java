@@ -124,16 +124,16 @@ public class OplogServiceImp implements IOplogService {
 //		queryString += " order by mo.id desc ";
 		return oplogDao.pageList(queryString,p,page,size);
 	}
-	public int getSigidTotalCount(String ipAddress) {
-		String queryString = "select count(*) from Oplog mo where mo.sigip=? ";
-		Object[] p = new Object[]{ipAddress};
+	public int getSigidTotalCount(String number) {
+		String queryString = "select count(*) from Oplog mo where mo.signumber=? ";
+		Object[] p = new Object[]{number};
 		
 //		queryString += " order by mo.id desc ";
 		return oplogDao.getUniqueResult(queryString,p);
 	}
-	public List<Oplog> querySigidList(String ipAddress, int page, int size) {
-		String queryString = "from Oplog mo where mo.sigip=? ";
-		Object[] p = new Object[]{ipAddress};
+	public List<Oplog> querySigidList(String number, int page, int size) {
+		String queryString = "from Oplog mo where mo.signumber=? ";
+		Object[] p = new Object[]{number};
 //		queryString += " order by mo.id desc ";
 		return oplogDao.pageList(queryString,p,page,size);
 	}

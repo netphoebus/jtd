@@ -68,7 +68,8 @@ public class SolutionAction extends ActionSupport implements RequestAware,
 	
 	private Sig sig;
 	private ConflictVO conflictVO;
-	private String sigIp;
+	//private String sigIp;//2015-6-24 修改项目 改为使用signumber（信号机编号）来标识信号机唯一性
+	private String sigNumber;
 	
 	/*
 	 * url param
@@ -78,13 +79,23 @@ public class SolutionAction extends ActionSupport implements RequestAware,
 	
 	public String solutions()
 	{
-			sigIp = (String) session.get("sigIp");
+			/*
+			 * 项目调整
+			 * sigIp 改为 sigNumber 2015-06-24
+			 */
+			/*	sigIp = (String) session.get("sigIp");
 			if(sigIp==null){
 				String errorMsg="IP地址失效,请重新进去信号机,进行设置";
 				request.put("errorMsg", errorMsg);
 				return "index";
+			}*/
+			sigNumber = (String) session.get("sigNumber");
+			if(sigNumber==null){
+				String errorMsg="链接失效,请重新进去信号机,进行设置";
+				request.put("errorMsg", errorMsg);
+				return "index";
 			}
-			sig = sigService.querySigByIpAddress(sigIp);
+			sig = sigService.querySigByNumber(sigNumber);
 			if(sig!=null)
 			{
 				solutions = solutionService.loadByPubid(sig.getId());
@@ -98,7 +109,7 @@ public class SolutionAction extends ActionSupport implements RequestAware,
 				solution = solutionService.loadById(soid);
 				steps = stepService.loadBySoId(soid);//获得相位方案的相位（相位为步序是偶数位的步序,service层已做处理）
 				setGreenConflict();
-				session.put("sigIp", sigIp);//从地图中进入信号机，将信号机id传入session
+				session.put("sigNumber", sigNumber);//从地图中进入信号机，将信号机id传入session
 				return "cssz-fa";
 			}else
 			{
@@ -294,12 +305,12 @@ public class SolutionAction extends ActionSupport implements RequestAware,
 		}
 		System.out.println("2-获取数据库数据，下发命令--------------------------------");
 		//下发命令
-		sigIp = (String) session.get("sigIp");
-		this.updateSolutionBytes(this.getCurrrenSession(sigIp));
+		sigNumber = (String) session.get("sigNumber");
+		this.updateSolutionBytes(this.getCurrrenSession(sigNumber));
 		
 		System.out.println("3-调阅新命令和新数据，更新数据库--------------------------------");
 		int commandId = solutionService.loadById(soid).getOrderid()+12;
-		Commands.executeCommand(commandId,this.getCurrrenSession(sigIp));
+		Commands.executeCommand(commandId,this.getCurrrenSession(sigNumber));
 		
 		return NONE;
 	}
@@ -315,7 +326,7 @@ public class SolutionAction extends ActionSupport implements RequestAware,
 		int orderid = solution.getOrderid();//(int)data[7]
 		byte[] msendDatas = new byte[524];
 		//1-获取数据库中保存的命令
-		Sig sig1 = sigService.querySigByIpAddress(sigIp);
+		Sig sig1 = sigService.querySigByNumber(sigNumber);
 		if(sig1==null){
 			System.out.println("updateSolutionBytes sig1================ null");
 			return ;
@@ -461,6 +472,9 @@ public class SolutionAction extends ActionSupport implements RequestAware,
 		
 	}
 	
+	/**
+	 * 2015-6-24 修改项目 改为使用signumber（信号机编号）来标识信号机唯一性
+	 * @return
 	public IoSession getCurrrenSession(String sigIp)
 	{
 		for(IoSession session : TimeServerHandler.iosessions)
@@ -472,7 +486,18 @@ public class SolutionAction extends ActionSupport implements RequestAware,
 		}
 		return null;
 	}
-	
+	*/
+	public IoSession getCurrrenSession(String sigNumber)
+	{
+		for(IoSession session : TimeServerHandler.iosessions)
+		{
+			if(session.getAttribute("number").equals(sigNumber))
+			{
+				return session;
+			}
+		}
+		return null;
+	}
 	// get、set-------------------------------------------
 
 	// 获得HttpServletResponse对象
@@ -621,13 +646,15 @@ public class SolutionAction extends ActionSupport implements RequestAware,
 		this.roadService = roadService;
 	}
 
-	public String getSigIp() {
+/*	public String getSigIp() {
 		return sigIp;
 	}
 
 	public void setSigIp(String sigIp) {
 		this.sigIp = sigIp;
-	}
+	}*/
+	
+	
 
 	public IIssuedcommandService getIssuedcommandService() {
 		return issuedcommandService;
@@ -644,6 +671,14 @@ public class SolutionAction extends ActionSupport implements RequestAware,
 
 	public void setDates(String dates) {
 		this.dates = dates;
+	}
+
+	public String getSigNumber() {
+		return sigNumber;
+	}
+
+	public void setSigNumber(String sigNumber) {
+		this.sigNumber = sigNumber;
 	}
 
 	

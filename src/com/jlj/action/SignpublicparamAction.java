@@ -48,49 +48,66 @@ public class SignpublicparamAction extends ActionSupport implements RequestAware
 	private Signpublicparam sigpubparam;
 	private Sig sig;
 	private int sigpubid;//信号机公共参数Id
-	private String sigIp;//信号机IP
+	//private String sigIp;//2015-6-24 修改项目 改为使用signumber（信号机编号）来标识信号机唯一性
+	private String sigNumber;
 	
 	private Integer spetimeable;
 	private Integer suntimeable;
 	
 	public String suretime(){
 		System.out.println("1-获取当前时间的各个数据--------------------------------");
-		
-		
-		
-		
-		sigIp = (String) session.get("sigIp");
+		/*
+		 * 项目调整
+		 * sigIp 改为 sigNumber 2015-06-24
+		 */
+		/*	sigIp = (String) session.get("sigIp");
 		if(sigIp==null){
 			String errorMsg="IP地址失效,请重新进去信号机,进行设置";
 			request.put("errorMsg", errorMsg);
 			return "index";
+		}*/
+		sigNumber = (String) session.get("sigNumber");
+		if(sigNumber==null){
+			String errorMsg="链接失效,请重新进去信号机,进行设置";
+			request.put("errorMsg", errorMsg);
+			return "index";
 		}
 		System.out.println("2-获取数据库数据，下发命令--------------------------------");
-		updateJiaoShiBytes(sigIp,getCurrrenSession(sigIp));
+		updateJiaoShiBytes(sigNumber,getCurrrenSession(sigNumber));
 		System.out.println("3-调阅新命令和新数据，更新数据库--------------------------------");
 		//Commands.executeCommand(28,this.getCurrrenSession(sigIp));//编号28 校时调阅
 		return NONE;
 	}
 	//跳转 一般参数页面  
 	public String publicParam() {
-		sigIp = (String) session.get("sigIp");
+		/*
+		 * 项目调整
+		 * sigIp 改为 sigNumber 2015-06-24
+		 */
+		/*	sigIp = (String) session.get("sigIp");
 		if(sigIp==null){
 			String errorMsg="IP地址失效,请重新进去信号机,进行设置";
 			request.put("errorMsg", errorMsg);
 			return "index";
+		}*/
+		sigNumber = (String) session.get("sigNumber");
+		if(sigNumber==null){
+			String errorMsg="链接失效,请重新进去信号机,进行设置";
+			request.put("errorMsg", errorMsg);
+			return "index";
 		}
-		//根据IP来查询信号机公共参数
-		sigpubparam = sigpubparamService.loadBySigIp(sigIp);
+		//根据sigNumber来查询信号机公共参数
+		sigpubparam = sigpubparamService.getPublicparamByNumber(sigNumber);
 		if(sigpubparam!=null&&sigpubparam.getIp()!=null)
 		{
 			//判断信号机公共参数中的signid是否为空，如果为空则设置公共参数中的signid对应sig
 			if(sigpubparam.getSig()==null)
 			{
-				sig = sigService.querySigByIpAddress(sigIp);
+				sig = sigService.querySigByNumber(sigNumber);
 				sigpubparam.setSig(sig);
 				sigpubparamService.update(sigpubparam);//公共参数中设置信号机id
 			}
-			session.put("sigIp", sigIp);//从地图中进入信号机，将信号机ip传入session
+			session.put("sigNumber", sigNumber);//从地图中进入信号机，将信号机sigNumber传入session
 			initPublicParamJSP(sigpubparam.getWorkingset());
 			//判断是否首次进入一般参数,如果首次进入一般参数则需设置公共参数中的signid对应sig
 			return "cssz-cs";
@@ -228,9 +245,19 @@ public class SignpublicparamAction extends ActionSupport implements RequestAware
 	 */
 	public String update() throws Exception {
 		setPublicParamJSP();
-		sigIp = (String) session.get("sigIp");
+		/*
+		 * 项目调整
+		 * sigIp 改为 sigNumber 2015-06-24
+		 */
+		/*	sigIp = (String) session.get("sigIp");
 		if(sigIp==null){
 			String errorMsg="IP地址失效,请重新进去信号机,进行设置";
+			request.put("errorMsg", errorMsg);
+			return "index";
+		}*/
+		sigNumber = (String) session.get("sigNumber");
+		if(sigNumber==null){
+			String errorMsg="链接失效,请重新进去信号机,进行设置";
 			request.put("errorMsg", errorMsg);
 			return "index";
 		}
@@ -238,15 +265,15 @@ public class SignpublicparamAction extends ActionSupport implements RequestAware
 		sigpubparamService.update(sigpubparam);//修改-from lq
 
 		System.out.println("2-获取数据库数据，下发命令--------------------------------");
-		updateSigPublicparamBytes(sigIp,getCurrrenSession(sigIp));
+		updateSigPublicparamBytes(sigNumber,getCurrrenSession(sigNumber));
 		System.out.println("3-调阅新命令和新数据，更新数据库--------------------------------");//("+newDatas+")
-		Commands.executeCommand(5,this.getCurrrenSession(sigIp));//编号5 公共参数调阅
+		Commands.executeCommand(5,this.getCurrrenSession(sigNumber));//编号5 公共参数调阅
 
 		return NONE;
 	}
 	
-	private void updateSigPublicparamBytes(String sigIp,IoSession currrenSession) {
-		Sig sig1 = sigService.querySigByIpAddress(sigIp);
+	private void updateSigPublicparamBytes(String sigNumber,IoSession currrenSession) {
+		Sig sig1 = sigService.querySigByNumber(sigNumber);
 		if(sig1!=null){
 			Issuedcommand issuedcommand = issuedcommandService.loadBySigidAndNumber(sig1.getId(),5);//编号5
 			if(issuedcommand!=null){
@@ -341,8 +368,8 @@ public class SignpublicparamAction extends ActionSupport implements RequestAware
 		
 	}
 
-	private void updateJiaoShiBytes(String sigIp,IoSession currrenSession) {
-		Sig sig1 = sigService.querySigByIpAddress(sigIp);
+	private void updateJiaoShiBytes(String sigNumber,IoSession currrenSession) {
+		Sig sig1 = sigService.querySigByNumber(sigNumber);
 		if(sig1!=null){
 //			Issuedcommand issuedcommand = issuedcommandService.loadBySigidAndNumber(sig1.getId(),28);//编号28
 //			if(issuedcommand!=null){
@@ -388,7 +415,6 @@ public class SignpublicparamAction extends ActionSupport implements RequestAware
 				  k += msendDatas[i1]&0xFF;
 				 }
 				 
-		         
 			       for (int i2 = 0; i2 < 2; i2++) {  
 			    	   msendDatas[msendDatas.length-i2-1]  = (byte) (k >>> (i2 * 8));  
 			       }  
@@ -414,21 +440,16 @@ public class SignpublicparamAction extends ActionSupport implements RequestAware
 		
 	}
 	
-	public IoSession getCurrrenSession(String sigIp)
+	public IoSession getCurrrenSession(String sigNumber)
 	{
 		for(IoSession session : TimeServerHandler.iosessions)
 		{
-			if(((InetSocketAddress)session.getRemoteAddress()).getAddress().getHostAddress().equals(sigIp))
+			if(session.getAttribute("number").equals(sigNumber))
 			{
 				return session;
 			}
 		}
 		return null;
-	}
-	
-	public void setMsgToSig()
-	{
-		
 	}
 	
 
@@ -512,14 +533,15 @@ public class SignpublicparamAction extends ActionSupport implements RequestAware
 		this.suntimeable = suntimeable;
 	}
 
-	public String getSigIp() {
+	/*public String getSigIp() {
 		return sigIp;
 	}
 
 	public void setSigIp(String sigIp) {
 		this.sigIp = sigIp;
-	}
-
+	}*/
+	
+	
 	public int getSigpubid() {
 		return sigpubid;
 	}
@@ -535,6 +557,12 @@ public class SignpublicparamAction extends ActionSupport implements RequestAware
 	@Resource
 	public void setIssuedcommandService(IIssuedcommandService issuedcommandService) {
 		this.issuedcommandService = issuedcommandService;
+	}
+	public String getSigNumber() {
+		return sigNumber;
+	}
+	public void setSigNumber(String sigNumber) {
+		this.sigNumber = sigNumber;
 	}
 	
 	
