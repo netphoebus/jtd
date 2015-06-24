@@ -30,7 +30,7 @@ public class Oplog implements java.io.Serializable {
 	private String loginip;
 	private Integer iptype;
 	private Date optime;
-	private String sigip;
+	private String signumber;
 
 	// Constructors
 
@@ -39,13 +39,13 @@ public class Oplog implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public Oplog(Usero usero, String opevent, String loginip, Integer iptype,String sigip,
+	public Oplog(Usero usero, String opevent, String loginip, Integer iptype,String signumber,
 			Date optime) {
 		this.usero = usero;
 		this.opevent = opevent;
 		this.loginip = loginip;
 		this.iptype = iptype;
-		this.sigip = sigip;
+		this.signumber = signumber;
 		this.optime = optime;
 	}
 
@@ -108,13 +108,13 @@ public class Oplog implements java.io.Serializable {
 		this.optime = optime;
 	}
 
-	@Column(name = "sigip", length = 20)
-	public String getSigip() {
-		return sigip;
+	@Column(name = "signumber", length = 20)
+	public String getSignumber() {
+		return signumber;
 	}
 
-	public void setSigip(String sigip) {
-		this.sigip = sigip;
+	public void setSignumber(String signumber) {
+		this.signumber = signumber;
 	}
 
 	
