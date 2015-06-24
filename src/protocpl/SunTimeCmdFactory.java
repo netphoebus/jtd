@@ -83,9 +83,10 @@ public class SunTimeCmdFactory extends CmdFactoryBase implements ICmdParser{
 	private void Upload_SunTimeHead(IoSession session, byte[] data) {
 		// TODO Auto-generated method stub
 		//获取session中的IP
-		String clientIP = ((InetSocketAddress)session.getRemoteAddress()).getAddress().getHostAddress();
-		Sig sig = sigService.querySigByIpAddress(clientIP);
-		
+//		String clientIP = ((InetSocketAddress)session.getRemoteAddress()).getAddress().getHostAddress();
+//		Sig sig = sigService.querySigByIpAddress(clientIP);
+		String number = (String)session.getAttribute("number");
+		Sig sig = sigService.querySigByNumber(number);
 		//保存信号机的公共参数下发命令的数据-start-from jlj
 		String datastr = DataConvertor.toHexString(data);
 		System.out.println("周日参数1--------------------datastr="+datastr);
@@ -195,8 +196,10 @@ public class SunTimeCmdFactory extends CmdFactoryBase implements ICmdParser{
 	private void Upload_SunTimeTail(IoSession session, byte[] data) {
 		// TODO Auto-generated method stub
 		//获取session中的IP
-		String clientIP = ((InetSocketAddress)session.getRemoteAddress()).getAddress().getHostAddress();
-		Sig sig = sigService.querySigByIpAddress(clientIP);
+//		String clientIP = ((InetSocketAddress)session.getRemoteAddress()).getAddress().getHostAddress();
+//		Sig sig = sigService.querySigByIpAddress(clientIP);
+		String number = (String)session.getAttribute("number");
+		Sig sig = sigService.querySigByNumber(number);
 		
 		//保存信号机的公共参数下发命令的数据-start-from jlj
 		String datastr = DataConvertor.toHexString(data);

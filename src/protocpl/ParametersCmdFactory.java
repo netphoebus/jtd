@@ -17,10 +17,12 @@ import com.jlj.model.Greenconflict;
 import com.jlj.model.Issuedcommand;
 import com.jlj.model.Sig;
 import com.jlj.model.Signpublicparam;
+import com.jlj.model.Userarea;
 import com.jlj.service.IGreenconflictService;
 import com.jlj.service.IIssuedcommandService;
 import com.jlj.service.ISigService;
 import com.jlj.service.ISignpublicparamService;
+import com.jlj.service.IUserareaService;
 
 
 
@@ -29,6 +31,7 @@ public class ParametersCmdFactory extends CmdFactoryBase implements ICmdParser{
 	public static boolean setSuccess;
 	final static ApplicationContext ac=new ClassPathXmlApplicationContext("beans.xml");
 	final static ISigService sigService = (ISigService)ac.getBean("sigService");
+	public final static IUserareaService userareaService = (IUserareaService)ac.getBean("userareaService");
 	final static ISignpublicparamService signpublicparamService = (ISignpublicparamService)ac.getBean("signpublicparamService");
 	final static IGreenconflictService greenconflictService = (IGreenconflictService)ac.getBean("greenconflictService");
 	final static IIssuedcommandService issuedcommandService = (IIssuedcommandService)ac.getBean("issuedcommandService");
@@ -103,23 +106,43 @@ public class ParametersCmdFactory extends CmdFactoryBase implements ICmdParser{
 	}
 	
 	public void Upload_parameters(IoSession session,byte[] data) throws Exception{
+		int number0 				= data[13]&0xff;
+		int number1 				= data[14]&0xff;
+		int number  				= number0<<8+number1;//信号机编号
 		
+		session.setAttribute("number",number+"");
+		//获取session中的IP地址，匹配数据库，发现sig表中无该ip，添加数据；发现sig表中有ip，则不插入-from jlj
+//		String ipAddress= ((InetSocketAddress)session.getRemoteAddress()).getAddress().getHostAddress();
+		Sig sig = sigService.querySigByNumber(number+"");
+		if(sig==null){
+			sig = new Sig();
+			sig.setIserror(0);
+//			sig.setIp(ipAddress);
+			sig.setNumber(number+"");
+			Userarea userarea = userareaService.loadById(1);//load未知区域
+			if(userarea==null){
+				System.out.println("userarea=null--------------------");
+			}
+			sig.setUserarea(userarea);
+			sigService.add(sig);
+		}
 		
 		//获取session中的IP
-		String clientIP = ((InetSocketAddress)session.getRemoteAddress()).getAddress().getHostAddress();
+//		String clientIP = ((InetSocketAddress)session.getRemoteAddress()).getAddress().getHostAddress();
 		//保存信号机的公共参数下发的命令-start-from jlj
 		String datastr = DataConvertor.toHexString(data);
 		System.out.println("公共参数命令长度是========================="+data.length);
 			//根据ip查出信号机
-			Sig sig = sigService.querySigByIpAddress(clientIP);
-			if(sig!=null){
-				Issuedcommand issuedcommand = issuedcommandService.loadBySigidAndNumber(sig.getId(),5);
+			String number2 = (String)session.getAttribute("number");
+			Sig sig2 = sigService.querySigByNumber(number2);
+			if(sig2!=null){
+				Issuedcommand issuedcommand = issuedcommandService.loadBySigidAndNumber(sig2.getId(),5);
 				if(issuedcommand==null){
 					issuedcommand = new Issuedcommand();
 					issuedcommand.setName("公共参数");
 					issuedcommand.setDatas(datastr);
 					issuedcommand.setNumber(5);//编号5
-					issuedcommand.setSig(sig);
+					issuedcommand.setSig(sig2);
 					issuedcommandService.add(issuedcommand);
 				}else{
 					issuedcommandService.updateObjectById(datastr,issuedcommand.getId());
@@ -133,7 +156,7 @@ public class ParametersCmdFactory extends CmdFactoryBase implements ICmdParser{
 		//获取信号机中的数据
 		int Red_Clearance_Time	 	= data[11];
 		int Yellow_Flash_Time 		= data[12];
-		int number 					= data[13];
+		
 		int comparam				= data[15];
 		int checkflow 				= data[16];
 		int innermark				= data[17];
@@ -157,11 +180,12 @@ public class ParametersCmdFactory extends CmdFactoryBase implements ICmdParser{
 		}
 		//-----------------------数据库---------------------------
 		//检查公共参数表是否有该ip地址：若无，插入新数据；若有，修改原数据
-		Signpublicparam signpublicparam = signpublicparamService.getPublicparamByIp(clientIP);
+//		Signpublicparam signpublicparam = signpublicparamService.getPublicparamByIp(clientIP);
+		Signpublicparam signpublicparam = signpublicparamService.getPublicparamByNumber(number2);
 		if(signpublicparam==null){
 			//System.out.println("-------------------------------signpublicparam add");
 			signpublicparam = new Signpublicparam();
-			signpublicparam.setIp(clientIP);
+//			signpublicparam.setIp(clientIP);
 			signpublicparam.setQchdtime(Red_Clearance_Time);//清场红灯
 			signpublicparam.setKjhstime(Yellow_Flash_Time);//开机黄闪
 			signpublicparam.setNumber(String.valueOf(number));
@@ -283,13 +307,14 @@ public class ParametersCmdFactory extends CmdFactoryBase implements ICmdParser{
 		}
 		//-----------------------数据库---------------------------
 		//获取session中的IP
-		String clientIP = ((InetSocketAddress)session.getRemoteAddress()).getAddress().getHostAddress();
+//		String clientIP = ((InetSocketAddress)session.getRemoteAddress()).getAddress().getHostAddress();
 		
 		//保存信号机的绿冲突下发命令的数据-start-from jlj
 		String datastr = DataConvertor.toHexString(data);
 		System.out.println("绿冲突--------------------datastr="+datastr);
 			//根据ip查出信号机
-			Sig sig = sigService.querySigByIpAddress(clientIP);
+			String number = (String)session.getAttribute("number");
+			Sig sig = sigService.querySigByNumber(number);
 			if(sig!=null){
 				Issuedcommand issuedcommand = issuedcommandService.loadBySigidAndNumber(sig.getId(),35);
 				if(issuedcommand==null){

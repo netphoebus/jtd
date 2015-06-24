@@ -79,20 +79,20 @@ public class TimeServerHandler  implements IoHandler {
 		// TODO Auto-generated method stub
 		System.out.println("IP:"+session.getRemoteAddress().toString());
 		iosessions.add(session);
-		//获取session中的IP地址，匹配数据库，发现sig表中无该ip，添加数据；发现sig表中有ip，则不插入-from jlj
-		String ipAddress= ((InetSocketAddress)session.getRemoteAddress()).getAddress().getHostAddress();
-		Sig sig = sigService.querySigByIpAddress(ipAddress);
-		if(sig==null){
-			sig = new Sig();
-			sig.setIserror(0);
-			sig.setIp(ipAddress);
-			Userarea userarea = userareaService.loadById(1);//load未知区域
-			if(userarea==null){
-				System.out.println("userarea=null--------------------");
-			}
-			sig.setUserarea(userarea);
-			sigService.add(sig);
-		}
+//		//获取session中的IP地址，匹配数据库，发现sig表中无该ip，添加数据；发现sig表中有ip，则不插入-from jlj
+//		String ipAddress= ((InetSocketAddress)session.getRemoteAddress()).getAddress().getHostAddress();
+//		Sig sig = sigService.querySigByIpAddress(ipAddress);
+//		if(sig==null){
+//			sig = new Sig();
+//			sig.setIserror(0);
+//			sig.setIp(ipAddress);
+//			Userarea userarea = userareaService.loadById(1);//load未知区域
+//			if(userarea==null){
+//				System.out.println("userarea=null--------------------");
+//			}
+//			sig.setUserarea(userarea);
+//			sigService.add(sig);
+//		}
 	}
 
 	public void sessionIdle(IoSession arg0, IdleStatus arg1) throws Exception {

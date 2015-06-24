@@ -108,4 +108,10 @@ public class SigServiceImp implements ISigService  {
 		Object[] p =  new Object[]{id};
 		return sigDao.getObjectsByCondition(queryString, p);
 	}
+	public Sig querySigByNumber(String number) {
+		String queryString = "from Sig mo where mo.number = :number";
+		String[] paramNames = new String[] { "number" };
+		Object[] values = new Object[] { number };
+		return sigDao.queryByNamedParam(queryString, paramNames, values);
+	}
 }

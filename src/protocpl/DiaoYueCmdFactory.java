@@ -169,12 +169,19 @@ public class DiaoYueCmdFactory extends CmdFactoryBase implements ICmdParser{
 	  	int flow = ((data[43]&0xff)<<24)+((data[44]&0xff)<<16)+((data[45]&0xff)<<8)+((data[46]&0xff));
 	  	System.out.println("车道号"+data[42]+"流量是"+flow);
 	  	
-	  	String clientIP = ((InetSocketAddress)session.getRemoteAddress()).getAddress().getHostAddress();
-	  	if(SigAction.curruntSigIp !=  null)
-	  	if(clientIP.equals(SigAction.curruntSigIp )){
+//	  	String clientIP = ((InetSocketAddress)session.getRemoteAddress()).getAddress().getHostAddress();
+//	  	if(SigAction.curruntSigIp !=  null)
+//	  	if(clientIP.equals(SigAction.curruntSigIp )){
+//	  		SigAction.trafficlights = locate;
+//	  		SigAction.Countdown = Countdown;
+//	  	}
+	  	String number = (String)session.getAttribute("number");
+	  	if(SigAction.curruntSigNumber !=  null)
+	  	if(number.equals(SigAction.curruntSigNumber )){
 	  		SigAction.trafficlights = locate;
 	  		SigAction.Countdown = Countdown;
 	  	}
+	  	
 	  	//0-计数器flag=1；判断器isnext=0；
 	  	int isnext=0;
 	  	//0:东左 1：东直 2：东右 3：南左 4：南直 5：南右 6：西左 7：西直 8:西右 9：北左 10：北直 11：北右
@@ -191,7 +198,8 @@ public class DiaoYueCmdFactory extends CmdFactoryBase implements ICmdParser{
 	  	//1-根据ip地址获取信号机id
 	  	//2-根据sigid和车道号的编号插入车流量信息
 	  	
-	  	Sig sig = sigService.querySigByIpAddress(clientIP);
+//	  	Sig sig = sigService.querySigByIpAddress(clientIP);
+		Sig sig = sigService.querySigByNumber(number);
 	  	if(sig!=null){
 	  		if(isnext==1){
 	  			//新插入记录

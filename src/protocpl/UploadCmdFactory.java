@@ -122,9 +122,10 @@ public class UploadCmdFactory extends CmdFactoryBase implements ICmdParser{
 
         	String time = year+"-"+mounth+"-"+day+" "+hour+":"+minute+":"+secound;
         	//获取session中的IP
-    		String clientIP = ((InetSocketAddress)session.getRemoteAddress()).getAddress().getHostAddress();
-    		Sig sig = sigService.querySigByIpAddress(clientIP);
-        	
+//    		String clientIP = ((InetSocketAddress)session.getRemoteAddress()).getAddress().getHostAddress();
+//    		Sig sig = sigService.querySigByIpAddress(clientIP);
+        	String number = (String)session.getAttribute("number");
+			Sig sig = sigService.querySigByNumber(number);
         	
     		if(sig!=null){
     			

@@ -195,4 +195,10 @@ public class SignpublicparamServiceImp implements ISignpublicparamService  {
 		String queryString = "from Signpublicparam mo where 1=1 and mo.ip='"+sigIp+"'";
 		return signpublicparamDao.loadByMkid(queryString);
 	}
+	public Signpublicparam getPublicparamByNumber(String number2) {
+		String queryString = "from Signpublicparam mo where mo.number = :number";
+		String[] paramNames = new String[] { "number" };
+		Object[] values = new Object[] { number2 };
+		return signpublicparamDao.queryByNamedParam(queryString, paramNames, values);
+	}
 }

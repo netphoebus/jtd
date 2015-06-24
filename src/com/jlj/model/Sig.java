@@ -33,6 +33,7 @@ public class Sig implements java.io.Serializable {
 	private String lat;
 	private String lng;
 	private String ip;
+	private String number;
 	private Long mkid;
 	private Integer iserror;
 	private Integer errorcode;
@@ -51,7 +52,7 @@ public class Sig implements java.io.Serializable {
 
 	/** full constructor */
 	public Sig(Userarea userarea, String name, String address, String lat,
-			String lng, String ip, Long mkid,Integer iserror,Integer errorcode,
+			String lng, String ip, String number, Long mkid,Integer iserror,Integer errorcode,
 			Signpublicparam signpublicparam, List<Devlog> devlogs,
 			Sigsystime sigsystime,List<Greenconflict> greenconflicts,List<Commontime> commontimes,
 			List<Solution> solutions,List<Issuedcommand> issuedcommands) {
@@ -61,6 +62,7 @@ public class Sig implements java.io.Serializable {
 		this.lat = lat;
 		this.lng = lng;
 		this.ip = ip;
+		this.number = number;
 		this.mkid = mkid;
 		this.iserror = iserror;
 		this.errorcode = errorcode;
@@ -227,6 +229,15 @@ public class Sig implements java.io.Serializable {
 
 	public void setErrorcode(Integer errorcode) {
 		this.errorcode = errorcode;
+	}
+
+	@Column(name = "number", length = 10)
+	public String getNumber() {
+		return number;
+	}
+
+	public void setNumber(String number) {
+		this.number = number;
 	}
 	
 	

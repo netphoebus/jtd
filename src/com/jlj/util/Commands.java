@@ -142,11 +142,15 @@ public class Commands {
         }
         return aaa;
 	}
-	public static void executeCommand(int i, String curruntSigIp, List<IoSession> list)
+	public static void executeCommand(int i, String curruntSigNumber, List<IoSession> list)
 	{
 		for(int j=0;j<list.size();j++)
 		{
-			if(list.get(j).getRemoteAddress().toString().contains(curruntSigIp))
+			/*if(list.get(j).getRemoteAddress().toString().contains(curruntSigIp))
+			{
+				list.get(j).write(IoBuffer.wrap(handleCommand(i)));
+			}*/
+			if(list.get(j).getAttribute("number").equals(curruntSigNumber))
 			{
 				list.get(j).write(IoBuffer.wrap(handleCommand(i)));
 			}

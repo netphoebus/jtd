@@ -60,5 +60,7 @@ public interface ISignpublicparamService {
 
 	public abstract Signpublicparam loadBySigIp(String sigIp);
 
+	public abstract Signpublicparam getPublicparamByNumber(String number2);
+
 
 }

@@ -86,9 +86,10 @@ public class SpecialTimeFactory extends CmdFactoryBase implements ICmdParser{
 	private void Upload_SpecialTimeHead(IoSession session, byte[] data) {
 		// TODO Auto-generated method stub
 		//获取session中的IP
-		String clientIP = ((InetSocketAddress)session.getRemoteAddress()).getAddress().getHostAddress();
-		Sig sig = sigService.querySigByIpAddress(clientIP);
-		
+//		String clientIP = ((InetSocketAddress)session.getRemoteAddress()).getAddress().getHostAddress();
+//		Sig sig = sigService.querySigByIpAddress(clientIP);
+		String number = (String)session.getAttribute("number");
+		Sig sig = sigService.querySigByNumber(number);
 		//保存信号机的公共参数下发命令的数据-start-from jlj
 		String datastr = DataConvertor.toHexString(data);
 		System.out.println("特殊日参数0-7长度是--------------------="+data.length);
@@ -198,9 +199,10 @@ public class SpecialTimeFactory extends CmdFactoryBase implements ICmdParser{
 	private void Upload_SpecialTimeTail(IoSession session, byte[] data) {
 		// TODO Auto-generated method stub
 		//获取session中的IP
-		String clientIP = ((InetSocketAddress)session.getRemoteAddress()).getAddress().getHostAddress();
-		Sig sig = sigService.querySigByIpAddress(clientIP);
-		
+//		String clientIP = ((InetSocketAddress)session.getRemoteAddress()).getAddress().getHostAddress();
+//		Sig sig = sigService.querySigByIpAddress(clientIP);
+		String number = (String)session.getAttribute("number");
+		Sig sig = sigService.querySigByNumber(number);
 		//保存信号机的公共参数下发命令的数据-start-from jlj
 		String datastr = DataConvertor.toHexString(data);
 		System.out.println("普通日参数8-15长度是--------------------="+data.length);

@@ -47,6 +47,8 @@ public interface ISigService {
 
 	public abstract List<Sig> querySigsByUserarea(Integer id);
 
+	public abstract Sig querySigByNumber(String number);
+
 
 
 }

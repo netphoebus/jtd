@@ -82,8 +82,10 @@ public class CommonTimeCmdFactory extends CmdFactoryBase implements ICmdParser{
 		
 
 	
-		String clientIP = ((InetSocketAddress)session.getRemoteAddress()).getAddress().getHostAddress();
-		Sig sig = sigService.querySigByIpAddress(clientIP);
+//		String clientIP = ((InetSocketAddress)session.getRemoteAddress()).getAddress().getHostAddress();
+//		Sig sig = sigService.querySigByIpAddress(clientIP);
+		String number = (String)session.getAttribute("number");
+		Sig sig = sigService.querySigByNumber(number);
 		
 		if(this.m_oData[7]==0){
 			Upload_CommonTimeHead(session,this.m_oData,sig);
@@ -99,7 +101,7 @@ public class CommonTimeCmdFactory extends CmdFactoryBase implements ICmdParser{
 		// TODO Auto-generated method stub
 //		ArrayList<Commontime> commtimelist = new ArrayList<Commontime>();
 		//获取session中的IP
-		String clientIP = ((InetSocketAddress)session.getRemoteAddress()).getAddress().getHostAddress();
+//		String clientIP = ((InetSocketAddress)session.getRemoteAddress()).getAddress().getHostAddress();
 		//保存信号机的公共参数下发命令的数据-start-from jlj
 		String datastr = DataConvertor.toHexString(data);
 		System.out.println("普通日参数0-7长度是--------------------="+data.length);
@@ -222,7 +224,7 @@ public class CommonTimeCmdFactory extends CmdFactoryBase implements ICmdParser{
 		// TODO Auto-generated method stub
 //		ArrayList<Commontime> commtimelist = new ArrayList<Commontime>();
 		//获取session中的IP
-		String clientIP = ((InetSocketAddress)session.getRemoteAddress()).getAddress().getHostAddress();
+//		String clientIP = ((InetSocketAddress)session.getRemoteAddress()).getAddress().getHostAddress();
 		//保存信号机的公共参数下发命令的数据-start-from jlj
 		String datastr = DataConvertor.toHexString(data);
 		System.out.println("普通日参数8-15长度是--------------------="+data.length);

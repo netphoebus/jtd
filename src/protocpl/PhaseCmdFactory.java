@@ -161,8 +161,9 @@ public class PhaseCmdFactory extends CmdFactoryBase implements ICmdParser{
 			//2-根据信号机id和相位编号orderid判断该相位是否保存
 			//3-若无，保存相位方案以及步序和方向（东南西北、左直右人人）；若有，更新数据。
 			//获取session中的IP
-			String clientIP = ((InetSocketAddress)session.getRemoteAddress()).getAddress().getHostAddress();
-			Sig sig =sigService.querySigByIpAddress(clientIP);
+//			String clientIP = ((InetSocketAddress)session.getRemoteAddress()).getAddress().getHostAddress();
+			String number = (String)session.getAttribute("number");
+			Sig sig = sigService.querySigByNumber(number);
 			
 				//保存信号机的相位方案下发命令的数据-start-from jlj
 				String datastr = DataConvertor.toHexString(data);

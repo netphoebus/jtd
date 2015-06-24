@@ -46,7 +46,8 @@ public class SigAction extends ActionSupport implements RequestAware,
 	private ISigService sigService;
 	private Sig sig;
 	private int id;
-	public static String curruntSigIp;
+	//public static String curruntSigIp;
+	public static String curruntSigNumber;
 	public int curruntCommandId;
 	private SigPara sigParas;
 
@@ -104,8 +105,10 @@ public class SigAction extends ActionSupport implements RequestAware,
 		long mkid = Long.parseLong(req.getParameter("mkid"));
 		sig = sigService.loadByMkid(mkid);
 		if (sig != null) {
-			curruntSigIp = sig.getIp();
-			session.put("sigIp", sig.getIp());// 从地图中进入信号机，将信号机ip传入session
+			//curruntSigIp = sig.getIp();
+			//session.put("sigIp", sig.getIp());// 从地图中进入信号机，将信号机ip传入session
+			curruntSigNumber = sig.getNumber();
+			session.put("sigNumber", curruntSigNumber);// 从地图中进入信号机，将信号机number传入session
 		}
 		return "traffic";
 	}
@@ -117,9 +120,9 @@ public class SigAction extends ActionSupport implements RequestAware,
 				+ TimeServerHandler.iosessions);
 		if (commandIdStr != null) {
 			curruntCommandId = Integer.parseInt(commandIdStr);
-			if (curruntSigIp != null && TimeServerHandler.iosessions != null
+			if (curruntSigNumber != null && TimeServerHandler.iosessions != null
 					&& TimeServerHandler.iosessions.size() > 0) {
-				Commands.executeCommand(curruntCommandId, curruntSigIp,
+				Commands.executeCommand(curruntCommandId, curruntSigNumber,
 						TimeServerHandler.iosessions);
 			}
 		}
