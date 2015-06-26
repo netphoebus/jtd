@@ -59,7 +59,7 @@ $(document).ready(function(){
 				});
 				var index = 0;//计数器
 				var commandNumber = 0;
-		    	var interval = setInterval(updateProgressbarValue, 1500);
+		    	var interval = setInterval(updateProgressbarValue, 3000);
 		 		function updateProgressbarValue()
 		 		{
 		 			console.log(index);
@@ -94,6 +94,7 @@ $(document).ready(function(){
 			        	 index= 0;
 			        	 commandNumber = 0;
 			        	 alert("所有参数开始初始化完成。");
+			        	 executeCommand(0);
 			        }else
 			        {
 			        	 $("#divProgressbar").progressbar("option", "value", newValue);  //设置进度条新值  
