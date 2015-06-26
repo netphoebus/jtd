@@ -13,7 +13,6 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<title>汽车流量折线图</title>
 		<link href="css/style.css" rel="stylesheet" type="text/css" />
-		<link href="css/select.css" rel="stylesheet" type="text/css" />
 		<link href="css/stilearn-helper.css" rel="stylesheet" type="text/css" />
 		<script type="text/javascript" src="js/jquery.js"></script>
 		<script src="js/stilearn-base.js"></script>
@@ -41,22 +40,144 @@ $(document).ready(function(e) {
   <script type="text/javascript" src="http://cdn.hcharts.cn/highcharts/highcharts.js"></script>
   <script type="text/javascript" src="http://cdn.hcharts.cn/highcharts/exporting.js"></script>
   <script>
+    var categorielist = new Array(20);
+  	var dleftlist=new Array(20);
+  	var dlinelist=new Array(20);
+  	var drightlist=new Array(20);
+  	var nleftlist=new Array(20);
+  	var nlinelist=new Array(20);
+  	var nrightlist=new Array(20);
+  	var xleftlist=new Array(20);
+  	var xlinelist=new Array(20);
+  	var xrightlist=new Array(20);
+  	var bleftlist=new Array(20);
+  	var blinelist=new Array(20);
+  	var brightlist=new Array(20);
+  	<s:iterator value="flows" var="flow" status="index">
+  		categorielist[<s:property value="#index.count"/>-1]="<s:date name='time' format='yyyy-MM-dd HH:mm:ss'/>";
+  		////-------------------------------------------------东
+  		<s:if test='dleft==null'>
+  			dleftlist[<s:property value="#index.count"/>-1]=0;
+  		</s:if>
+  		<s:else>
+  			dleftlist[<s:property value="#index.count"/>-1]=<s:property value="dleft"/>;
+  		</s:else>
+  		
+  		<s:if test='dline==null'>
+  			dlinelist[<s:property value="#index.count"/>-1]=0;
+  		</s:if>
+  		<s:else>
+  			dlinelist[<s:property value="#index.count"/>-1]=<s:property value="dline"/>;
+  		</s:else>
+  		
+  		<s:if test='dright==null'>
+  			drightlist[<s:property value="#index.count"/>-1]=0;
+  		</s:if>
+  		<s:else>
+  			drightlist[<s:property value="#index.count"/>-1]=<s:property value="dright"/>;
+  		</s:else>
+  		//-------------------------------------------------南
+  		<s:if test='nleft==null'>
+  			nleftlist[<s:property value="#index.count"/>-1]=0;
+  		</s:if>
+  		<s:else>
+  			nleftlist[<s:property value="#index.count"/>-1]=<s:property value="nleft"/>;
+  		</s:else>
+  		
+  		<s:if test='nline==null'>
+  			nlinelist[<s:property value="#index.count"/>-1]=0;
+  		</s:if>
+  		<s:else>
+  			nlinelist[<s:property value="#index.count"/>-1]=<s:property value="nline"/>;
+  		</s:else>
+  		
+  		<s:if test='nright==null'>
+  			nrightlist[<s:property value="#index.count"/>-1]=0;
+  		</s:if>
+  		<s:else>
+  			nrightlist[<s:property value="#index.count"/>-1]=<s:property value="nright"/>;
+  		</s:else>
+  		//-------------------------------------------------西
+  		<s:if test='xleft==null'>
+  			xleftlist[<s:property value="#index.count"/>-1]=0;
+  		</s:if>
+  		<s:else>
+  			xleftlist[<s:property value="#index.count"/>-1]=<s:property value="xleft"/>;
+  		</s:else>
+  		
+  		<s:if test='xline==null'>
+  			xlinelist[<s:property value="#index.count"/>-1]=0;
+  		</s:if>
+  		<s:else>
+  			xlinelist[<s:property value="#index.count"/>-1]=<s:property value="xline"/>;
+  		</s:else>
+  		
+  		
+  		<s:if test='xright==null'>
+  			xrightlist[<s:property value="#index.count"/>-1]=0;
+  		</s:if>
+  		<s:else>
+  			xrightlist[<s:property value="#index.count"/>-1]=<s:property value="xright"/>;
+  		</s:else>
+  		
+  		//-------------------------------------------------北
+  		<s:if test='bleft==null'>
+  			bleftlist[<s:property value="#index.count"/>-1]=0;
+  		</s:if>
+  		<s:else>
+  			bleftlist[<s:property value="#index.count"/>-1]=<s:property value="bleft"/>;
+  		</s:else>
+  		
+  		<s:if test='bline==null'>
+  			blinelist[<s:property value="#index.count"/>-1]=0;
+  		</s:if>
+  		<s:else>
+  			blinelist[<s:property value="#index.count"/>-1]=<s:property value="bline"/>;
+  		</s:else>
+  		
+  		
+  		<s:if test='bright==null'>
+  			brightlist[<s:property value="#index.count"/>-1]=0;
+  		</s:if>
+  		<s:else>
+  			brightlist[<s:property value="#index.count"/>-1]=<s:property value="bright"/>;
+  		</s:else>
+  		
+  	</s:iterator>
+  	
+  	/*
+  	var categorielist = new Array('2015-06-26 09:24:15', '2015-06-26 09:25:15', '2015-06-26 09:26:15', '2015-06-26 09:27:15', '2015-06-26 09:28:15', '2015-06-26 09:29:15','2015-06-26 09:30:15', '2015-06-26 09:31:15', '2015-06-26 09:32:15', '2015-06-26 09:33:15', '2015-06-26 09:34:15', '2015-06-26 09:35:15'
+  	, '2015-06-26 09:36:15', '2015-06-26 09:37:15', '2015-06-26 09:38:15', '2015-06-26 09:39:15', '2015-06-26 09:40:15', '2015-06-26 09:41:15', '2015-06-26 09:42:15', '2015-06-26 09:43:15'
+  	);
+  	var dleftlist=new Array(7, 6, 9, 10, 18, 21, 25, 26, 23, 18, 13, 9, 9, 14, 18, 21, 25, 26, 23, 18);
+  	var dlinelist=new Array(7, 6, 9, 14, 18, 21, 25, 26, 23, 18, 13, 9, 9, 14, 18, 21, 25, 26, 23, 18);
+  	var drightlist=new Array(7, 6, 9, 13, 18, 21, 25, 26, 23, 18, 13, 9, 9, 14, 18, 21, 25, 26, 23, 18);
+  	var nleftlist=new Array(7, 6, 9, 11, 18, 21, 25, 26, 23, 18, 13, 9, 9, 14, 18, 21, 25, 26, 23, 18);
+  	var nlinelist=new Array(7, 6, 9, 18, 18, 21, 25, 26, 23, 18, 13, 9, 9, 14, 18, 21, 25, 26, 23, 18);
+  	var nrightlist=new Array(7, 6, 9, 4, 18, 21, 25, 26, 23, 18, 13, 9, 9, 14, 18, 21, 25, 26, 23, 18);
+  	var xleftlist=new Array(7, 6, 9, 5, 18, 21, 25, 26, 23, 18, 13, 9, 9, 14, 18, 21, 25, 26, 23, 18);
+  	var xlinelist=new Array(7, 6, 9, 7, 18, 21, 25, 26, 23, 18, 13, 9, 9, 14, 18, 21, 25, 26, 23, 18);
+  	var xrightlist=new Array(7, 6, 9, 8, 18, 21, 25, 26, 23, 18, 13, 9, 9, 14, 18, 21, 25, 26, 23, 18);
+  	var bleftlist=new Array(7, 6, 9, 9, 18, 21, 25, 26, 23, 18, 13, 9, 9, 14, 18, 21, 25, 26, 23, 18);
+  	var blinelist=new Array(7, 6, 9, 20, 18, 21, 25, 26, 23, 18, 13, 9, 9, 14, 18, 21, 25, 26, 23, 18);
+  	var brightlist=new Array(7, 6, 9, 23, 18, 21, 25, 26, 23, 18, 13, 9, 9, 14, 18, 21, 25, 26, 23, 18);
+    */
     $(function () {
     $('#container').highcharts({
         title: {
-            text: 'Monthly Average Temperature',
+            text: '车流量折线图',
             x: -20 //center
         },
         subtitle: {
-            text: 'Source: WorldClimate.com',
+            text: '按时间显示车流量',
             x: -20
         },
         xAxis: {
-            categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun','Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+            categories: categorielist
         },
         yAxis: {
             title: {
-                text: 'Temperature (°C)'
+                text: '数量(辆)'
             },
             plotLines: [{
                 value: 0,
@@ -65,7 +186,7 @@ $(document).ready(function(e) {
             }]
         },
         tooltip: {
-            valueSuffix: '°C'
+            valueSuffix: '辆'
         },
         legend: {
             layout: 'vertical',
@@ -74,17 +195,41 @@ $(document).ready(function(e) {
             borderWidth: 0
         },
         series: [{
-            name: 'Tokyo',
-            data: [7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6]
+            name: '东左',
+            data: dleftlist
         }, {
-            name: 'New York',
-            data: [-0.2, 0.8, 5.7, 11.3, 17.0, 22.0, 24.8, 24.1, 20.1, 14.1, 8.6, 2.5]
+            name: '东直',
+            data: dlinelist
         }, {
-            name: 'Berlin',
-            data: [-0.9, 0.6, 3.5, 8.4, 13.5, 17.0, 18.6, 17.9, 14.3, 9.0, 3.9, 1.0]
+            name: '东右',
+            data: drightlist
         }, {
-            name: 'London',
-            data: [3.9, 4.2, 5.7, 8.5, 11.9, 15.2, 17.0, 16.6, 14.2, 10.3, 6.6, 4.8]
+            name: '南左',
+            data: nleftlist
+        }, {
+            name: '南直',
+            data: nlinelist
+        }, {
+            name: '南右',
+            data: nrightlist
+        }, {
+            name: '西左',
+            data: xleftlist
+        }, {
+            name: '西直',
+            data: xlinelist
+        }, {
+            name: '西右',
+            data: xrightlist
+        }, {
+            name: '北左',
+            data: bleftlist
+        }, {
+            name: '北直',
+            data: blinelist
+        }, {
+            name: '北右',
+            data: brightlist
         }]
     });
 });
@@ -109,11 +254,11 @@ $(document).ready(function(e) {
 						<li>
 							<a href="#tab3" class="selected">流量报表折线图</a>
 						</li>
-						<!-- 
+						
 						<li>
-							<a href="flow_bar.jsp">流量报表柱状图</a>
+							<a href="flowAction!listbar">流量报表柱状图</a>
 						</li>
-						 -->
+						 
 					</ul>
 				</div>
 
@@ -122,11 +267,79 @@ $(document).ready(function(e) {
 
 
 				<div id="tab3" class="tabson">
-					
+					<form action="flowAction!list" method="post">
+					<ul class="forminfo">
+						<li>
+							<table width="100%" border="0" cellspacing="0" cellpadding="0">
+								<tr style="height: 35px;">
+									<td>信号机：</td>
+									<td><s:select list="sigs" name="sigid" cssStyle="width:150px;height:25px;border:#bbb 1px solid;" listKey="id" listValue="name"></s:select></td>
+								</tr>
+								<tr style="height: 35px;">
+									<td>
+									时间：
+									</td>
+									<td>
+									<input name="time1" id="startdate" value="<s:property value="time1"/>" style="width: 150px;" class="Wdate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',readOnly:true,maxDate:'#F{$dp.$D(\'enddate\')}'})" />
+									至
+									<input name="time2" id="enddate" value="<s:property value="time2"/>" style="width: 150px;" class="Wdate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',readOnly:true,minDate:'#F{$dp.$D(\'startdate\')}',startDate:'#F{$dp.$D(\'startdate\',{d:+1})}'})" />
+									</td>
+								</tr>
+							
+								<tr>
+									<td width="85">
+										&nbsp;
+									</td>
+									<td height="50">
+										<input name="input2" type="submit" class="scbtn" value="查询" />
+
+										<input name="input3" type="reset" class="scbtn" value="重置" />
+									</td>
+								</tr>
+							</table>
+						</li>
+
+					</ul>
+					</form>
 					<div id="container" style="min-width:700px;height:400px"></div>
+					<ul class="forminfo" style="line-height: 40px; font-size: 14px;">
+						<table width="98%" border="0" align="center" cellpadding="2"
+							cellspacing="1" bgcolor="#93CDF3" style="margin-top: 8px">
+							<tr align="right" bgcolor="#EEF4EA">
+								<td height="34" align="center" bgcolor="#FFFFFF">
+									&nbsp;
+								</td>
+								<td height="34" colspan="6" align="center" bgcolor="#FFFFFF">
+									记录数：<s:property value="totalCount" />&nbsp;&nbsp;&nbsp;
+									<a
+										href="javascript:jumpFlowPage('flowAction!listline',<s:property value="1"/>,<s:property value="sigid"/>,'<s:property value="time1"/>','<s:property value="time2"/>');"
+										target="main">首页</a>&nbsp;&nbsp;
+									<a
+										href="javascript:jumpFlowPage('flowAction!listline',<s:property value="page-1"/>,<s:property value="sigid"/>,'<s:property value="time1"/>','<s:property value="time2"/>');"
+										target="main">上一页</a>&nbsp;&nbsp;&nbsp;
+									<a
+										href="javascript:jumpFlowPage('flowAction!listline',<s:property value="page+1"/>,<s:property value="sigid"/>,'<s:property value="time1"/>','<s:property value="time2"/>');"
+										target="main">下一页</a>&nbsp;&nbsp;&nbsp;
+									<a
+										href="javascript:jumpFlowPage('flowAction!listline',<s:property value="pageCount"/>,<s:property value="sigid"/>,'<s:property value="time1"/>','<s:property value="time2"/>');"
+										target="main">尾页</a>&nbsp;&nbsp;&nbsp;
+									<input type='button' class="exit"
+										onclick="jumpFlowPage('flowAction!listline',document.getElementById('page').value,<s:property value="sigid"/>,'<s:property value="time1"/>','<s:property value="time2"/>');"
+										value='转到' />
+									&nbsp; 当前页：
+									<input onpaste="return false" onkeypress="checkPage();"
+										id="page" type="text" name="page"
+										value="<s:property value="page"/>" size="2"
+										style="width: 25px; height: 20px; line-height: 18px; BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; FONT-SIZE: 13px; BORDER-LEFT: #cccccc 1px solid; COLOR: #000000; BORDER-BOTTOM: #cccccc 1px solid; FONT-FAMILY: 宋体; BACKGROUND-COLOR: #ffffff;" />
+									/共
+									<s:property value="pageCount" />
+									页
+								</td>
+							</tr>
+						</table>
+					</ul>
 				</div>
-
-
+				
 
 				<!-- 
 				<div id="tab4" class="tabson">

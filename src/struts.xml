@@ -14,6 +14,7 @@
 	<package name="usero" extends="struts-default">
 		<global-results>
 			<result name="adminLogin">/login.jsp</result>
+			<result name="opsessiongo">/op_sessiongo.jsp</result>
 		</global-results>
 		<action name="toolkitAction" class="toolkitAction">
 		</action>
@@ -65,6 +66,8 @@
 	
 	<package name="flow" extends="struts-default">
 		<action name="flowAction" class="flowAction">
+			<result name="opsessiongo">/op_sessiongo.jsp</result>
+		
 			<result name="list">/flow_table.jsp</result>
 			<result name="listline">/flow_line.jsp</result>
 			<result name="listbar">/flow_bar.jsp</result>
