@@ -2,7 +2,6 @@ package com.jlj.action;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.net.InetSocketAddress;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -24,6 +23,7 @@ import org.springframework.stereotype.Component;
 
 import com.jlj.model.Sig;
 import com.jlj.model.SigPara;
+import com.jlj.model.Usero;
 import com.jlj.service.ISigService;
 import com.jlj.util.Commands;
 import com.jlj.vo.SigStatus;
@@ -33,7 +33,7 @@ import com.opensymphony.xwork2.ActionSupport;
 @Scope("prototype")
 public class SigAction extends ActionSupport implements RequestAware,
 		SessionAware, ServletResponseAware, ServletRequestAware {
-
+	
 	private static final long serialVersionUID = 1L;
 	Map<String, Object> request;
 	Map<String, Object> session;
@@ -53,9 +53,8 @@ public class SigAction extends ActionSupport implements RequestAware,
 	private Long mkid;
 
 	public String sigStatus() {
-		// Usero usero = (Usero)session.get("usero");
-		// int userid = usero.getId();
-		int userid = 1;
+		Usero usero = (Usero)session.get("usero");
+		 int userid = usero.getId();
 		List<Sig> usersigs = sigService.querySigsByUser(userid);
 		if (usersigs != null && usersigs.size() > 0) {
 			List<SigStatus> sigstatuses = new ArrayList<SigStatus>();
@@ -92,9 +91,15 @@ public class SigAction extends ActionSupport implements RequestAware,
 
 	public IoSession getCurrrenSession(String sigNumber)
 	{
+		System.out.println("SigAction 链接数=========================="+TimeServerHandler.iosessions.size());
+		System.out.println("当前的编号是："+sigNumber);
 		for(IoSession session : TimeServerHandler.iosessions)
 		{
-			if(session.getAttribute("number").equals(sigNumber))
+			System.out.println("所有session的编号是："+session.getAttribute("number"));
+		}
+		for(IoSession session : TimeServerHandler.iosessions)
+		{
+			if(session.getAttribute("number")!=null&&session.getAttribute("number").equals(sigNumber))
 			{
 				return session;
 			}

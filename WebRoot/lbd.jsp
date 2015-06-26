@@ -165,7 +165,15 @@ $(document).ready(function(e) {
 						</div>
 					</div>
 					
-					<div style="width: 100%; float: left; margin-top: 15px;">
+					<div style="float: left; line-height: 35px; width: 90%;">
+						<label>
+							<input name="input" type="button" class="scbtn"
+							style="margin-top: 15px;" onclick="initGreenRoad()" value="删除当前联动" />
+						</label>
+						
+					</div>
+					
+					<div style="width: 100%; float: left; margin-top: 28px;">
 						<table width="1000" class="filetable2">
 							<thead>
 								<tr>
@@ -305,6 +313,7 @@ $(document).ready(function(e) {
 						<input name="input" type="button" class="scbtn"
 							style="margin-top: 15px;" onclick="initGreenRoad()" value="生成时距图" />
 					</div>
+					
 					<p>
 						&nbsp;
 					</p>

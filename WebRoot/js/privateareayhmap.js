@@ -62,13 +62,11 @@ google.maps.event.addDomListener(window, "load", initialize);
     mapobj = maphelper.initMap(mapCanvas, myOptions);
 	if(ulimit<=0)
 	{
-	
 		AreasInit();
 	}
 	MarkersInit();
 	console.log("initialize ulimit:"+ulimit);
 	GreenLinesInit();
-	//google.maps.event.addListener(mapobj, "rightclick", reset);
 
 }
 
@@ -150,7 +148,6 @@ function setMarkerEvents(marker)
 						opacity:0.5,
 						id:lineId
 				});
-	 			//$("#total_km").empty().text((poly.getLength()/1000).toFixed(3) + "km");  
 	 		}
 		});
 		
@@ -385,71 +382,9 @@ function getMarkerContent(marker)
 
 
 
-//添加单个信号机标记
-function saveMarker(id)
-{
-	for(var i=0;i<initMarkers.length;i++)
-	{
-		if(initMarkers[i].id == id)
-		{
-			var number = $('#numberSelect').val();
-			var address = $('#address').val();
-			var name = $('#name').val();
-			var lat = initMarkers[i].getPosition().jb;
-			var lng = initMarkers[i].getPosition().kb;
-			
-			$.ajax({   
-	            url:'addOrUpdate',//这里是你的action或者servlert的路径地址   
-	            type:'post', //数据发送方式     
-	 			data: { "id":id,"number":number,"address":address,"name":name,"lat":lat,"lng":lng},
-	            error: function(msg)
-	            { //失败   
-	            	alert('信号机增加失败');   
-	            },   
-	            success: function(msg)
-	            { //成功   
-	          		if(infowindow)
-					infowindow.close();
-					alert('信号机绑定成功');   
-	            }  
-    	    });   
-    	    
-    	    initMarkers[i].initOver = true;
-    	    initMarkers[i].setAnimation(null);
-    	    initMarkers[i].name = name;
-    	    initMarkers[i].address = address;
-    	    initMarkers[i].number = number;
-		}
-	}
-}
 
 
-//删除单个信号机标记
-function deleteMarker(id)
-{
-	for(var i=0;i<initMarkers.length;i++)
-	{
-	
-		if(initMarkers[i].id == id)
-		{
-			$.ajax({   
-	            url:'delete',//这里是你的action或者servlert的路径地址   
-	            type:'post', //数据发送方式     
-	 			data: { "id":id},
-	            error: function(msg)
-	            { //失败   
-	            	alert('信号机删除失败');   
-	            },   
-	            success: function(msg)
-	            { //成功   
-	            	alert('信号机删除成功');   
-	            }  
-    	    });   
-    	   	 initMarkers[i].setMap(null);
-	         initMarkers.splice(i,1);
-		}
-	}
-}
+
 
 
 function Polyline() {
@@ -503,6 +438,32 @@ function saveLine()
 
 function changeArea()
 {
-	location.href = "greenmap.jsp?areaid="+parseInt($("#areaid").val());
+	location.href = "areayhmap.jsp?areaid="+parseInt($("#areaid").val());
+}
+
+var polygon = null;
+function Polygon() {
+		ClearPoly();
+		alert("点击地图进行绘制");
+			maphelper.bindInstanceEvent(mapobj, 'click',   
+		   function(event) {			 
+				dots.push(new Array(event.latLng.lng(),event.latLng.lat()));
+		 		
+				//画多边形
+					if(dots.length == 1){
+					polygon =  maphelper.polygon({
+							dots:dots,						
+							color:"#009966",
+							opacity:0.3,
+							fillcolor:"#99FF00",
+							fillopacity:0.3
+					});
+				}else	{
+					var path = polygon.getPath();
+					path.push(event.latLng);
+					polygon.setPath(path);
+				}
+								
+		});  
 }
 

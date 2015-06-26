@@ -1,6 +1,10 @@
 package com.jlj.util;
 
-import com.jlj.vo.UsefulPhaseVO;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 public class TestMain {
 
@@ -29,7 +33,27 @@ public class TestMain {
 		}*/
 		
 		
-		System.out.println(3689/3600);
+		//System.out.println(3689/3600);
+		  	String dateStr = "";   
+		  	Date date = new Date();   
+	        //format的格式可以任意   
+	        DateFormat sdf = new SimpleDateFormat("yy/MM/dd/HH/mm/ss");   
+	        try {   
+	            dateStr = sdf.format(date);   
+	            String[] dates = dateStr.split("/");
+	            List<Integer> dateNumber = new ArrayList<Integer>();
+	            for(int i=0;i<dates.length;i++)
+	            {
+	            	dateNumber.add(Integer.parseInt(dates[i]));
+	            }
+	            for(int i=0;i<dateNumber.size();i++)
+	            {
+	            	System.out.println(dateNumber.get(i));
+	            }
+	        } catch (Exception e) {   
+	            e.printStackTrace();   
+	        } 
+	        
 	}
 
 }

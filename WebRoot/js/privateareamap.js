@@ -242,7 +242,7 @@ function MarkersInit()
 function getMarkerContent(marker)
 {
 	return '<div  id="content"><h1 id="">当前信号机</h1><div id="bodyContent">' 
-	+ '<br><div style="margin-top:0.8px">&nbsp;信号机&nbsp;编&nbsp;&nbsp;号&nbsp;&nbsp;：<input id="getnumber" value="'+marker.number+'" name="signal_number" type="text"  width="25px"/></div>' 
+	+ '<br><div style="margin-top:0.8px">信号机编号：<input id="getnumber" value="'+marker.number+'" name="signal_number" type="text"  width="25px"/></div>' 
 	+ '<br><div style="margin-top:0.8px">信号机地址：<input  id="address" value="'+marker.name+'" name="signal_address" type="text"    width="25px"/></div>' 
 	+ '<br><div style="margin-top:0.8px">信号机名称：<input id="name" value="'+marker.address+'" name="signal_name" type="text"   width="25px"/></div>' 
 	'</div>' ;

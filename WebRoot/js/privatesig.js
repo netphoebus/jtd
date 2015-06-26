@@ -17,12 +17,25 @@ function executeCommand(id)
 
 function autojs()
 {
-	if($("#zdjs").val()=="一天")
+	console.log($("#zdjs").val());
+	if($("#zdjs").val()==4)
 	{
 		setInterval("suretime()",60*1000*60*24);
-	}else if($("#zdjs").val()=="一周")
+	}else if($("#zdjs").val()==5)
 	{
 		setInterval("suretime()",60*1000*60*24*7);
+	}else if($("#zdjs").val()==0)
+	{
+		setInterval("suretime()",60*1000*5);
+	}else if($("#zdjs").val()==1)
+	{
+		setInterval("suretime()",60*1000*10);
+	}else if($("#zdjs").val()==2)
+	{
+		setInterval("suretime()",60*1000*30);
+	}else if($("#zdjs").val()==3)
+	{
+		setInterval("suretime()",60*1000*60);
 	}
 }
 

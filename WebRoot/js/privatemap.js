@@ -28,7 +28,6 @@ function initialize() {
 		}
 		AreaInit();
 		console.log(searchStrURL);
-		
 	    var mapCanvas = document.getElementById("map_canvas");
 		var myOptions = {
 		zoom: markerZoom,   
@@ -203,7 +202,8 @@ function setMarkerEvents(marker)
 //初始化地图所有标志
 function MarkersInit()
 {
-	console.log("MarkersInit coming....");
+	console.log("Markers    Init........");
+		console.log("areaid...."+areaid);
 		$.ajax({   
 	            url:'load',//这里是你的action或者servlert的路径地址   
 	            type:'post', //数据发送方式   
@@ -216,31 +216,36 @@ function MarkersInit()
 	            },   
 	            success: function(msg)
 	            { //成功
-	            console.log("MarkersInit success coming....");
 	            		encodeURI(msg);
-	            	 	markermsg = msg;
-	            	 	for(var i=0;i<markermsg.length;i++)
-			    	    {
-			    	    	numbers.push(markermsg[i].number);
-				    	     var marker =  maphelper.markerPoint({
-						  	    id:  markermsg[i].id,
-								lat: markermsg[i].lat,
-						        lng: markermsg[i].lng,
-						        title: '红绿灯',
-						        icon: "images/boot2.png"
-				
-						 	 });
-						 	  console.log(maphelper);  
-						  marker.dbclickable = true;
-						  marker.connectSuccess = true;
-						  marker.initOver = true;
-						  marker.number = markermsg[i].number;
-						  marker.name = markermsg[i].name;
-						  marker.address = markermsg[i].address;
-						  setMarkerEvents(marker);
-						  initMarkers.push(marker);
-			    	    } 	 
-			    	    console.log(initMarkers);  
+	            		console.log(msg);
+	            		numbers = [];
+	            		if(msg!=null)
+	            		{
+	            			markermsg = msg;
+		            	 	for(var i=0;i<markermsg.length;i++)
+				    	    {
+				    	    	numbers.push(markermsg[i].number);
+					    	     var marker =  maphelper.markerPoint({
+							  	    id:  markermsg[i].id,
+									lat: markermsg[i].lat,
+							        lng: markermsg[i].lng,
+							        title: '红绿灯',
+							        icon: "images/boot2.png"
+					
+							 	 });
+							 	  console.log(maphelper);  
+							  marker.dbclickable = true;
+							  marker.connectSuccess = true;
+							  marker.initOver = true;
+							  marker.number = markermsg[i].number;
+							  marker.name = markermsg[i].name;
+							  marker.address = markermsg[i].address;
+							  setMarkerEvents(marker);
+							  initMarkers.push(marker);
+				    	    } 	 
+				    	    console.log("信号机编号numbers"+numbers);  
+	            		}
+	            	 	
 			    	   
 	            }  
     	    });  
@@ -251,6 +256,7 @@ function MarkersInit()
 //初始化当前区域
 function AreaInit()
 {
+		console.log("Area  Init........");
 		$.ajax({   
 	            url:'loadArea',//这里是你的action或者servlert的路径地址   
 	            type:'post', //数据发送方式   
@@ -264,16 +270,20 @@ function AreaInit()
 	            success: function(msg)
 	            { //成功
 	            		encodeURI(msg);
-						$("#areaname").val(msg.areaname);
-						lng = msg.lng;
-						lat = msg.lat;
-						ulimit = msg.ulimit;
-						markerZoom = msg.size;
-						areaid = msg.id;
-						if(ulimit==0)
-						{
-							$("#areasdiv").show();
-						}
+	            		console.log(msg);
+	            		if(msg!=null)
+	            		{
+	            			$("#areaname").val(msg.areaname);
+							lng = msg.lng;
+							lat = msg.lat;
+							ulimit = msg.ulimit;
+							markerZoom = msg.size;
+							areaid = msg.id;
+							if(ulimit==0)
+							{
+								$("#areasdiv").show();
+							}
+	            		}
 	            }  
     	    });  
 }
@@ -314,7 +324,7 @@ function AreasInit()
 function getMarkerContent(marker)
 {
 	return '<div  id="content"><h1 id="">当前信号机</h1><div id="bodyContent">' 
-	+ '<br><div style="margin-top:0.8px">&nbsp;信号机&nbsp;编&nbsp;&nbsp;号&nbsp;&nbsp;：<input id="getnumber" value="'+marker.number+'" name="signal_number" type="text"  width="25px"/></div>' 
+	+ '<br><div style="margin-top:0.8px">信号机编号：<input id="getnumber" value="'+marker.number+'" name="signal_number" type="text"  width="25px"/></div>' 
 	+ '<br><div style="margin-top:0.8px">信号机地址：<input  id="address" value="'+marker.name+'" name="signal_address" type="text"    width="25px"/></div>' 
 	+ '<br><div style="margin-top:0.8px">信号机名称：<input id="name" value="'+marker.address+'" name="signal_name" type="text"   width="25px"/></div>' 
 	'</div>' ;
@@ -325,7 +335,7 @@ function setMarkerContent(marker)
 {
 	
 	return '<div  id="content"><h1 id="">绑定远程信号机</h1><div id="bodyContent">'
-	+ '<div style="margin-top:10px; float:left; width:300px;">&nbsp;信号机&nbsp;&nbsp;编&nbsp;&nbsp;号&nbsp;&nbsp;：<select id="numberSelect"  name="numberSelect"  style="padding-bottom:1px;border:1px solid #cfdfe4" width="25px">'
+	+ '<div style="margin-top:10px; float:left; width:300px;">信号机编号：<select id="numberSelect"  name="numberSelect"  style="padding-bottom:1px;border:1px solid #cfdfe4" width="25px">'
 	+options+'</select></div>' 
 	+ '<br><div style="margin-top:5px; float:left; width:300px;">信号机地址：<input id="address" value="" name="signal_address" type="text"   style="padding-bottom:1px;border:1px solid #cfdfe4"  width="25px"/></div>' 
 	+ '<br><div style="margin-top:5px; float:left; width:300px;">信号机名称：<input id="name" value="" name="signal_name" type="text"   style="padding-bottom:1px;border:1px solid #cfdfe4"  width="25px"/></div>' 

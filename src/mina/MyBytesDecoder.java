@@ -114,18 +114,15 @@ public class MyBytesDecoder extends CumulativeProtocolDecoder {
     	        if (in.remaining() > 1) {
     	         
     	            in.mark();//标记当前位置，以便reset
-    	            System.out.println("test" + in.limit()+"========"+in.getHexDump()); 
-    	            
+    	           // System.out.println("test" + in.limit()+"========"+in.getHexDump()); 
+    	            in.getHexDump();
     	            int length = in.limit();
-    	            
-    	            
-    	            
     	            if(length < 0 ){//如果消息内容不够，则重置，相当于不读取size   
     	            System.out.println("package notenough  left="+in.remaining()+" length="+length);
     	                in.reset();   
     	                return false;//接收新数据，以拼凑成完整数据   
     	            }else{  
-    	            System.out.println("package ="+in.toString()); 
+    	            //System.out.println("package ="+in.toString()); 
     	           // in.getInt();
     	             	
 //    	            int i = in.limit();

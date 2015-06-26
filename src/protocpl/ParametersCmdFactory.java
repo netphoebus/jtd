@@ -106,35 +106,17 @@ public class ParametersCmdFactory extends CmdFactoryBase implements ICmdParser{
 	}
 	
 	public void Upload_parameters(IoSession session,byte[] data) throws Exception{
-		int number0 				= data[13]&0xff;
-		int number1 				= data[14]&0xff;
-		int number  				= number0<<8+number1;//信号机编号
 		
-		session.setAttribute("number",number+"");
-		//获取session中的IP地址，匹配数据库，发现sig表中无该ip，添加数据；发现sig表中有ip，则不插入-from jlj
-//		String ipAddress= ((InetSocketAddress)session.getRemoteAddress()).getAddress().getHostAddress();
-		Sig sig = sigService.querySigByNumber(number+"");
-		if(sig==null){
-			sig = new Sig();
-			sig.setIserror(0);
-//			sig.setIp(ipAddress);
-			sig.setNumber(number+"");
-			Userarea userarea = userareaService.loadById(1);//load未知区域
-			if(userarea==null){
-				System.out.println("userarea=null--------------------");
-			}
-			sig.setUserarea(userarea);
-			sigService.add(sig);
-		}
-		
+	
+		String number = (String)session.getAttribute("number");
 		//获取session中的IP
 //		String clientIP = ((InetSocketAddress)session.getRemoteAddress()).getAddress().getHostAddress();
 		//保存信号机的公共参数下发的命令-start-from jlj
 		String datastr = DataConvertor.toHexString(data);
 		System.out.println("公共参数命令长度是========================="+data.length);
 			//根据ip查出信号机
-			String number2 = (String)session.getAttribute("number");
-			Sig sig2 = sigService.querySigByNumber(number2);
+			
+			Sig sig2 = sigService.querySigByNumber(number);
 			if(sig2!=null){
 				Issuedcommand issuedcommand = issuedcommandService.loadBySigidAndNumber(sig2.getId(),5);
 				if(issuedcommand==null){
@@ -181,7 +163,7 @@ public class ParametersCmdFactory extends CmdFactoryBase implements ICmdParser{
 		//-----------------------数据库---------------------------
 		//检查公共参数表是否有该ip地址：若无，插入新数据；若有，修改原数据
 //		Signpublicparam signpublicparam = signpublicparamService.getPublicparamByIp(clientIP);
-		Signpublicparam signpublicparam = signpublicparamService.getPublicparamByNumber(number2);
+		Signpublicparam signpublicparam = signpublicparamService.getPublicparamByNumber(number);
 		if(signpublicparam==null){
 			//System.out.println("-------------------------------signpublicparam add");
 			signpublicparam = new Signpublicparam();

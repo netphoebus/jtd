@@ -120,10 +120,22 @@ $(document).ready(function(e) {
 									<td>
 										<div class="vocation">
 											<select id="zdjs" name="select4" class="select2">
-												<option>
+												<option value="0">
+													五分钟
+												</option>
+												<option value="1">
+													十分钟
+												</option>
+												<option value="2">
+													三十分钟
+												</option>
+												<option value="3">
+													一小时
+												</option>
+												<option value="4">
 													一天
 												</option>
-												<option>
+												<option value="5">
 													一周
 												</option>
 											</select>

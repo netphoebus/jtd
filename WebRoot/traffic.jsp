@@ -303,15 +303,8 @@ var btn=document.getElementById('show_btn');
        <li onclick="javascript:location.href='sigpublicparamAction!publicParam'">设置参数</li>
 		<li  onclick="javascript:location.href='promotionAction!promotion'">高级设置</li>
 
-		  <li  id="manyCommands">所有参数</li> 
-		  <!--<li  onclick="executeCommand(2)">所有参数</li> -->
-		  <li  onclick="executeCommand(5)">初始化公共参数</li>
-		  <li  onclick="executeCommand(6)">初始化普通时间段0-7</li>
-		  <li  onclick="executeCommand(7)">初始化普通时间段8-15</li>
-		  <li  onclick="executeCommand(8)">初始化周日时间段0-7</li>
-		  <li  onclick="executeCommand(9)">初始化周日时间段8-15</li>
-		  <li  onclick="executeCommand(3)">初始化特殊时间段0-7</li>
-		  <li  onclick="executeCommand(1)">初始化特殊时间段8-15</li>
+		  <li  id="manyCommands">初始化所有参数</li> 
+		  <!--<li  onclick="executeCommand(2)">初始化所有参数</li> -->
 		  <li  onclick="javascript:location.href='mapAction!delete'">删除信号机</li>
          </ul>
        </div>

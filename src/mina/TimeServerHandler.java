@@ -7,6 +7,7 @@ import org.apache.mina.core.buffer.IoBuffer;
 import org.apache.mina.core.service.IoHandler;
 import org.apache.mina.core.session.IdleStatus;
 import org.apache.mina.core.session.IoSession;
+import org.apache.mina.transport.socket.SocketSessionConfig;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -29,6 +30,7 @@ public class TimeServerHandler  implements IoHandler {
 	public final static ISigService sigService = (ISigService)ac.getBean("sigService");
 	public final static IUserareaService userareaService = (IUserareaService)ac.getBean("userareaService");
 	
+	private static int index;
 	public void exceptionCaught(IoSession arg0, Throwable arg1)
 			throws Exception {
 		// TODO Auto-generated method stub
@@ -72,13 +74,19 @@ public class TimeServerHandler  implements IoHandler {
 		{
 			cmdFactory.TaskDispose();
 		}
+		index--;
 		iosessions.remove(arg0);
 	}
 
 	public void sessionCreated(IoSession session) throws Exception {
 		// TODO Auto-generated method stub
 		System.out.println("IP:"+session.getRemoteAddress().toString());
-		iosessions.add(session);
+		SocketSessionConfig cfg = (SocketSessionConfig) session.getConfig();   
+       // cfg.setReceiveBufferSize(2 * 1024 * 1024);   
+       // cfg.setReadBufferSize(2 * 1024 * 1024);   
+        cfg.setKeepAlive(true);   
+        cfg.setSoLinger(0); //这个是根本解决问题的设置   
+		
 //		//获取session中的IP地址，匹配数据库，发现sig表中无该ip，添加数据；发现sig表中有ip，则不插入-from jlj
 //		String ipAddress= ((InetSocketAddress)session.getRemoteAddress()).getAddress().getHostAddress();
 //		Sig sig = sigService.querySigByIpAddress(ipAddress);
@@ -98,14 +106,16 @@ public class TimeServerHandler  implements IoHandler {
 	public void sessionIdle(IoSession arg0, IdleStatus arg1) throws Exception {
 		// TODO Auto-generated method stub
 		System.out.println( "IDLE " + arg0.getIdleCount( arg1 ));  
-//		if(arg0.getIdleCount( arg1 ) == 6){
-//			arg0.close();
-//		}
+		if(arg0.getIdleCount( arg1 ) == 3){
+			arg0.close(true);
+		}
 	}
 
 	public void sessionOpened(IoSession session) throws Exception {
 		// TODO Auto-generated method stub
+		System.out.println("=====================================================新增sessIon的次数:"+index++);
 		System.out.println( "opened " +session.getRemoteAddress().toString());  
+		iosessions.add(session);
 //			String[] cmds = cmd_diaoyue1.split(" ");
 //	        byte[] aaa = new byte[cmds.length];
 //	        int i = 0;
