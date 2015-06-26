@@ -33,6 +33,7 @@ public class PromotionAction extends ActionSupport implements RequestAware,
 	
 	private String centerIp;
 	private String centerPort;
+	private String sigNumber;
 	
 	
 	/**
@@ -60,6 +61,13 @@ public class PromotionAction extends ActionSupport implements RequestAware,
 	 */
 	public String promotionSig()
 	{
+		sigNumber = (String) session.get("sigNumber");
+		if(sigNumber==null){
+			String errorMsg="链接失效,请重新进去信号机,进行设置";
+			request.put("errorMsg", errorMsg);
+			return "index";
+		}
+		this.getCurrrenSession(sigNumber);
 		System.out.println("正在升级.....");
 		System.out.println(centerIp);
 		System.out.println(centerPort);
@@ -144,6 +152,16 @@ public class PromotionAction extends ActionSupport implements RequestAware,
 
 	public void setCenterPort(String centerPort) {
 		this.centerPort = centerPort;
+	}
+
+
+	public String getSigNumber() {
+		return sigNumber;
+	}
+
+
+	public void setSigNumber(String sigNumber) {
+		this.sigNumber = sigNumber;
 	}
 
 	

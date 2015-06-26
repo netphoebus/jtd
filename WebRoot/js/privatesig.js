@@ -17,12 +17,25 @@ function executeCommand(id)
 
 function autojs()
 {
-	if($("#zdjs").val()=="一天")
+	console.log($("#zdjs").val());
+	if($("#zdjs").val()==4)
 	{
 		setInterval("suretime()",60*1000*60*24);
-	}else if($("#zdjs").val()=="一周")
+	}else if($("#zdjs").val()==5)
 	{
 		setInterval("suretime()",60*1000*60*24*7);
+	}else if($("#zdjs").val()==0)
+	{
+		setInterval("suretime()",60*1000*5);
+	}else if($("#zdjs").val()==1)
+	{
+		setInterval("suretime()",60*1000*10);
+	}else if($("#zdjs").val()==2)
+	{
+		setInterval("suretime()",60*1000*30);
+	}else if($("#zdjs").val()==3)
+	{
+		setInterval("suretime()",60*1000*60);
 	}
 }
 
@@ -46,7 +59,7 @@ $(document).ready(function(){
 				});
 				var index = 0;//计数器
 				var commandNumber = 0;
-		    	var interval = setInterval(updateProgressbarValue, 1500);
+		    	var interval = setInterval(updateProgressbarValue, 3000);
 		 		function updateProgressbarValue()
 		 		{
 		 			console.log(index);
@@ -81,6 +94,7 @@ $(document).ready(function(){
 			        	 index= 0;
 			        	 commandNumber = 0;
 			        	 alert("所有参数开始初始化完成。");
+			        	 executeCommand(0);
 			        }else
 			        {
 			        	 $("#divProgressbar").progressbar("option", "value", newValue);  //设置进度条新值  

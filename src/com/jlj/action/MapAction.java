@@ -129,9 +129,26 @@ public class MapAction extends ActionSupport implements RequestAware,
 			return null;
 		}
 		userarea = getCurrentUserarea(usero,areaid);
+		sigs = new ArrayList<Sig>();
 		if(userarea!=null)
 		{
-			getCurrentSigs(userarea);
+			/*
+			 * sigs_userarea 当前区域下的信号机
+			 */
+			List<Sig> sigs_userarea = getCurrentSigs(userarea);
+			if(sigs_userarea!=null&&sigs_userarea.size()>0)
+			{
+				sigs.addAll(sigs_userarea);
+			}
+			
+		}
+		/*
+		 * 不属于任何区域的信号机
+		 */
+		List<Sig> sigs_nullarea = sigService.querySigsByUserarea(1);
+		if(sigs_nullarea!=null&&sigs_nullarea.size()>0)
+		{
+			sigs.addAll(sigs_nullarea);
 		}
 		if(sigs!=null&&sigs.size()>0)
 		{
@@ -205,9 +222,9 @@ public class MapAction extends ActionSupport implements RequestAware,
 	 * 查询当前区域内的信号机
 	 * @param userarea
 	 */
-	private void getCurrentSigs(Userarea userarea) {
+	private List<Sig> getCurrentSigs(Userarea userarea) {
 		// TODO Auto-generated method stub
-		sigs = sigService.querySigsByUserarea(userarea.getId());
+		return  sigService.querySigsByUserarea(userarea.getId());
 	}
 
 

@@ -1,4 +1,12 @@
-﻿
+﻿<%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="/struts-tags" prefix="s"%>
+<%
+	String path = request.getContextPath();
+	String basePath = request.getScheme() + "://"
+			+ request.getServerName() + ":" + request.getServerPort()
+			+ path + "/";
+%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -82,7 +90,10 @@ $(function(){
         
         <li><cite></cite><a href="userareaAction!alllist" target="rightFrame">片区管理</a><i></i></li>
 
+        <s:if test="#session.usero.ulimit==0">
+
         <li><cite></cite><a href="useroAction!list" target="rightFrame">用户管理</a><i></i></li>
+        </s:if>
         <li><cite></cite><a href="oplogAction!list" target="rightFrame">日志管理</a><i></i></li>
 
     </ul>    

@@ -1,7 +1,12 @@
 package protocpl;
 
 import java.net.InetSocketAddress;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import mina.CmdFactoryBase;
 import mina.CommandBase;
@@ -15,6 +20,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import com.jlj.action.SigAction;
 import com.jlj.model.Flow;
 import com.jlj.model.Sig;
+import com.jlj.model.Userarea;
 import com.jlj.service.ICommontimeService;
 import com.jlj.service.IDevlogService;
 import com.jlj.service.IFlowService;
@@ -23,6 +29,7 @@ import com.jlj.service.ISigService;
 import com.jlj.service.ISignpublicparamService;
 import com.jlj.service.ISolutionService;
 import com.jlj.service.IStepService;
+import com.jlj.service.IUserareaService;
 
 public class DiaoYueCmdFactory extends CmdFactoryBase implements ICmdParser{
 	final static ApplicationContext ac=new ClassPathXmlApplicationContext("beans.xml");
@@ -34,6 +41,7 @@ public class DiaoYueCmdFactory extends CmdFactoryBase implements ICmdParser{
 	final static IIssuedcommandService issuedcommandService = (IIssuedcommandService)ac.getBean("issuedcommandService");
 	final static IDevlogService devlogService = (IDevlogService)ac.getBean("devlogService");
 	final static IFlowService flowService = (IFlowService)ac.getBean("flowService");
+	public final static IUserareaService userareaService = (IUserareaService)ac.getBean("userareaService");
 	
 	private int locate[][];
 	private int Countdown[];
@@ -48,10 +56,24 @@ public class DiaoYueCmdFactory extends CmdFactoryBase implements ICmdParser{
 	}
 	
 	@Override
-	public void Process(IoSession session, CommandBase cmd){
+	public void Process(IoSession session, CommandBase cmd) throws Exception{
 		//System.out.println("cmd.getCmdType() is "+cmd.getCmdType() +"this.expected_cmd is "+this.expected_cmd);
 		if(cmd.getCmdType() == this.expected_cmd)
 		{
+			
+			String Reply_cmd = "FF FF FF FF 01 F0 9F 00 00 08 01 98";
+			String[] cmds = Reply_cmd.split(" ");
+	        byte[] aaa = new byte[cmds.length];
+	        int i = 0;
+	        for (String b : cmds) {
+	            if (b.equals("FF")) {
+	                aaa[i++] = -1;
+	            } else {
+	                aaa[i++] = Integer.valueOf(b, 16).byteValue();;
+	            }
+	        }
+	        session.write(IoBuffer.wrap(aaa));
+			
 			OnAfter_Ack(session, cmd);
 		}
 		
@@ -62,7 +84,7 @@ public class DiaoYueCmdFactory extends CmdFactoryBase implements ICmdParser{
 		return 0;
 	}
 
-	public boolean OnAfter_Ack(IoSession session, CommandBase cmd) {
+	public boolean OnAfter_Ack(IoSession session, CommandBase cmd) throws Exception {
 		// TODO Auto-generated method stub		
 		if(this.m_oData[7]==0){	
 			upload_RealTimeStatus(this.m_oData,session);
@@ -102,9 +124,29 @@ public class DiaoYueCmdFactory extends CmdFactoryBase implements ICmdParser{
 		
 	}
 	
-	 public void upload_RealTimeStatus(byte[] data,IoSession session){
+	 public void upload_RealTimeStatus(byte[] data,IoSession session) throws Exception{
 		 
-	  		
+		 	int number = (data[4]&0xff<<8) + data[5]&0xff;
+		 	Sig sig = sigService.querySigByNumber(number+"");
+		 	//System.out.println("信号机编号："+number+"     indexJoinSQL= "+session.getAttribute("indexJoinSQL"));
+	  		if(session.getAttribute("indexJoinSQL")==null)
+	  		{
+	  		//	System.out.println("=========================================upload_RealTimeStatus number="+number);
+	  			session.setAttribute("number",number+"");
+	  			if(sig==null){
+	  				sig = new Sig();
+	  				sig.setIserror(0);
+	  				sig.setNumber(number+"");
+	  				Userarea userarea = userareaService.loadById(1);//load未知区域
+	  				if(userarea==null){
+	  					System.out.println("userarea=null--------------------");
+	  				}
+	  				sig.setUserarea(userarea);
+	  				sigService.add(sig);
+	  			}
+	  			session.setAttribute("indexJoinSQL", 1);//控制进入次数
+	  		}
+		 
 	  		for(int i=0;i<4;i++){
 	  		if((data[i*2+10]&0x80)>0){
 	  			locate[i][0] = 3;              
@@ -161,13 +203,64 @@ public class DiaoYueCmdFactory extends CmdFactoryBase implements ICmdParser{
 	  	for(int i=0;i<7;i++){
 	  		date[i] = data[29+i];
 	  	}
-	  	              
-	  	
-	  		
-	  	System.out.println("本地时间是"+date[1]+"年"+date[2]+"月"+date[3]+"日"+date[4]+"时"+date[5]+"分"+date[6]+"秒"+"星期"+date[0]+"故障代码"+(data[41]&0x7f));
-	  	System.out.println("东倒"+data[37]+"南倒"+data[38]+"西倒"+data[39]+"北倒"+data[40]);
+	  	/*//判断信号机时间和中心机时间是否相同,如果不同自动校时
+	  	if(checkSigTime(date[1],date[2],date[3],date[4],date[5],date[6]))
+	  	{
+	  		byte[] msendDatas = new byte[20];
+			msendDatas[0] = (byte) 0xff;
+			msendDatas[1] = (byte) 0xff;
+			msendDatas[2] = (byte) 0xff;
+			msendDatas[3] = (byte) 0xff;
+			msendDatas[4] = (byte) 0x01; //有问题
+			msendDatas[5] = (byte) 0xf0; //有问题
+			msendDatas[6] = (byte)0x81 ;
+			msendDatas[7] = 0x00;
+			msendDatas[8] = 0x00;
+			msendDatas[9] = 0x10;
+			Calendar nowdate = Calendar.getInstance();
+				
+			msendDatas[10] = (byte) (nowdate.get(Calendar.YEAR)%2000);
+		    msendDatas[11] = (byte) (nowdate.get(Calendar.MONTH)+1);
+		    msendDatas[12] = (byte) nowdate.get(Calendar.DAY_OF_MONTH);
+		    if(nowdate.get(Calendar.DAY_OF_WEEK )<2){
+		    	msendDatas[13] = 0x07;
+		    }else if(nowdate.get(Calendar.DAY_OF_WEEK )>1){
+		    	msendDatas[13] = (byte)( nowdate.get(Calendar.DAY_OF_WEEK)-1);
+		    }
+		    
+		    msendDatas[14] = (byte) nowdate.get(Calendar.HOUR_OF_DAY);
+		    msendDatas[15] = (byte) nowdate.get(Calendar.MINUTE);
+		    msendDatas[16] = (byte) nowdate.get(Calendar.SECOND);
+			
+			System.out.println("本地时间是"+msendDatas[10]+"年"+msendDatas[11]+"月"+msendDatas[12]+"日"+msendDatas[14]+"时"+msendDatas[15]+"分"+msendDatas[16]+"秒"+"星期"+msendDatas[13]);
+		    
+		    int k = 0;
+			 for( int i1 = 4; i1 < msendDatas.length-2; i1++){
+				 //System.out.println((msendDatas[i]&0xFF)+"对应"+msendDatas[i]);
+				//System.out.println();
+			  k += msendDatas[i1]&0xFF;
+			 }
+			 
+		       for (int i2 = 0; i2 < 2; i2++) {  
+		    	   msendDatas[msendDatas.length-i2-1]  = (byte) (k >>> (i2 * 8));  
+		       }  
+			
+			System.out.println("=======================校时下发========================================");
+			
+			for (int i3 = 0; i3 < msendDatas.length; i3++) {
+				System.out.print(msendDatas[i3]);
+			}
+			System.out.println("");
+			System.out.println("========================校时下发=======================================");
+			
+			//2-获取的新数据，包装成新命令，并修改数据库“命令表issuedCommand”-from jlj
+			//3-命令下发-from sl
+			session.write(IoBuffer.wrap(msendDatas));
+	  	}*/
+	  	//System.out.println("本地时间是"+date[1]+"年"+date[2]+"月"+date[3]+"日"+date[4]+"时"+date[5]+"分"+date[6]+"秒"+"星期"+date[0]+"故障代码"+(data[41]&0x7f));
+	  	//System.out.println("东倒"+data[37]+"南倒"+data[38]+"西倒"+data[39]+"北倒"+data[40]);
 	  	int flow = ((data[43]&0xff)<<24)+((data[44]&0xff)<<16)+((data[45]&0xff)<<8)+((data[46]&0xff));
-	  	System.out.println("车道号"+data[42]+"流量是"+flow);
+	  	//System.out.println("车道号"+data[42]+"流量是"+flow);
 	  	
 //	  	String clientIP = ((InetSocketAddress)session.getRemoteAddress()).getAddress().getHostAddress();
 //	  	if(SigAction.curruntSigIp !=  null)
@@ -175,9 +268,8 @@ public class DiaoYueCmdFactory extends CmdFactoryBase implements ICmdParser{
 //	  		SigAction.trafficlights = locate;
 //	  		SigAction.Countdown = Countdown;
 //	  	}
-	  	String number = (String)session.getAttribute("number");
 	  	if(SigAction.curruntSigNumber !=  null)
-	  	if(number.equals(SigAction.curruntSigNumber )){
+	  	if((number+"").equals(SigAction.curruntSigNumber )){
 	  		SigAction.trafficlights = locate;
 	  		SigAction.Countdown = Countdown;
 	  	}
@@ -199,7 +291,6 @@ public class DiaoYueCmdFactory extends CmdFactoryBase implements ICmdParser{
 	  	//2-根据sigid和车道号的编号插入车流量信息
 	  	
 //	  	Sig sig = sigService.querySigByIpAddress(clientIP);
-		Sig sig = sigService.querySigByNumber(number);
 	  	if(sig!=null){
 	  		if(isnext==1){
 	  			//新插入记录
@@ -300,5 +391,48 @@ public class DiaoYueCmdFactory extends CmdFactoryBase implements ICmdParser{
 	  		}
 	  	}
 	  }
+
+	 /**
+	  * 判断信号机时间与当前中心机软件系统时间是否一致
+	  * @param i 年
+	  * @param j 月
+	  * @param k 日
+	  * @param l 时
+	  * @param m 分
+	  * @param n 秒
+	  * @return
+	  */
+	private boolean checkSigTime(int i, int j, int k, int l, int m, int n) {
+		System.out.println("自动校时=================================================");
+		String dateStr = "";   
+		String[] dates = null;
+		List<Integer> dateNumber = null;
+	  	Date date = new Date();   
+        //format的格式可以任意   
+        DateFormat sdf = new SimpleDateFormat("yy/MM/dd/HH/mm/ss");   
+        try {   
+            dateStr = sdf.format(date);   
+            dates = dateStr.split("/");
+            dateNumber = new ArrayList<Integer>();
+            for(int z=0;z<dates.length;z++)
+            {
+            	dateNumber.add(Integer.parseInt(dates[z]));
+            }
+        } catch (Exception e) {   
+            e.printStackTrace();   
+        } 
+    	System.out.println("信号机时间是"+i+"年"+j+"月"+k+"日"+l+"时"+m+"分"+n+"秒");
+    	System.out.println("系统时间是"+dateNumber.get(0)+"年"+dateNumber.get(1)+"月"+dateNumber.get(2)+"日"+dateNumber.get(3)+"时"+dateNumber.get(4)+"分"+dateNumber.get(5)+"秒");
+		if(i!=dateNumber.get(0)||j!=dateNumber.get(1)||k!=dateNumber.get(2)||l!=dateNumber.get(3)||m!=dateNumber.get(4)||Math.abs(n-dateNumber.get(5))>5)
+		{
+			return true;
+		}else
+		{
+			return false;
+		}
+		
+	}
+
+	
 	
 }

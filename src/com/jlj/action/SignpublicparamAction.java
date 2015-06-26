@@ -98,7 +98,7 @@ public class SignpublicparamAction extends ActionSupport implements RequestAware
 		}
 		//根据sigNumber来查询信号机公共参数
 		sigpubparam = sigpubparamService.getPublicparamByNumber(sigNumber);
-		if(sigpubparam!=null&&sigpubparam.getIp()!=null)
+		if(sigpubparam!=null&&sigpubparam.getNumber()!=null)
 		{
 			//判断信号机公共参数中的signid是否为空，如果为空则设置公共参数中的signid对应sig
 			if(sigpubparam.getSig()==null)
@@ -432,7 +432,7 @@ public class SignpublicparamAction extends ActionSupport implements RequestAware
 				//2-获取的新数据，包装成新命令，并修改数据库“命令表issuedCommand”-from jlj
 				
 				//3-命令下发-from sl
-//				currrenSession.write(IoBuffer.wrap(msendDatas));
+				currrenSession.write(IoBuffer.wrap(msendDatas));
 //			}
 		}
 		

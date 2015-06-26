@@ -47,7 +47,7 @@
 <form action="useroAction!login" method="post">
     <ul>
     <li><input name="username" type="text" class="loginuser" value="${loginFail}" onclick="JavaScript:this.value=''"/></li>
-    <li><input name="password" type="text" class="loginpwd" value="密码" onclick="JavaScript:this.value=''"/></li>
+    <li><input name="password" type="password" class="loginpwd" value="密码" onclick="JavaScript:this.value=''"/></li>
     <li><input type="submit" type="button" class="loginbtn" value="登录"/><label>
     <input name="" type="checkbox" value="" checked="checked" style="margin-bottom:8px;" />记住密码</label></li>
     </ul>
