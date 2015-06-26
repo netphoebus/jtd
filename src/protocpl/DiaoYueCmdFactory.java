@@ -128,6 +128,7 @@ public class DiaoYueCmdFactory extends CmdFactoryBase implements ICmdParser{
 		 
 		 	int number = (data[4]&0xff<<8) + data[5]&0xff;
 		 	Sig sig = sigService.querySigByNumber(number+"");
+		 	//System.out.println("信号机编号："+number+"     indexJoinSQL= "+session.getAttribute("indexJoinSQL"));
 	  		if(session.getAttribute("indexJoinSQL")==null)
 	  		{
 	  		//	System.out.println("=========================================upload_RealTimeStatus number="+number);

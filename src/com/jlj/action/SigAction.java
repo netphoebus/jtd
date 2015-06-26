@@ -91,12 +91,12 @@ public class SigAction extends ActionSupport implements RequestAware,
 
 	public IoSession getCurrrenSession(String sigNumber)
 	{
-		System.out.println("SigAction 链接数=========================="+TimeServerHandler.iosessions.size());
+		/*System.out.println("SigAction 链接数=========================="+TimeServerHandler.iosessions.size());
 		System.out.println("当前的编号是："+sigNumber);
 		for(IoSession session : TimeServerHandler.iosessions)
 		{
 			System.out.println("所有session的编号是："+session.getAttribute("number"));
-		}
+		}*/
 		for(IoSession session : TimeServerHandler.iosessions)
 		{
 			if(session.getAttribute("number")!=null&&session.getAttribute("number").equals(sigNumber))

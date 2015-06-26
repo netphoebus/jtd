@@ -93,7 +93,7 @@ public class MyBytesDecoder extends CumulativeProtocolDecoder {
     		 // 
     		 
              int length = ((in.get(in.position()+8)&0xff)<<8)+(in.get(in.position()+9)&0xff)+4;
-             System.out.println("length is"+length);
+            // System.out.println("length is"+length);
     		 // int length = in.limit();
               if (length < 1) {
                   throw new ServerException("Error net message. (Message Length="+length+")");

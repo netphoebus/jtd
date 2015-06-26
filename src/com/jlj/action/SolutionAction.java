@@ -108,7 +108,7 @@ public class SolutionAction extends ActionSupport implements RequestAware,
 				}
 				solution = solutionService.loadById(soid);
 				steps = stepService.loadBySoId(soid);//获得相位方案的相位（相位为步序是偶数位的步序,service层已做处理）
-				setGreenConflict();
+				setGreenConflict(sig.getId());
 				session.put("sigNumber", sigNumber);//从地图中进入信号机，将信号机id传入session
 				return "cssz-fa";
 			}else
@@ -121,8 +121,8 @@ public class SolutionAction extends ActionSupport implements RequestAware,
 	}
 	
 	//获得绿冲突对象
-	private void setGreenConflict() {
-		greens = greenService.getGreenconflicts();
+	private void setGreenConflict(Integer sigid) {
+		greens = greenService.loadBySid(sigid);
 		if(greens!=null&&greens.size()==16)
 		{
 			conflictVO = new ConflictVO();

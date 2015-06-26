@@ -304,7 +304,7 @@ var btn=document.getElementById('show_btn');
 		<li  onclick="javascript:location.href='promotionAction!promotion'">高级设置</li>
 
 		  <li  id="manyCommands">初始化所有参数</li> 
-		  <!--<li  onclick="executeCommand(2)">初始化所有参数</li> -->
+		  <li  onclick="executeCommand(0)">调阅实时状态</li> 
 		  <li  onclick="javascript:location.href='mapAction!delete'">删除信号机</li>
          </ul>
        </div>

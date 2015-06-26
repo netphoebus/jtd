@@ -384,7 +384,7 @@ public class ParametersCmdFactory extends CmdFactoryBase implements ICmdParser{
 							break;
 						}
 					}
-					greenconflict.setName(i+""+j2);
+					greenconflict.setName(""+j2);
 					try {
 						greenconflictService.add(greenconflict);
 					} catch (Exception e) {

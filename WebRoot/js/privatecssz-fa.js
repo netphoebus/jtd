@@ -95,7 +95,7 @@ $(document).ready(function(){
 					{
 						conflictStr = $("#c16").val();
 					}
-					console.log(conflictStr);
+					console.log("冲突:"+conflictStr);
 					//第二部：分两种情况，一种为 id 一种为 class 解析conflictStr 并逐一找出冲突的灯当前的颜色是否为绿色如果为绿色则返回
 					if(img[0].id==null||img[0].id =="")
 					{
