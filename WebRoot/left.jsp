@@ -87,11 +87,8 @@ $(function(){
     <div class="title"><span><img src="images/leftico03.png" /></span>系统用户管理</div>
     <ul class="menuson">
         <li><cite></cite><a href="usero_update_password.jsp" target="rightFrame">修改密码</a><i></i></li>
-        
-        <li><cite></cite><a href="userareaAction!alllist" target="rightFrame">片区管理</a><i></i></li>
-
         <s:if test="#session.usero.ulimit==0">
-
+        <li><cite></cite><a href="userareaAction!alllist" target="rightFrame">片区管理</a><i></i></li>
         <li><cite></cite><a href="useroAction!list" target="rightFrame">用户管理</a><i></i></li>
         </s:if>
         <li><cite></cite><a href="oplogAction!list" target="rightFrame">日志管理</a><i></i></li>

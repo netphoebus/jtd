@@ -30,15 +30,16 @@
 <input  type="button" onclick="saveMarkers();" value="保存信号机位置" style="margin-left:48%;margin-top:10px;width:88px;height:20px;  background:url(images/topbtn02.fw.png); color:#FFF; border-bottom:#039 1px solid; border-right:#039 1px solid;"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;		
  -->  
  <div style="float：left;width:660px;">
-   <input type="button" onclick="Polygon()" value=" 添加区域范围 " style="margin-left:20px;margin-top:10px;width:100px;height:20px; background:url(images/topbtn02.fw.png); color:#FFF; border-bottom:#039 1px solid; border-right:#039 1px solid;"/>
-    <input type="button" onclick="saveGon()" value="保存区域范围 " style="margin-left:20px;margin-top:10px;width:100px;height:20px; background:url(images/topbtn02.fw.png); color:#FFF; border-bottom:#039 1px solid; border-right:#039 1px solid;"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-  	<s:if test="#session.usero.ulimit==0">
- 			 可选区域 : <select id="areaid" name="select4" class="dfinputarea" onchange="changeArea();">
+ 	<s:if test="#session.usero.ulimit==0">
+ 			&nbsp;&nbsp;可选区域 : <select id="areaid" name="select4" class="dfinputarea" onchange="changeArea();">
 											</select>
  	 	</s:if>
  	 	<s:else>
 	 				当前区域：<input type="text" name="areaname" id="areaname" class="dfinputarea" size="17" readonly="readonly"/>
 				</s:else>
+   <input type="button" onclick="Polygon()" value=" 添加区域范围 " style="margin-left:20px;margin-top:10px;width:100px;height:20px; background:url(images/topbtn02.fw.png); color:#FFF; border-bottom:#039 1px solid; border-right:#039 1px solid;"/>
+    <input type="button" onclick="saveGon()" value="保存区域范围 " style="margin-left:20px;margin-top:10px;width:100px;height:20px; background:url(images/topbtn02.fw.png); color:#FFF; border-bottom:#039 1px solid; border-right:#039 1px solid;"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  
 											</div>
    <div id="map_canvas" style="margin:4px ;width:98%; height:760px;border:2px solid #cfdfe4">
    		地图加载失败....

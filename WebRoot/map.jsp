@@ -23,15 +23,16 @@
 
 <body >
  	<div style="float：left;width:660px;">
-		   <input  type="button" onclick="ClearPoly()" value="取消添加信号机" style="margin-left:20px;margin-top:10px;width:100px;height:20px;  background:url(images/topbtn02.fw.png); color:#FFF; border-bottom:#039 1px solid; border-right:#039 1px solid;"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		   <input type="button" onclick="addClickEventListener()" value=" 添加信号机 " style="margin-left:20px;margin-top:10px;width:100px;height:20px; background:url(images/topbtn02.fw.png); color:#FFF; border-bottom:#039 1px solid; border-right:#039 1px solid;"/>	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		<s:if test="#session.usero.ulimit==0">
- 			 可选区域 : <select id="areaid" name="select4" class="dfinputarea" onchange="changeArea();">
+ 		<s:if test="#session.usero.ulimit==0">
+ 			&nbsp;&nbsp;可选区域 : <select id="areaid" name="select4" class="dfinputarea" onchange="changeArea();">
 											</select>
  	 	</s:if>
  	 	<s:else>
 	 				当前区域：<input type="text" name="areaname" id="areaname" class="dfinputarea" size="17" readonly="readonly"/>
 				</s:else>
+		   <input  type="button" onclick="ClearPoly()" value="取消添加信号机" style="margin-left:20px;margin-top:10px;width:100px;height:20px;  background:url(images/topbtn02.fw.png); color:#FFF; border-bottom:#039 1px solid; border-right:#039 1px solid;"/>&nbsp;&nbsp;
+		   <input type="button" onclick="addClickEventListener()" value=" 添加信号机 " style="margin-left:20px;margin-top:10px;width:100px;height:20px; background:url(images/topbtn02.fw.png); color:#FFF; border-bottom:#039 1px solid; border-right:#039 1px solid;"/>
+	
  	 </div>
  	
  								

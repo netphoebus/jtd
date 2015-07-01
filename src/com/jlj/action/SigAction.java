@@ -55,7 +55,14 @@ public class SigAction extends ActionSupport implements RequestAware,
 	public String sigStatus() {
 		Usero usero = (Usero)session.get("usero");
 		 int userid = usero.getId();
-		List<Sig> usersigs = sigService.querySigsByUser(userid);
+		 List<Sig> usersigs = new ArrayList<Sig>();
+		 if(usero.getUlimit()==0)
+		 {
+			 usersigs = sigService.getAllSigs();
+		 }else
+		 {
+			 usersigs = sigService.querySigsByUser(userid);
+		 }
 		if (usersigs != null && usersigs.size() > 0) {
 			List<SigStatus> sigstatuses = new ArrayList<SigStatus>();
 			for (int i = 0; i < usersigs.size(); i++) {

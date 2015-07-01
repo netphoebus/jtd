@@ -1,4 +1,13 @@
-﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+﻿<%@  page language="java" import="java.util.*" pageEncoding="utf-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="/struts-tags" prefix="s"%>
+<%
+	String path = request.getContextPath();
+	String basePath = request.getScheme() + "://"
+			+ request.getServerName() + ":" + request.getServerPort()
+			+ path + "/";
+%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -27,26 +36,11 @@ $(function(){
 <div class="topleft">管理控制平台</div>
 <div class="topright">    
     <ul>
-      <li><span>欢迎您：管理系统 [ admin ]</span></li>
-      <li><span><a href="password.html" target="rightFrame">修改密码</a></span></li>
+      <li><span>欢迎您：管理员 [<s:property value="#session.usero.username"/>]</span></li>
+      <li><span><a href="usero_update_password.jsp" target="rightFrame">修改密码</a></span></li>
       <li><span><a href="login.jsp" target="_parent">安全退出</a></span></li>
     </ul>
    
     </div>
-<div class="topleftmain" >    
-    <ul class="nav">
-    <li style="width: 150px; background: none; margin-left:50px;"><a href="smanag.html" target="rightFrame"><span>[ 用户管理 ]</span></a></li>
-
-    <li><a href="left.jsp" target="leftFrame" class="selected">
-    <h2>设 置</h2></a></li>
-    <li><a href="left-2.html"  target="leftFrame">
-    <h2>查 看</h2></a></li>
-    <li><a href="left-3.html"  target="leftFrame">
-    <h2>控 制</h2>
-      </a></li>
-    <li><a href="left-4.html" target="leftFrame">
-    <h2>编 辑</h2></a></li>
-  </ul>
-</div>
 </body>
 </html>

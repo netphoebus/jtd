@@ -89,7 +89,13 @@ public class MapAction extends ActionSupport implements RequestAware,
 			return null;
 		}else
 		{
-			userareas = userareaService.queryList(usero.getId());
+			if(usero.getUlimit()==0)
+			{
+				userareas = userareaService.getUserareas();
+			}else
+			{
+				userareas = userareaService.queryList(usero.getId());
+			}
 			if(userareas.size()>0)
 			{
 				userarea = getCurrentUserarea(usero,areaid);
@@ -128,7 +134,9 @@ public class MapAction extends ActionSupport implements RequestAware,
 		if(usero==null){
 			return null;
 		}
+		
 		userarea = getCurrentUserarea(usero,areaid);
+		
 		sigs = new ArrayList<Sig>();
 		if(userarea!=null)
 		{
@@ -190,7 +198,13 @@ public class MapAction extends ActionSupport implements RequestAware,
 			return null;
 		}else
 		{
-			userareas = userareaService.queryList(usero.getId());
+			if(usero.getUlimit()==0)
+			{
+				userareas = userareaService.getUserareas();
+			}else
+			{
+				userareas = userareaService.queryList(usero.getId());
+			}
 			if(userareas.size()>0)
 			{
 				userareaVOs = new ArrayList<UserareaVO>();
@@ -235,26 +249,38 @@ public class MapAction extends ActionSupport implements RequestAware,
 	 */
 	private Userarea getCurrentUserarea(Usero usero,int areaid) {
 		// TODO Auto-generated method stub
-		userareas = userareaService.queryList(usero.getId());
-		if(areaid==0)
+		if(usero.getUlimit()==0)
 		{
-			userarea = userareas.get(0);
+			userareas = userareaService.getUserareas();
 		}else
 		{
-			for(Userarea area:userareas)
-			{
-				if(area.getId()==areaid)
-				{
-					userarea = area;
-					break;
-				}
-			}
-			if(userarea==null)
+			userareas = userareaService.queryList(usero.getId());
+		}
+		if(userareas!=null&&userareas.size()>0)
+		{
+			if(areaid==0)
 			{
 				userarea = userareas.get(0);
+			}else
+			{
+				for(Userarea area:userareas)
+				{
+					if(area.getId()==areaid)
+					{
+						userarea = area;
+						break;
+					}
+				}
+				if(userarea==null)
+				{
+					userarea = userareas.get(0);
+				}
 			}
+			return userarea;
+		}else
+		{
+			return null;
 		}
-		return userarea;
 	}
 
 	/**
@@ -427,7 +453,6 @@ public class MapAction extends ActionSupport implements RequestAware,
 	public void setSigIp(String sigIp) {
 		this.sigIp = sigIp;
 	}*/
-
 
 	public Usero getUsero() {
 		return usero;

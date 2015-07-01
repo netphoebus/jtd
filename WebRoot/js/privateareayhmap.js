@@ -66,7 +66,7 @@ google.maps.event.addDomListener(window, "load", initialize);
 	}
 	MarkersInit();
 	console.log("initialize ulimit:"+ulimit);
-	GreenLinesInit();
+	//GreenLinesInit();
 
 }
 
@@ -464,6 +464,10 @@ function Polygon() {
 					path.push(event.latLng);
 					polygon.setPath(path);
 				}
+				maphelper.bindInstanceEvent(polygon, 'dblclick', function(event,map,poly) {
+									self.location='syssj.jsp'; 
+									
+					        });
 								
 		});  
 }

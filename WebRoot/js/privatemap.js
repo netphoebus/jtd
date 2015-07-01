@@ -283,6 +283,11 @@ function AreaInit()
 							{
 								$("#areasdiv").show();
 							}
+	            		}else
+	            		{
+	            			lng = 119.71389770507812;
+							lat = 31.336923737413848;
+							markerZoom = 12;
 	            		}
 	            }  
     	    });  

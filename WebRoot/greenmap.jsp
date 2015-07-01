@@ -22,23 +22,17 @@
 <script type="text/javascript" src="js/privategreenmap.js"></script>
 
 <body >
-	<!--
-	经度<input  type="text" name="CLNG" id="CLNG" value="" size="17"/><br/>
-	维度<input  type="text" name="CLAT" id="CLAT" value="" size="17"/><br/>
-	当前地图级别<input  type="text" name="ZOOM" id="ZOOM" value="8" size="17"/><br/>
-
-<input  type="button" onclick="saveMarkers();" value="保存信号机位置" style="margin-left:48%;margin-top:10px;width:88px;height:20px;  background:url(images/topbtn02.fw.png); color:#FFF; border-bottom:#039 1px solid; border-right:#039 1px solid;"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;		
- -->  
  <div style="float：left;width:660px;">
-   <input type="button" onclick="Polyline()" value=" 添加无电缆联动 " style="margin-left:20px;margin-top:10px;width:100px;height:20px; background:url(images/topbtn02.fw.png); color:#FFF; border-bottom:#039 1px solid; border-right:#039 1px solid;"/>
-    <input type="button" onclick="saveLine()" value="保存无电缆联动 " style="margin-left:20px;margin-top:10px;width:100px;height:20px; background:url(images/topbtn02.fw.png); color:#FFF; border-bottom:#039 1px solid; border-right:#039 1px solid;"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	<s:if test="#session.usero.ulimit==0">
- 			 可选区域 : <select id="areaid" name="select4" class="dfinputarea" onchange="changeArea();">
+ <s:if test="#session.usero.ulimit==0">
+ 			 &nbsp;&nbsp;可选区域 : <select id="areaid" name="select4" class="dfinputarea" onchange="changeArea();">
 											</select>
  	 	</s:if>
  	 	<s:else>
 	 				当前区域：<input type="text" name="areaname" id="areaname" class="dfinputarea" size="17" readonly="readonly"/>
 				</s:else>
+   <input type="button" onclick="Polyline()" value=" 添加无电缆联动 " style="margin-left:20px;margin-top:10px;width:100px;height:20px; background:url(images/topbtn02.fw.png); color:#FFF; border-bottom:#039 1px solid; border-right:#039 1px solid;"/>
+    <input type="button" onclick="saveLine()" value="保存无电缆联动 " style="margin-left:20px;margin-top:10px;width:100px;height:20px; background:url(images/topbtn02.fw.png); color:#FFF; border-bottom:#039 1px solid; border-right:#039 1px solid;"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	
 											</div>
    <div id="map_canvas" style="margin:4px ;width:98%; height:760px;border:2px solid #cfdfe4">
    		地图加载失败....

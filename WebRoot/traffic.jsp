@@ -340,7 +340,9 @@ var btn=document.getElementById('show_btn');
        	 <li  onclick="executeCommand(29)">黄 闪<br /></li>
          <li  onclick="executeCommand(30)">关 灯<br /></li>
          <li  onclick="executeCommand(31)">全 红<br /></li>
+         <!-- 
          <li  onclick="executeCommand(29)">锁 定<br /></li>
+          -->
          <!--  
          <li style="background:none; border: solid 1px #fff; "><select name="select" class="select2">
               <option>指定相位</option>

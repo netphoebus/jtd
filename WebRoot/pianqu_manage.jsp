@@ -58,10 +58,8 @@ $(document).ready(function(e) {
 					</ul>
 				</div>
 
-
-
-
 				<div id="tab4" class="tabson">
+				<!--
 					<form action="userareaAction!add" method="post">
 					<ul class="forminfo">
 						<li>
@@ -178,6 +176,7 @@ $(document).ready(function(e) {
 						</li>
 					</ul>
 					</form>
+					  -->
 					<div class="tools">
 						<ul class="seachform">
 							<li>
