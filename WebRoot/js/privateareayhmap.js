@@ -442,17 +442,18 @@ function changeArea()
 }
 
 var polygon = null;
+var areadots = new Array();
 function Polygon() {
 		ClearPoly();
 		alert("点击地图进行绘制");
 			maphelper.bindInstanceEvent(mapobj, 'click',   
 		   function(event) {			 
-				dots.push(new Array(event.latLng.lng(),event.latLng.lat()));
+				areadots.push(new Array(event.latLng.lng(),event.latLng.lat()));
 		 		
 				//画多边形
-					if(dots.length == 1){
+					if(areadots.length == 1){
 					polygon =  maphelper.polygon({
-							dots:dots,						
+							dots:areadots,						
 							color:"#009966",
 							opacity:0.3,
 							fillcolor:"#99FF00",
