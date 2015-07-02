@@ -66,14 +66,12 @@ $(document).ready(function(e) {
 							</li>
 						</ul>
 					</div>
-					<form id="promotionform" name="promotionform" action="promotionAction!promotionSig"
-			method="post" >
 					<div id="tab1" class="tabson">
 						<div class="csbox">
 							<table border="0" cellspacing="0" cellpadding="0">
 								<tr>
 									<td style="padding-right: 5px;">
-										<input name="" type="submit" onclick="return check();" class="scbtn" value="升  级" />
+										<input name="" type="button" onclick="check();" class="scbtn" value="升  级" />
 									</td>
 									<td style="padding-right: 5px;">
 										<input name="" type="submit" class="scbtn"  value="自动升级" />
@@ -114,7 +112,6 @@ $(document).ready(function(e) {
 					
 							</div>
 						</div>
-		</form>
 					</div>
 
 				</div>

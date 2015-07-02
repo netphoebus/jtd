@@ -238,5 +238,10 @@
 	<package name="area_ajax" extends="json-default">
 		<action name="addArea" class="userareaAction" method="addArea"/>
 	</package>
+	
+		 
+	<package name="promotion_ajax" extends="json-default">
+		<action name="promotionSig" class="promotionAction" method="promotionSig"/>
+	</package>
 </struts>
 

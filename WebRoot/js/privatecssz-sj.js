@@ -63,8 +63,28 @@ function check()
 	  {	
 	  	alert("输入端口号不正确.");
 	  	return false;
+	  }else
+	  {
+	  	var centerIp = $("#centerIp").val();
+	  	var centerPort = $("#centerPort").val();
+	  	$.ajax({   
+            url:'promotionSig',//这里是你的action或者servlert的路径地址   
+            type:'post', //数据发送方式  
+            data: { "centerIp":centerIp,"centerPort":centerPort},  
+            traditional: true,  
+            error: function(msg)
+            { //失败   
+            	alert('发送命令失败');   
+            },   
+            success: function(msg)
+            { //成功   
+				alert('升级成功');   
+            }  
+   	    });  
+	  	
+	  	
+	  	
 	  }
-	 console.log( reg.test($("#centerPort").val()) );
 }
 
 
