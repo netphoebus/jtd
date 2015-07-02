@@ -212,6 +212,7 @@
      <package name="sig_ajax" extends="json-default">
 		<action name="doCommand" class="sigAction" method="doCommand"/>
 		<action name="sigStatus" class="sigAction" method="sigStatus"/>
+		<action name="runByPharse" class="sigAction" method="runByPharse"/>
 	</package>
 	
 	 <package name="solution_ajax" extends="json-default">

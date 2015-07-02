@@ -51,6 +51,15 @@ public class SigAction extends ActionSupport implements RequestAware,
 	public int curruntCommandId;
 	private SigPara sigParas;
 	private Long mkid;
+	
+	
+	/*
+	 * json messsage
+	 */
+	private String dates;
+	private int gltime;
+	private int rltime;
+	private int yltime;
 
 	public String sigStatus() {
 		Usero usero = (Usero)session.get("usero");
@@ -191,6 +200,26 @@ public class SigAction extends ActionSupport implements RequestAware,
 		}
 		return NONE;
 	}
+	
+	/**
+	 * 按指定相位运行
+	 * @return
+	 */
+	public String runByPharse()
+	{
+		
+		
+		
+		System.out.println(dates);
+		System.out.println(gltime);
+		System.out.println(rltime);
+		System.out.println(yltime);
+		
+		
+		
+		
+		return NONE;
+	}
 
 	/**
 	 * 添加
@@ -295,6 +324,38 @@ public class SigAction extends ActionSupport implements RequestAware,
 
 	public void setMkid(Long mkid) {
 		this.mkid = mkid;
+	}
+
+	public String getDates() {
+		return dates;
+	}
+
+	public void setDates(String dates) {
+		this.dates = dates;
+	}
+
+	public int getGltime() {
+		return gltime;
+	}
+
+	public void setGltime(int gltime) {
+		this.gltime = gltime;
+	}
+
+	public int getRltime() {
+		return rltime;
+	}
+
+	public void setRltime(int rltime) {
+		this.rltime = rltime;
+	}
+
+	public int getYltime() {
+		return yltime;
+	}
+
+	public void setYltime(int yltime) {
+		this.yltime = yltime;
 	}
 	
 	

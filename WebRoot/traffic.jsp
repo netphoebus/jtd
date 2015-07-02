@@ -12,6 +12,7 @@ request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+pa
 <title>无标题文档</title>
 <link href="css/style.css" rel="stylesheet" type="text/css" />
 <link href="css/select.css" rel="stylesheet" type="text/css" />
+
 <link href="css/stilearn-helper.css" rel="stylesheet" type="text/css" />
 <link href="css/jquery-ui.css" rel="stylesheet" type="text/css" />
 
@@ -187,6 +188,7 @@ var btn=document.getElementById('show_btn');
 	if(obj.style.display=='none'){
 		obj.style.display='block';
 		btn.innerHTML='自　动';
+		allRed(0);
 		
 	}else{
 		obj.style.display='none';
@@ -340,22 +342,173 @@ var btn=document.getElementById('show_btn');
        	 <li  onclick="executeCommand(29)">黄 闪<br /></li>
          <li  onclick="executeCommand(30)">关 灯<br /></li>
          <li  onclick="executeCommand(31)">全 红<br /></li>
-         <!-- 
-         <li  onclick="executeCommand(29)">锁 定<br /></li>
-          -->
-         <!--  
-         <li style="background:none; border: solid 1px #fff; "><select name="select" class="select2">
-              <option>指定相位</option>
-              <option>相位001</option>
-              <option>相位021</option>
-            </select><br />
-            </li>
-             <li>指定相位运行<br /></li>
-             -->
+           <li  onclick="runByPharse()">指定相位运行<br /></li>
          </ul>
+         
+          <div style="width:100%; float:left; margin-bottom:10px;">
+         <ul class="toolbar1" style="margin-left:80px; ">
+	         		<li  onclick="allRed(0)">指定相位全红<br /></li>
+	         		<li  onclick="clearAllLight(0)">指定相位清空<br /></li>
+	         		<li>绿灯时间&nbsp;&nbsp;<input style="border:1px dotted #CCC;;width:60%;height:100%" id="gltime" type="text" name="gltime" value="0"/>秒</li>
+	         		<li>黄灯时间&nbsp;&nbsp;<input style="border:1px dotted #CCC;;width:60%;height:100%" id="yltime" type="text" name="yltime" value="3"/>秒</li>	
+	         		<li>红灯时间&nbsp;&nbsp;<input style="border:1px dotted #CCC;;width:60%;height:100%" id="rltime" type="text" name="rltime" value="0"/>秒</li>
+	         </ul>
+         <div class="picbox">
+										<div style="width: 100%; float: left; height: ">
+											<div class="xhu">
+											</div>
+											<div class="xhu" style="margin-left: 135px;">
+											</div>
+										</div>
+										<div style="width: 100%; float: left; height: ">
+											<div class="xhu" style="margin-top: 0px;">
+												<img class="0_3_3" alt="北人行道" class="l23" src="images/rod/l330.png" width="15" />
+											</div>
+											<div class="xhu" style="margin-left: 135px; margin-top: 0px;">
+												<img class="0_3_3" alt="北人行道" class="l03" src="images/rod/l330.png" width="15" />
+											</div>
+										</div>
+										<div style="width: 100%; float: left; height: ">
+											<div class="xhup">
+												<img  class="0_2_3" alt="西人行道"  src="images/rod/l230.png" width="15" />
+											</div>
+											<div class="xhup" style="margin-left: 165px;">
+												<img class="0_0_3" alt="东人行道" src="images/rod/l030.png" width="15" />
+											</div>
+										</div>
+										
+										<div style="height: 110px; width: 100%; float: left;">
+											<div class="xleftdown">
+												<table width="18" border="0" align="center" cellpadding="0"
+													cellspacing="0">
+													<tr>
+														<td height="2"></td>
+													</tr>
+													<tr>
+														<td align="center">
+															<img id="0_0_2"  src="images/rod/l020.png" alt="东向西右拐"
+																width="15" height="15" />
+														</td>
+													</tr>
+													<tr>
+														<td align="center">
+															<img id="0_0_1"  src="images/rod/l010.png" alt="东向西直行"
+																width="15" height="15" />
+														</td>
+													</tr>
+													<tr>
+														<td align="center">
+															<img id="0_0_0"   src="images/rod/l000.png" alt="东向西左拐"
+																width="15" height="15" />
+														</td>
+													</tr>
+												</table>
+											</div>
+											<div class="xrightdown">
+												<table width="50" height="18" border="0" cellspacing="0"
+													cellpadding="0">
+													<tr>
+														<td width="2" height="18"></td>
+														<td>
+															<img id="0_3_2"  src="images/rod/l320.png" alt="北向南右拐" width="15"
+																height="15" />
+														</td>
+														<td>
+															<img id="0_3_1"  src="images/rod/l310.png" alt="北向南直行" width="15"
+																height="15" />
+														</td>
+														<td>
+															<img  id="0_3_0"  src="images/rod/l300.png" alt="北向南左拐" width="15"
+																height="15" />
+														</td>
+													</tr>
+												</table>
+											</div>
+											<div class="xleftup">
+												<table width="50" height="18" border="0" cellspacing="0"
+													cellpadding="0">
+													<tr>
+														<td width="2" height="18"></td>
+														<td>
+															<img id="0_1_0"  src="images/rod/l100.png" alt="南向北左拐" width="15"
+																height="15" />
+														</td>
+														<td>
+															<img id="0_1_1"  src="images/rod/l110.png" alt="南向北直行" width="15"
+																height="15" />
+														</td>
+														<td>
+															<img id="0_1_2"  src="images/rod/l120.png" alt="南向北右拐" width="15"
+																height="15" />
+														</td>
+													</tr>
+												</table>
+											</div>
+											<div class="xrightup">
+												<table width="18" border="0" align="center" cellpadding="0"
+													cellspacing="0">
+													<tr>
+														<td height="2"></td>
+													</tr>
+													<tr>
+														<td align="center">
+															<img  id="0_2_0"  src="images/rod/l200.png" alt="西向东左拐" width="15"
+																height="15" />
+														</td>
+													</tr>
+													<tr>
+														<td align="center">
+															<img id="0_2_1"  src="images/rod/l210.png" alt="西向东直行"  width="15"
+																height="15" />
+														</td>
+													</tr>
+													<tr>
+														<td align="center">
+															<img id="0_2_2"  src="images/rod/l220.png" alt="西向东右拐" width="15"
+																height="15" />
+														</td>
+													</tr>
+												</table>
+											</div>
+										</div>
+										<div style="width: 100%; float: left; height: ">
+											<div class="xhup">
+											
+												<img class="0_2_3"  src="images/rod/l230.png" alt="西人行道" width="15" />
+											</div>
+											<div class="xhup" style="margin-left: 165px;">
+											
+												<img class="0_0_3"  src="images/rod/l030.png" alt="东人行道" width="15" />
+											</div>
+										</div>
+										<div style="width: 100%; float: left; height: ">
+											<div class="xhu" style="margin-top: 0px;">
+												
+												<img  class="0_1_3"  src="images/rod/l130.png" alt="南人行道" width="15" />
+											
+											</div>
+											<div class="xhu" style="margin-left: 135px; margin-top: 0px;">
+											
+												<img class="0_1_3"  src="images/rod/l130.png" alt="南人行道" width="15" />
+											
+											</div>
+										</div>
+										<div style="width: 100%; float: left; height: ">
+											<div class="xhu" style="margin-top: 0px;">
+											</div>
+											<div class="xhu" style="margin-left: 135px; margin-top: 0px;">
+											</div>
+										</div>
+									</div>
+         
+       </div>
+           
+         
        </div>
         <div id="divProgressbar"></div>
      </div>
+     
+      
     
 </div>
 

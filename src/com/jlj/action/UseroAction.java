@@ -72,7 +72,12 @@ SessionAware,ServletResponseAware,ServletRequestAware {
 			request.put("loginFail", loginfail);
 			return "adminLogin";
 		}*/else{
+			
+			
 			session.put("usero", usero);
+			
+			
+			
 			return "loginSucc";
 		}
 	}

@@ -102,7 +102,7 @@ $(document).ready(function(){
 						//class
 						var imgclass= img[0].classList[0];
 						conflictStart = imgclass.substring(0,1);
-						if(conflictStr!="")
+						if(typeof(conflictStr) != "undefined"&&conflictStr!="")
 						{
 							console.log(conflictStart+conflictStr);
 							var bjsrc = $("."+conflictStart+conflictStr)[0].src;
@@ -120,7 +120,7 @@ $(document).ready(function(){
 						
 						console.log("conflictStart:-------------------------"+conflictStart);
 						
-						if(conflictStr!="")
+						if(typeof(conflictStr) != "undefined"&&conflictStr!="")
 						{
 							var strs= conflictStr.split(","); //字符分割 
 							console.log("strs:-------------------------"+strs);
