@@ -207,16 +207,52 @@ public class SigAction extends ActionSupport implements RequestAware,
 	 */
 	public String runByPharse()
 	{
-		
-		
+		//0_2_3:3,0_0_3:3,0_3_3:*,*_*_*:*,*_*_*:3,0_0_0:3,0_3_2:*,*_*_*:*,*_*_*:3,0_1_0:3,0_1_1:3,0_1_2:3,0_2_0:3,0_2_1:3,0_2_2:3,0_1_3:3,
+		//0
+		//0
+		//3
+		/**
+		 * data数组元素解释说明
+		 * 4_0_3:1[解释 id_方向_灯: 灯色]
+		 * 4  [解释 id(步序id都是偶数位)]
+		 * 0  [方向(0:东-》西,1:南-》北,2:西-》东,3:北-》南]
+		 * 3  [0:左转灯,1: 直行灯 ,2:右转灯 ,3:人行道]
+		 * : 
+		 * 1  [3：红 2：黄 1：绿 0：灭 null：未知]
+		 */
 		
 		System.out.println(dates);
-		System.out.println(gltime);
-		System.out.println(rltime);
-		System.out.println(yltime);
+		System.out.println(gltime);//绿灯持续时间
+		System.out.println(yltime);//黄灯持续时间
+		System.out.println(rltime);//红灯持续时间
 		
 		
-		
+		String[] solus = dates.split(",");
+		for (int i = 0; i < solus.length; i++) {
+			int stepid= Integer.parseInt(solus[i].substring(0, solus[i].indexOf("_")));
+			int roadtype = Integer.parseInt(solus[i].substring(solus[i].indexOf("_")+1, solus[i].lastIndexOf("_")));
+			int dengtype = Integer.parseInt(solus[i].substring(solus[i].lastIndexOf("_")+1, solus[i].indexOf(":")));
+			String dengtypestr="";
+			switch (dengtype) {
+			case 0:
+				dengtypestr = "leftcolor";
+				break;
+			case 1:
+				dengtypestr = "linecolor";
+				break;
+			case 2:
+				dengtypestr = "rightcolor";
+				break;
+			case 3:
+				dengtypestr = "rxcolor";
+				break;
+			default:
+				break;
+			}
+			int deng = Integer.parseInt(solus[i].substring(solus[i].indexOf(":")+1));
+			System.out.println("stepid="+stepid+",fangxiang="+roadtype+",dengtype="+dengtype+",deng="+deng);
+			
+		}
 		
 		return NONE;
 	}
