@@ -334,7 +334,22 @@ var btn=document.getElementById('show_btn');
          </ul>
          
        </div>
-       
+       			<s:hidden id="c1" name="conflictVO.c_00"></s:hidden>
+				  <s:hidden id="c2" name="conflictVO.c_01"></s:hidden>
+				   <s:hidden id="c3" name="conflictVO.c_02"></s:hidden>
+				    <s:hidden id="c4" name="conflictVO.c_03"></s:hidden>
+				     <s:hidden id="c5" name="conflictVO.c_10"></s:hidden>
+				      <s:hidden id="c6" name="conflictVO.c_11"></s:hidden>
+				       <s:hidden id="c7" name="conflictVO.c_12"></s:hidden>
+				        <s:hidden id="c8" name="conflictVO.c_13"></s:hidden>
+				         <s:hidden id="c9" name="conflictVO.c_20"></s:hidden>
+				          <s:hidden id="c10" name="conflictVO.c_21"></s:hidden>
+				           <s:hidden id="c11" name="conflictVO.c_22"></s:hidden>
+				            <s:hidden id="c12" name="conflictVO.c_23"></s:hidden>
+				             <s:hidden id="c13" name="conflictVO.c_30"></s:hidden>
+				              <s:hidden id="c14" name="conflictVO.c_31"></s:hidden>
+				               <s:hidden id="c15" name="conflictVO.c_32"></s:hidden>
+				                <s:hidden id="c16" name="conflictVO.c_33"></s:hidden>
        <div id="test_div" style="width:100%; float:left; display:none; margin-bottom:15px; ">
        
          <ul class="toolbar1" style="margin-left:80px; ">

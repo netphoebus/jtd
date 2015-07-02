@@ -21,11 +21,14 @@ import org.apache.struts2.interceptor.SessionAware;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import com.jlj.model.Greenconflict;
 import com.jlj.model.Sig;
 import com.jlj.model.SigPara;
 import com.jlj.model.Usero;
+import com.jlj.service.IGreenconflictService;
 import com.jlj.service.ISigService;
 import com.jlj.util.Commands;
+import com.jlj.vo.ConflictVO;
 import com.jlj.vo.SigStatus;
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -52,7 +55,12 @@ public class SigAction extends ActionSupport implements RequestAware,
 	private SigPara sigParas;
 	private Long mkid;
 	
-	
+	/*
+	 * 绿冲突
+	 */
+	private List<Greenconflict> greens;
+	private ConflictVO conflictVO;
+	private IGreenconflictService greenService;
 	/*
 	 * json messsage
 	 */
@@ -129,6 +137,7 @@ public class SigAction extends ActionSupport implements RequestAware,
 			//curruntSigIp = sig.getIp();
 			//session.put("sigIp", sig.getIp());// 从地图中进入信号机，将信号机ip传入session
 			curruntSigNumber = sig.getNumber();
+			setGreenConflict(sig.getId());
 			session.put("sigNumber", curruntSigNumber);// 从地图中进入信号机，将信号机number传入session
 		}
 		return "traffic";
@@ -148,6 +157,126 @@ public class SigAction extends ActionSupport implements RequestAware,
 			}
 		}
 		return null;
+	}
+	
+	//获得绿冲突对象
+	private void setGreenConflict(Integer sigid) {
+		greens = greenService.loadBySid(sigid);
+		if(greens!=null&&greens.size()==16)
+		{
+			conflictVO = new ConflictVO();
+			for(int i=0;i<greens.size();i++)
+			{
+				String conflictname="";
+				
+				if(greens.get(i).getL00()!=null&&greens.get(i).getL00()==1)
+				{
+					conflictname = conflictname+"_0_0,";
+				} if(greens.get(i).getL01()!=null&&greens.get(i).getL01()==1)
+				{
+					conflictname = conflictname+"_0_1,";
+				} if(greens.get(i).getL02()!=null&&greens.get(i).getL02()==1)
+				{
+					conflictname = conflictname+"_0_2,";
+				} if(greens.get(i).getL03()!=null&&greens.get(i).getL03()==1)
+				{
+					conflictname = conflictname+"_0_3,";
+				} if(greens.get(i).getL10()!=null&&greens.get(i).getL10()==1)
+				{
+					conflictname = conflictname+"_1_0,";
+				} if(greens.get(i).getL11()!=null&&greens.get(i).getL11()==1)
+				{
+					conflictname = conflictname+"_1_1,";
+				} if(greens.get(i).getL12()!=null&&greens.get(i).getL12()==1)
+				{
+					conflictname = conflictname+"_1_2,";
+				} if(greens.get(i).getL13()!=null&&greens.get(i).getL13()==1)
+				{
+					conflictname = conflictname+"_1_3,";
+				} if(greens.get(i).getL20()!=null&&greens.get(i).getL20()==1)
+				{
+					conflictname = conflictname+"_2_0,";
+				} if(greens.get(i).getL21()!=null&&greens.get(i).getL21()==1)
+				{
+					conflictname = conflictname+"_2_1,";
+				} if(greens.get(i).getL22()!=null&&greens.get(i).getL22()==1)
+				{
+					conflictname = conflictname+"_2_2,";
+				} if(greens.get(i).getL23()!=null&&greens.get(i).getL23()==1)
+				{
+					conflictname = conflictname+"_2_3,";
+				} if(greens.get(i).getL30()!=null&&greens.get(i).getL30()==1)
+				{
+					conflictname = conflictname+"_3_0,";
+				} if(greens.get(i).getL31()!=null&&greens.get(i).getL31()==1)
+				{
+					conflictname = conflictname+"_3_1,";
+				} if(greens.get(i).getL32()!=null&&greens.get(i).getL32()==1)
+				{
+					conflictname = conflictname+"_3_2,";
+				} if(greens.get(i).getL33()!=null&&greens.get(i).getL33()==1)
+				{
+					conflictname = conflictname+"_3_3,";
+				}
+				
+				switch (i) {
+				case 0:
+					conflictVO.setC_00(conflictname);
+					break;
+				case 1:
+					conflictVO.setC_01(conflictname);
+					break;
+				case 2:
+					conflictVO.setC_02(conflictname);
+					break;
+				case 3:
+					conflictVO.setC_03(conflictname);
+					break;
+				case 4:
+					conflictVO.setC_10(conflictname);
+					break;
+				case 5:
+					conflictVO.setC_11(conflictname);
+					break;
+				case 6:
+					conflictVO.setC_12(conflictname);
+					break;
+				case 7:
+					conflictVO.setC_13(conflictname);
+					break;
+				case 8:
+					conflictVO.setC_20(conflictname);
+					break;
+				case 9:
+					conflictVO.setC_21(conflictname);
+					break;
+				case 10:
+					conflictVO.setC_22(conflictname);
+					break;
+				case 11:
+					conflictVO.setC_23(conflictname);
+					break;
+				case 12:
+					conflictVO.setC_30(conflictname);
+					break;
+				case 13:
+					conflictVO.setC_31(conflictname);
+					break;
+				case 14:
+					conflictVO.setC_32(conflictname);
+					break;
+				case 15:
+					conflictVO.setC_33(conflictname);
+					break;
+				default:
+					break;
+				}
+				
+				
+			}
+			
+		}
+		
 	}
 
 	// 获得状态
@@ -208,14 +337,10 @@ public class SigAction extends ActionSupport implements RequestAware,
 	public String runByPharse()
 	{
 		
-		
-		
 		System.out.println(dates);
 		System.out.println(gltime);
 		System.out.println(rltime);
 		System.out.println(yltime);
-		
-		
 		
 		
 		return NONE;
@@ -356,6 +481,30 @@ public class SigAction extends ActionSupport implements RequestAware,
 
 	public void setYltime(int yltime) {
 		this.yltime = yltime;
+	}
+
+	public List<Greenconflict> getGreens() {
+		return greens;
+	}
+
+	public void setGreens(List<Greenconflict> greens) {
+		this.greens = greens;
+	}
+
+	public ConflictVO getConflictVO() {
+		return conflictVO;
+	}
+
+	public void setConflictVO(ConflictVO conflictVO) {
+		this.conflictVO = conflictVO;
+	}
+
+	public IGreenconflictService getGreenService() {
+		return greenService;
+	}
+	@Resource
+	public void setGreenService(IGreenconflictService greenService) {
+		this.greenService = greenService;
 	}
 	
 	

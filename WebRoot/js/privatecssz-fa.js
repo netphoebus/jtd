@@ -104,9 +104,34 @@ $(document).ready(function(){
 						conflictStart = imgclass.substring(0,1);
 						if(typeof(conflictStr) != "undefined"&&conflictStr!="")
 						{
-							console.log(conflictStart+conflictStr);
-							var bjsrc = $("."+conflictStart+conflictStr)[0].src;
-							console.log(bjsrc);
+							var strs= conflictStr.split(","); //字符分割 
+							console.log("strs:-------------------------"+strs);
+							for (i=0;i<strs.length-1;i++) 
+							{ 
+								var lightKind = strs[i].substring(strs[i].length-1,strs[i].length);
+								console.log("lightKind:-------------------------"+lightKind);
+								var imgNow = null;//当前与之比较的灯
+								var currentLightNumber = 0;//当前与之比较的灯 的种类
+								var srcNow = "";
+								if(lightKind==3)
+								{
+									 imgNow = $("."+conflictStart+strs[i]);
+									 console.log("imgNow:---------------------------"+"."+conflictStart+strs[i]);
+									 srcNow = imgNow[0].currentSrc;
+									 currentLightNumber = srcNow.substring(srcNow.indexOf(".png")-1,srcNow.indexOf(".png"));//当前比较灯的颜色
+								}else
+								{
+									imgNow = $("#"+conflictStart+strs[i]);
+									srcNow = imgNow[0].currentSrc;
+								    currentLightNumber = srcNow.substring(srcNow.indexOf(".png")-1,srcNow.indexOf(".png"));//当前比较灯的颜色
+								}
+								if(currentLightNumber==1)
+								{
+									alert(imgNow[0].alt+"与当前灯绿冲突");
+									return;
+								}
+							}
+							
 						}
 						
 					}else
