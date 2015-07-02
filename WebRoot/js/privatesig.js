@@ -330,6 +330,10 @@ function runByPharse()
 	var gltime = $("#gltime").val();
 	var rltime = $("#rltime").val();
 	var yltime = $("#yltime").val();
+	
+	
+	var t=setTimeout(executeCommand(33),1000*(parseInt(gltime)+parseInt(rltime)+parseInt(yltime)+2000));//转换为自动控制
+	
 	console.log(updateFang,gltime,rltime,yltime);
 	var msg = "";
 	for(var prop in updateFang){
