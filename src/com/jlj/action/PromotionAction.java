@@ -67,10 +67,48 @@ public class PromotionAction extends ActionSupport implements RequestAware,
 			request.put("errorMsg", errorMsg);
 			return "index";
 		}
-		this.getCurrrenSession(sigNumber);
+		IoSession currrenSession =this.getCurrrenSession(sigNumber);
 		System.out.println("正在升级.....");
 		System.out.println(centerIp);
 		System.out.println(centerPort);
+		int port = Integer.valueOf(centerPort);
+		byte send_byte[] = new byte[14];
+		send_byte[0] = (byte) 0xff;
+		send_byte[1] = (byte) 0xff;
+		send_byte[2] = (byte) 0xff;
+		send_byte[3] = (byte) 0xff;
+		send_byte[4] = (byte) 0x01;
+		send_byte[5] = (byte) 0xF0;
+		send_byte[6] = (byte) 0xA2;
+		send_byte[7] = (byte) 0x17;
+		send_byte[8] = (byte) 0x00;
+		send_byte[9] = (byte) 0x0A;
+		send_byte[10] = (byte) (port>>8);
+		send_byte[11] = (byte) (port&0xff);
+		
+		 int k = 0;
+		 for( int i = 4; i < send_byte.length-2; i++){
+			 //System.out.println((msendDatas[i]&0xFF)+"对应"+msendDatas[i]);
+			//System.out.println();
+		  k += send_byte[i]&0xFF;
+		 }
+		 
+	       for (int i = 0; i < 2; i++) {  
+	    	   send_byte[send_byte.length-i-1]  = (byte) (k >>> (i * 8));  
+	       }  
+		
+	   	System.out.println("=======================下发升级命令========================================");
+		
+		for (int i3 = 0; i3 < send_byte.length; i3++) {
+			System.out.print(send_byte[i3]);
+		}
+		System.out.println("");
+		System.out.println("========================下发升级命令=======================================");
+		
+		currrenSession.write(send_byte);
+	       
+		//send_byte[12] = (byte) 0xff;
+		//send_byte[13] = (byte) 0xff;
 		return null;
 	}
 	/**
