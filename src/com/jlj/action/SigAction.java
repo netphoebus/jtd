@@ -334,6 +334,7 @@ public class SigAction extends ActionSupport implements RequestAware,
 	 * 按指定相位运行
 	 * @return
 	 */
+	private String sigNumber;
 	public String runByPharse()
 	{
 		//0_2_3:3,0_0_3:3,0_3_3:*,*_*_*:*,*_*_*:3,0_0_0:3,0_3_2:*,*_*_*:*,*_*_*:3,0_1_0:3,0_1_1:3,0_1_2:3,0_2_0:3,0_2_1:3,0_2_2:3,0_1_3:3,
@@ -349,12 +350,24 @@ public class SigAction extends ActionSupport implements RequestAware,
 		 * : 
 		 * 1  [3：红 2：黄 1：绿 0：灭 null：未知]
 		 */
-		
+		sigNumber = (String) session.get("sigNumber");
+		IoSession currrenSession=this.getCurrrenSession(sigNumber);
 		System.out.println(dates);
 		System.out.println(gltime);//绿灯持续时间
 		System.out.println(yltime);//黄灯持续时间
 		System.out.println(rltime);//红灯持续时间
 		
+		byte send_byte[] = new byte[27+8+4];
+		send_byte[0] = (byte) 0xff;
+		send_byte[1] = (byte) 0xff;
+		send_byte[2] = (byte) 0xff;
+		send_byte[3] = (byte) 0xff;
+		send_byte[4] = (byte) 0x01;
+		send_byte[5] = (byte) 0xF0;
+		send_byte[6] = (byte) 0xA2;
+		send_byte[7] = (byte) 0x06;
+		send_byte[8] = (byte) 0x00;
+		send_byte[9] = (byte) 0x23;
 		String[] solus = dates.split(",");
 		for (int i = 0; i < solus.length; i++) {
 			int stepid= Integer.parseInt(solus[i].substring(0, solus[i].indexOf("_")));
@@ -380,7 +393,219 @@ public class SigAction extends ActionSupport implements RequestAware,
 			int deng = Integer.parseInt(solus[i].substring(solus[i].indexOf(":")+1));
 			System.out.println("stepid="+stepid+",fangxiang="+roadtype+",dengtype="+dengtype+",deng="+deng);
 			
+			switch (roadtype) {
+			case 0:
+				if(dengtype == 0){
+					if(deng ==1){
+						send_byte[10] = (byte) (send_byte[10]&0x20);
+						send_byte[19] =  (byte) (send_byte[10]&0x40);
+						
+					}else if(deng == 2){
+						send_byte[10] = (byte) (send_byte[10]&0x40);
+					}else if(deng == 3){
+						send_byte[10] = (byte) (send_byte[10]&0x80);
+					}
+					send_byte[28] =  (byte) (send_byte[10]&0x80);
+				}else if(dengtype == 1){
+					if(deng ==1){
+						send_byte[10] = (byte) (send_byte[10]&0x04);
+						send_byte[19] =  (byte) (send_byte[10]&0x08);
+						
+					}else if(deng == 2){
+						send_byte[10] = (byte) (send_byte[10]&0x08);
+					}else if(deng == 3){
+						send_byte[10] = (byte) (send_byte[10]&0x10);
+					}
+					send_byte[28] =  (byte) (send_byte[10]&0x10);
+				}else if(dengtype == 2){
+					if(deng ==1){
+						send_byte[11] = (byte) (send_byte[10]&0x20);
+						send_byte[20] =  (byte) (send_byte[10]&0x40);
+						
+					}else if(deng == 2){
+						send_byte[11] = (byte) (send_byte[10]&0x40);
+					}else if(deng == 3){
+						send_byte[11] = (byte) (send_byte[10]&0x80);
+					}
+					send_byte[29] =  (byte) (send_byte[10]&0x80);
+				}else if(dengtype == 3){
+					if(deng ==1){
+						send_byte[11] = (byte) (send_byte[10]&0x0A);
+						send_byte[20] =  (byte) (send_byte[10]&0x14);
+						
+					}else if(deng == 2){
+					}else if(deng == 3){
+						send_byte[11] = (byte) (send_byte[10]&0x14);
+					}
+					send_byte[29] =  (byte) (send_byte[10]&0x14);
+				}
+				break;
+			case 1:
+				if(dengtype == 0){
+					if(deng ==1){
+						send_byte[12] = (byte) (send_byte[10]&0x20);
+						send_byte[21] =  (byte) (send_byte[10]&0x40);
+					}else if(deng == 2){
+						send_byte[12] = (byte) (send_byte[10]&0x40);
+					}else if(deng == 3){
+						send_byte[12] = (byte) (send_byte[10]&0x80);
+					}
+					send_byte[30] =  (byte) (send_byte[10]&0x80);
+				}else if(dengtype == 1){
+					if(deng ==1){
+						send_byte[12] = (byte) (send_byte[10]&0x04);
+						send_byte[21] =  (byte) (send_byte[10]&0x08);
+						
+					}else if(deng == 2){
+						send_byte[12] = (byte) (send_byte[10]&0x08);
+					}else if(deng == 3){
+						send_byte[12] = (byte) (send_byte[10]&0x10);
+					}
+					send_byte[30] =  (byte) (send_byte[10]&0x10);
+				}else if(dengtype == 2){
+					if(deng ==1){
+						send_byte[13] = (byte) (send_byte[10]&0x20);
+						send_byte[22] =  (byte) (send_byte[10]&0x40);
+						
+					}else if(deng == 2){
+						send_byte[13] = (byte) (send_byte[10]&0x40);
+					}else if(deng == 3){
+						send_byte[13] = (byte) (send_byte[10]&0x80);
+					}
+					send_byte[31] =  (byte) (send_byte[10]&0x80);
+				}else if(dengtype == 3){
+					if(deng ==1){
+						send_byte[13] = (byte) (send_byte[10]&0x0A);
+						send_byte[22] =  (byte) (send_byte[10]&0x14);
+						
+					}else if(deng == 2){
+					}else if(deng == 3){
+						send_byte[13] = (byte) (send_byte[10]&0x14);
+					}
+					send_byte[31] =  (byte) (send_byte[10]&0x14);
+				}
+				break;
+			case 2:
+				if(dengtype == 0){
+					if(deng ==1){
+						send_byte[14] = (byte) (send_byte[10]&0x20);
+						send_byte[23] =  (byte) (send_byte[10]&0x40);
+					}else if(deng == 2){
+						send_byte[14] = (byte) (send_byte[10]&0x40);
+					}else if(deng == 3){
+						send_byte[14] = (byte) (send_byte[10]&0x80);
+					}
+					send_byte[32] =  (byte) (send_byte[10]&0x80);
+				}else if(dengtype == 1){
+					if(deng ==1){
+						send_byte[14] = (byte) (send_byte[10]&0x04);
+						send_byte[23] =  (byte) (send_byte[10]&0x08);
+						
+					}else if(deng == 2){
+						send_byte[14] = (byte) (send_byte[10]&0x08);
+					}else if(deng == 3){
+						send_byte[14] = (byte) (send_byte[10]&0x10);
+					}
+					send_byte[32] =  (byte) (send_byte[10]&0x10);
+				}else if(dengtype == 2){
+					if(deng ==1){
+						send_byte[15] = (byte) (send_byte[10]&0x20);
+						send_byte[24] =  (byte) (send_byte[10]&0x40);
+						
+					}else if(deng == 2){
+						send_byte[15] = (byte) (send_byte[10]&0x40);
+					}else if(deng == 3){
+						send_byte[15] = (byte) (send_byte[10]&0x80);
+					}
+					send_byte[33] =  (byte) (send_byte[10]&0x80);
+				}else if(dengtype == 3){
+					if(deng ==1){
+						send_byte[15] = (byte) (send_byte[10]&0x0A);
+						send_byte[24] =  (byte) (send_byte[10]&0x14);
+						
+					}else if(deng == 2){
+					}else if(deng == 3){
+						send_byte[15] = (byte) (send_byte[10]&0x14);
+					}
+					send_byte[33] =  (byte) (send_byte[10]&0x14);
+				}
+				break;
+			case 3:
+				if(dengtype == 0){
+					if(deng ==1){
+						send_byte[16] = (byte) (send_byte[10]&0x20);
+						send_byte[25] =  (byte) (send_byte[10]&0x40);
+					}else if(deng == 2){
+						send_byte[16] = (byte) (send_byte[10]&0x40);
+					}else if(deng == 3){
+						send_byte[16] = (byte) (send_byte[10]&0x80);
+					}
+					send_byte[34] =  (byte) (send_byte[10]&0x80);
+				}else if(dengtype == 1){
+					if(deng ==1){
+						send_byte[16] = (byte) (send_byte[10]&0x04);
+						send_byte[25] =  (byte) (send_byte[10]&0x08);
+						
+					}else if(deng == 2){
+						send_byte[16] = (byte) (send_byte[10]&0x08);
+					}else if(deng == 3){
+						send_byte[16] = (byte) (send_byte[10]&0x10);
+					}
+					send_byte[34] =  (byte) (send_byte[10]&0x10);
+				}else if(dengtype == 2){
+					if(deng ==1){
+						send_byte[17] = (byte) (send_byte[10]&0x20);
+						send_byte[26] =  (byte) (send_byte[10]&0x40);
+						
+					}else if(deng == 2){
+						send_byte[17] = (byte) (send_byte[10]&0x40);
+					}else if(deng == 3){
+						send_byte[17] = (byte) (send_byte[10]&0x80);
+					}
+					send_byte[35] =  (byte) (send_byte[10]&0x80);
+				}else if(dengtype == 3){
+					if(deng ==1){
+						send_byte[17] = (byte) (send_byte[10]&0x0A);
+						send_byte[26] =  (byte) (send_byte[10]&0x14);
+						
+					}else if(deng == 2){
+					}else if(deng == 3){
+						send_byte[17] = (byte) (send_byte[10]&0x14);
+					}
+					send_byte[35] =  (byte) (send_byte[10]&0x14);
+				}
+				break;
+			default:
+				break;
+			}
+		
+			
 		}
+		send_byte[18] = (byte) gltime;
+		send_byte[27] = (byte) yltime;
+		send_byte[36] = (byte) rltime;
+		
+		 int k = 0;
+		 for( int i1 = 4; i1 < send_byte.length-2; i1++){
+			 //System.out.println((msendDatas[i]&0xFF)+"对应"+msendDatas[i]);
+			//System.out.println();
+		  k += send_byte[i1]&0xFF;
+		 }
+		 
+	       for (int i1 = 0; i1 < 2; i1++) {  
+	    	   send_byte[send_byte.length-i1-1]  = (byte) (k >>> (i1 * 8));  
+	       }  
+		
+	   	System.out.println("=======================下发升级命令========================================");
+		
+		for (int i3 = 0; i3 < send_byte.length; i3++) {
+			System.out.print(send_byte[i3]);
+		}
+		System.out.println("");
+		System.out.println("========================下发升级命令=======================================");
+		
+		currrenSession.write(send_byte);
+		
 		
 		return NONE;
 	}
@@ -544,6 +769,14 @@ public class SigAction extends ActionSupport implements RequestAware,
 	@Resource
 	public void setGreenService(IGreenconflictService greenService) {
 		this.greenService = greenService;
+	}
+
+	public static String getCurruntSigNumber() {
+		return curruntSigNumber;
+	}
+
+	public static void setCurruntSigNumber(String curruntSigNumber) {
+		SigAction.curruntSigNumber = curruntSigNumber;
 	}
 	
 	
