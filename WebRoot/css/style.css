@@ -87,6 +87,17 @@ h2{font-weight:normal;}
 	margin-top: 100px;
 	margin-left: 330px;
 }
+
+.loginyzm{
+	width: 106px;
+	height: 30px;
+	background: url(../images/loginyzm.png) no-repeat;
+	border: none;
+	line-height: 30px;
+	padding-left: 44px;
+	font-size: 14px;
+	color: #90a2bc;
+}
 .loginbox ul li{margin-bottom:25px;}
 .loginbox ul li label{color:#687f92; padding-left:25px;}
 .loginbox ul li label a{color:#687f92;}

@@ -160,7 +160,7 @@ public class SigAction extends ActionSupport implements RequestAware,
 	}
 	
 	//获得绿冲突对象
-	private void setGreenConflict(Integer sigid) {
+	private void setGreenConflict(int sigid) {
 		greens = greenService.loadBySid(sigid);
 		if(greens!=null&&greens.size()==16)
 		{
