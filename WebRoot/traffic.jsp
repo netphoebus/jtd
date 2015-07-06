@@ -357,9 +357,10 @@ var btn=document.getElementById('show_btn');
        	 <li  onclick="executeCommand(29)">黄 闪<br /></li>
          <li  onclick="executeCommand(30)">关 灯<br /></li>
          <li  onclick="executeCommand(31)">全 红<br /></li>
-           <li  onclick="runByPharse()">指定相位运行<br /></li>
+         <!--  
+           <li  onclick="">指定相位运行<br /></li>-->
          </ul>
-         
+          <!--  
           <div style="width:100%; float:left; margin-bottom:10px;">
          <ul class="toolbar1" style="margin-left:80px; ">
 	         		<li  onclick="allRed(0)">指定相位全红<br /></li>
@@ -518,7 +519,7 @@ var btn=document.getElementById('show_btn');
          
        </div>
            
-         
+         -->
        </div>
         <div id="divProgressbar"></div>
      </div>

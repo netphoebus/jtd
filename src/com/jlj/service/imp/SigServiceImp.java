@@ -79,7 +79,7 @@ public class SigServiceImp implements ISigService  {
 		return sigDao.pageList(queryString,p,page,size);
 	}
 	public Sig loadByMkid(long mkid) {
-		String queryString = "from Sig mo where 1=1 and mo.mkid="+mkid;
+		String queryString = "from Sig mo where  mo.mkid="+mkid;
 		return sigDao.loadByMkid(queryString);
 	}
 	public Sig querySigByIpAddress(String ipAddress) {

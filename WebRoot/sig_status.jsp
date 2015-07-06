@@ -27,7 +27,7 @@
 					success:function(data){ 
 						var _tr = "";
 						$.each(data,function(i,list){ 
-							_tr += "<li class=active ><cite></cite><a href=traffic.html target=mapFrame>"+list.name+"信号机"+list.status+"</a></li>";
+							_tr += "<li class=active ><cite></cite>"+list.name+"信号机"+list.status+"</li>";
 							
 						}) 
 						$(".menuson").html(_tr);

@@ -132,8 +132,12 @@ public class SigAction extends ActionSupport implements RequestAware,
 	}
 	
 	public String toTraffic() {
+		System.out.println(mkid);
 		sig = sigService.loadByMkid(mkid);
+		System.out.println("sig================="+sig);
 		if (sig != null) {
+			
+			System.out.println(sig.getId());
 			//curruntSigIp = sig.getIp();
 			//session.put("sigIp", sig.getIp());// 从地图中进入信号机，将信号机ip传入session
 			curruntSigNumber = sig.getNumber();
@@ -161,7 +165,9 @@ public class SigAction extends ActionSupport implements RequestAware,
 	
 	//获得绿冲突对象
 	private void setGreenConflict(int sigid) {
+		System.out.println("sigid:"+sigid);
 		greens = greenService.loadBySid(sigid);
+		System.out.println("greens:"+greens);
 		if(greens!=null&&greens.size()==16)
 		{
 			conflictVO = new ConflictVO();

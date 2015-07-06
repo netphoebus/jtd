@@ -3,6 +3,7 @@ package com.jlj.action;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -153,7 +154,17 @@ public class MapAction extends ActionSupport implements RequestAware,
 		/*
 		 * 不属于任何区域的信号机
 		 */
-		List<Sig> sigs_nullarea = sigService.querySigsByUserarea(1);
+		List<Sig> allsigs = sigService.getSigs();//所有信号机
+		
+		List<Sig> sigs_nullarea = new ArrayList<Sig>();//区域为null的信号机
+		
+		for(int i=0;i<allsigs.size();i++)
+		{
+			if(allsigs.get(i).getUserarea()==null)
+			{
+				sigs_nullarea.add(allsigs.get(i));
+			}
+		}
 		if(sigs_nullarea!=null&&sigs_nullarea.size()>0)
 		{
 			sigs.addAll(sigs_nullarea);
@@ -334,7 +345,8 @@ public class MapAction extends ActionSupport implements RequestAware,
 			request.put("errorMsg", errorMsg);
 			return "index";
 		}
-		sig = sigService.querySigByNumber(sigNumber);
+		 sig = sigService.querySigByNumber(sigNumber);
+		sig.setUserarea(null);
 		sig.setMkid(null);
 		sig.setAddress(null);
 		sig.setName(null);
