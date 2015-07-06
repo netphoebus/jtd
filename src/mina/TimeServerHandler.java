@@ -40,6 +40,7 @@ public class TimeServerHandler  implements IoHandler {
 
 	public void inputClosed(IoSession arg0) throws Exception {
 		// TODO Auto-generated method stub
+		arg0.close(true);
 		
 	}
 	protected byte[] m_oData = null;
