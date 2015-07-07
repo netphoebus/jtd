@@ -31,8 +31,8 @@
 	 				当前区域：<input type="text" name="areaname" id="areaname" class="dfinputarea" size="17" readonly="readonly"/>
 				</s:else>
 		   <input  type="button" onclick="ClearPoly()" value="浏览地图" style="margin-left:20px;margin-top:10px;width:100px;height:20px;  background:url(images/topbtn02.fw.png); color:#FFF; border-bottom:#039 1px solid; border-right:#039 1px solid;"/>&nbsp;&nbsp;
-		   <input type="button" onclick="addClickEventListener()" value=" 添加信号机 " style="margin-left:20px;margin-top:10px;width:100px;height:20px; background:url(images/topbtn02.fw.png); color:#FFF; border-bottom:#039 1px solid; border-right:#039 1px solid;"/>
-	
+		   <input type="button" onclick="addClickEventListener()" value=" 添加信号机 " style="margin-left:20px;margin-top:10px;width:100px;height:20px; background:url(images/topbtn02.fw.png); color:#FFF; border-bottom:#039 1px solid; border-right:#039 1px solid;"/>&nbsp;&nbsp;
+			<input type="button" onclick="deleteSig()" value=" 删除信号机 " style="margin-left:20px;margin-top:10px;width:100px;height:20px; background:url(images/topbtn02.fw.png); color:#FFF; border-bottom:#039 1px solid; border-right:#039 1px solid;"/>
  	 </div>
  	
  								

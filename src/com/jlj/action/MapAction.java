@@ -339,13 +339,7 @@ public class MapAction extends ActionSupport implements RequestAware,
 			request.put("errorMsg", errorMsg);
 			return "index";
 		}*/
-		sigNumber = (String) session.get("sigNumber");
-		if(sigNumber==null){
-			String errorMsg="链接失效,请重新进去信号机,进行设置";
-			request.put("errorMsg", errorMsg);
-			return "index";
-		}
-		 sig = sigService.querySigByNumber(sigNumber);
+		sig = sigService.loadByMkid(mkid);
 		sig.setUserarea(null);
 		sig.setMkid(null);
 		sig.setAddress(null);
@@ -353,7 +347,7 @@ public class MapAction extends ActionSupport implements RequestAware,
 		sig.setLat(null);
 		sig.setLng(null);
 		sigService.update(sig);
-		return "map";
+		return NONE;
 	}
 	
 	/**

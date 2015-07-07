@@ -16,7 +16,7 @@ var options = "";
 var areaid = 0;//当前区域
 var ulimit = 10;//用户权限
 var searchStrURL = decodeURI(location.search);
-		    	
+var deleteable = false;    	
 
 google.maps.event.addDomListener(window, "load", initialize);
 
@@ -80,6 +80,7 @@ function reset() {
 
 function ClearPoly() {
 	maphelper.clearInstanceEvent(mapobj, 'click');//删除实例其所有事件侦听器或指定侦听器.
+	deleteable = false;
 }
 
 function addClickEventListener() {
@@ -155,7 +156,16 @@ function setMarkerEvents(marker)
 					
 						window.open("sigAction!toTraffic?mkid="+marker.id,"rightFrame");
 	        });
+	        
+	      
+	        	  maphelper.bindInstanceEvent(marker, 'click', function(event,map,marker) {
+	        	    if(deleteable)
+	        			{
+							deleteMarker(marker.id);
+						}
+	        });
 	
+	      
 		maphelper.bindInstanceEvent(marker, 'mouseover', function(event,map,marker) {
 		
 			//if(marker.isConnect&&!marker.isInitMarker)
@@ -391,6 +401,8 @@ function saveMarker(id)
 //删除单个信号机标记
 function deleteMarker(id)
 {
+	alert("您确定要删除该信号机么?");
+	console.log(id);
 	for(var i=0;i<initMarkers.length;i++)
 	{
 	
@@ -399,7 +411,7 @@ function deleteMarker(id)
 			$.ajax({   
 	            url:'delete',//这里是你的action或者servlert的路径地址   
 	            type:'post', //数据发送方式     
-	 			data: { "id":id},
+	 			data: { "mkid":id},
 	            error: function(msg)
 	            { //失败   
 	            	alert('信号机删除失败');   
@@ -415,9 +427,12 @@ function deleteMarker(id)
 	}
 }
 
-function Polyline() {
-		alert("点击地图上的信号机");
-		 clickable = true;//单击启动
+
+
+function deleteSig()
+{
+		alert("点击地图上的信号机进行删除");
+		deleteable = true;//单击启动
 }
 
 function changeArea()

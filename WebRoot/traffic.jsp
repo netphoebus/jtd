@@ -307,7 +307,6 @@ var btn=document.getElementById('show_btn');
 
 		  <li  id="manyCommands">初始化所有参数</li> 
 		  <li  onclick="executeCommand(0)">调阅实时状态</li> 
-		  <li  onclick="javascript:location.href='mapAction!delete'">删除信号机</li>
          </ul>
        </div>
        <div style="width:100%; float:left; margin-bottom:10px;">
