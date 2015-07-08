@@ -25,7 +25,7 @@ public class Greenroad implements java.io.Serializable {
 	private String sigmids;
 	private String name;
 	private String remark;
-	
+	private Integer type;
 	// Constructors
 
 	/** default constructor */
@@ -33,11 +33,12 @@ public class Greenroad implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public Greenroad(Long marklineid, String sigmids, String name, String remark) {
+	public Greenroad(Long marklineid, String sigmids, String name, String remark,Integer type) {
 		this.marklineid = marklineid;
 		this.sigmids = sigmids;
 		this.name = name;
 		this.remark = remark;
+		this.type = type;
 	}
 
 	// Property accessors
@@ -85,6 +86,15 @@ public class Greenroad implements java.io.Serializable {
 
 	public void setRemark(String remark) {
 		this.remark = remark;
+	}
+
+	@Column(name = "type")
+	public Integer getType() {
+		return type;
+	}
+
+	public void setType(Integer type) {
+		this.type = type;
 	}
 
 	
