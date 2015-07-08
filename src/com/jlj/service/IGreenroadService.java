@@ -38,6 +38,6 @@ public interface IGreenroadService {
 
 	public abstract Greenroad queryGreenroadByIpAddress(String ipAddress);
 
-	public abstract List<Greenroad> getAllGreenroads();
+	public abstract List<Greenroad> getAllGreenroads(int i);
 
 }

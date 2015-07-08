@@ -73,8 +73,13 @@ function addOption(){
 
 
 function addArea() {
-  dbclick = true;
-  alert("双击地图位置作为区域中心点.");
+	//改变新增区域按钮状态
+	if($("#addarea").css("background-image")!="none")
+	{
+		$("#addarea").css("background-image",'none').css("color","#000");
+		dbclick = true;
+	 	alert("双击地图位置作为区域中心点.");
+	}
  }
 
 
@@ -266,6 +271,7 @@ function setMarkerContent(marker)
 //添加单个信号机标记
 function saveArea()
 {
+	
 	var areaname = $('#areaname').val();
 	var lat = $("#CLAT").val();
 	var lng = $("#CLNG").val();
@@ -284,7 +290,12 @@ function saveArea()
 		alert("当前地图级别不正确..");
 		return ;
 	}
-	console.log(areaname,lat,lng,zoom);
+	//改变新增区域按钮状态
+	if($("#addarea").css("background-image")=="none")
+	{
+		$("#addarea").css("background-image",'url(images/topbtn02.fw.png)').css("color","#fff");
+		dbclick = false;
+	}
 	$.ajax({   
            url:'addArea',//这里是你的action或者servlert的路径地址   
            type:'post', //数据发送方式     

@@ -17,7 +17,7 @@ var ulimit = 10;//用户权限
 var searchStrURL = decodeURI(location.search);
 
 
-//绿波带
+//特勤控制
 var markerids = [];
 var linesmsg = [];
 var dbclickable = true;
@@ -62,11 +62,13 @@ google.maps.event.addDomListener(window, "load", initialize);
     mapobj = maphelper.initMap(mapCanvas, myOptions);
 	if(ulimit<=0)
 	{
+	
 		AreasInit();
 	}
 	MarkersInit();
 	console.log("initialize ulimit:"+ulimit);
-	//GreenLinesInit();
+	GreenLinesInit();
+	//google.maps.event.addListener(mapobj, "rightclick", reset);
 
 }
 
@@ -113,7 +115,6 @@ function initSignal(marker) {
 
 
 
-
 function removeClickListener() {
     if (mapClickEventListener) {
       google.maps.event.removeListener(mapClickEventListener);
@@ -148,6 +149,7 @@ function setMarkerEvents(marker)
 						opacity:0.5,
 						id:lineId
 				});
+	 			//$("#total_km").empty().text((poly.getLength()/1000).toFixed(3) + "km");  
 	 		}
 		});
 		
@@ -297,7 +299,7 @@ function AreasInit()
 function GreenLinesInit()
 {
 		$.ajax({   
-	            url:'loadLines',//这里是你的action或者servlert的路径地址   
+	            url:'loadTqLines',//这里是你的action或者servlert的路径地址   
 	            type:'post', //数据发送方式   
 	            dataType:'json', 
 	            async:false,
@@ -336,7 +338,7 @@ function GreenLinesInit()
 								});
 								dots = Array();
 								maphelper.bindInstanceEvent(poly, 'dblclick', function(event,map,poly) {
-									self.location='greenroadAction!lbd?mklid='+poly.id; 
+									self.location='greenroadAction!tq?mklid='+poly.id; 
 									
 					        });
 			    	    	
@@ -349,7 +351,6 @@ function GreenLinesInit()
 										dots.push(new Array(initMarkers[i].getPosition().kb,initMarkers[i].getPosition().jb));
 									}
 								}
-			    	    				
 							    	    var	 poly = maphelper.polyline({
 										dots:dots,						
 										color:"#008000",
@@ -382,14 +383,84 @@ function getMarkerContent(marker)
 
 
 
+//添加单个信号机标记
+function saveMarker(id)
+{
+	for(var i=0;i<initMarkers.length;i++)
+	{
+		if(initMarkers[i].id == id)
+		{
+			var number = $('#numberSelect').val();
+			var address = $('#address').val();
+			var name = $('#name').val();
+			var lat = initMarkers[i].getPosition().jb;
+			var lng = initMarkers[i].getPosition().kb;
+			
+			$.ajax({   
+	            url:'addOrUpdate',//这里是你的action或者servlert的路径地址   
+	            type:'post', //数据发送方式     
+	 			data: { "id":id,"number":number,"address":address,"name":name,"lat":lat,"lng":lng},
+	            error: function(msg)
+	            { //失败   
+	            	alert('信号机增加失败');   
+	            },   
+	            success: function(msg)
+	            { //成功   
+	          		if(infowindow)
+					infowindow.close();
+					alert('信号机绑定成功');   
+	            }  
+    	    });   
+    	    
+    	    initMarkers[i].initOver = true;
+    	    initMarkers[i].setAnimation(null);
+    	    initMarkers[i].name = name;
+    	    initMarkers[i].address = address;
+    	    initMarkers[i].number = number;
+		}
+	}
+}
 
 
-
+//删除单个信号机标记
+function deleteMarker(id)
+{
+	for(var i=0;i<initMarkers.length;i++)
+	{
+	
+		if(initMarkers[i].id == id)
+		{
+			$.ajax({   
+	            url:'delete',//这里是你的action或者servlert的路径地址   
+	            type:'post', //数据发送方式     
+	 			data: { "id":id},
+	            error: function(msg)
+	            { //失败   
+	            	alert('信号机删除失败');   
+	            },   
+	            success: function(msg)
+	            { //成功   
+	            	alert('信号机删除成功');   
+	            }  
+    	    });   
+    	   	 initMarkers[i].setMap(null);
+	         initMarkers.splice(i,1);
+		}
+	}
+}
 
 
 function Polyline() {
+
+
+		//改变新增区域按钮状态
+	if($("#addroad").css("background-image")!="none")
+	{
+		$("#addroad").css("background-image",'none').css("color","#000");
 		alert("点击地图上的信号机");
-		 clickable = true;//单击启动
+		clickable = true;//单击启动
+	}
+	
 }
 
 //清楚当前绿线
@@ -397,7 +468,6 @@ function ClearPoly() {
 	maphelper.clearPoly();
 	maphelper.clearLine();
 	$("#total_km").text("");
-
 	clickable = true;//单击恢复
 	
 }
@@ -411,6 +481,12 @@ function saveLine()
 	}else
 	{
 		console.log(poly);
+		//改变新增区域按钮状态
+		if($("#addroad").css("background-image")=="none")
+		{
+			$("#addroad").css("background-image",'url(images/topbtn02.fw.png)').css("color","#fff");
+			 clickable = false;
+		}
 		var sids = "";
 		for(var i=0;i<markerids.length;i++)
 		{
@@ -418,7 +494,7 @@ function saveLine()
 		}
 		console.log(lineId,sids);
 		$.ajax({   
-            url:'addOrUpdateLine',//这里是你的action或者servlert的路径地址   
+            url:'addOrUpdateTqLine',//这里是你的action或者servlert的路径地址   
             type:'post', //数据发送方式     
  			data: { "mklid":lineId,"sids":sids},
             error: function(msg)
@@ -438,51 +514,6 @@ function saveLine()
 
 function changeArea()
 {
-	location.href = "areayhmap.jsp?areaid="+parseInt($("#areaid").val());
-}
-function saveGon()
-{
-	//改变新增区域按钮状态
-		if($("#addyharea").css("background-image")=="none")
-		{
-			$("#addyharea").css("background-image",'url(images/topbtn02.fw.png)').css("color","#fff");
-			alert("优化区域开发中..")
-		}
-}
-var polygon = null;
-var areadots = new Array();
-function Polygon() {
-		ClearPoly();
-	
-		
-		if($("#addyharea").css("background-image")!="none")
-		{
-			$("#addyharea").css("background-image",'none').css("color","#000");
-			alert("点击地图进行绘制");
-		}
-			maphelper.bindInstanceEvent(mapobj, 'click',   
-		   function(event) {			 
-				areadots.push(new Array(event.latLng.lng(),event.latLng.lat()));
-		 		
-				//画多边形
-					if(areadots.length == 1){
-					polygon =  maphelper.polygon({
-							dots:areadots,						
-							color:"#009966",
-							opacity:0.3,
-							fillcolor:"#99FF00",
-							fillopacity:0.3
-					});
-				}else	{
-					var path = polygon.getPath();
-					path.push(event.latLng);
-					polygon.setPath(path);
-				}
-				maphelper.bindInstanceEvent(polygon, 'dblclick', function(event,map,poly) {
-									self.location='syssj.jsp'; 
-									
-					        });
-								
-		});  
+	location.href = "greenmap.jsp?areaid="+parseInt($("#areaid").val());
 }
 

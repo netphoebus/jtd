@@ -91,7 +91,34 @@ public class GreenroadAction extends ActionSupport implements RequestAware,
 	 */
 	public String loadLines() throws Exception {
 
-		greenroads = greenroadService.getAllGreenroads();
+		greenroads = greenroadService.getAllGreenroads(0);
+		if (greenroads != null && greenroads.size() > 0) {
+			JSONArray jsonArr = JSONArray.fromObject(greenroads);
+			System.out.println(jsonArr);
+			PrintWriter out;
+			try {
+				response.setContentType("text/html;charset=UTF-8");
+				out = response.getWriter();
+				out.print(jsonArr.toString());
+				out.flush();
+				out.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		return NONE;
+
+	}
+	
+	
+	/**
+	 * 地图加载特勤控制
+	 * 
+	 * @throws Exception
+	 */
+	public String loadTqLines() throws Exception {
+
+		greenroads = greenroadService.getAllGreenroads(1);
 		if (greenroads != null && greenroads.size() > 0) {
 			JSONArray jsonArr = JSONArray.fromObject(greenroads);
 			System.out.println(jsonArr);
@@ -139,6 +166,26 @@ public class GreenroadAction extends ActionSupport implements RequestAware,
 		return NONE;
 	}
 	
+	
+	/**
+	 * 绿波带地图页面新增 特勤控制
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
+	public String addOrUpdateTqLine() throws Exception {
+		greenroad = greenroadService.loadByMkid(mklid);
+		if (greenroad != null) {
+			// update
+		} else {
+			greenroad = new Greenroad();
+			greenroad.setMarklineid(mklid);
+			greenroad.setSigmids(sids);
+			greenroadService.add(greenroad);
+		}
+		return NONE;
+	}
+	
 	/**
 	 * 跳转至绿波带设置时距图 页面
 	 * 
@@ -153,6 +200,25 @@ public class GreenroadAction extends ActionSupport implements RequestAware,
 			return "lbd";
 		} else {
 			String errorMsg="没有获得相应绿波带信息,请确保数据不为空.";
+			request.put("errorMsg", errorMsg);
+			return "index";
+		}
+
+	}
+	
+	/**
+	 * 跳转至特勤控制设置时间页面
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
+	public String tq() throws Exception {
+		greenroad = greenroadService.loadByMkid(mklid);
+		if (greenroad != null) {
+			setSigVOS(greenroad);
+			return "tq";
+		} else {
+			String errorMsg="没有获得相应特勤控制信息,请确保数据不为空.";
 			request.put("errorMsg", errorMsg);
 			return "index";
 		}

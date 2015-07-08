@@ -115,7 +115,6 @@ function initSignal(marker) {
 
 
 
-
 function removeClickListener() {
     if (mapClickEventListener) {
       google.maps.event.removeListener(mapClickEventListener);
@@ -453,8 +452,16 @@ function deleteMarker(id)
 
 
 function Polyline() {
+
+
+		//改变新增区域按钮状态
+	if($("#addroad").css("background-image")!="none")
+	{
+		$("#addroad").css("background-image",'none').css("color","#000");
 		alert("点击地图上的信号机");
-		 clickable = true;//单击启动
+		clickable = true;//单击启动
+	}
+	
 }
 
 //清楚当前绿线
@@ -462,7 +469,6 @@ function ClearPoly() {
 	maphelper.clearPoly();
 	maphelper.clearLine();
 	$("#total_km").text("");
-
 	clickable = true;//单击恢复
 	
 }
@@ -476,6 +482,12 @@ function saveLine()
 	}else
 	{
 		console.log(poly);
+		//改变新增区域按钮状态
+		if($("#addroad").css("background-image")=="none")
+		{
+			$("#addroad").css("background-image",'url(images/topbtn02.fw.png)').css("color","#fff");
+			 clickable = false;
+		}
 		var sids = "";
 		for(var i=0;i<markerids.length;i++)
 		{

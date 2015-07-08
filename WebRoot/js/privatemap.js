@@ -47,7 +47,6 @@ function initialize() {
 		mapPath:"maptile/googlemaps/roadmap/",
 		mapFileExt:"png"
     };
-
     maphelper = new mapHelper();
     mapobj = maphelper.initMap(mapCanvas, myOptions);
     
@@ -64,10 +63,10 @@ function initialize() {
 //初始化select
 function addOption(){  
 
-		for(var i=0;i<numbers.length;i++){   
-		  	options = options+"+<option value=" +numbers[i] + ">" + numbers[i] + "</option>"
-		}   
-    }  
+	for(var i=0;i<numbers.length;i++){   
+	  	options = options+"+<option value=" +numbers[i] + ">" + numbers[i] + "</option>"
+	}   
+}  
 
 
 function reset() {
@@ -79,12 +78,57 @@ function reset() {
  }
 
 function ClearPoly() {
-	maphelper.clearInstanceEvent(mapobj, 'click');//删除实例其所有事件侦听器或指定侦听器.
-	deleteable = false;
+
+	//改变新增\删除按钮状态
+	if($("#addsig").css("background-image")=="none")
+	{
+		$("#addsig").css("background-image",'url(images/topbtn02.fw.png)').css("color","#fff");
+	}
+	if($("#delsig").css("background-image")=="none")
+	{
+		$("#delsig").css("background-image",'url(images/topbtn02.fw.png)').css("color","#fff");
+	}
+	maphelper.clearInstanceEvent(mapobj, 'click');//取消新增
+	if (mapClickEventListener) {
+		      google.maps.event.removeListener(mapClickEventListener);
+		      mapClickEventListener = null;
+		    }
+	deleteable = false;//取消删除
+}
+
+function deleteSig()
+{
+		//删除按钮
+		if($("#addsig").css("background-image")=="none")
+		{
+			$("#addsig").css("background-image",'url(images/topbtn02.fw.png)').css("color","#fff");
+			maphelper.clearInstanceEvent(mapobj, 'click');//取消新增
+			if (mapClickEventListener) {
+		      google.maps.event.removeListener(mapClickEventListener);
+		      mapClickEventListener = null;
+		    }
+		}
+		if($("#delsig").css("background-image")!="none")
+		{
+			$("#delsig").css("background-image",'none').css("color","#000");
+			alert("点击地图上的信号机进行删除");
+			deleteable = true;//可以删除
+		}
+		
 }
 
 function addClickEventListener() {
-		alert("单击地图添加信号机..");
+		
+		if($("#addsig").css("background-image")!="none")
+		{
+			$("#addsig").css("background-image",'none').css("color","#000");
+			alert("单击地图添加信号机..");
+		}
+		if($("#delsig").css("background-image")=="none")
+		{
+			$("#delsig").css("background-image",'url(images/topbtn02.fw.png)').css("color","#fff");
+			deleteable = false;//取消删除
+		}
         if (!mapClickEventListener) {
           mapClickEventListener = google.maps.event.addListener(mapobj, 'click', function (event) {
             addMarker(event.latLng, true);
@@ -112,7 +156,6 @@ function addClickEventListener() {
 
 	//初始化信号机
 function initSignal(marker) {
-   
     //标记动画
     if (marker.getAnimation() != null) {
         marker.setAnimation(null);
@@ -160,9 +203,9 @@ function setMarkerEvents(marker)
 	      
 	        	  maphelper.bindInstanceEvent(marker, 'click', function(event,map,marker) {
 	        	    if(deleteable)
-	        			{
-							deleteMarker(marker.id);
-						}
+        			{
+						deleteMarker(marker.id);
+					}
 	        });
 	
 	      
@@ -425,18 +468,13 @@ function deleteMarker(id)
 		         initMarkers.splice(i,1);
 			}
 		}
-		deleteable = false;
 	}
 	
 }
 
 
 
-function deleteSig()
-{
-		alert("点击地图上的信号机进行删除");
-		deleteable = true;//单击启动
-}
+
 
 function changeArea()
 {

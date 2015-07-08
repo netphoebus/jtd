@@ -127,4 +127,8 @@ public class GreenroadServiceImp implements IGreenroadService  {
 	public List<Greenroad> getAllGreenroads() {
 		return greenroadDao.queryList("from Greenroad ");
 	}
+	public List<Greenroad> getAllGreenroads(int i) {
+		// TODO Auto-generated method stub
+		return greenroadDao.queryList("from Greenroad mo where mo.type="+i);
+	}
 }
