@@ -52,7 +52,7 @@ $(document).ready(function(e) {
 			<div class="itab">
 				<ul>
 					<li>
-						<a href="#tab1" class="selected">电缆联动</a>
+						<a href="#tab1" class="selected">无电缆联动</a>
 					</li>
 
 				</ul>
@@ -168,7 +168,7 @@ $(document).ready(function(e) {
 					<div style="float: left; line-height: 35px; width: 90%;">
 						<label>
 							<input name="input" type="button" class="scbtn"
-							style="margin-top: 15px;" onclick="initGreenRoad()" value="删除当前联动" />
+							style="margin-top: 15px;" onclick="deleteLine()" value="删除当前联动" />
 						</label>
 						
 					</div>

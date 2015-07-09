@@ -514,6 +514,6 @@ function saveLine()
 
 function changeArea()
 {
-	location.href = "greenmap.jsp?areaid="+parseInt($("#areaid").val());
+	location.href = "tqmap.jsp?areaid="+parseInt($("#areaid").val());
 }
 

@@ -271,46 +271,60 @@ function setMarkerContent(marker)
 //添加单个信号机标记
 function saveArea()
 {
-	
-	var areaname = $('#areaname').val();
-	var lat = $("#CLAT").val();
-	var lng = $("#CLNG").val();
-	var zoom = $("#ZOOM").val();
-	if(lat==""||lng=="")
-	{
-		alert("请添加区域..");
-		return ;
-	}if(areaname=="")
-	{
-		alert("请填写区域名称..");
-		return ;
-	}
-	if(zoom==""||zoom==0)
-	{
-		alert("当前地图级别不正确..");
-		return ;
-	}
 	//改变新增区域按钮状态
-	if($("#addarea").css("background-image")=="none")
+	if($("#addarea").css("background-image")!="none")
 	{
-		$("#addarea").css("background-image",'url(images/topbtn02.fw.png)').css("color","#fff");
-		dbclick = false;
-	}
-	$.ajax({   
-           url:'addArea',//这里是你的action或者servlert的路径地址   
-           type:'post', //数据发送方式     
-			data: { "lat":lat,"lng":lng,"zoom":zoom,"uareaname":areaname},
-           error: function(msg)
-           { //失败   
-           		alert('区域添加失败');   
-           },   
-           success: function(msg)
-           { //成功   
-			alert('区域添加成功');  
+		alert("请点击 添加区域 按钮.");
+	}else
+	{
+		var areaname = $('#areaname').val();
+		var lat = $("#CLAT").val();
+		var lng = $("#CLNG").val();
+		var zoom = $("#ZOOM").val();
+		if(lng==""||isNaN(parseFloat(lng)))
+		{
+			alert("请正确填写经度.");
+			return ;
+		}
+		if(lat==""||isNaN(parseFloat(lat)))
+		{
+			alert("请正确填写纬度.");
+			return ;
+		}if(areaname=="")
+		{
+			alert("请填写区域名称..");
+			return ;
+		}
+		console.log(parseInt(zoom));
+		if(zoom==""||zoom==0||isNaN(parseInt(zoom)))
+		{
+			alert("当前地图级别不正确..");
+			return ;
+		}
+		//改变新增区域按钮状态
+		if($("#addarea").css("background-image")=="none")
+		{
+			$("#addarea").css("background-image",'url(images/topbtn02.fw.png)').css("color","#fff");
 			dbclick = false;
-           }  
-  	    });   
+		}
+		$.ajax({   
+	           url:'addArea',//这里是你的action或者servlert的路径地址   
+	           type:'post', //数据发送方式     
+				data: { "lat":lat,"lng":lng,"zoom":zoom,"uareaname":areaname},
+	           error: function(msg)
+	           { //失败   
+	           		alert('区域添加失败');   
+	           },   
+	           success: function(msg)
+	           { //成功   
+				alert('区域添加成功');  
+				dbclick = false;
+	           }  
+	  	    });   
     	    
+	
+	}
+	
     	 
 }
 

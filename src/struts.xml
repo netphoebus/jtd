@@ -181,6 +181,7 @@
 		</global-results>
 		<action name="greenroadAction" class="greenroadAction">
 			<result name="lbd">/lbd.jsp</result>
+			<result name="tq">/tqcontrol.jsp</result>
 			<result name="greenroad">/greenroad.jsp</result>
 			<result name="error">/error.jsp</result>
 		</action>
@@ -207,6 +208,10 @@
 	<package name="greenmap_ajax" extends="json-default">
 		<action name="addOrUpdateLine" class="greenroadAction" method="addOrUpdateLine"/>	
 		<action name="loadLines" class="greenroadAction" method="loadLines"/>	
+		<action name="addOrUpdateTqLine" class="greenroadAction" method="addOrUpdateTqLine"/>	
+		<action name="loadTqLines" class="greenroadAction" method="loadTqLines"/>	
+		<action name="deleteLine" class="greenroadAction" method="deleteLine"/>	
+		<action name="deleteTqLine" class="greenroadAction" method="deleteTqLine"/>	
 	</package>
 	
      <package name="sig_ajax" extends="json-default">
@@ -233,6 +238,7 @@
 	 
 	 <package name="greenroad_ajax" extends="json-default">
 		<action name="setPharseTime" class="greenroadAction" method="setPharseTime"/>
+		<action name="doControl" class="greenroadAction" method="doControl"/>
 	</package>
 	 
 	<package name="area_ajax" extends="json-default">

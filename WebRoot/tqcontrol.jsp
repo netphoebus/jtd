@@ -8,7 +8,7 @@
 			+ path + "/";
 %>
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<title>无标题文档</title>
@@ -17,7 +17,7 @@
 		<link href="css/select.css" rel="stylesheet" type="text/css" />
 		<script type="text/javascript" src="js/jquery.js"></script>
 		<script type="text/javascript" src="js/select-ui.min.js"></script>
-		<script type="text/javascript" src="js/lbd.js"></script>
+		<script type="text/javascript" src="js/tq.js"></script>
 		<!--[if IE 6]>
 	<script src="js/IE6PNG.js"></script>
 	<script type="text/javascript">
@@ -142,17 +142,6 @@ $(document).ready(function(e) {
 					</div>
 
 
-					<div style="float: left; line-height: 35px; width: 90%;">
-						<label>
-							周 期：
-						</label>
-						<div class="vocation">
-							<span style="margin-right: 5px;"> 
-									<s:textfield id="circleTime" name="maxCircleTime" cssClass="dfinput" style="width: 125px;"></s:textfield>
-									</span>
-						</div>
-						秒
-					</div>
 					
 					<div style="float: left; line-height: 35px; width: 90%;">
 						<label>
@@ -160,7 +149,7 @@ $(document).ready(function(e) {
 						</label>
 						<div class="vocation">
 							<span style="margin-right: 5px;"> 
-								<input type="time" name="begintime" class="dfinput" id="begintime" style="width: 125px;"/>
+								<input type="time" name="begintime" class="dfinput" id="begintime" style="width: 125px;"  />
 									</span>
 						</div>
 					</div>
@@ -168,9 +157,8 @@ $(document).ready(function(e) {
 					<div style="float: left; line-height: 35px; width: 90%;">
 						<label>
 							<input name="input" type="button" class="scbtn"
-							style="margin-top: 15px;" onclick="initGreenRoad()" value="删除当前联动" />
+							style="margin-top: 15px;" onclick="deleteTqLine()" value="删除当前控制" />
 						</label>
-						
 					</div>
 					
 					<div style="width: 100%; float: left; margin-top: 28px;">
@@ -181,120 +169,42 @@ $(document).ready(function(e) {
 										style="text-align: center; line-height: 20px; text-indent: 0px;">
 										编号
 									</th>
-									<th width="5%" height="40"
-										style="text-align: center; line-height: 20px; text-indent: 0px;">
-										周期
-									</th>
 									<th width="20%"
 										style="text-align: center; line-height: 20px; text-indent: 10px;">
 										路口名
 									</th>
 									<th width="14%"
 										style="text-align: left; line-height: 20px; text-indent: 0px;">
-										距离（米）
-									</th>
-									<th width="14%"
-										style="text-align: left; line-height: 20px; text-indent: 0px;">
-										正向同步相位号
-									</th>
-									<th width="14%"
-										style="text-align: left; line-height: 20px; text-indent: 0px;">
-										期望正向速度（Km/h）
-									</th>
-									<th width="14%"
-										style="text-align: left; line-height: 20px; text-indent: 0px;">
-										反向同步相位号
+										执行相位
 									</th>
 									<th width="15%"
 										style="text-align: left; line-height: 20px; text-indent: 0px;">
-										期望反向车速（Km/h）
+										执行时间
 									</th>
 								</tr>
 							</thead>
 							<tbody>
-								<s:hidden id="maxCircleTime" name="maxCircleTime"></s:hidden>
 								<s:iterator value="sigVOs" var="sigVO" status="status">
-									<input type="hidden" alt="可用相位所占周期比例" id="<s:property value="id"/>_pro" value="<s:property value="pharsePros"/>"/>
-									<input type="hidden" alt="姓名" id="<s:property value="id"/>_signame" value="<s:property value="name"/>"/>
-									<input type="hidden" alt="周期" id="<s:property value="id"/>_circle" value="<s:property value="circleTime"/>"/>
 									<tr>
 										<td style="text-align: center;">
 											<s:property value="id" />
 										</td>
 										<td style="text-align: center;">
-											<s:property value="circleTime" />
-										</td>
-										<td style="text-align: center;">
 											<s:property value="name" />
-										</td>
-										<td align="right">
-											<input alt="离基准点的距离" id="<s:property value="id"/>_distance" type="text"
-												class="dfinput" style="width: 120px; float: left;" />
 										</td>
 										<td>
 											<s:if test="usefulPhases!=null&&usefulPhases.size()>0">
 												<s:select list="usefulPhases" listValue="name"
 													listKey="sigid_usefulpid" name="usefulPhaseVO"
-													cssClass="zxselect"></s:select>
+													cssClass="zxselect" ></s:select>
 											</s:if>
-
 											<s:else>没有可用相位</s:else>
-
-
 										</td>
-
 										<td>
-
-											<s:if test="#status.last">
-						                      	最后一个路口无需设置正向速度
-						                    </s:if>
-											<s:else>
-												<input type="text" alt="正向速度"
-													id="<s:property value="id"/>_zxspeed" class="dfinput"
-													style="width: 120px;" />
-											</s:else>
+												<input type="text" alt="执行时间"
+													id="<s:property value="id"/>_time" class="dfinput_tqtime"  value="10"
+													style="width: 120px;" /> 秒*10
 										</td>
-
-										<td>
-										
-										
-											<s:if test="#status.first">
-											
-											
-						                      				<s:if test="usefulPhases!=null&&usefulPhases.size()>0">
-																<s:select list="usefulPhases" listValue="name"
-																	listKey="sigid_usefulpid" name="usefulPhaseVO"
-																	cssClass="fxselect"></s:select>
-															</s:if>
-				
-															<s:else>没有可用相位</s:else>
-						                      	
-						                      	
-						                      	
-						                      	
-						                      </s:if>
-											<s:else>
-												由系统自动获得反向对应相位
-											</s:else>
-											
-											
-											
-										</td>
-
-
-										<td>
-
-
-											<s:if test="#status.last">
-                      	最后一个路口无需设置反向速度
-                      </s:if>
-											<s:else>
-												<input type="text" alt="反向速度"
-													id="<s:property value="id"/>_fxspeed" class="dfinput"
-													style="width: 120px;" />
-											</s:else>
-										</td>
-
 									</tr>
 								</s:iterator>
 
@@ -310,8 +220,8 @@ $(document).ready(function(e) {
 					</div>
 					<div
 						style="width: 90%; float: left; margin-top: 20px; color: #999; text-align: center;">
-						<input name="input" type="button" class="scbtn"
-							style="margin-top: 15px;" onclick="initGreenRoad()" value="生成时距图" />
+						<input name="input" type="button" class="scbtn" id="doControl"
+							style="margin-top: 15px;"  value="执行特勤控制" />
 					</div>
 					
 					<p>

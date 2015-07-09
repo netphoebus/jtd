@@ -161,6 +161,7 @@ public class GreenroadAction extends ActionSupport implements RequestAware,
 			greenroad = new Greenroad();
 			greenroad.setMarklineid(mklid);
 			greenroad.setSigmids(sids);
+			greenroad.setType(0);
 			greenroadService.add(greenroad);
 		}
 		return NONE;
@@ -181,6 +182,7 @@ public class GreenroadAction extends ActionSupport implements RequestAware,
 			greenroad = new Greenroad();
 			greenroad.setMarklineid(mklid);
 			greenroad.setSigmids(sids);
+			greenroad.setType(1);
 			greenroadService.add(greenroad);
 		}
 		return NONE;
@@ -283,6 +285,158 @@ public class GreenroadAction extends ActionSupport implements RequestAware,
 			}
 		}
 		
+		return NONE;
+	}
+	
+	
+	
+	/**
+	 * 设置特勤控制时间
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
+	public String doControl() throws Exception {
+		System.out.println(dates+" "+begintime+" "+orderid+" "+timetype);
+		int hour = 0;
+		int minute = 0;
+		int seconds = 0;
+		int workingway =3;
+		/**
+		 * map数组元素解释说明 5_0_10,7_0_10   sid_相位名称(步序的orderid为偶数)_相位执行时间
+		 * 需处理 commontime :hour minute seconds  workingway 0表示普通控制方式，1表示黄闪，2表示关灯，3表示协调控制（绿波带），4表示感应控制，5表示中心控制，6未定义;
+		 * 
+		 */
+		String[] sigctimes = dates.split(",");
+		for (int i = 0; i < sigctimes.length; i++) {
+			String[] sig_time = sigctimes[i].split("_");
+			int sid = Integer.parseInt(sig_time[0]);
+			int pharseNumber = Integer.parseInt(sig_time[1]);//0代表t0 1代表t1
+			int runTime = Integer.parseInt(sig_time[2]);//t0的具体时间
+			commontime = commontimeService.loadByOrderIdAndTimetype(timetype, orderid, sid);
+			switch (pharseNumber) {
+			case 0:
+				commontime.setT0(runTime);
+				break;
+			case 1:
+				commontime.setT1(runTime);
+				break;
+			case 2:
+				commontime.setT2(runTime);
+				break;
+			case 3:
+				commontime.setT3(runTime);
+				break;
+			case 4:
+				commontime.setT4(runTime);
+				break;
+			case 5:
+				commontime.setT5(runTime);
+				break;
+			case 6:
+				commontime.setT6(runTime);
+				break;
+			case 7:
+				commontime.setT7(runTime);
+				break;
+			case 8:
+				commontime.setT8(runTime);
+				break;
+			case 9:
+				commontime.setT9(runTime);
+				break;
+			case 10:
+				commontime.setT10(runTime);
+				break;
+			case 11:
+				commontime.setT11(runTime);
+				break;
+			case 12:
+				commontime.setT12(runTime);
+				break;
+			case 13:
+				commontime.setT13(runTime);
+				break;
+			case 14:
+				commontime.setT14(runTime);
+				break;
+			case 15:
+				commontime.setT15(runTime);
+				break;
+			case 16:
+				commontime.setT16(runTime);
+				break;
+			case 17:
+				commontime.setT17(runTime);
+				break;
+			case 18:
+				commontime.setT18(runTime);
+				break;
+			case 19:
+				commontime.setT19(runTime);
+				break;
+			case 20:
+				commontime.setT20(runTime);
+				break;
+			case 21:
+				commontime.setT21(runTime);
+				break;
+			case 22:
+				commontime.setT22(runTime);
+				break;
+			case 23:
+				commontime.setT23(runTime);
+				break;
+			case 24:
+				commontime.setT24(runTime);
+				break;
+			case 25:
+				commontime.setT25(runTime);
+				break;
+			case 26:
+				commontime.setT26(runTime);
+				break;
+			case 27:
+				commontime.setT27(runTime);
+				break;
+			case 28:
+				commontime.setT28(runTime);
+				break;
+			case 29:
+				commontime.setT29(runTime);
+				break;
+			case 30:
+				commontime.setT30(runTime);
+				break;
+			case 31:
+				commontime.setT31(runTime);
+				break;
+			default:
+				break;
+			}
+			//from lq 2015/7/9 需修改
+			/*if(!begintime.equals("0")&&!begintime.equals("")&&begintime.length()>0&&begintime.indexOf(":")!=-1)
+			{
+				hour = Integer.parseInt(begintime.split(":")[0]);
+				minute =  Integer.parseInt(begintime.split(":")[1]);
+			}else
+			{
+				hour = commontime.getHour();
+				minute = commontime.getMinute();
+			}
+			commontimeService.updateCommontime(hour,minute,seconds,workingway,orderid,timetype,sid);
+			// 下发信号机 时间段参数
+			Sig sig = sigService.loadById(sid);
+			if(sig!=null){
+				String sigNumber = sig.getNumber();
+				this.updateCommonTimeBytes(sig,this.getCurrrenSession(sigNumber));
+				System.out.println("setPharseTime-调阅新命令和新数据，更新数据库--------------------------------");
+				Commands.executeCommand(6,this.getCurrrenSession(sigNumber));//commontime 编号6
+				Thread.sleep(100);
+				Commands.executeCommand(7,this.getCurrrenSession(sigNumber));//commontime 编号7
+				Thread.sleep(100);
+			}*/
+		}
 		return NONE;
 	}
 	
@@ -963,7 +1117,6 @@ public class GreenroadAction extends ActionSupport implements RequestAware,
 	}
 
 	
-
 	/**
 	 * 设置时距图完成后跳转至 时距图
 	 * 
@@ -1012,9 +1165,30 @@ public class GreenroadAction extends ActionSupport implements RequestAware,
 	}
 
 	/**
-	 * 检查绿波带对象
+	 * 删除绿波带对象
 	 * 
 	 */
+	public String deleteLine()
+	{
+		greenroad = greenroadService.loadByMkid(mklid);
+		if (greenroad != null) {
+			greenroadService.delete(greenroad);
+		} 
+		return NONE;
+	}
+	
+	/**
+	 * 删除特勤控制对象
+	 * 
+	 */
+	public String deleteTqLine()
+	{
+		greenroad = greenroadService.loadByMkid(mklid);
+		if (greenroad != null) {
+			greenroadService.delete(greenroad);
+		} 
+		return NONE;
+	}
 
 	// get、set-------------------------------------------
 	// 获得HttpServletResponse对象
@@ -1200,7 +1374,15 @@ public class GreenroadAction extends ActionSupport implements RequestAware,
 		this.areaid = areaid;
 	}
 
-	
+
+	public String getDates() {
+		return dates;
+	}
+
+
+	public void setDates(String dates) {
+		this.dates = dates;
+	}
 	
 	
 

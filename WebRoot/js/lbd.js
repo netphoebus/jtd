@@ -107,3 +107,24 @@ function changeTimeSelect()
 	console.log("sigtimeAction!sigtimes?timetype="+timetype+"&orderid="+orderid+"&mklid="+mklid);
 	location.href = "greenroadAction!lbd?timetype="+timetype+"&orderid="+orderid+"&mklid="+mklid;
 }
+
+
+
+function deleteLine()
+{
+	var mklid = $("#mklid").val();
+	$.ajax({   
+	            url:'deleteLine',//这里是你的action或者servlert的路径地址   
+	            type:'post', //数据发送方式     
+	 			data: { "mklid":mklid},
+	            error: function(msg)
+	            { //失败   
+	            	alert('删除失败');   
+	            },   
+	            success: function(msg)
+	            { //成功   
+	            	alert('删除成功');   
+	            	location.reload();  //刷新本页
+	            }  
+    	    });   	
+}
