@@ -101,106 +101,79 @@ function cleanAll()
 
 $(document).ready(function(){
 	$(".dfinput").on("blur",function(){
-				var time = $(this).val();
-				time = parseInt(time);
-				if(isNaN(time))
+			var	time = parseInt($(this).val());
+				var id  = $(this).attr("id");
+				if(id=='kjhs')
 				{
-					alert("设置不正确,请重新设置.");
-					$(this).val(0);//恢复原值
-					return ;
-				}else
-				{
-					var id  = $(this).attr("id");
-					if(id=='kjhs')
+					if(isNaN(time)||time>30)
 					{
-						if(time>30)
-						{
-							alert("设置不正确,请重新设置.");
-							$(this).val(0);//恢复原值
-								return ;
-						}
-					}if(id=='qchd')
-					{
-						if(time>9)
-						{
-							alert("设置不正确,请重新设置.");
-							$(this).val(0);//恢复原值
-								return ;
-						}
-					}if(id=='gmin')
-					{
-						if(time>90||time<10)
-						{
-							alert("设置不正确,请重新设置.");
-							$(this).val(10);//恢复原值
+						alert("设置不正确,请重新设置.");
+						$(this).val(0);//恢复原值
 							return ;
-						}
-					}if(id=='gmax')
-					{
-						if(time>15||time<3)
-						{
-							alert("设置不正确,请重新设置.");
-							$(this).val(3);//恢复原值
-								return ;
-						}
-					}if(id=='bc')
-					{
-						if(time>90||time<parseInt($("#gmin").val()))
-						{
-							alert("设置不正确,请重新设置.");
-							$(this).val(10);//恢复原值
-								return ;
-						}
-					}if(id=='xrfx')
-					{
-						if(time>90||time<30)
-						{
-							alert("设置不正确,请重新设置.");
-							$(this).val(30);//恢复原值
-							return ;
-						}
 					}
-					
+				}if(id=='qchd')
+				{
+					if(isNaN(time)||time>9)
+					{
+						alert("设置不正确,请重新设置.");
+						$(this).val(0);//恢复原值
+							return ;
+					}
+				}if(id=='gmin')
+				{
+					if(isNaN(time)||time>90||time<10)
+					{
+						alert("设置不正确,请重新设置.");
+						$(this).val(10);//恢复原值
+						return ;
+					}
+				}if(id=='bc')
+				{
+					if(isNaN(time)||time>15||time<3)
+					{
+						alert("设置不正确,请重新设置.");
+						$(this).val(3);//恢复原值
+						return ;
+					}
+				}if(id=='gmax')
+				{
+					if(isNaN(time)||time>90||time<parseInt($("#gmin").val()))
+					{
+						alert("设置不正确,请重新设置.");
+						$(this).val(10);//恢复原值
+							return ;
+					}
+				}if(id=='xrfx')
+				{
+					if(isNaN(time)||time>90||time<30)
+					{
+						alert("设置不正确,请重新设置.");
+						$(this).val(30);//恢复原值
+						return ;
+					}
 				}
 		});
 		
 		
 		
 		$(".ydfinput").on("blur",function(){
-				var time = $(this).val();
-				time = parseInt(time);
-				if(isNaN(time))
-				{
-					alert("月份设置不正确,请重新设置.");
-					$(this).val(0);//恢复原值
-					return ;
-				}else
-				{
-					if(time>12)
+				var	time = parseInt($(this).val());
+					if(isNaN(time)||time>12)
 					{
 						alert("月份设置不正确,请重新设置.");
+						$(this).val(0);//恢复原值
 						return ;
 					}				
-				}
 		});
 		
 		$(".rdfinput").on("blur",function(){
-				var time = $(this).val();
-				time = parseInt(time);
-				if(isNaN(time))
-				{
-					alert("日期设置不正确,请重新设置.");
-					$(this).val(0);//恢复原值
-					return ;
-				}else
-				{
-					if(time>31)
+				var	time = parseInt($(this).val());
+					if(isNaN(time)||time>31)
 					{
 						alert("日期设置不正确,请重新设置.");
 						$(this).val(0);//恢复原值
 						return ;
 					}	
-				}
 		});
 	
 
