@@ -45,6 +45,7 @@ public class Commands {
 	public final static String cmd_qcll   = "FF FF FF FF 01 F0 A2 0F 00 08 01 AA"; //发送清除累计流量命令  命令编号 34
 	public final static String cmd_dylct  = "FF FF FF FF 01 F0 92 04 00 08 01 8F"; //35
 	public final static String cmd_update = "FF FF FF FF 01 F0 A2 17 00 0A 00 15 01 c9" ;//36
+	public final static String cmd_qkll     = "FF FF FF FF 01 F0 A2 0F 00 08 01 AA"; //37  清空累计流量
 	public static String getCommandStr(int i)
 	{
 		switch (i) {
@@ -122,6 +123,8 @@ public class Commands {
 			return cmd_dylct;
 		case 36:
 			return cmd_update;
+		case 37:
+			return cmd_qkll;
 		default:
 			break;
 		}
