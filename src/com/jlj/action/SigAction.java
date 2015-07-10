@@ -123,9 +123,12 @@ public class SigAction extends ActionSupport implements RequestAware,
 		}*/
 		for(IoSession session : TimeServerHandler.iosessions)
 		{
-			if(session.getAttribute("number")!=null&&session.getAttribute("number").equals(sigNumber))
+			if(session.getAttribute("number")!=null)
 			{
-				return session;
+				if(session.getAttribute("number").equals(sigNumber))
+				{
+					return session;
+				}
 			}
 		}
 		return null;

@@ -45,4 +45,6 @@ public interface ISolutionService {
 	public abstract Solution getSolutionBySignidAndOrderid(Integer id,
 			int soluorderid);
 
+
+
 }

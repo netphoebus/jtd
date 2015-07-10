@@ -104,10 +104,12 @@ public class SolutionAction extends ActionSupport implements RequestAware,
 			{
 				if(soid==0)
 				{
-					soid = 1;
+					solution = solutions.get(0);
+				}else
+				{
+					solution = solutionService.loadById(soid);
 				}
-				solution = solutionService.loadById(soid);
-				steps = stepService.loadBySoId(soid);//获得相位方案的相位（相位为步序是偶数位的步序,service层已做处理）
+				steps = stepService.loadBySoId(solution.getId());//获得相位方案的相位（相位为步序是偶数位的步序,service层已做处理）
 				setGreenConflict(sig.getId());
 				session.put("sigNumber", sigNumber);//从地图中进入信号机，将信号机id传入session
 				return "cssz-fa";
@@ -491,9 +493,12 @@ public class SolutionAction extends ActionSupport implements RequestAware,
 	{
 		for(IoSession session : TimeServerHandler.iosessions)
 		{
-			if(session.getAttribute("number").equals(sigNumber))
+			if(session.getAttribute("number")!=null)
 			{
-				return session;
+				if(session.getAttribute("number").equals(sigNumber))
+				{
+					return session;
+				}
 			}
 		}
 		return null;

@@ -2,7 +2,6 @@ package com.jlj.action;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.net.InetSocketAddress;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -26,14 +25,23 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.jlj.model.Commontime;
+import com.jlj.model.Greenconflict;
 import com.jlj.model.Greenroad;
 import com.jlj.model.Issuedcommand;
+import com.jlj.model.Road;
 import com.jlj.model.Sig;
+import com.jlj.model.Solution;
+import com.jlj.model.Step;
 import com.jlj.service.ICommontimeService;
+import com.jlj.service.IGreenconflictService;
 import com.jlj.service.IGreenroadService;
 import com.jlj.service.IIssuedcommandService;
+import com.jlj.service.IRoadService;
 import com.jlj.service.ISigService;
+import com.jlj.service.ISolutionService;
+import com.jlj.service.IStepService;
 import com.jlj.util.Commands;
+import com.jlj.vo.ConflictVO;
 import com.jlj.vo.SigGreenRoadVO;
 import com.jlj.vo.UsefulPhaseVO;
 import com.opensymphony.xwork2.ActionSupport;
@@ -52,14 +60,21 @@ public class GreenroadAction extends ActionSupport implements RequestAware,
 	private List<Greenroad> greenroads;
 	private List<SigGreenRoadVO> sigVOs;
 	private List<UsefulPhaseVO> phaseVOs;
+	private List<Road> roads;
+	private List<Sig> sigs;
 
 	private IGreenroadService greenroadService;
 	private ICommontimeService commontimeService;
 	private IIssuedcommandService issuedcommandService;
+	private ISolutionService solutionService;
 	private ISigService sigService;
+	private IStepService stepService;
+	private IRoadService roadService;
 
 	private Greenroad greenroad;
 	private Commontime commontime;
+	private Solution solution;
+	private Step step;
 	private Sig sig;
 	private SigGreenRoadVO sigVO;
 	private int id;
@@ -67,6 +82,14 @@ public class GreenroadAction extends ActionSupport implements RequestAware,
 
 	
 	private String begintime;
+	/*
+	 * 绿冲突
+	 */
+	private List<Greenconflict> greens;
+	private List<ConflictVO>  conflictVOs;
+	private ConflictVO conflictVO;
+	private IGreenconflictService greenService;
+	
 	
 	/*
 	 * 绿波带地图
@@ -218,6 +241,10 @@ public class GreenroadAction extends ActionSupport implements RequestAware,
 		greenroad = greenroadService.loadByMkid(mklid);
 		if (greenroad != null) {
 			setSigVOS(greenroad);
+			
+			
+			setGreenConflict(sigVOs);
+			
 			return "tq";
 		} else {
 			String errorMsg="没有获得相应特勤控制信息,请确保数据不为空.";
@@ -225,6 +252,137 @@ public class GreenroadAction extends ActionSupport implements RequestAware,
 			return "index";
 		}
 
+	}
+	
+	
+	//获得绿冲突对象
+	private void setGreenConflict(List<SigGreenRoadVO> sigVOs) {
+		
+		conflictVOs = new ArrayList<ConflictVO>();
+		for(int j=0;j<sigVOs.size();j++)
+		{
+			conflictVO = new ConflictVO();
+			System.out.println("sigid:"+sigVOs.get(j).getId());
+			conflictVO.setSid(sigVOs.get(j).getId());
+			greens = greenService.loadBySid(sigVOs.get(j).getId());
+			System.out.println("greens:"+greens);
+			if(greens!=null&&greens.size()==16)
+			{
+				String conflictname="";
+				for(int i=0;i<greens.size();i++)
+				{
+					if(greens.get(i).getL00()!=null&&greens.get(i).getL00()==1)
+					{
+						conflictname = conflictname+"_0_0,";
+					} if(greens.get(i).getL01()!=null&&greens.get(i).getL01()==1)
+					{
+						conflictname = conflictname+"_0_1,";
+					} if(greens.get(i).getL02()!=null&&greens.get(i).getL02()==1)
+					{
+						conflictname = conflictname+"_0_2,";
+					} if(greens.get(i).getL03()!=null&&greens.get(i).getL03()==1)
+					{
+						conflictname = conflictname+"_0_3,";
+					} if(greens.get(i).getL10()!=null&&greens.get(i).getL10()==1)
+					{
+						conflictname = conflictname+"_1_0,";
+					} if(greens.get(i).getL11()!=null&&greens.get(i).getL11()==1)
+					{
+						conflictname = conflictname+"_1_1,";
+					} if(greens.get(i).getL12()!=null&&greens.get(i).getL12()==1)
+					{
+						conflictname = conflictname+"_1_2,";
+					} if(greens.get(i).getL13()!=null&&greens.get(i).getL13()==1)
+					{
+						conflictname = conflictname+"_1_3,";
+					} if(greens.get(i).getL20()!=null&&greens.get(i).getL20()==1)
+					{
+						conflictname = conflictname+"_2_0,";
+					} if(greens.get(i).getL21()!=null&&greens.get(i).getL21()==1)
+					{
+						conflictname = conflictname+"_2_1,";
+					} if(greens.get(i).getL22()!=null&&greens.get(i).getL22()==1)
+					{
+						conflictname = conflictname+"_2_2,";
+					} if(greens.get(i).getL23()!=null&&greens.get(i).getL23()==1)
+					{
+						conflictname = conflictname+"_2_3,";
+					} if(greens.get(i).getL30()!=null&&greens.get(i).getL30()==1)
+					{
+						conflictname = conflictname+"_3_0,";
+					} if(greens.get(i).getL31()!=null&&greens.get(i).getL31()==1)
+					{
+						conflictname = conflictname+"_3_1,";
+					} if(greens.get(i).getL32()!=null&&greens.get(i).getL32()==1)
+					{
+						conflictname = conflictname+"_3_2,";
+					} if(greens.get(i).getL33()!=null&&greens.get(i).getL33()==1)
+					{
+						conflictname = conflictname+"_3_3,";
+					}
+					if(conflictname!="")
+					{
+						conflictname = conflictname.substring(0, conflictname.length()-1);
+					}
+					switch (i) {
+					case 0:
+						conflictVO.setC_00(conflictname);
+						break;
+					case 1:
+						conflictVO.setC_01(conflictname);
+						break;
+					case 2:
+						conflictVO.setC_02(conflictname);
+						break;
+					case 3:
+						conflictVO.setC_03(conflictname);
+						break;
+					case 4:
+						conflictVO.setC_10(conflictname);
+						break;
+					case 5:
+						conflictVO.setC_11(conflictname);
+						break;
+					case 6:
+						conflictVO.setC_12(conflictname);
+						break;
+					case 7:
+						conflictVO.setC_13(conflictname);
+						break;
+					case 8:
+						conflictVO.setC_20(conflictname);
+						break;
+					case 9:
+						conflictVO.setC_21(conflictname);
+						break;
+					case 10:
+						conflictVO.setC_22(conflictname);
+						break;
+					case 11:
+						conflictVO.setC_23(conflictname);
+						break;
+					case 12:
+						conflictVO.setC_30(conflictname);
+						break;
+					case 13:
+						conflictVO.setC_31(conflictname);
+						break;
+					case 14:
+						conflictVO.setC_32(conflictname);
+						break;
+					case 15:
+						conflictVO.setC_33(conflictname);
+						break;
+					default:
+						break;
+					}
+					
+				}
+			}
+			conflictVOs.add(conflictVO);
+		}
+		
+		
 	}
 	
 	
@@ -298,122 +456,42 @@ public class GreenroadAction extends ActionSupport implements RequestAware,
 	 */
 	public String doControl() throws Exception {
 		System.out.println(dates+" "+begintime+" "+orderid+" "+timetype);
-		int hour = 0;
-		int minute = 0;
-		int seconds = 0;
-		int workingway =3;
 		/**
-		 * map数组元素解释说明 5_0_10,7_0_10   sid_相位名称(步序的orderid为偶数)_相位执行时间
-		 * 需处理 commontime :hour minute seconds  workingway 0表示普通控制方式，1表示黄闪，2表示关灯，3表示协调控制（绿波带），4表示感应控制，5表示中心控制，6未定义;
-		 * 
+		 * map数组元素解释说明 5_0_10,7_0_10   sid_相位名称(步序的orderid为偶数)_相位执行时间  
+		 * 第一步：查找当前时间段
+		 * 第二步：查找当前时间段的相位方案的相位
+		 * 第三步：按指定相位运行
 		 */
 		String[] sigctimes = dates.split(",");
 		for (int i = 0; i < sigctimes.length; i++) {
 			String[] sig_time = sigctimes[i].split("_");
-			int sid = Integer.parseInt(sig_time[0]);
+			int sid = Integer.parseInt(sig_time[0]);//信号机编号
 			int pharseNumber = Integer.parseInt(sig_time[1]);//0代表t0 1代表t1
-			int runTime = Integer.parseInt(sig_time[2]);//t0的具体时间
+			int runTime = Integer.parseInt(sig_time[2]);//相位运行时间具体时间
+			
 			commontime = commontimeService.loadByOrderIdAndTimetype(timetype, orderid, sid);
-			switch (pharseNumber) {
-			case 0:
-				commontime.setT0(runTime);
-				break;
-			case 1:
-				commontime.setT1(runTime);
-				break;
-			case 2:
-				commontime.setT2(runTime);
-				break;
-			case 3:
-				commontime.setT3(runTime);
-				break;
-			case 4:
-				commontime.setT4(runTime);
-				break;
-			case 5:
-				commontime.setT5(runTime);
-				break;
-			case 6:
-				commontime.setT6(runTime);
-				break;
-			case 7:
-				commontime.setT7(runTime);
-				break;
-			case 8:
-				commontime.setT8(runTime);
-				break;
-			case 9:
-				commontime.setT9(runTime);
-				break;
-			case 10:
-				commontime.setT10(runTime);
-				break;
-			case 11:
-				commontime.setT11(runTime);
-				break;
-			case 12:
-				commontime.setT12(runTime);
-				break;
-			case 13:
-				commontime.setT13(runTime);
-				break;
-			case 14:
-				commontime.setT14(runTime);
-				break;
-			case 15:
-				commontime.setT15(runTime);
-				break;
-			case 16:
-				commontime.setT16(runTime);
-				break;
-			case 17:
-				commontime.setT17(runTime);
-				break;
-			case 18:
-				commontime.setT18(runTime);
-				break;
-			case 19:
-				commontime.setT19(runTime);
-				break;
-			case 20:
-				commontime.setT20(runTime);
-				break;
-			case 21:
-				commontime.setT21(runTime);
-				break;
-			case 22:
-				commontime.setT22(runTime);
-				break;
-			case 23:
-				commontime.setT23(runTime);
-				break;
-			case 24:
-				commontime.setT24(runTime);
-				break;
-			case 25:
-				commontime.setT25(runTime);
-				break;
-			case 26:
-				commontime.setT26(runTime);
-				break;
-			case 27:
-				commontime.setT27(runTime);
-				break;
-			case 28:
-				commontime.setT28(runTime);
-				break;
-			case 29:
-				commontime.setT29(runTime);
-				break;
-			case 30:
-				commontime.setT30(runTime);
-				break;
-			case 31:
-				commontime.setT31(runTime);
-				break;
-			default:
-				break;
+			if(commontime!=null)
+			{
+				solution = solutionService.getSolutionBySignidAndOrderid(sid, commontime.getWorkingprogram());
+				if(solution!=null)
+				{
+					step = stepService.queryStepByPharseNameAndSoluid(pharseNumber, solution.getId());
+					if(step!=null)
+					{
+						roads = roadService.loadByStepid(step.getId());
+					}
+				}
+				
 			}
+			if(roads!=null)
+			{
+				for(int j=0;i<roads.size();j++)
+				{
+					System.out.println("Roadtpye"+roads.get(j).getRoadtype()+";"+"Leftcolor"+roads.get(j).getLeftcolor()+";"+"Rightcolor"+roads.get(j).getRightcolor()+";"+"Linecolor"+roads.get(j).getLinecolor()+";"+"Rxcolor"+roads.get(j).getRxcolor());
+				}
+				
+			}
+			
 			//from lq 2015/7/9 需修改
 			/*if(!begintime.equals("0")&&!begintime.equals("")&&begintime.length()>0&&begintime.indexOf(":")!=-1)
 			{
@@ -444,9 +522,12 @@ public class GreenroadAction extends ActionSupport implements RequestAware,
 	{
 		for(IoSession session : TimeServerHandler.iosessions)
 		{
-			if(session.getAttribute("number").equals(sigNumber))
+			if(session.getAttribute("number")!=null)
 			{
-				return session;
+				if(session.getAttribute("number").equals(sigNumber))
+				{
+					return session;
+				}
 			}
 		}
 		return null;
@@ -1382,6 +1463,116 @@ public class GreenroadAction extends ActionSupport implements RequestAware,
 
 	public void setDates(String dates) {
 		this.dates = dates;
+	}
+
+
+	public ISolutionService getSolutionService() {
+		return solutionService;
+	}
+
+	@Resource
+	public void setSolutionService(ISolutionService solutionService) {
+		this.solutionService = solutionService;
+	}
+
+
+	public Solution getSolution() {
+		return solution;
+	}
+
+
+	public void setSolution(Solution solution) {
+		this.solution = solution;
+	}
+
+
+	public IStepService getStepService() {
+		return stepService;
+	}
+
+	@Resource
+	public void setStepService(IStepService stepService) {
+		this.stepService = stepService;
+	}
+
+
+	public Step getStep() {
+		return step;
+	}
+
+
+	public void setStep(Step step) {
+		this.step = step;
+	}
+
+
+	public List<Road> getRoads() {
+		return roads;
+	}
+
+
+	public void setRoads(List<Road> roads) {
+		this.roads = roads;
+	}
+
+
+	public IRoadService getRoadService() {
+		return roadService;
+	}
+
+	@Resource
+	public void setRoadService(IRoadService roadService) {
+		this.roadService = roadService;
+	}
+
+
+	public List<Greenconflict> getGreens() {
+		return greens;
+	}
+
+
+	public void setGreens(List<Greenconflict> greens) {
+		this.greens = greens;
+	}
+
+
+	public ConflictVO getConflictVO() {
+		return conflictVO;
+	}
+
+
+	public void setConflictVO(ConflictVO conflictVO) {
+		this.conflictVO = conflictVO;
+	}
+
+
+	public IGreenconflictService getGreenService() {
+		return greenService;
+	}
+
+	@Resource
+	public void setGreenService(IGreenconflictService greenService) {
+		this.greenService = greenService;
+	}
+
+
+	public List<Sig> getSigs() {
+		return sigs;
+	}
+
+
+	public void setSigs(List<Sig> sigs) {
+		this.sigs = sigs;
+	}
+
+
+	public List<ConflictVO> getConflictVOs() {
+		return conflictVOs;
+	}
+
+
+	public void setConflictVOs(List<ConflictVO> conflictVOs) {
+		this.conflictVOs = conflictVOs;
 	}
 	
 	

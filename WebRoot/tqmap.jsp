@@ -20,6 +20,7 @@
 <script type="text/javascript" src="js/popup_layer.js"></script>
 <script type="text/javascript" src="js/json2.js"></script>
 <script type="text/javascript" src="js/privatetqmap.js"></script>
+<script type="text/javascript" src="js/privatesig.js"></script>
 
 <body >
  <div style="float：left;width:660px;">

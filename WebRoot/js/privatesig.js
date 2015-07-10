@@ -131,6 +131,8 @@ $(document).ready(function(){
 			var img = "";
 			var conflictStart = "";
 			var conflictStr = "";
+			
+			
 		$(".picbox img").click(function(event) {
 	
 			var img = $(event.target);
@@ -146,6 +148,8 @@ $(document).ready(function(){
 			
 			var headnumber1 = headnumber.substring(0,1);//当前焦点的路口方位
 			var headnumber2 = headnumber.substring(1,2);//当前焦点的灯转向
+			
+			
 			
 			//根据灯的种类及当前颜色 来修改灯的颜色
 			if(lastnumber == 0)

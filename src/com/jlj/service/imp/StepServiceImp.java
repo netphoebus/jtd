@@ -137,4 +137,10 @@ public class StepServiceImp implements IStepService  {
 		String queryString = "from Step mo where 1=1 and mo.solution.id="+soid;
 		return stepDao.queryList(queryString);
 	}
+	public Step queryStepByPharseNameAndSoluid(int pharseNumber, Integer id) {
+		String queryString="from Step mo where mo.phasename=:phasename and mo.solution.id=:id";
+		String[] paramNames=new String[]{"phasename","id"};
+		Object[] values=new Object[]{"相位"+pharseNumber,id};
+		return stepDao.queryByNamedParam(queryString,paramNames,values);
+	}
 }

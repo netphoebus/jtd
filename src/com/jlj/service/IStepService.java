@@ -45,4 +45,7 @@ public interface IStepService {
 
 	public abstract List<Step> loadBySoIdStep(int soid);
 
+	public abstract Step queryStepByPharseNameAndSoluid(int pharseNumber,
+			Integer id);
+
 }

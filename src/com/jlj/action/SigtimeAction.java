@@ -68,7 +68,7 @@ public class SigtimeAction extends ActionSupport implements RequestAware,
 	private int timetype;
 	private Solution solution;
 	private Signpublicparam publicparam;
-	private int soid;
+	private int soid;//solution-orderid
 	private int signid;
 	//private String sigIp;//2015-6-24 修改项目 改为使用signumber（信号机编号）来标识信号机唯一性
 	private String sigNumber;
@@ -106,7 +106,7 @@ public class SigtimeAction extends ActionSupport implements RequestAware,
 			commontime = getCurrentCommontime();
 			if(commontime!=null)
 			{
-				steps = getCurrentSolution();
+				steps = getCurrentSolution(sig);
 				setCurrentSteptimes(commontime, steps);
 			}
 			session.put("sigNumber", sigNumber);// 从地图中进入信号机，将信号机id传入session
@@ -261,23 +261,6 @@ public class SigtimeAction extends ActionSupport implements RequestAware,
 		}
 	}
 
-	/**
-	 * 设置从url链接中传过来的参数
-	 */
-	public void setURLParameter() {
-		if (req.getParameter("timetype") != null) {
-			timetype = Integer.parseInt(req.getParameter("timetype"));// 获得前台的时间类型
-		}
-		if (req.getParameter("orderid") != null) {
-			orderid = Integer.parseInt(req.getParameter("orderid"));// 获得前台的时间段id
-		}
-		if (req.getParameter("soid") != null) {
-			soid = Integer.parseInt(req.getParameter("soid"));// 获得前台sid
-		}
-		if (req.getParameter("signid") != null) {
-			signid = Integer.parseInt(req.getParameter("signid"));// 获得前台sid
-		}
-	}
 
 	/**
 	 * 前台显示部分方法 1、select获得所有时间段名称和orderId 2、获得当前显示的commontime 3、获得当前的solution
@@ -296,12 +279,13 @@ public class SigtimeAction extends ActionSupport implements RequestAware,
 		return commontime;
 	}
 
-	public List<Step> getCurrentSolution() {
+	public List<Step> getCurrentSolution(Sig sig) {
 		if (soid == 0) {
-			solution = solutionService.loadById(commontime.getWorkingprogram() + 1);// 相位方案0对应数据库中的id=1
+			solution = solutionService.getSolutionBySignidAndOrderid(sig.getId(),0);// 相位方案0对应数据库中的id=1
 		} else {
-			solution = solutionService.loadById(soid);
+			solution = solutionService.getSolutionBySignidAndOrderid(sig.getId(),soid);
 		}
+		commontime.setWorkingprogram(solution.getOrderid());//设置当前时间段所选择的相位方案
 		return steps = stepService.loadBySoId(solution.getId());
 	}
 
@@ -476,9 +460,12 @@ public class SigtimeAction extends ActionSupport implements RequestAware,
 	{
 		for(IoSession session : TimeServerHandler.iosessions)
 		{
-			if(session.getAttribute("number").equals(sigNumber))
+			if(session.getAttribute("number")!=null)
 			{
-				return session;
+				if(session.getAttribute("number").equals(sigNumber))
+				{
+					return session;
+				}
 			}
 		}
 		return null;

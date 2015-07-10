@@ -235,7 +235,7 @@ $(document).ready(function(e) {
 									<td style="margin-left:10px">
 								 
 											<s:select list="solutions"   listValue="soluname" listKey="orderid"   id="soid"
-						             name="commontime.workingprogram"  cssClass="select4"  onchange="changeSelect()"></s:select> 
+						             name="commontime.workingprogram"   cssClass="select4"  onchange="changeSoSelect()"></s:select> 
 									</td>
 								</tr>
 								<tr>
@@ -442,7 +442,7 @@ $(document).ready(function(e) {
 										相位<s:property value="#status.index"/>
 									</h1>
 									<s:property value="phasename"/>：
-										<input value="${step.second}" name="${step.id}_${step.stepname}" class="timeinput" style="width: 75px; height: 20px;" placeholder="范围:10-90"/>
+										<input value="${step.second}" name="${step.id}_${step.stepname}" class="timeinput" style="width: 70px; height: 20px;" placeholder="范围:10-90"/>
 									秒	
 									</txt>
 								</li>
