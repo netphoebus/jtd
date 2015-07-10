@@ -105,17 +105,17 @@ $(document).ready(function(){
 				var id  = $(this).attr("id");
 				if(id=='kjhs')
 				{
-					if(isNaN(time)||time>30)
+					if(isNaN(time)||time>30||time<0)
 					{
-						alert("设置不正确,请重新设置.");
+						alert("开机黄闪设置不正确,请重新设置.");
 						$(this).val(0);//恢复原值
 							return ;
 					}
 				}if(id=='qchd')
 				{
-					if(isNaN(time)||time>9)
+					if(isNaN(time)||time>9||time<0)
 					{
-						alert("设置不正确,请重新设置.");
+						alert("清场红灯设置不正确,请重新设置.");
 						$(this).val(0);//恢复原值
 							return ;
 					}
@@ -123,7 +123,7 @@ $(document).ready(function(){
 				{
 					if(isNaN(time)||time>90||time<10)
 					{
-						alert("设置不正确,请重新设置.");
+						alert("最短绿灯设置不正确,请重新设置.");
 						$(this).val(10);//恢复原值
 						return ;
 					}
@@ -131,7 +131,7 @@ $(document).ready(function(){
 				{
 					if(isNaN(time)||time>15||time<3)
 					{
-						alert("设置不正确,请重新设置.");
+						alert("步长时间设置不正确,请重新设置.");
 						$(this).val(3);//恢复原值
 						return ;
 					}
@@ -139,7 +139,7 @@ $(document).ready(function(){
 				{
 					if(isNaN(time)||time>90||time<parseInt($("#gmin").val()))
 					{
-						alert("设置不正确,请重新设置.");
+						alert("最长绿灯设置不正确,请重新设置.");
 						$(this).val(10);//恢复原值
 							return ;
 					}
@@ -147,8 +147,16 @@ $(document).ready(function(){
 				{
 					if(isNaN(time)||time>90||time<30)
 					{
-						alert("设置不正确,请重新设置.");
+						alert("行人请求设置不正确,请重新设置.");
 						$(this).val(30);//恢复原值
+						return ;
+					}
+				}if(id=='cycle')
+				{
+					if(isNaN(time)||time>255||time<0)
+					{
+						alert("周期设置不正确,请重新设置.");
+						$(this).val(0);//恢复原值
 						return ;
 					}
 				}
@@ -158,7 +166,7 @@ $(document).ready(function(){
 		
 		$(".ydfinput").on("blur",function(){
 				var	time = parseInt($(this).val());
-					if(isNaN(time)||time>12)
+					if(isNaN(time)||time>12||time<0)
 					{
 						alert("月份设置不正确,请重新设置.");
 						$(this).val(0);//恢复原值
@@ -168,7 +176,7 @@ $(document).ready(function(){
 		
 		$(".rdfinput").on("blur",function(){
 				var	time = parseInt($(this).val());
-					if(isNaN(time)||time>31)
+					if(isNaN(time)||time>31||time<0)
 					{
 						alert("日期设置不正确,请重新设置.");
 						$(this).val(0);//恢复原值

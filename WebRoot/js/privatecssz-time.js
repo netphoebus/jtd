@@ -21,10 +21,7 @@ function changeControl()
 	var index = $("#control").val();
 	if(index==3)
 	{
-		$("#seconds").attr("readonly",true);
-	}else
-	{
-		$("#seconds").attr("readonly",false);
+		$("#seconds").removeAttr("readOnly");
 	}
 }
 
@@ -54,3 +51,72 @@ function updateStepTimes()
             }  
    	    });  
 }
+
+
+$(document).ready(function(){
+	$(".dfinput").on("blur",function(){
+			var	time = parseInt($(this).val());
+				var id  = $(this).attr("id");
+				if(id=='hour')
+				{
+					if(isNaN(time)||time>24||time<0)
+					{
+						alert("小时设置不正确,请重新设置.");
+						$(this).val(0);//恢复原值
+							return ;
+					}
+				}if(id=='minute')
+				{
+					if(isNaN(time)||time>60||time<0)
+					{
+						alert("分钟设置不正确,请重新设置.");
+						$(this).val(0);//恢复原值
+							return ;
+					}
+				}if(id=='seconds')
+				{
+					if(isNaN(time)||time>60||time<0)
+					{
+						alert("秒数设置不正确,请重新设置.");
+						$(this).val(0);//恢复原值
+						return ;
+					}
+				}if(id=='lstime')
+				{
+					if(isNaN(time)||time>9||time<0)
+					{
+						alert("绿闪时间设置不正确,请重新设置.");
+						$(this).val(0);//恢复原值
+						return ;
+					}
+				}if(id=='hdtime')
+				{
+					if(isNaN(time)||time>9||time<3)
+					{
+						alert("黄灯时间设置不正确,请重新设置.");
+						$(this).val(3);//恢复原值
+						return ;
+					}
+				}if(id=='qchdtime')
+				{
+					if(isNaN(time)||time>9||time<0)
+					{
+						alert("红灯时间设置不正确,请重新设置.");
+						$(this).val(0);//恢复原值
+						return ;
+					}
+				}
+		});
+		
+		$(".timeinput").on("blur",function(){
+			var	time = parseInt($(this).val());
+				if(isNaN(time)||time>90||time<10)
+				{
+					alert("相位执行时间设置不正确,请重新设置.");
+					$(this).val(10);//恢复原值
+					return ;
+				}
+		});
+		
+
+});

@@ -219,7 +219,7 @@ $(document).ready(function(e) {
 									<div class="csbox">
 										请求周期：
 										<s:textfield name="sigpubparam.cycle" cssClass="dfinput"
-											cssStyle="width:150px;" ></s:textfield>
+											cssStyle="width:150px;" id="cycle" placeholder="范围:0-255"></s:textfield>
 										×10秒
 									</div>
 								</div>

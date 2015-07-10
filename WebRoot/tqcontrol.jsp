@@ -203,7 +203,7 @@ $(document).ready(function(e) {
 										<td>
 												<input type="text" alt="执行时间"
 													id="<s:property value="id"/>_time" class="dfinput_tqtime"  value="10"
-													style="width: 120px;" /> 秒*10
+													style="width: 120px;" /> ×10秒
 										</td>
 									</tr>
 								</s:iterator>

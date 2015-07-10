@@ -7,8 +7,8 @@
 			+ request.getServerName() + ":" + request.getServerPort()
 			+ path + "/";
 %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<title>时间参数</title>
@@ -179,7 +179,7 @@ $(document).ready(function(e) {
 										</label>
 									</td>
 									<td>
-										<s:textfield name="commontime.hour" cssClass="dfinput"
+										<s:textfield name="commontime.hour" id="hour" cssClass="dfinput"
 									cssStyle="width:150px;"></s:textfield>
 									</td>
 								</tr>
@@ -190,7 +190,7 @@ $(document).ready(function(e) {
 										</label>
 									</td>
 									<td>
-									<s:textfield name="commontime.minute" cssClass="dfinput"
+									<s:textfield name="commontime.minute" id="minute" cssClass="dfinput"
 									cssStyle="width:150px;"></s:textfield>
 									</td>
 								</tr>
@@ -205,11 +205,11 @@ $(document).ready(function(e) {
 									<td>
 										<s:if test="commontime.workingway==3">
 										<s:textfield name="commontime.seconds" id="seconds" cssClass="dfinput"
-									cssStyle="width:150px;"  readonly="true"></s:textfield>
+									cssStyle="width:150px;" ></s:textfield>
 									</s:if>
 									<s:else>
 										<s:textfield name="commontime.seconds" id="seconds" cssClass="dfinput"
-									cssStyle="width:150px;" readonly="false"></s:textfield>
+									cssStyle="width:150px;" readonly="true"></s:textfield>
 									</s:else>
 									</td>
 									
@@ -245,8 +245,8 @@ $(document).ready(function(e) {
 										</label>
 									</td>
 									<td>
-										<s:textfield name="commontime.lstime" cssClass="dfinput"
-									cssStyle="width:150px;"></s:textfield>
+										<s:textfield name="commontime.lstime" id="lstime" cssClass="dfinput"
+									cssStyle="width:150px;" placeholder="范围:0-9"></s:textfield>
 									</td>
 								</tr>
 								<tr>
@@ -256,8 +256,8 @@ $(document).ready(function(e) {
 										</label>
 									</td>
 									<td>
-										<s:textfield name="commontime.hdtime" cssClass="dfinput"
-									cssStyle="width:150px;"></s:textfield>
+										<s:textfield name="commontime.hdtime" id="hdtime" cssClass="dfinput"
+									cssStyle="width:150px;" placeholder="范围:3-9"></s:textfield>
 									</td>
 								</tr>
 								<tr>
@@ -267,8 +267,8 @@ $(document).ready(function(e) {
 										</label>
 									</td>
 									<td>
-										<s:textfield name="commontime.qchdtime" cssClass="dfinput"
-									cssStyle="width:150px;"></s:textfield>
+										<s:textfield name="commontime.qchdtime" id="qchdtime" cssClass="dfinput"
+									cssStyle="width:150px;" placeholder="范围:0-9"></s:textfield>
 									</td>
 								</tr>
 								<tr>
@@ -442,7 +442,7 @@ $(document).ready(function(e) {
 										相位<s:property value="#status.index"/>
 									</h1>
 									<s:property value="phasename"/>：
-										<input value="${step.second}" name="${step.id}_${step.stepname}" class="timeinput" style="width: 60px; height: 20px;"/>
+										<input value="${step.second}" name="${step.id}_${step.stepname}" class="timeinput" style="width: 75px; height: 20px;" placeholder="范围:10-90"/>
 									秒	
 									</txt>
 								</li>
