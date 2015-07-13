@@ -48,4 +48,6 @@ public interface IUserareaService {
 
 	public abstract List<Userarea> queryList(Integer id);
 
+	public abstract Userarea getUserByAreaname(String areaname);
+
 }

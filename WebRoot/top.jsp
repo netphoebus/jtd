@@ -27,7 +27,25 @@ $(function(){
 		$(".nav li a.selected").removeClass("selected")
 		$(this).addClass("selected");
 	})	
+	
+	
+		
+	$("#time").html(new Date().toLocaleString());
+	
+	
+	function realtime()
+	{
+		$("#time").html(new Date().toLocaleString());
+	}
+	setInterval(realtime,1000);
 })	
+
+function logout(){
+	if(confirm("你确定退出管理系统吗？")){
+		parent.location.href = "useroAction!logout";
+	}
+	
+}
 </script>
 
 </head>
@@ -37,8 +55,10 @@ $(function(){
 <div class="topright">    
     <ul>
       <li><span>欢迎您：管理员 [<s:property value="#session.usero.username"/>]</span></li>
+      <li><span><div id="time"></div> </span></li>
       <li><span><a href="usero_update_password.jsp" target="rightFrame">修改密码</a></span></li>
-      <li><span><a href="login.jsp" target="_parent">安全退出</a></span></li>
+      <li><span><a href="javascript:void(0)" onClick="logout()">注销</a></span></li>
+      	
     </ul>
    
     </div>

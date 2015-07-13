@@ -59,6 +59,7 @@ public class MapAction extends ActionSupport implements RequestAware,
 	 * 区域
 	 */
 	private int areaid;
+	private String areaname;
 	
 	
 	/*
@@ -368,30 +369,7 @@ public class MapAction extends ActionSupport implements RequestAware,
 		return "view";
 	}
 	
-	/**
-	 * 处理从url链接中传过来的参数
-	 */
-	public void setURLParameter() {
-		if (req.getParameter("address") != null) {
-			address = req.getParameter("address");
-		}
-		if (req.getParameter("name") != null) {
-			name = req.getParameter("name");
-		}
-		if (req.getParameter("mkid") != null) {
-			mkid = Long.parseLong(req.getParameter("mkid"));
-		}
-		if (req.getParameter("lat") != null) {
-			lat = req.getParameter("lat");
-		}
-		if (req.getParameter("lng") != null) {
-			lng = req.getParameter("lng");
-		}
-		if (req.getParameter("areaid") != null) {
-			areaid = Integer.parseInt(req.getParameter("areaid"));
-		}
-	}
-
+	
 	
 	// get、set-------------------------------------------
 	// 获得HttpServletResponse对象
@@ -588,6 +566,14 @@ public class MapAction extends ActionSupport implements RequestAware,
 
 	public void setNumber(String number) {
 		this.number = number;
+	}
+
+	public String getAreaname() {
+		return areaname;
+	}
+
+	public void setAreaname(String areaname) {
+		this.areaname = areaname;
 	}
 
 	

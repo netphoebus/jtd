@@ -243,6 +243,7 @@
 	 
 	<package name="area_ajax" extends="json-default">
 		<action name="addArea" class="userareaAction" method="addArea"/>
+		<action name="checkAreaname" class="userareaAction" method="checkAreaname"/>
 	</package>
 	
 		 

@@ -310,7 +310,7 @@ function saveArea()
 		$.ajax({   
 	           url:'addArea',//这里是你的action或者servlert的路径地址   
 	           type:'post', //数据发送方式     
-				data: { "lat":lat,"lng":lng,"zoom":zoom,"uareaname":areaname},
+				data: { "lat":lat,"lng":lng,"zoom":parseInt(zoom),"uareaname":areaname},
 	           error: function(msg)
 	           { //失败   
 	           		alert('区域添加失败');   
@@ -328,6 +328,38 @@ function saveArea()
     	 
 }
 
+
+$(document).ready(function(){
+
+	$("#areaname").on("blur",function(){
+	
+			var uareaname = $(this).val();
+			$.ajax({   
+			            url:'checkAreaname',//这里是你的action或者servlert的路径地址   
+			            type:'post', //数据发送方式   
+			            async:false,
+			            data: { "uareaname":uareaname},
+			            dataType:'json',
+			            error: function(msg)
+			            { //失败   
+			            	console.log('post失败');   
+			            },   
+			            success: function(msg)
+			            { //成功
+							 if(msg!=null)
+							 {
+							 	alert(msg.message);
+						 		$(document).ready(function(){ 
+						 			$("#areaname").val('');
+						 		});
+							 }
+						}
+					});
+	
+	
+	});
+
+});
 
 
 

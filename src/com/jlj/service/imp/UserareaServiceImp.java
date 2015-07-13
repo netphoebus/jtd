@@ -156,5 +156,11 @@ public class UserareaServiceImp implements IUserareaService  {
 		Object[] p = new Object[]{id};;
 		return userareaDao.getObjectsByCondition(queryString, p);
 	}
+	public Userarea getUserByAreaname(String uareaname) {
+		String queryString="from Userarea mo where mo.uareaname=:uareaname";
+		String[] paramNames=new String[]{"uareaname"};
+		Object[] values=new Object[]{uareaname};
+		return userareaDao.queryByNamedParam(queryString,paramNames,values);
+	}
 	
 }

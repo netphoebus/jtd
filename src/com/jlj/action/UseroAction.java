@@ -77,6 +77,15 @@ SessionAware,ServletResponseAware,ServletRequestAware {
 		}
 		
 	}
+	
+	/**
+	 * 用户注销
+	 */
+	public String logout()
+	{
+		session.clear();
+		return "adminLogin";
+	}
 	/**
 	 * 用户管理
 	 */
@@ -164,6 +173,8 @@ SessionAware,ServletResponseAware,ServletRequestAware {
 			}
 		}
 	}
+	
+	
 	
 	
 	// 获得HttpServletResponse对象

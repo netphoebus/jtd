@@ -1,5 +1,7 @@
 package com.jlj.action;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.URLDecoder;
 import java.util.List;
 import java.util.Map;
@@ -7,6 +9,8 @@ import java.util.Map;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import net.sf.json.JSONObject;
 
 import org.apache.struts2.interceptor.RequestAware;
 import org.apache.struts2.interceptor.ServletRequestAware;
@@ -21,6 +25,7 @@ import com.jlj.model.Usero;
 import com.jlj.service.ISigService;
 import com.jlj.service.IUserareaService;
 import com.jlj.service.IUseroService;
+import com.jlj.vo.UserareaVO;
 import com.opensymphony.xwork2.ActionSupport;
 
 @Component("userareaAction")
@@ -195,22 +200,28 @@ SessionAware,ServletResponseAware,ServletRequestAware {
 	
 	
 	/**
-	 * 处理从url链接中传过来的参数
+	 * 检查地区名是否存在
 	 */
-	public void setURLParameter() {
-		if (req.getParameter("lat") != null) {
-			lat = req.getParameter("lat");
+	public String checkAreaname()
+	{
+		userarea = userareaService.getUserByAreaname(uareaname);
+		if(userarea!=null)
+		{
+			UserareaVO userareaVO = new UserareaVO();
+			userareaVO.setMessage("该区域已经存在,请重新输入.");
+			JSONObject jsonObj = JSONObject.fromObject(userareaVO);
+			PrintWriter out;
+			try {
+				response.setContentType("text/html;charset=UTF-8");
+				out = response.getWriter();
+				out.print(jsonObj.toString());
+				out.flush();
+				out.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
-		if (req.getParameter("lng") != null) {
-			lng = req.getParameter("lng");
-		}
-		if (req.getParameter("zoom") != null) {
-			zoom = Integer.parseInt(req.getParameter("zoom"));
-		}
-		if (req.getParameter("uareaname") != null) {
-			uareaname = req.getParameter("uareaname");
-		}
-		System.out.println(lat+" "+lng+" "+zoom+" "+uareaname);
+		return  null;
 	}
 	
 	// 获得HttpServletResponse对象

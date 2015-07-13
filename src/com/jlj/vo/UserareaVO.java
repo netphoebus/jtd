@@ -8,6 +8,7 @@ public class UserareaVO {
 	private String lng;
 	private Integer size;
 	private int ulimit;
+	private String message;
 	
 	
 	public int getId() {
@@ -45,6 +46,12 @@ public class UserareaVO {
 	}
 	public void setUlimit(int ulimit) {
 		this.ulimit = ulimit;
+	}
+	public String getMessage() {
+		return message;
+	}
+	public void setMessage(String message) {
+		this.message = message;
 	}
 	
 	
