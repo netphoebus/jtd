@@ -128,23 +128,26 @@ public class UploadCmdFactory extends CmdFactoryBase implements ICmdParser{
 			Sig sig = sigService.querySigByNumber(number);
         	
     		if(sig!=null){
-    			
-            	try {
-            		//录入故障日志
-                	Devlog devlog = new Devlog();
-                	devlog.setSig(sig);
-                	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-					Date errorDate = sdf.parse(time);
-					devlog.setDevtime(errorDate);
-					devlog.setDevevent("故障代码"+error_code);
-					devlogService.add(devlog);
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-            	//修改当前信号机故障状态以及故障代码
-    			int sigStatus = 1;
-    			sigService.updateSigStatus(sigStatus,error_code,sig.getId());
+    			//若当前状态为正常状态，录入故障信息并插入数据库
+    			if(sig.getIserror()!=null&&sig.getIserror()==0){
+    				try {
+                		//录入故障日志
+                    	Devlog devlog = new Devlog();
+                    	devlog.setSig(sig);
+                    	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    					Date errorDate = sdf.parse(time);
+    					devlog.setDevtime(errorDate);
+    					devlog.setDevevent("故障代码"+error_code);
+    					devlogService.add(devlog);
+    				} catch (Exception e) {
+    					// TODO Auto-generated catch block
+    					e.printStackTrace();
+    				}
+                	//修改当前信号机故障状态以及故障代码
+        			int sigStatus = 1;
+        			sigService.updateSigStatus(sigStatus,error_code,sig.getId());
+    			}
+            	
     		}
         }
 	}

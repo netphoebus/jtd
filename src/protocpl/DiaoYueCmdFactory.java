@@ -1,10 +1,8 @@
 package protocpl;
 
-import java.net.InetSocketAddress;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -30,6 +28,7 @@ import com.jlj.service.ISignpublicparamService;
 import com.jlj.service.ISolutionService;
 import com.jlj.service.IStepService;
 import com.jlj.service.IUserareaService;
+import com.jlj.util.Commands;
 
 public class DiaoYueCmdFactory extends CmdFactoryBase implements ICmdParser{
 	final static ApplicationContext ac=new ClassPathXmlApplicationContext("beans.xml");
@@ -268,14 +267,44 @@ public class DiaoYueCmdFactory extends CmdFactoryBase implements ICmdParser{
 //	  		SigAction.trafficlights = locate;
 //	  		SigAction.Countdown = Countdown;
 //	  	}
+	  	
 	  	if(SigAction.curruntSigNumber !=  null){
 		  	if((number+"").equals(SigAction.curruntSigNumber )){
 		  		SigAction.trafficlights = locate;
 		  		SigAction.Countdown = Countdown;
-		  		//获取故障代码"+(data[41]&0x7f)并存入SIGAction的静态字段中
-		  		SigAction.isfault = (data[41]&0x7f);
+		  		
+		  		
 		  	}
 	  	}
+	  	
+	  	//判断是否故障：若故障，若数据库当前状态为正常状态（即iserror=0），则下发一条”请发故障信息"命令，让信号机发送故障数据;获取故障信息之后，录入数据库并修改iserror值，改为故障iserror=1；
+	  	//若故障，若数据库当前状态为故障状态（即iserror=1），则pass；
+	  	//若故障已排除，则为正常状态，修改数据库的iserror值，改为故障iserror=0；
+	  	int faultcode = (data[41]&0x7f);//获取故障代码
+	  	if(faultcode!=0){
+	  		//故障
+	  		
+	  		int iserror=0;
+	  		if(sig!=null&&sig.getIserror()!=null){
+	  			iserror = sig.getIserror();
+	  		}
+	  		if(iserror==0){
+	  			//下发一条”请发故障信息"命令
+	  			Commands.executeCommand(3, session);
+	  		}
+	  	}else{
+	  		//正常状态，若该信号机的iserror=1，改为0
+	  		//修改当前信号机故障状态以及故障代码
+	  		if(sig.getIserror()==1){
+	  			int sigStatus = 0;
+				int error_code = 0;
+				sigService.updateSigStatus(sigStatus,error_code,sig.getId());
+	  		}
+			
+	  	}
+	  	
+	  	
+	  	
 	  	//计数器flag；判断器isnext；
 	  	int isnext=0;
 	  	//0:东左 1：东直 2：东右 3：南左 4：南直 5：南右 6：西左 7：西直 8:西右 9：北左 10：北直 11：北右
