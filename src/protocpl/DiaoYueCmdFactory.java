@@ -45,7 +45,7 @@ public class DiaoYueCmdFactory extends CmdFactoryBase implements ICmdParser{
 	
 	private int locate[][];
 	private int Countdown[];
-	private static int flag = 0;
+	private static int flag = 0;//车流量计数器
 	private static int flow_returnid;
 	public DiaoYueCmdFactory(byte[] data) {
 		super(data);
@@ -268,29 +268,30 @@ public class DiaoYueCmdFactory extends CmdFactoryBase implements ICmdParser{
 //	  		SigAction.trafficlights = locate;
 //	  		SigAction.Countdown = Countdown;
 //	  	}
-	  	if(SigAction.curruntSigNumber !=  null)
-	  	if((number+"").equals(SigAction.curruntSigNumber )){
-	  		SigAction.trafficlights = locate;
-	  		SigAction.Countdown = Countdown;
+	  	if(SigAction.curruntSigNumber !=  null){
+		  	if((number+"").equals(SigAction.curruntSigNumber )){
+		  		SigAction.trafficlights = locate;
+		  		SigAction.Countdown = Countdown;
+		  		//获取故障代码"+(data[41]&0x7f)并存入SIGAction的静态字段中
+		  		SigAction.isfault = (data[41]&0x7f);
+		  	}
 	  	}
-	  	
-	  	//0-计数器flag=1；判断器isnext=0；
+	  	//计数器flag；判断器isnext；
 	  	int isnext=0;
 	  	//0:东左 1：东直 2：东右 3：南左 4：南直 5：南右 6：西左 7：西直 8:西右 9：北左 10：北直 11：北右
 	  	int whichroad = data[42];
-	  	if(whichroad<flag){
-	  		isnext =1;
-	  		flag = whichroad;
+	  	//判断来了多少个0，如果来了10个0（1分钟，6s每次，一共10次），插入新数据；如果没到累计到10个0，一直修改数据累加
+	  	//插入方式：根据sigid和车道号的编号插入车流量信息
+	  	if(whichroad==0){
+	  		flag++;//如果来一个0，计数器加1;表示1分钟内的第几次，6s每次，一共10次（第一次flag=0）
 	  	}
-	  	flag++;
-	  	if(whichroad==11){
+	  	if(flag==10){
+	  		//如果计数器超过10次（第11次），插入新数据
+	  		isnext=1;
+	  		//计数器清0
 	  		flag=0;
 	  	}
 	  	
-	  	//1-根据ip地址获取信号机id
-	  	//2-根据sigid和车道号的编号插入车流量信息
-	  	
-//	  	Sig sig = sigService.querySigByIpAddress(clientIP);
 	  	if(sig!=null){
 	  		if(isnext==1){
 	  			//新插入记录
@@ -346,48 +347,89 @@ public class DiaoYueCmdFactory extends CmdFactoryBase implements ICmdParser{
 	  		}else{
 	  			//更新记录
 	  			String flowziduan="";
-	  			switch (whichroad) {
-				case 0:
-					flowziduan="dleft";
-					break;
-				case 1:
-					flowziduan="dline";
-					break;
-				case 2:
-					flowziduan="dright";
-					break;
-				case 3:
-					flowziduan="nleft";
-					break;
-				case 4:
-					flowziduan="nline";
-					break;
-				case 5:
-					flowziduan="nright";
-					break;
-				case 6:
-					flowziduan="xleft";
-					break;
-				case 7:
-					flowziduan="xline";
-					break;
-				case 8:
-					flowziduan="xright";
-					break;
-				case 9:
-					flowziduan="bleft";
-					break;
-				case 10:
-					flowziduan="bline";
-					break;
-				case 11:
-					flowziduan="bright";
-					break;
-				default:
-					break;
-				}
-	  			flowService.updateFlowByCondition(flowziduan,flow,flow_returnid);
+	  			//获取数据库中该条记录中已存在的值
+	  			Flow dbflowobj = flowService.loadById(flow_returnid);
+	  			int dbflow = 0;
+	  			if(dbflowobj!=null){
+		  			switch (whichroad) {
+					case 0:
+						flowziduan="dleft";
+						if(dbflowobj.getDleft()!=null){
+		  					dbflow = dbflowobj.getDleft();
+		  				}
+						break;
+					case 1:
+						flowziduan="dline";
+						if(dbflowobj.getDline()!=null){
+		  					dbflow = dbflowobj.getDline();
+		  				}
+						break;
+					case 2:
+						flowziduan="dright";
+						if(dbflowobj.getDright()!=null){
+		  					dbflow = dbflowobj.getDright();
+		  				}
+						break;
+					case 3:
+						flowziduan="nleft";
+						if(dbflowobj.getNleft()!=null){
+		  					dbflow = dbflowobj.getNleft();
+		  				}
+						break;
+					case 4:
+						flowziduan="nline";
+						if(dbflowobj.getNline()!=null){
+		  					dbflow = dbflowobj.getNline();
+		  				}
+						break;
+					case 5:
+						flowziduan="nright";
+						if(dbflowobj.getNright()!=null){
+		  					dbflow = dbflowobj.getNright();
+		  				}
+						break;
+					case 6:
+						flowziduan="xleft";
+						if(dbflowobj.getXleft()!=null){
+		  					dbflow = dbflowobj.getXleft();
+		  				}
+						break;
+					case 7:
+						flowziduan="xline";
+						if(dbflowobj.getXline()!=null){
+		  					dbflow = dbflowobj.getXline();
+		  				}
+						break;
+					case 8:
+						flowziduan="xright";
+						if(dbflowobj.getXright()!=null){
+		  					dbflow = dbflowobj.getXright();
+		  				}
+						break;
+					case 9:
+						flowziduan="bleft";
+						if(dbflowobj.getBleft()!=null){
+		  					dbflow = dbflowobj.getBleft();
+		  				}
+						break;
+					case 10:
+						flowziduan="bline";
+						if(dbflowobj.getBline()!=null){
+		  					dbflow = dbflowobj.getBline();
+		  				}
+						break;
+					case 11:
+						flowziduan="bright";
+						if(dbflowobj.getBright()!=null){
+		  					dbflow = dbflowobj.getBright();
+		  				}
+						break;
+					default:
+						break;
+					}
+		  			flowService.updateFlowByCondition(flowziduan,dbflow+flow,flow_returnid);
 	  			
+	  			}
 	  		}
 	  	}
 	  }

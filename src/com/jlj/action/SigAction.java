@@ -45,6 +45,7 @@ public class SigAction extends ActionSupport implements RequestAware,
 
 	public static int[][] trafficlights = new int[4][5];
 	private static int[][] trafficlights_next = new int[4][5];
+	public static int isfault;//是否故障
 	public static int[] Countdown = new int[4];
 	private ISigService sigService;
 	private Sig sig;
@@ -290,6 +291,17 @@ public class SigAction extends ActionSupport implements RequestAware,
 
 	// 获得状态
 	public String realtime() {
+		//判断是否需要插入和下发故障信息
+		int flag = 0;//计数器
+		if(isfault!=0){
+			flag = 1;//计数器=1，说明有故障
+		}
+		if(flag==1){
+			//故障发生了，执行命令
+			
+			flag = 0;
+		}
+		
 		/**
 		 * trafficLigths[0-3]:表示一个红绿灯的各个方向依次为：0:东-》西,1:南-》北,2:西-》东,3:北-》南
 		 * trafficLigths[0-3][0-4]：表示一个方向的5具体的灯： 0:左转灯,1: 直行灯 ,2:右转灯 ,3:人行道
