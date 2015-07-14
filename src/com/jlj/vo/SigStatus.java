@@ -3,10 +3,12 @@ package com.jlj.vo;
 public class SigStatus {
 	private String name;
 	private String status;
-	public SigStatus(String name, String status) {
+	private String url;
+	public SigStatus(String name, String status, String url) {
 		super();
 		this.name = name;
 		this.status = status;
+		this.url = url;
 	}
 	public String getName() {
 		return name;
@@ -20,5 +22,12 @@ public class SigStatus {
 	public void setStatus(String status) {
 		this.status = status;
 	}
+	public String getUrl() {
+		return url;
+	}
+	public void setUrl(String url) {
+		this.url = url;
+	}
+	
 	
 }

@@ -83,18 +83,28 @@ public class SigAction extends ActionSupport implements RequestAware,
 		if (usersigs != null && usersigs.size() > 0) {
 			List<SigStatus> sigstatuses = new ArrayList<SigStatus>();
 			for (int i = 0; i < usersigs.size(); i++) {
-				String thestatus="";
+				StringBuffer thestatus=new StringBuffer();
 				Sig sigobj = usersigs.get(i);
+//				if(sigobj.getMkid()!=null){
+//					thestatus.append("<a href='sigAction!toTraffic?mkid="+sigobj.getMkid()+"' target='rightFrame'>");
+//				}else{
+//					thestatus.append("<a href=# onClick=alert('当前信号机异常') >");
+//				}
 				IoSession theSession =this.getCurrrenSession(sigobj.getNumber());
 				if(theSession==null){
-					thestatus = "<font color=red>断开</font>";
+					thestatus.append("<font color=red>断开</font>");
 				}else if(usersigs.get(i).getIserror()==1){
-					thestatus = "<font color=red>故障</font>";
+					thestatus.append("<font color=red>故障</font>");
 				}else{
-					thestatus = "正常";
+					thestatus.append("正常");
+				}
+//				thestatus.append("</a>");
+				String url="#";
+				if(sigobj.getMkid()!=null){
+					url="sigAction!toTraffic?mkid="+sigobj.getMkid();
 				}
 				SigStatus sigstatus = new SigStatus(usersigs.get(i)
-						.getName(), thestatus);
+						.getName(), thestatus.toString(),url);
 				if(sigobj.getLat()!=null&&!sigobj.getLat().equals("")&&sigobj.getLng()!=null&&!sigobj.getLng().equals("")){
 					sigstatuses.add(sigstatus);
 				}
