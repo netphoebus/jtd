@@ -10,7 +10,6 @@ function changeTimeSelect()
 
 function deleteTqLine()
 {
-	console.log("进入删除")
 	var mklid = $("#mklid").val();
 	$.ajax({   
 	            url:'deleteTqLine',//这里是你的action或者servlert的路径地址   
@@ -32,6 +31,8 @@ function test()
 {
 	console.log("test");
 }
+
+
 $(document).ready(function(){
 	//设置相位执行时间
 		$(".dfinput_tqtime").on("blur",function(){
@@ -54,13 +55,6 @@ $(document).ready(function(){
 				}
 		});
 		
-		
-		
-	
-		
-		
-		
-	
 });
 
 
@@ -78,35 +72,26 @@ $(document).ready(function(){
 			console.log(conflictVOs);
 			
 		$(".picbox img").click(function(event) {
-	
 			var img = $(event.target);
 			var imgsrc = img[0].src;//获得当前焦点的src
 			
-			console.log("imgsrc:-----------------------"+imgsrc);
 			var lastnumber = imgsrc.substring(imgsrc.indexOf(".png")-1,imgsrc.indexOf(".png"));//当前焦点的灯的颜色
-			
-			console.log("lastnumber:-----------------------"+lastnumber);
-			
 			var headnumber = imgsrc.substring(imgsrc.indexOf(".png")-3,imgsrc.indexOf(".png")-1);//当前焦点的路口方位及左转还是右转灯	
-			console.log("headnumber:-----------------------"+headnumber);
 			
 			var headnumber1 = headnumber.substring(0,1);//当前焦点的路口方位
 			var headnumber2 = headnumber.substring(1,2);//当前焦点的灯转向
-			
 			
 			//根据灯的种类及当前颜色 来修改灯的颜色
 			if(lastnumber == 0)
 			{
 					//当前灯色要改为绿色的时候要进行绿冲突判断
-					
-					
 					//第二部：分两种情况，一种为 id 一种为 class 解析conflictStr 并逐一找出冲突的灯当前的颜色是否为绿色如果为绿色则返回
 					if(img[0].id==null||img[0].id =="")
 					{
 						//class
 						var imgclass= img[0].classList[0];
 						conflictStart = imgclass.substring(0,imgclass.indexOf("_"));
-							console.log("====================信号机"+conflictStart)
+						console.log("====================信号机"+conflictStart)
 						for(var i=0;i<conflictVOs.length;i++)
 						{
 							console.log("====================信号机"+conflictVOs[i].sid,conflictStart)

@@ -9,6 +9,7 @@ public class MarkerVO {
 	private String lng;
 	//private String ip;
 	private String number;
+	private String message;
 	
 	
 	public Long getId() {
@@ -52,6 +53,12 @@ public class MarkerVO {
 	}
 	public void setNumber(String number) {
 		this.number = number;
+	}
+	public String getMessage() {
+		return message;
+	}
+	public void setMessage(String message) {
+		this.message = message;
 	}
 	
 	

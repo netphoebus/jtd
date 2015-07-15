@@ -341,30 +341,6 @@ function GreenLinesInit()
 									self.location='greenroadAction!lbd?mklid='+poly.id; 
 									
 					        });
-			    	    	
-			    	    	/*
-			    	    		for(var i=0;i<initMarkers.length;i++)
-								{
-									if(initMarkers[i].id==marker.id)
-									{
-										console.log(initMarkers[i]);
-										dots.push(new Array(initMarkers[i].getPosition().kb,initMarkers[i].getPosition().jb));
-									}
-								}
-			    	    				
-							    	    var	 poly = maphelper.polyline({
-										dots:dots,						
-										color:"#008000",
-										weight:16,
-										opacity:0.5,
-										id:linesmsg[i].marklineid
-								});
-								
-									maphelper.bindInstanceEvent(poly, 'dblclick', function(event,map) {
-									
-									console.log("这条线被打开了");
-					        });
-					        */
 			    	    } 	   
 	            }  
     	    });  
@@ -384,76 +360,7 @@ function getMarkerContent(marker)
 
 
 
-//添加单个信号机标记
-function saveMarker(id)
-{
-	for(var i=0;i<initMarkers.length;i++)
-	{
-		if(initMarkers[i].id == id)
-		{
-			var number = $('#numberSelect').val();
-			var address = $('#address').val();
-			var name = $('#name').val();
-			var lat = initMarkers[i].getPosition().jb;
-			var lng = initMarkers[i].getPosition().kb;
-			
-			$.ajax({   
-	            url:'addOrUpdate',//这里是你的action或者servlert的路径地址   
-	            type:'post', //数据发送方式     
-	 			data: { "id":id,"number":number,"address":address,"name":name,"lat":lat,"lng":lng},
-	            error: function(msg)
-	            { //失败   
-	            	alert('信号机增加失败');   
-	            },   
-	            success: function(msg)
-	            { //成功   
-	          		if(infowindow)
-					infowindow.close();
-					alert('信号机绑定成功');   
-	            }  
-    	    });   
-    	    
-    	    initMarkers[i].initOver = true;
-    	    initMarkers[i].setAnimation(null);
-    	    initMarkers[i].name = name;
-    	    initMarkers[i].address = address;
-    	    initMarkers[i].number = number;
-		}
-	}
-}
-
-
-//删除单个信号机标记
-function deleteMarker(id)
-{
-	for(var i=0;i<initMarkers.length;i++)
-	{
-	
-		if(initMarkers[i].id == id)
-		{
-			$.ajax({   
-	            url:'delete',//这里是你的action或者servlert的路径地址   
-	            type:'post', //数据发送方式     
-	 			data: { "id":id},
-	            error: function(msg)
-	            { //失败   
-	            	alert('信号机删除失败');   
-	            },   
-	            success: function(msg)
-	            { //成功   
-	            	alert('信号机删除成功');   
-	            }  
-    	    });   
-    	   	 initMarkers[i].setMap(null);
-	         initMarkers.splice(i,1);
-		}
-	}
-}
-
-
 function Polyline() {
-
-
 		//改变新增区域按钮状态
 	if($("#addroad").css("background-image")!="none")
 	{
@@ -464,7 +371,7 @@ function Polyline() {
 	
 }
 
-//清楚当前绿线
+//清除当前绿线
 function ClearPoly() {
 	maphelper.clearPoly();
 	maphelper.clearLine();

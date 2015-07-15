@@ -64,86 +64,17 @@ var conflictVOs = <s:property value="conflictVOs" escape="false"/>;
 
 			<div style="width: 100%; float: left; margin-top: 15px;">
 				<div class="lleft lbdinfo ">
-					<div style="float: left; line-height: 35px; width: 90%;">
-
-						<label>
-							时段选择：
-						</label>
-						<div class="vocation">
-							<select id="timetype" name="timetype" class="select1"
-								onchange="changeTimeSelect()">
-								<option <s:if test="timetype==0">selected</s:if> value="0">
-									普通日
-								</option>
-								<option <s:if test="timetype==1">selected</s:if> value="1">
-									周日
-								</option>
-								<option <s:if test="timetype==2">selected</s:if> value="2">
-									特殊日
-								</option>
-							</select>
-						</div>
-					</div>
 
 					<div style="float: left; line-height: 35px; width: 90%;">
 						<label>
-							时段细分：
+							开始日期：
 						</label>
 						<div class="vocation">
-							<select name="select3" id="orderid" class="select1"
-								onchange="changeTimeSelect()">
-								<option <s:if test="orderid==0">selected</s:if> value="0">
-									时间段0
-								</option>
-								<option <s:if test="orderid==1">selected</s:if> value="1">
-									时间段1
-								</option>
-								<option <s:if test="orderid==2">selected</s:if> value="2">
-									时间段2
-								</option>
-								<option <s:if test="orderid==3">selected</s:if> value="3">
-									时间段3
-								</option>
-								<option <s:if test="orderid==4">selected</s:if> value="4">
-									时间段4
-								</option>
-								<option <s:if test="orderid==5">selected</s:if> value="5">
-									时间段5
-								</option>
-								<option <s:if test="orderid==6">selected</s:if> value="6">
-									时间段6
-								</option>
-								<option <s:if test="orderid==7">selected</s:if> value="7">
-									时间段7
-								</option>
-								<option <s:if test="orderid==8">selected</s:if> value="8">
-									时间段8
-								</option>
-								<option <s:if test="orderid==9">selected</s:if> value="9">
-									时间段9
-								</option>
-								<option <s:if test="orderid==10">selected</s:if> value="10">
-									时间段10
-								</option>
-								<option <s:if test="orderid==11">selected</s:if> value="11">
-									时间段11
-								</option>
-								<option <s:if test="orderid==12">selected</s:if> value="12">
-									时间段12
-								</option>
-								<option <s:if test="orderid==13">selected</s:if> value="13">
-									时间段13
-								</option>
-								<option <s:if test="orderid==14">selected</s:if> value="14">
-									时间段14
-								</option>
-								<option <s:if test="orderid==15">selected</s:if> value="15">
-									时间段15
-								</option>
-							</select>
+							<span style="margin-right: 5px;"> 
+								<input type="date" name="begindate" class="dfinput" formate="yyyy-MM-dd" id="begindate" style="width: 165px;"  />
+									</span>
 						</div>
 					</div>
-
 
 					
 					<div style="float: left; line-height: 35px; width: 90%;">
@@ -152,7 +83,7 @@ var conflictVOs = <s:property value="conflictVOs" escape="false"/>;
 						</label>
 						<div class="vocation">
 							<span style="margin-right: 5px;"> 
-								<input type="time" name="begintime" class="dfinput" id="begintime" style="width: 125px;"  />
+								<input type="time" name="begintime" class="dfinput" id="begintime" style="width: 165px;"  />
 									</span>
 						</div>
 					</div>
@@ -172,17 +103,25 @@ var conflictVOs = <s:property value="conflictVOs" escape="false"/>;
 										style="text-align: center; line-height: 20px; text-indent: 0px;">
 										编号
 									</th>
-									<th width="20%"
+									<th width="8%"
 										style="text-align: center; line-height: 20px; text-indent: 10px;">
 										路口名
 									</th>
-									<th width="14%"
-										style="text-align: left; line-height: 20px; text-indent: 0px;">
-										执行相位
+									<th width="40%"
+										style="text-align: center; line-height: 20px; text-indent: 0px;">
+										指定相位
 									</th>
-									<th width="15%"
+									<th width="16%"
 										style="text-align: left; line-height: 20px; text-indent: 0px;">
-										执行时间
+										绿灯执行时间
+									</th>
+									<th width="16%"
+										style="text-align: left; line-height: 20px; text-indent: 0px;">
+										黄灯执行时间
+									</th>
+									<th width="16%"
+										style="text-align: left; line-height: 20px; text-indent: 0px;">
+										红灯灯执行时间
 									</th>
 								</tr>
 							</thead>
@@ -190,7 +129,7 @@ var conflictVOs = <s:property value="conflictVOs" escape="false"/>;
 								<s:iterator value="sigVOs" var="sigVO" status="status">
 									<tr>
 										<td style="text-align: center;">
-											<s:property value="id" />
+											<s:property value="number" />
 										</td>
 										<td style="text-align: center;">
 											<s:property value="name" />
@@ -346,9 +285,19 @@ var conflictVOs = <s:property value="conflictVOs" escape="false"/>;
          
 										</td>
 										<td>
-												<input type="text" alt="执行时间"
+												<input type="text" alt="绿灯执行时间"
 													id="<s:property value="id"/>_time" class="dfinput_tqtime"  value="10"
 													style="width: 120px;" /> ×10秒
+										</td>
+										<td>
+												<input type="text" alt="黄灯执行时间"
+													id="<s:property value="id"/>_time" class="dfinput_tqtime"  value="10"
+													style="width: 120px;" /> 秒
+										</td>
+										<td>
+												<input type="text" alt="红灯执行时间"
+													id="<s:property value="id"/>_time" class="dfinput_tqtime"  value="10"
+													style="width: 120px;" /> 秒
 										</td>
 									</tr>
 								</s:iterator>
@@ -356,12 +305,6 @@ var conflictVOs = <s:property value="conflictVOs" escape="false"/>;
 
 							</tbody>
 						</table>
-					</div>
-					<div
-						style="width: 90%; float: left; margin-top: 20px; color: #999; text-align: center;">
-						注：基准路口距离设置为0，其余路口的距离是与基准路口的距离。允许非对称相位
-						<input type="hidden" id="mklid"
-							value="<s:property value="mklid"/>" />
 					</div>
 					<div
 						style="width: 90%; float: left; margin-top: 20px; color: #999; text-align: center;">

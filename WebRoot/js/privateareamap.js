@@ -317,8 +317,8 @@ function saveArea()
 	           },   
 	           success: function(msg)
 	           { //成功   
-				alert('区域添加成功');  
-				dbclick = false;
+					alert('区域添加成功');  
+					self.location.reload();  //刷新本页
 	           }  
 	  	    });   
     	    

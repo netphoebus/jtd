@@ -49,6 +49,8 @@ public interface ISigService {
 
 	public abstract Sig querySigByNumber(String number);
 
+	public abstract Sig querySigByName(String name);
+
 
 
 }

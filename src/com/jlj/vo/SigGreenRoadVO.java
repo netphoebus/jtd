@@ -5,10 +5,11 @@ import java.util.List;
 
 public class SigGreenRoadVO {
 	
-	private int id;//路口编号
+	private int id;//路口id
 	private String name;//路口名称
 	private String distance;//与基准点的距离
 	private int circleTime;//周期
+	private String number;//路口编号
 	
 	private List<UsefulPhaseVO> usefulPhases;//所有可用相位
 	private List<String> pharsePros = new ArrayList<String>();
@@ -80,6 +81,12 @@ public class SigGreenRoadVO {
 	}
 	public void setPharsePros(List<String> pharsePros) {
 		this.pharsePros = pharsePros;
+	}
+	public String getNumber() {
+		return number;
+	}
+	public void setNumber(String number) {
+		this.number = number;
 	}
 	
 	

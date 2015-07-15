@@ -351,24 +351,28 @@ public class MapAction extends ActionSupport implements RequestAware,
 		return NONE;
 	}
 	
-	/**
-	 * 修改
-	 * 
-	 * @return
-	 */
-	public String update() throws Exception {
-		return SUCCESS;
+	public String checkMarkerName()
+	{
+		//System.out.println("checkMarkerName");
+		sig = sigService.querySigByName(name);
+		if(sig!=null)
+		{
+			MarkerVO markerVO = new MarkerVO();
+			markerVO.setMessage("该信号机名称已经存在,请重新输入.");
+			JSONObject jsonObj = JSONObject.fromObject(markerVO);
+			PrintWriter out;
+			try {
+				response.setContentType("text/html;charset=UTF-8");
+				out = response.getWriter();
+				out.print(jsonObj.toString());
+				out.flush();
+				out.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		return  null;
 	}
-
-	/**
-	 * 查看信息
-	 * 
-	 * @return
-	 */
-	public String view() {
-		return "view";
-	}
-	
 	
 	
 	// get、set-------------------------------------------

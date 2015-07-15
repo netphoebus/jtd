@@ -219,7 +219,7 @@ $(document).ready(function(e) {
 									<input type="hidden" alt="周期" id="<s:property value="id"/>_circle" value="<s:property value="circleTime"/>"/>
 									<tr>
 										<td style="text-align: center;">
-											<s:property value="id" />
+											<s:property value="number" />
 										</td>
 										<td style="text-align: center;">
 											<s:property value="circleTime" />
@@ -244,7 +244,6 @@ $(document).ready(function(e) {
 										</td>
 
 										<td>
-
 											<s:if test="#status.last">
 						                      	最后一个路口无需设置正向速度
 						                    </s:if>
@@ -268,7 +267,6 @@ $(document).ready(function(e) {
 															</s:if>
 				
 															<s:else>没有可用相位</s:else>
-						                      	
 						                      	
 						                      	
 						                      	
@@ -313,7 +311,6 @@ $(document).ready(function(e) {
 						<input name="input" type="button" class="scbtn"
 							style="margin-top: 15px;" onclick="initGreenRoad()" value="生成时距图" />
 					</div>
-					
 					<p>
 						&nbsp;
 					</p>

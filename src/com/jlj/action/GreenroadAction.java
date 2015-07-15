@@ -240,11 +240,8 @@ public class GreenroadAction extends ActionSupport implements RequestAware,
 	public String tq() throws Exception {
 		greenroad = greenroadService.loadByMkid(mklid);
 		if (greenroad != null) {
-			setSigVOS(greenroad);
-			
-			
+			setTqSigVOS(greenroad);
 			setGreenConflict(sigVOs);
-			
 			return "tq";
 		} else {
 			String errorMsg="没有获得相应特勤控制信息,请确保数据不为空.";
@@ -254,8 +251,27 @@ public class GreenroadAction extends ActionSupport implements RequestAware,
 
 	}
 	
-	
-	//获得绿冲突对象
+	/*
+	 * 设置特勤控制信号机vo
+	 */
+	private void setTqSigVOS(Greenroad greenroad) {
+		sigVOs = new ArrayList<SigGreenRoadVO>();
+		String[] mkids = greenroad.getSigmids().split(",");
+		for (int i = 0; i < mkids.length; i++) {
+			sig = sigService.loadByMkid(Long.parseLong(mkids[i]));
+			if (sig != null) {
+				sigVO = new SigGreenRoadVO();
+				sigVO.setNumber(sig.getNumber());
+				sigVO.setName(sig.getName());
+				sigVOs.add(sigVO);
+			}
+		}
+	}
+
+
+	/*
+	 * 获得绿冲突对象列表
+	 */
 	private void setGreenConflict(List<SigGreenRoadVO> sigVOs) {
 		
 		conflictVOs = new ArrayList<ConflictVO>();
@@ -657,12 +673,11 @@ public class GreenroadAction extends ActionSupport implements RequestAware,
 			sig = sigService.loadByMkid(Long.parseLong(mkids[i]));
 			if (sig != null) {
 				sigVO = new SigGreenRoadVO();
-				sigVO.setId(sig.getId());
+				sigVO.setNumber(sig.getNumber());
 				sigVO.setName(sig.getName());
 				commontime = commontimeService.loadByOrderIdAndTimetype(
 						timetype, orderid, sig.getId());
 				if (commontime != null) {
-					
 					sigVO = setCurrentSigVOParam(sigVO);//设置 单个sigVO的复杂属性
 				}
 				sigVOs.add(sigVO);

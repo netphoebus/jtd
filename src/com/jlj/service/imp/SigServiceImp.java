@@ -114,4 +114,10 @@ public class SigServiceImp implements ISigService  {
 		Object[] values = new Object[] { number };
 		return sigDao.queryByNamedParam(queryString, paramNames, values);
 	}
+	public Sig querySigByName(String name) {
+		String queryString = "from Sig mo where mo.name =:name";
+		String[] paramNames = new String[] { "name" };
+		Object[] values = new Object[] { name };
+		return sigDao.queryByNamedParam(queryString, paramNames, values);
+	}
 }

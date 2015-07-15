@@ -392,9 +392,9 @@ function setMarkerContent(marker)
 	return '<div  id="content"><h1 id="">绑定远程信号机</h1><div id="bodyContent">'
 	+ '<div style="margin-top:10px; float:left; width:300px;">信号机编号：<select id="numberSelect"  name="numberSelect"  style="padding-bottom:1px;border:1px solid #cfdfe4" width="25px">'
 	+options+'</select></div>' 
-	+ '<br><div style="margin-top:5px; float:left; width:300px;">信号机地址：<input id="address" value="" name="signal_address" type="text"   style="padding-bottom:1px;border:1px solid #cfdfe4"  width="25px"/></div>' 
-	+ '<br><div style="margin-top:5px; float:left; width:300px;">信号机名称：<input id="name" value="" name="signal_name" type="text"   style="padding-bottom:1px;border:1px solid #cfdfe4"  width="25px"/></div>' 
-	+ '<br><div class="maptip"><btn><a href="javascript:saveMarker('+marker.id+')" target="rightFrame" ">绑定</a></btn></div></div>'
+	+ '<br><div style="margin-top:5px; float:left; width:300px;">信号机地址：<input id="address" class="setAddress" value="" name="signal_address" type="text"   style="padding-bottom:1px;border:1px solid #cfdfe4"  width="25px"/></div>' 
+	+ '<br><div style="margin-top:5px; float:left; width:300px;">信号机名称：<input id="name" class="setName" value="" name="signal_name" type="text"   style="padding-bottom:1px;border:1px solid #cfdfe4"  width="25px"/></div>' 
+	+ '<br><div class="maptip"><btn><a href="javascript:saveMarker('+marker.id+')" target="rightFrame" onclick="return checkMarker();">绑定</a></btn></div></div>'
 
 	'</div>' ;
 }
@@ -403,7 +403,6 @@ function setMarkerContent(marker)
 //添加单个信号机标记
 function saveMarker(id)
 {
-	console.log(" saveMarker areaid:"+areaid);
 	for(var i=0;i<initMarkers.length;i++)
 	{
 		if(initMarkers[i].id == id)
@@ -427,15 +426,9 @@ function saveMarker(id)
 	          		if(infowindow)
 					infowindow.close();
 					alert('信号机绑定成功');  
-					
+					self.location.reload();  //刷新本页
 	            }  
     	    });   
-    	    initMarkers[i].dbclickable = true;
-    	    initMarkers[i].initOver = true;
-    	    initMarkers[i].setAnimation(null);
-    	    initMarkers[i].name = name;
-    	    initMarkers[i].address = address;
-    	    initMarkers[i].number = number;
 		}
 	}
 }
@@ -444,7 +437,7 @@ function saveMarker(id)
 //删除单个信号机标记
 function deleteMarker(id)
 {
-	if(confirm("您确定要删除该信号机么?"))
+	if(confirm("删除当前信号机会导致与信号机相关的特勤控制及无电缆联动也删除，您确定要删除该信号机么?"))
 	{
 		for(var i=0;i<initMarkers.length;i++)
 		{
@@ -462,10 +455,9 @@ function deleteMarker(id)
 		            success: function(msg)
 		            { //成功   
 		            	alert('信号机删除成功');   
+		            	self.location.reload();  //刷新本页
 		            }  
 	    	    });   
-	    	   	 initMarkers[i].setMap(null);
-		         initMarkers.splice(i,1);
 			}
 		}
 	}
@@ -480,4 +472,46 @@ function changeArea()
 {
 	location.href = "map.jsp?areaid="+parseInt($("#areaid").val());
 }
+
+function checkMarker()
+{
+	var nameError = false;
+	var address = $(".setAddress").val();
+	var name = $(".setName").val();
+	if(address==null||address=="")
+	{
+		alert("信号机所在地址不能为空");
+		return false;
+	}
+	$.ajax({   
+			            url:'checkMarkerName',//这里是你的action或者servlert的路径地址   
+			            type:'post', //数据发送方式   
+			            async:false,
+			            data: { "name":name},
+			            dataType:'json',
+			            error: function(msg)
+			            { //失败   
+			            	console.log('post失败');   
+			            },   
+			            success: function(msg)
+			            { //成功
+							 if(msg!=null)
+							 {
+						 		nameError = true;
+							 }
+						}
+					});
+	if(name==null||name=="")
+	{
+		alert("信号机名称不能为空");
+		return false;
+	}
+	if(nameError)
+	{
+		alert("信号机名称已存在，请重新舒服");
+		return false;
+	}
+}
+
+
 
