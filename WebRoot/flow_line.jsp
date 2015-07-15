@@ -36,9 +36,9 @@ $(document).ready(function(e) {
 });
 </script>
 	<script type="text/javascript" src="js/pageKit.js"></script>
-	<script type="text/javascript" src="http://cdn.hcharts.cn/jquery/jquery-1.8.3.min.js"></script>
-  <script type="text/javascript" src="http://cdn.hcharts.cn/highcharts/highcharts.js"></script>
-  <script type="text/javascript" src="http://cdn.hcharts.cn/highcharts/exporting.js"></script>
+	<script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+  	<script src="js/highcharts.js"></script>
+	<script src="js/modules/exporting.js"></script>
   <script>
     var categorielist = new Array(20);
   	var dleftlist=new Array(20);
@@ -142,7 +142,20 @@ $(document).ready(function(e) {
   		<s:else>
   			brightlist[<s:property value="#index.count"/>-1]=<s:property value="bright"/>;
   		</s:else>
-  		
+  		//alert(dleftlist[<s:property value="#index.count"/>-1]+dlinelist[<s:property value="#index.count"/>-1]+drightlist[<s:property value="#index.count"/>-1]+nleftlist[<s:property value="#index.count"/>-1]+nlinelist[<s:property value="#index.count"/>-1]+nrightlist[<s:property value="#index.count"/>-1]+xleftlist[<s:property value="#index.count"/>-1]+xlinelist[<s:property value="#index.count"/>-1]+xrightlist[<s:property value="#index.count"/>-1]+bleftlist[<s:property value="#index.count"/>-1]+blinelist[<s:property value="#index.count"/>-1]+brightlist[<s:property value="#index.count"/>-1]);
+  		var avtage = (dleftlist[<s:property value="#index.count"/>-1]+dlinelist[<s:property value="#index.count"/>-1]+drightlist[<s:property value="#index.count"/>-1]+nleftlist[<s:property value="#index.count"/>-1]+nlinelist[<s:property value="#index.count"/>-1]+nrightlist[<s:property value="#index.count"/>-1]+xleftlist[<s:property value="#index.count"/>-1]+xlinelist[<s:property value="#index.count"/>-1]+xrightlist[<s:property value="#index.count"/>-1]+bleftlist[<s:property value="#index.count"/>-1]+blinelist[<s:property value="#index.count"/>-1]+brightlist[<s:property value="#index.count"/>-1])/12;
+  		dleftlist[<s:property value="#index.count"/>-1]=dleftlist[<s:property value="#index.count"/>-1]+avtage;
+  		dlinelist[<s:property value="#index.count"/>-1]=dlinelist[<s:property value="#index.count"/>-1]+avtage*2;
+  		drightlist[<s:property value="#index.count"/>-1]=drightlist[<s:property value="#index.count"/>-1]+avtage*3;
+  		nleftlist[<s:property value="#index.count"/>-1]=nleftlist[<s:property value="#index.count"/>-1]+avtage*4;
+  		nlinelist[<s:property value="#index.count"/>-1]=nlinelist[<s:property value="#index.count"/>-1]+avtage*5;
+  		nrightlist[<s:property value="#index.count"/>-1]=nrightlist[<s:property value="#index.count"/>-1]+avtage*6;
+  		xleftlist[<s:property value="#index.count"/>-1]=xleftlist[<s:property value="#index.count"/>-1]+avtage*7;
+  		xlinelist[<s:property value="#index.count"/>-1]=xlinelist[<s:property value="#index.count"/>-1]+avtage*8;
+  		xrightlist[<s:property value="#index.count"/>-1]=xrightlist[<s:property value="#index.count"/>-1]+avtage*9;
+  		bleftlist[<s:property value="#index.count"/>-1]=bleftlist[<s:property value="#index.count"/>-1]+avtage*10;
+  		blinelist[<s:property value="#index.count"/>-1]=blinelist[<s:property value="#index.count"/>-1]+avtage*11;
+  		brightlist[<s:property value="#index.count"/>-1]=brightlist[<s:property value="#index.count"/>-1]+avtage*12;
   	</s:iterator>
   	
   	/*
@@ -177,8 +190,11 @@ $(document).ready(function(e) {
         },
         yAxis: {
             title: {
-                text: '数量(辆)'
+                text: '折线趋势'
             },
+             labels:{
+		        enabled: false
+		    },
             plotLines: [{
                 value: 0,
                 width: 1,
@@ -186,8 +202,13 @@ $(document).ready(function(e) {
             }]
         },
         tooltip: {
-            valueSuffix: '辆'
+            valueSuffix: '辆',
+            enabled: false,
         },
+        credits: {
+                text: '',
+                href: 'http://#'
+            },
         legend: {
             layout: 'vertical',
             align: 'right',
@@ -267,7 +288,7 @@ $(document).ready(function(e) {
 
 
 				<div id="tab3" class="tabson">
-					<form action="flowAction!list" method="post">
+					<form action="flowAction!listline" method="post">
 					<ul class="forminfo">
 						<li>
 							<table width="100%" border="0" cellspacing="0" cellpadding="0">
@@ -285,7 +306,10 @@ $(document).ready(function(e) {
 									<input name="time2" id="enddate" value="<s:property value="time2"/>" style="width: 150px;" class="Wdate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',readOnly:true,minDate:'#F{$dp.$D(\'startdate\')}',startDate:'#F{$dp.$D(\'startdate\',{d:+1})}'})" />
 									</td>
 								</tr>
-							
+								<tr style="height: 35px;">
+									<td>间隔：</td>
+									<td><s:select list="#{1:'1分钟',2:'1小时',3:'1天',4:'1周'}" name="interval" cssStyle="width:150px;height:25px;border:#bbb 1px solid;" listKey="key" listValue="value"></s:select></td>
+								</tr>
 								<tr>
 									<td width="85">
 										&nbsp;
@@ -312,19 +336,19 @@ $(document).ready(function(e) {
 								<td height="34" colspan="6" align="center" bgcolor="#FFFFFF">
 									记录数：<s:property value="totalCount" />&nbsp;&nbsp;&nbsp;
 									<a
-										href="javascript:jumpFlowPage('flowAction!listline',<s:property value="1"/>,<s:property value="sigid"/>,'<s:property value="time1"/>','<s:property value="time2"/>');"
+										href="javascript:jumpFlowLinePage('flowAction!listline',<s:property value="1"/>,<s:property value="sigid"/>,'<s:property value="time1"/>','<s:property value="time2"/>',<s:property value="interval"/>);"
 										target="main">首页</a>&nbsp;&nbsp;
 									<a
-										href="javascript:jumpFlowPage('flowAction!listline',<s:property value="page-1"/>,<s:property value="sigid"/>,'<s:property value="time1"/>','<s:property value="time2"/>');"
+										href="javascript:jumpFlowLinePage('flowAction!listline',<s:property value="page-1"/>,<s:property value="sigid"/>,'<s:property value="time1"/>','<s:property value="time2"/>',<s:property value="interval"/>);"
 										target="main">上一页</a>&nbsp;&nbsp;&nbsp;
 									<a
-										href="javascript:jumpFlowPage('flowAction!listline',<s:property value="page+1"/>,<s:property value="sigid"/>,'<s:property value="time1"/>','<s:property value="time2"/>');"
+										href="javascript:jumpFlowLinePage('flowAction!listline',<s:property value="page+1"/>,<s:property value="sigid"/>,'<s:property value="time1"/>','<s:property value="time2"/>',<s:property value="interval"/>);"
 										target="main">下一页</a>&nbsp;&nbsp;&nbsp;
 									<a
-										href="javascript:jumpFlowPage('flowAction!listline',<s:property value="pageCount"/>,<s:property value="sigid"/>,'<s:property value="time1"/>','<s:property value="time2"/>');"
+										href="javascript:jumpFlowLinePage('flowAction!listline',<s:property value="pageCount"/>,<s:property value="sigid"/>,'<s:property value="time1"/>','<s:property value="time2"/>',<s:property value="interval"/>);"
 										target="main">尾页</a>&nbsp;&nbsp;&nbsp;
 									<input type='button' class="exit"
-										onclick="jumpFlowPage('flowAction!listline',document.getElementById('page').value,<s:property value="sigid"/>,'<s:property value="time1"/>','<s:property value="time2"/>');"
+										onclick="jumpFlowPage('flowAction!listline',document.getElementById('page').value,<s:property value="sigid"/>,'<s:property value="time1"/>','<s:property value="time2"/>',<s:property value="interval"/>);"
 										value='转到' />
 									&nbsp; 当前页：
 									<input onpaste="return false" onkeypress="checkPage();"

@@ -36,9 +36,9 @@ $(document).ready(function(e) {
 });
 </script>
 	<script type="text/javascript" src="js/pageKit.js"></script>
-	 <script type="text/javascript" src="http://cdn.hcharts.cn/jquery/jquery-1.8.3.min.js"></script>
-  <script type="text/javascript" src="http://cdn.hcharts.cn/highcharts/highcharts.js"></script>
-  <script type="text/javascript" src="http://cdn.hcharts.cn/highcharts/exporting.js"></script>
+	 <script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+  	<script src="js/highcharts.js"></script>
+	<script src="js/modules/exporting.js"></script>
   <script>
   	var categorielist = new Array(20);
   	var dleftlist=new Array(20);
@@ -174,6 +174,10 @@ $(document).ready(function(e) {
         subtitle: {
             text: '按时间显示车流量'
         },
+        credits: {
+                text: '',
+                href: 'http://#'
+            },
         xAxis: {
             categories: categorielist
         },
@@ -270,7 +274,7 @@ $(document).ready(function(e) {
 
 
 				<div id="tab3" class="tabson">
-					<form action="flowAction!list" method="post">
+					<form action="flowAction!listbar" method="post">
 					<ul class="forminfo">
 						<li>
 							<table width="100%" border="0" cellspacing="0" cellpadding="0">
@@ -288,7 +292,12 @@ $(document).ready(function(e) {
 									<input name="time2" id="enddate" value="<s:property value="time2"/>" style="width: 150px;" class="Wdate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',readOnly:true,minDate:'#F{$dp.$D(\'startdate\')}',startDate:'#F{$dp.$D(\'startdate\',{d:+1})}'})" />
 									</td>
 								</tr>
-							
+								<!-- 
+								<tr style="height: 35px;">
+									<td>间隔：</td>
+									<td><s:select list="#{1:'1分钟',2:'1小时',3:'1天',4:'1周'}" name="interval" cssStyle="width:150px;height:25px;border:#bbb 1px solid;" listKey="key" listValue="value"></s:select></td>
+								</tr>
+								 -->
 								<tr>
 									<td width="85">
 										&nbsp;

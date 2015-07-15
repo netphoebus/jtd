@@ -6,6 +6,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.xml.registry.infomodel.User;
+
+import com.jlj.model.Usero;
+
 public class TestMain {
 
 	/**
@@ -36,8 +40,29 @@ public class TestMain {
 		//System.out.println(3689/3600);
 		  /*
 		   */
-		Object obj = null;
-		obj.equals(""); 
+//		Object obj = null;
+//		obj.equals(""); 
+		
+		int a = 0;
+		SimpleDateFormat sdf=new SimpleDateFormat("yyyyMMddHHmmss");
+		String dateString1=sdf.format(new Date());
+		System.out.println(dateString1);
+		List<Usero> useros = new ArrayList<Usero>();
+		for (int i = 0; i < 300000; i++) {
+			Usero usero = new Usero();
+			usero.setId(i);
+			usero.setUsername("asd");
+			usero.setPassword("asd");
+			usero.setUlimit(1);
+			usero.setUip("192.168.1.21");
+			useros.add(usero);
+		}
+		for (int i = 0; i < useros.size(); i++) {
+			a  = a + useros.get(i).getId();
+		}
+		System.out.println(a);
+		String dateString2=sdf.format(new Date());
+		System.out.println(dateString2);
 	}
 
 }

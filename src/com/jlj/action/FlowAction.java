@@ -1,7 +1,8 @@
 package com.jlj.action;
 
-import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -55,6 +56,7 @@ SessionAware,ServletResponseAware,ServletRequestAware {
 	private int sigid;
 	private List<Sig> sigs;
 	
+	private int interval;
 	/**
 	 * 车流量管理
 	 */
@@ -108,6 +110,7 @@ SessionAware,ServletResponseAware,ServletRequestAware {
 	 * 流量折线图
 	 * @return
 	 */
+	private int size2=10;//折线图的每页条数
 	public String listline() throws Exception{
 		//----------------------------------查询流量折线图-------------------------------------
 		Usero usero = (Usero)session.get("usero");
@@ -130,24 +133,107 @@ SessionAware,ServletResponseAware,ServletRequestAware {
 		}
 		//总记录数
 		if(sigid!=0||(time1!=null&&!time1.trim().equals(""))||(time2!=null&&!time2.trim().equals(""))){
-			
-			totalCount=flowService.getConditionTotalCount(sigid,time1,time2);
-			//总页数
-			pageCount=flowService.getPageCount(totalCount,size);
-			if(pageCount!=0&&page>pageCount){
-				page=pageCount;
+			if(interval==1){//1分钟
+				totalCount=flowService.getConditionTotalCount(sigid,time1,time2);
+				//总页数
+				pageCount=flowService.getPageCount(totalCount,size2);
+				if(pageCount!=0&&page>pageCount){
+					page=pageCount;
+				}
+				//所有当前页记录对象
+				flows=flowService.queryConditionList(sigid,time1,time2,page,size2);
+			}else if(interval==2){//1小时
+				//如果有数据，但是没超过60条，认为是只有一条记录
+				int totalCountTemp = flowService.getConditionTotalCount(sigid,time1,time2);
+				totalCount=totalCountTemp/60;//总记录数
+				if(totalCount==0&&totalCountTemp!=0){
+					totalCount=1;
+				}
+				//总页数
+				pageCount=flowService.getPageCount(totalCount,size2);//总页数
+				if(pageCount!=0&&page>pageCount){
+					page=pageCount;
+				}
+				//所有当前页记录对象
+				int counts = 0;
+				if(pageCount==page){
+					counts = totalCount%size2;
+					if(totalCountTemp==0){
+						counts = 0;
+					}
+					System.out.println("counts = "+counts);
+				}else{
+					counts = 10;
+				}
+				flows = new ArrayList<Flow>();
+				//循环获取10组数据
+				for (int j = 0; j < counts; j++) {
+					//一组数据-------------------start
+					List<Flow> flowtemps=flowService.queryConditionList(sigid,time1,time2,j+1,60);//第一组
+					Flow flowVO = new Flow();
+					int dlefts = 0;
+					int dlines = 0;
+					int drights = 0;
+					int nlefts = 0;
+					int nlines = 0;
+					int nrights = 0; 
+					int xlefts = 0;
+					int xlines = 0;
+					int xrights = 0;
+					int blefts = 0;
+					int blines = 0;
+					int brights = 0;
+					Date times = null;
+					for (int i = 0; i < flowtemps.size(); i++) {
+						Flow flowtemp = flowtemps.get(i);
+						if(i==0){
+							times =flowtemp.getTime();
+						}
+						dlefts+=flowtemp.getDleft();
+						dlines+=flowtemp.getDline();
+						drights+=flowtemp.getDright();
+						nlefts+=flowtemp.getNleft();
+						nlines+=flowtemp.getNline();
+						nrights+=flowtemp.getNright();
+						xlefts+=flowtemp.getXleft();
+						xlines+=flowtemp.getXline();
+						xrights+=flowtemp.getXright();
+						blefts+=flowtemp.getBleft();
+						blines+=flowtemp.getBline();
+						brights+=flowtemp.getBright();
+					}
+					flowVO.setDleft(dlefts);
+					flowVO.setDline(dlines);
+					flowVO.setDright(drights);
+					flowVO.setNleft(nlefts);
+					flowVO.setNline(nlines);
+					flowVO.setNright(nrights);
+					flowVO.setXleft(xlefts);
+					flowVO.setXline(xlines);
+					flowVO.setXright(xrights);
+					flowVO.setBleft(blefts);
+					flowVO.setBline(blines);
+					flowVO.setBright(brights);
+					flowVO.setTime(times);
+					//一组数据-------------------end
+					flows.add(flowVO);
+				}
+				
+			}else if(interval==3){//1天
+				
+			}else if(interval==4){//1周
+				
 			}
-			//所有当前页记录对象
-			flows=flowService.queryConditionList(sigid,time1,time2,page,size);
+			
 		}else{
 			totalCount=flowService.getTotalCount();
 			//总页数
-			pageCount=flowService.getPageCount(totalCount,size);
+			pageCount=flowService.getPageCount(totalCount,size2);
 			if(pageCount!=0&&page>pageCount){
 				page=pageCount;
 			}
 			//所有当前页记录对象
-			flows=flowService.queryList(page,size);
+			flows=flowService.queryList(page,size2);
 		}
 		return "listline";
 	}
@@ -380,6 +466,12 @@ SessionAware,ServletResponseAware,ServletRequestAware {
 	}
 	public void setTime2(String time2) {
 		this.time2 = time2;
+	}
+	public int getInterval() {
+		return interval;
+	}
+	public void setInterval(int interval) {
+		this.interval = interval;
 	}
 	
 	

@@ -96,6 +96,17 @@ $(document).ready(function(e) {
 									<input name="time2" id="enddate" value="<s:property value="time2"/>" style="width: 150px;" class="Wdate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',readOnly:true,minDate:'#F{$dp.$D(\'startdate\')}',startDate:'#F{$dp.$D(\'startdate\',{d:+1})}'})" />
 								</div>
 						</li>
+						<!-- 
+						<li>
+							<div style="float: left; line-height: 35px;">
+								<label>
+									时间：
+								</label>
+								<div class="vocation">
+									<s:select list="#{1:'1分钟',2:'1小时',3:'1天',4:'1周'}" name="interval" cssStyle="width:150px;height:25px;border:#bbb 1px solid;" cssClass="select1" listKey="key" listValue="value"></s:select>
+								</div>
+						</li>
+						 -->
 						<li>
 							<table width="100%" border="0" cellspacing="0" cellpadding="0">
 								<tr>

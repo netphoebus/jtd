@@ -186,4 +186,17 @@ public class FlowServiceImp implements IFlowService  {
 //		queryString += " order by mo.id desc ";
 		return flowDao.pageList(queryString,p,page,size);
 	}
+	public List<Flow> queryConditionList2(int sigid, String time1, String time2) {
+		String queryString = "from Flow mo where mo.sig.id=? ";
+		Object[] p = null;
+		if(time1!=null&&!time1.equals("")){
+			queryString += " and mo.time >='"+time1+"'";
+		}
+		if(time2!=null&&!time2.equals("")){
+			queryString += " and mo.time <='"+time2+"'";
+		}
+		p = new Object[]{sigid};
+//		queryString += " order by mo.id desc ";
+		return flowDao.getObjectsByCondition(queryString, p);
+	}
 }

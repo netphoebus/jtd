@@ -56,4 +56,9 @@ public interface IFlowService {
 
 	public abstract List<Flow> queryList(int page, int size);
 
+	public abstract List<Flow> queryConditionList2(int sigid, String time1,
+			String time2);
+
+
+
 }

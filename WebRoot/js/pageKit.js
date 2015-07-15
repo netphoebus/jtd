@@ -80,6 +80,21 @@ console.log("jumpFlowPage----------------");
 	window.location=url;
 }
 
+//分页显示用户管理
+function jumpFlowLinePage(url,page,sigid,time1,time2,interval){
+console.log("jumpFlowPage----------------");
+	var page=page;
+	if(isNaN(page)){
+		var page2=document.getElementById(page).value;
+		page=parseInt(page2);
+	}
+	
+	var url=url+'?page='+page+'&sigid='+sigid+'&time1='+time1+'&time2='+time2+'&interval='+interval;
+	url=encodeURI(url);
+	url=encodeURI(url);
+	window.location=url;
+}
+
 //分页显示片区管理
 function jumpAllPage(url,page,uareaname){
 console.log("pianqu----------------");

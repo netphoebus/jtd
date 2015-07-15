@@ -57,7 +57,7 @@ SessionAware,ServletResponseAware,ServletRequestAware {
 		if(ipAddress==null||ipAddress.equals("")){
 			return NONE;
 		}*/
-		String number = (String)session.get("number");
+		String number = (String)session.get("sigNumber");
 		if(number==null||number.equals("")){
 			return NONE;
 		}
