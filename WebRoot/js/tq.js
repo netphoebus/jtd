@@ -34,6 +34,8 @@ function test()
 
 
 $(document).ready(function(){
+
+	
 	//设置相位执行时间
 		$(".dfinput_tqtime").on("blur",function(){
 				console.log($(this));
@@ -53,6 +55,7 @@ $(document).ready(function(){
 						return ;
 					}
 				}
+				$(this).val(time);
 		});
 		
 });
@@ -69,7 +72,10 @@ $(document).ready(function(){
 			var img = "";
 			var conflictStart = "";
 			var conflictStr = "";
-			console.log(conflictVOs);
+			for(var i=0;i<conflictVOs.length;i++)
+			{
+				allRed(conflictVOs[i].sid);
+			}
 			
 		$(".picbox img").click(function(event) {
 			var img = $(event.target);
@@ -91,69 +97,83 @@ $(document).ready(function(){
 						//class
 						var imgclass= img[0].classList[0];
 						conflictStart = imgclass.substring(0,imgclass.indexOf("_"));
-						console.log("====================信号机"+conflictStart)
 						for(var i=0;i<conflictVOs.length;i++)
 						{
-							console.log("====================信号机"+conflictVOs[i].sid,conflictStart)
 							if(conflictVOs[i].sid==conflictStart)
 							{
 								console.log("冲突:"+conflictVOs[i].c_00);
 								 if(headnumber=="00")
 								{
+									console.log("获取了这里的00");
 									conflictStr = conflictVOs[i].c_00;
 								}
 								else if(headnumber=="01")
 								{
+									console.log("获取了这里的01");
 									conflictStr = conflictVOs[i].c_01;
 								}
 								else if(headnumber=="02")
 								{
+									console.log("获取了这里的02");
 									conflictStr = conflictVOs[i].c_02;
 								}
 								else if(headnumber=="03")
 								{
+									console.log("获取了这里的03");
 									conflictStr = conflictVOs[i].c_03;
 								}
 								else if(headnumber=="10")
 								{
+									console.log("获取了这里的10");
 									conflictStr = conflictVOs[i].c_10;
 								}
 								else if(headnumber=="11")
 								{
+									console.log("获取了这里的11");
 									conflictStr = conflictVOs[i].c_11;
 								}
 								else if(headnumber=="12")
 								{
+									console.log("获取了这里的12");
 									conflictStr = conflictVOs[i].c_12;
 								}
 								else if(headnumber=="13")
 								{
+									console.log("获取了这里的13");
 									conflictStr = conflictVOs[i].c_13;
 								}
 								else if(headnumber=="20")
 								{
+									console.log("获取了这里的20");
 									conflictStr = conflictVOs[i].c_20;
 								}
 								else if(headnumber=="21")
 								{
+									console.log("获取了这里的21");
 									conflictStr = conflictVOs[i].c_21;
 								}else if(headnumber=="22")
 								{
+									console.log("获取了这里的22");
 									conflictStr = conflictVOs[i].c_22;
 								}else if(headnumber=="23")
 								{
+									console.log("获取了这里的23");
 									conflictStr = conflictVOs[i].c_23;
 								}else if(headnumber=="30")
 								{
+									console.log("获取了这里的30");
 									conflictStr = conflictVOs[i].c_30;
 								}else if(headnumber=="31")
 								{
+									console.log("获取了这里的31");
 									conflictStr = conflictVOs[i].c_31;
 								}else if(headnumber=="32")
 								{
+									console.log("获取了这里的32");
 									conflictStr = conflictVOs[i].c_32;
 								}else if(headnumber=="33")
 								{
+									console.log("获取了这里的33");
 									conflictStr = conflictVOs[i].c_33;
 								}
 							}
@@ -164,18 +184,15 @@ $(document).ready(function(){
 						if(typeof(conflictStr) != "undefined"&&conflictStr!="")
 						{
 							var strs= conflictStr.split(","); //字符分割 
-							console.log("strs:-------------------------"+strs);
 							for (i=0;i<strs.length-1;i++) 
 							{ 
 								var lightKind = strs[i].substring(strs[i].length-1,strs[i].length);
-								console.log("lightKind:-------------------------"+lightKind);
 								var imgNow = null;//当前与之比较的灯
 								var currentLightNumber = 0;//当前与之比较的灯 的种类
 								var srcNow = "";
 								if(lightKind==3)
 								{
 									 imgNow = $("."+conflictStart+strs[i]);
-									 console.log("imgNow:---------------------------"+"."+conflictStart+strs[i]);
 									 srcNow = imgNow[0].currentSrc;
 									 currentLightNumber = srcNow.substring(srcNow.indexOf(".png")-1,srcNow.indexOf(".png"));//当前比较灯的颜色
 								}else
@@ -191,107 +208,106 @@ $(document).ready(function(){
 								}
 							}
 						}
-						console.log("====================2");
 					}else
 					{
 						//id
 						var imgid = img[0].id;
-						console.log("imgid:-------------------------"+imgid);
-						
-						
 						conflictStart = imgid.substring(0,imgid.indexOf("_"));
-						
 						
 						for(var i=0;i<conflictVOs.length;i++)
 						{
+							console.log(conflictVOs[i]);
 							if(conflictVOs[i].sid==conflictStart)
 							{
+								console.log("冲突:"+conflictVOs[i].c_00);
 								 if(headnumber=="00")
 								{
+									console.log("获取了这里的00");
 									conflictStr = conflictVOs[i].c_00;
 								}
 								else if(headnumber=="01")
 								{
+									console.log("获取了这里的01");
 									conflictStr = conflictVOs[i].c_01;
 								}
 								else if(headnumber=="02")
 								{
+									console.log("获取了这里的02");
 									conflictStr = conflictVOs[i].c_02;
 								}
 								else if(headnumber=="03")
 								{
+									console.log("获取了这里的03");
 									conflictStr = conflictVOs[i].c_03;
 								}
 								else if(headnumber=="10")
 								{
+									console.log("获取了这里的10");
 									conflictStr = conflictVOs[i].c_10;
 								}
 								else if(headnumber=="11")
 								{
+									console.log("获取了这里的11");
 									conflictStr = conflictVOs[i].c_11;
 								}
 								else if(headnumber=="12")
 								{
+									console.log("获取了这里的12");
 									conflictStr = conflictVOs[i].c_12;
 								}
 								else if(headnumber=="13")
 								{
+									console.log("获取了这里的13");
 									conflictStr = conflictVOs[i].c_13;
 								}
 								else if(headnumber=="20")
 								{
+									console.log("获取了这里的20");
 									conflictStr = conflictVOs[i].c_20;
 								}
 								else if(headnumber=="21")
 								{
+									console.log("获取了这里的21");
 									conflictStr = conflictVOs[i].c_21;
 								}else if(headnumber=="22")
 								{
+									console.log("获取了这里的22");
 									conflictStr = conflictVOs[i].c_22;
 								}else if(headnumber=="23")
 								{
+									console.log("获取了这里的23");
 									conflictStr = conflictVOs[i].c_23;
 								}else if(headnumber=="30")
 								{
+									console.log("获取了这里的30");
 									conflictStr = conflictVOs[i].c_30;
 								}else if(headnumber=="31")
 								{
+									console.log("获取了这里的31");
 									conflictStr = conflictVOs[i].c_31;
 								}else if(headnumber=="32")
 								{
+									console.log("获取了这里的32");
 									conflictStr = conflictVOs[i].c_32;
 								}else if(headnumber=="33")
 								{
+									console.log("获取了这里的33");
 									conflictStr = conflictVOs[i].c_33;
 								}
 							}
 						}
-							
-					console.log("冲突:"+conflictStr);
-						
-						
-						
-						
-						
-						
-						
-						console.log("conflictStart:-------------------------"+conflictStart);
-						
 						if(typeof(conflictStr) != "undefined"&&conflictStr!="")
 						{
 							var strs= conflictStr.split(","); //字符分割 
-							console.log("strs:-------------------------"+strs);
 							for (i=0;i<strs.length-1;i++) 
 							{ 
 								var lightKind = strs[i].substring(strs[i].length-1,strs[i].length);
-								console.log("lightKind:-------------------------"+lightKind);
 								var imgNow = null;//当前与之比较的灯
 								var currentLightNumber = 0;//当前与之比较的灯 的种类
 								var srcNow = "";
 								if(lightKind==3)
 								{
 									 imgNow = $("."+conflictStart+strs[i]);
-									 console.log("imgNow:---------------------------"+"."+conflictStart+strs[i]);
 									 srcNow = imgNow[0].currentSrc;
 									 currentLightNumber = srcNow.substring(srcNow.indexOf(".png")-1,srcNow.indexOf(".png"));//当前比较灯的颜色
 								}else

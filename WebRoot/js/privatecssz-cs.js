@@ -160,6 +160,7 @@ $(document).ready(function(){
 						return ;
 					}
 				}
+				$(this).val(time);
 		});
 		
 		

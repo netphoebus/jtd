@@ -1,6 +1,5 @@
  $(document).ready(function(){
  
- 
 			var searchStrURL = decodeURI(location.search);
 		    var searchStrArray = searchStrURL.slice(1).split("&");
 		    console.log(searchStrURL);

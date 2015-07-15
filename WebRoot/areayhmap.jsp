@@ -22,13 +22,6 @@
 <script type="text/javascript" src="js/privateareayhmap.js"></script>
 
 <body >
-	<!--
-	经度<input  type="text" name="CLNG" id="CLNG" value="" size="17"/><br/>
-	维度<input  type="text" name="CLAT" id="CLAT" value="" size="17"/><br/>
-	当前地图级别<input  type="text" name="ZOOM" id="ZOOM" value="8" size="17"/><br/>
-
-<input  type="button" onclick="saveMarkers();" value="保存信号机位置" style="margin-left:48%;margin-top:10px;width:88px;height:20px;  background:url(images/topbtn02.fw.png); color:#FFF; border-bottom:#039 1px solid; border-right:#039 1px solid;"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;		
- -->  
  <div style="float：left;width:660px;">
  	<s:if test="#session.usero.ulimit==0">
  			&nbsp;&nbsp;可选区域 : <select id="areaid" name="select4" class="dfinputarea" onchange="changeArea();">

@@ -39,60 +39,76 @@ $(document).ready(function(){
 					//第一步：判断是那个路口的那个灯进行设置为绿色，则获得当前绿冲突的情况 放在conflictStr中
 					if(headnumber=="00")
 					{
+						console.log("获取了这里的00");
 						conflictStr = $("#c1").val();
 					}
 					else if(headnumber=="01")
 					{
+						console.log("获取了这里的01");
 						conflictStr = $("#c2").val();
 					}
 					else if(headnumber=="02")
 					{
+						console.log("获取了这里的02");
 						conflictStr = $("#c3").val();
 					}
 					else if(headnumber=="03")
 					{
+						console.log("获取了这里的03");
 						conflictStr = $("#c4").val();
 					}
 					else if(headnumber=="10")
 					{
+						console.log("获取了这里的10");
 						conflictStr = $("#c5").val();
 					}
 					else if(headnumber=="11")
 					{
+							console.log("获取了这里的11");
 						conflictStr = $("#c6").val();
 					}
 					else if(headnumber=="12")
 					{
+						console.log("获取了这里的12");
 						conflictStr = $("#c7").val();
 					}
 					else if(headnumber=="13")
 					{
+						console.log("获取了这里的13");
 						conflictStr = $("#c8").val();
 					}
 					else if(headnumber=="20")
 					{
+						console.log("获取了这里的20");
 						conflictStr = $("#c9").val();
 					}
 					else if(headnumber=="21")
 					{
+						console.log("获取了这里的21");
 						conflictStr = $("#c10").val();
 					}else if(headnumber=="22")
 					{
+						console.log("获取了这里的22");
 						conflictStr = $("#c11").val();
 					}else if(headnumber=="23")
 					{
+						console.log("获取了这里的23");
 						conflictStr = $("#c12").val();
 					}else if(headnumber=="30")
 					{
+						console.log("获取了这里的30");
 						conflictStr = $("#c13").val();
 					}else if(headnumber=="31")
 					{
+						console.log("获取了这里的31");
 						conflictStr = $("#c14").val();
 					}else if(headnumber=="32")
 					{
+						console.log("获取了这里的32");
 						conflictStr = $("#c15").val();
 					}else if(headnumber=="33")
 					{
+						console.log("获取了这里的33");
 						conflictStr = $("#c16").val();
 					}
 					console.log("冲突:"+conflictStr);

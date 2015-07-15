@@ -261,6 +261,7 @@ public class GreenroadAction extends ActionSupport implements RequestAware,
 			sig = sigService.loadByMkid(Long.parseLong(mkids[i]));
 			if (sig != null) {
 				sigVO = new SigGreenRoadVO();
+				sigVO.setId(sig.getId());
 				sigVO.setNumber(sig.getNumber());
 				sigVO.setName(sig.getName());
 				sigVOs.add(sigVO);
@@ -277,16 +278,15 @@ public class GreenroadAction extends ActionSupport implements RequestAware,
 		conflictVOs = new ArrayList<ConflictVO>();
 		for(int j=0;j<sigVOs.size();j++)
 		{
-			conflictVO = new ConflictVO();
-			System.out.println("sigid:"+sigVOs.get(j).getId());
-			conflictVO.setSid(sigVOs.get(j).getId());
 			greens = greenService.loadBySid(sigVOs.get(j).getId());
-			System.out.println("greens:"+greens);
 			if(greens!=null&&greens.size()==16)
 			{
-				String conflictname="";
+				System.out.println("信号机："+sigVOs.get(j).getNumber());
+				conflictVO = new ConflictVO();
+				conflictVO.setSid(sigVOs.get(j).getId());
 				for(int i=0;i<greens.size();i++)
 				{
+					String conflictname="";
 					if(greens.get(i).getL00()!=null&&greens.get(i).getL00()==1)
 					{
 						conflictname = conflictname+"_0_0,";
@@ -336,7 +336,7 @@ public class GreenroadAction extends ActionSupport implements RequestAware,
 					{
 						conflictname = conflictname+"_3_3,";
 					}
-					if(conflictname!="")
+					if(conflictname!=""&&conflictname.contains(","))
 					{
 						conflictname = conflictname.substring(0, conflictname.length()-1);
 					}
@@ -392,7 +392,6 @@ public class GreenroadAction extends ActionSupport implements RequestAware,
 					default:
 						break;
 					}
-					
 				}
 			}
 			conflictVOs.add(conflictVO);
@@ -673,6 +672,7 @@ public class GreenroadAction extends ActionSupport implements RequestAware,
 			sig = sigService.loadByMkid(Long.parseLong(mkids[i]));
 			if (sig != null) {
 				sigVO = new SigGreenRoadVO();
+				sigVO.setId(sig.getId());
 				sigVO.setNumber(sig.getNumber());
 				sigVO.setName(sig.getName());
 				commontime = commontimeService.loadByOrderIdAndTimetype(

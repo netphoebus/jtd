@@ -44,6 +44,8 @@ $(document).ready(function(e) {
 });
 
 var conflictVOs = <s:property value="conflictVOs" escape="false"/>;
+
+
 </script>
 <script type="text/javascript" src="js/tq.js"></script>
 	</head>

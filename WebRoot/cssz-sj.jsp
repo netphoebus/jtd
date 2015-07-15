@@ -103,7 +103,7 @@ $(document).ready(function(e) {
 							</div>
 
 							<div class="csbox">
-								FTP服务端口号：
+								FTP服务端口号&nbsp;：
 								<s:textfield name="centerPort" id="centerPort" cssClass="dfinput"
 									cssStyle="width:150px;"></s:textfield>
 								

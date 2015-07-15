@@ -75,7 +75,6 @@ google.maps.event.addDomListener(window, "load", initialize);
 
 
 
-
 function ClearPoly() {
 	maphelper.clearInstanceEvent(mapobj, 'click');//删除实例其所有事件侦听器或指定侦听器.
 }

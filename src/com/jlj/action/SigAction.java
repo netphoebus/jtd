@@ -241,7 +241,10 @@ public class SigAction extends ActionSupport implements RequestAware,
 				{
 					conflictname = conflictname+"_3_3,";
 				}
-				
+				if(conflictname!=""&&conflictname.contains(","))
+				{
+					conflictname = conflictname.substring(0, conflictname.length()-1);
+				}
 				switch (i) {
 				case 0:
 					conflictVO.setC_00(conflictname);
@@ -294,7 +297,7 @@ public class SigAction extends ActionSupport implements RequestAware,
 				default:
 					break;
 				}
-				
+				System.out.println(conflictname);
 				
 			}
 			

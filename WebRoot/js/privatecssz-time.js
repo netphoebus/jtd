@@ -22,6 +22,9 @@ function changeControl()
 	if(index==3)
 	{
 		$("#seconds").removeAttr("readOnly");
+	}else
+	{
+		$("#seconds").attr("readOnly","true");
 	}
 }
 
@@ -63,15 +66,16 @@ $(document).ready(function(){
 					{
 						alert("小时设置不正确,请重新设置.");
 						$(this).val(0);//恢复原值
-							return ;
+						return ;
 					}
+					
 				}if(id=='minute')
 				{
 					if(isNaN(time)||time>60||time<0)
 					{
 						alert("分钟设置不正确,请重新设置.");
 						$(this).val(0);//恢复原值
-							return ;
+						return ;
 					}
 				}if(id=='seconds')
 				{
@@ -106,6 +110,7 @@ $(document).ready(function(){
 						return ;
 					}
 				}
+				$(this).val(time);
 		});
 		
 		$(".timeinput").on("blur",function(){
@@ -116,6 +121,7 @@ $(document).ready(function(){
 					$(this).val(10);//恢复原值
 					return ;
 				}
+				$(this).val(time);//恢复原值
 		});
 		
 
