@@ -11,7 +11,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>默认主页面</title>
+<title>默认某页面</title>
 <link href="css/style.css" rel="stylesheet" type="text/css" />
 <link href="css/stilearn-helper.css" rel="stylesheet" type="text/css" />
 <script src="js/stilearn-base.js"></script>

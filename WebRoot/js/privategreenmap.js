@@ -17,7 +17,7 @@ var ulimit = 10;//用户权限
 var searchStrURL = decodeURI(location.search);
 
 
-//绿波带
+//无电缆联动
 var markerids = [];
 var linesmsg = [];
 var dbclickable = true;
@@ -391,7 +391,7 @@ function saveLine()
 {
 	if(markerids.length<2)
 	{
-		alert("当前没有可保存的绿波带");
+		alert("当前没有可保存的无电缆联动,请点击添加无电缆联动按钮.");
 	}else
 	{
 		console.log(poly);
@@ -413,11 +413,11 @@ function saveLine()
  			data: { "mklid":lineId,"sids":sids},
             error: function(msg)
             { //失败   
-            		alert("当前绿波带保存失败"); 
+            		alert("当前无电缆联动保存失败"); 
             },   
             success: function(msg)
             { //成功   
-				alert("当前绿波带保存成功");  
+				alert("当前无电缆联动保存成功");  
 				self.location.reload();  //刷新本页
             }  
    	    });   
