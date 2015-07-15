@@ -21,9 +21,11 @@ import org.apache.struts2.interceptor.SessionAware;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import com.jlj.model.Greenroad;
 import com.jlj.model.Sig;
 import com.jlj.model.Userarea;
 import com.jlj.model.Usero;
+import com.jlj.service.IGreenroadService;
 import com.jlj.service.ISigService;
 import com.jlj.service.IUserareaService;
 import com.jlj.vo.MarkerVO;
@@ -43,13 +45,15 @@ public class MapAction extends ActionSupport implements RequestAware,
 	
 	private ISigService sigService;
 	private IUserareaService userareaService;
+	private IGreenroadService greenroadService;
 
 	private List<MarkerVO> initMarkers = new ArrayList<MarkerVO>();
 	private List<Sig> sigs;
 	private List<Userarea> userareas;
 	private List<UserareaVO> userareaVOs;
+	private List<Greenroad> greenroads;
 	
-	
+	private Greenroad greenroad;
 	private Sig sig;
 	//private String sigIp;//2015-6-24 修改项目 改为使用signumber（信号机编号）来标识信号机唯一性
 	private String sigNumber;
@@ -329,7 +333,7 @@ public class MapAction extends ActionSupport implements RequestAware,
 	 * 
 	 * @return
 	 */
-	public String delete() {
+	public String deleteMarker() {
 		/*
 		 * 项目调整
 		 * sigIp 改为 sigNumber 2015-06-24
@@ -341,6 +345,9 @@ public class MapAction extends ActionSupport implements RequestAware,
 			return "index";
 		}*/
 		sig = sigService.loadByMkid(mkid);
+		
+		deletGreenroad(mkid);
+		
 		sig.setUserarea(null);
 		sig.setMkid(null);
 		sig.setAddress(null);
@@ -350,7 +357,21 @@ public class MapAction extends ActionSupport implements RequestAware,
 		sigService.update(sig);
 		return NONE;
 	}
-	
+	/*
+	 * 删除信号机相关联动
+	 */
+	private void deletGreenroad(Long mkid) {
+		// TODO Auto-generated method stub
+		greenroads = greenroadService.getGreenroads();
+		for(Greenroad gd : greenroads)
+		{
+			if(gd.getSigmids().contains(mkid.toString()))
+			{
+				greenroadService.delete(gd);
+			}
+		}
+	}
+
 	public String checkMarkerName()
 	{
 		//System.out.println("checkMarkerName");
@@ -578,6 +599,30 @@ public class MapAction extends ActionSupport implements RequestAware,
 
 	public void setAreaname(String areaname) {
 		this.areaname = areaname;
+	}
+
+	public IGreenroadService getGreenroadService() {
+		return greenroadService;
+	}
+	@Resource
+	public void setGreenroadService(IGreenroadService greenroadService) {
+		this.greenroadService = greenroadService;
+	}
+
+	public List<Greenroad> getGreenroads() {
+		return greenroads;
+	}
+
+	public void setGreenroads(List<Greenroad> greenroads) {
+		this.greenroads = greenroads;
+	}
+
+	public Greenroad getGreenroad() {
+		return greenroad;
+	}
+
+	public void setGreenroad(Greenroad greenroad) {
+		this.greenroad = greenroad;
 	}
 
 	

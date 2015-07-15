@@ -78,22 +78,7 @@ function reset() {
  }
 
 function ClearPoly() {
-
-	//改变新增\删除按钮状态
-	if($("#addsig").css("background-image")=="none")
-	{
-		$("#addsig").css("background-image",'url(images/topbtn02.fw.png)').css("color","#fff");
-	}
-	if($("#delsig").css("background-image")=="none")
-	{
-		$("#delsig").css("background-image",'url(images/topbtn02.fw.png)').css("color","#fff");
-	}
-	maphelper.clearInstanceEvent(mapobj, 'click');//取消新增
-	if (mapClickEventListener) {
-		      google.maps.event.removeListener(mapClickEventListener);
-		      mapClickEventListener = null;
-		    }
-	deleteable = false;//取消删除
+		self.location.reload();  //刷新本页
 }
 
 function deleteSig()
@@ -118,7 +103,6 @@ function deleteSig()
 }
 
 function addClickEventListener() {
-		
 		if($("#addsig").css("background-image")!="none")
 		{
 			$("#addsig").css("background-image",'none').css("color","#000");
@@ -196,14 +180,17 @@ function setMarkerEvents(marker)
 {
 		
 		maphelper.bindInstanceEvent(marker, 'dblclick', function(event,map,marker) {
-					
+					 if(!deleteable)
+        			{
 						window.open("sigAction!toTraffic?mkid="+marker.id,"rightFrame");
+					}
 	        });
 	        
 	      
 	        	  maphelper.bindInstanceEvent(marker, 'click', function(event,map,marker) {
 	        	    if(deleteable)
         			{
+        				console.log("delete");
 						deleteMarker(marker.id);
 					}
 	        });
@@ -293,7 +280,6 @@ function MarkersInit()
 							  setMarkerEvents(marker);
 							  initMarkers.push(marker);
 				    	    } 	 
-				    	    console.log("信号机编号numbers"+numbers);  
 	            		}
 	            	 	
 			    	   
@@ -337,7 +323,7 @@ function AreaInit()
 	            		{
 	            			lng = 119.71389770507812;
 							lat = 31.336923737413848;
-							markerZoom = 12;
+							markerZoom = 13;
 	            		}
 	            }  
     	    });  
@@ -426,9 +412,14 @@ function saveMarker(id)
 	          		if(infowindow)
 					infowindow.close();
 					alert('信号机绑定成功');  
-					self.location.reload();  //刷新本页
 	            }  
     	    });   
+    	    initMarkers[i].dbclickable = true;
+    	    initMarkers[i].initOver = true;
+    	    initMarkers[i].setAnimation(null);
+    	    initMarkers[i].name = name;
+    	    initMarkers[i].address = address;
+    	    initMarkers[i].number = number;
 		}
 	}
 }
@@ -437,7 +428,7 @@ function saveMarker(id)
 //删除单个信号机标记
 function deleteMarker(id)
 {
-	if(confirm("删除当前信号机会导致与信号机相关的特勤控制及无电缆联动也删除，您确定要删除该信号机么?"))
+	if(confirm("相关联动设置也会一并删除,您确定要删除该信号机么?"))
 	{
 		for(var i=0;i<initMarkers.length;i++)
 		{
@@ -445,7 +436,7 @@ function deleteMarker(id)
 			if(initMarkers[i].id == id)
 			{
 				$.ajax({   
-		            url:'delete',//这里是你的action或者servlert的路径地址   
+		            url:'deleteMarker',//这里是你的action或者servlert的路径地址   
 		            type:'post', //数据发送方式     
 		 			data: { "mkid":id},
 		            error: function(msg)
@@ -454,10 +445,12 @@ function deleteMarker(id)
 		            },   
 		            success: function(msg)
 		            { //成功   
-		            	alert('信号机删除成功');   
-		            	self.location.reload();  //刷新本页
+		            	alert('信号机删除成功');  
 		            }  
-	    	    });   
+		           
+	    	    }); 
+	    	     initMarkers[i].setMap(null);
+		         initMarkers.splice(i,1);  
 			}
 		}
 	}

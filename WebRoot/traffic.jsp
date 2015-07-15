@@ -204,7 +204,7 @@ var btn=document.getElementById('show_btn');
 <body>   
 <div class="formbody" >
 
-     <div class="tabson" style="margin-top:0px;" ><ul class="toolbar" style="width:100%; margin-bottom:10px;"><li style="padding-left:5px;">信号机基本信息 |　IP:<s:property value="sig.ip"/>&nbsp;&nbsp;&nbsp;地址:<s:property value="sig.address"/>&nbsp;&nbsp;&nbsp;名称:<s:property value="sig.name" />　</li></ul>
+     <div class="tabson" style="margin-top:0px;" ><ul class="toolbar" style="width:100%; margin-bottom:10px;"><li style="padding-left:5px;">信号机基本信息 |　编号:<s:property value="sig.number"/>&nbsp;&nbsp;&nbsp;地址:<s:property value="sig.address"/>&nbsp;&nbsp;&nbsp;名称:<s:property value="sig.name" />&nbsp;&nbsp;&nbsp;所在区域:<s:property value="sig.userarea.uareaname" />　</li></ul>
        <div style="width:100%; float:left;">
          <div class="xwbox" >
          <li style=" margin-top: 60px; height:29px;">

@@ -35,13 +35,14 @@ google.maps.event.addDomListener(window, "load", initialize);
 		{
 			var areaidstr = searchStrURL.substring(searchStrURL.indexOf("=")+1,searchStrURL.length);
 			areaid = parseInt(areaidstr);
-			console.log(areaid);
 		}
 		AreaInit();
-	   var mapCanvas = document.getElementById("map_canvas");
+		console.log(searchStrURL);
+	    var mapCanvas = document.getElementById("map_canvas");
 		var myOptions = {
 		zoom: markerZoom,   
-		center: new Array(119.69663500785828, 31.369760901943426),  
+		center: new Array(lng, lat),  
+		disableDefaultUI: false,   
 		disableDefaultUI: false,   
 		navigationControl: true,   
 		navigationControlOptions: {position: google.maps.ControlPosition.RIGHT_TOP},    
@@ -256,7 +257,12 @@ function AreaInit()
 						if(ulimit==0)
 						{
 							$("#areasdiv").show();
-						}
+						}else
+	            		{
+	            			lng = 119.71389770507812;
+							lat = 31.336923737413848;
+							markerZoom = 13;
+	            		}
 	            }  
     	    });  
 }

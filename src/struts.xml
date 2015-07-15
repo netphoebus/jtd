@@ -201,7 +201,7 @@
 		<action name="load" class="mapAction" method="load"/>
 		<action name="loadArea" class="mapAction" method="loadArea"/>
 		<action name="loadAreas" class="mapAction" method="loadAreas"/>
-		<action name="delete" class="mapAction" method="delete"/>
+		<action name="deleteMarker" class="mapAction" method="deleteMarker"/>
 		<action name="checkMarkerName" class="mapAction" method="checkMarkerName"/>
 	</package>
 	
