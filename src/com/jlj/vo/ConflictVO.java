@@ -2,6 +2,7 @@ package com.jlj.vo;
 
 public class ConflictVO {
 	private int sid;
+	private String number;
 	private String c_00;
 	private String c_01;
 	private String c_02;
@@ -128,6 +129,7 @@ public class ConflictVO {
 	public String toString() {
 		// TODO Auto-generated method stub "\""+a+"\""
 		return "{sid:"+this.sid+","+
+		"number:"+"\""+this.number+"\""+","+
 		"c_00:"+"\""+this.c_00+"\""+","+
 		"c_01:"+"\""+this.c_01+"\""+","+
 		"c_02:"+"\""+this.c_02+"\""+","+
@@ -144,6 +146,12 @@ public class ConflictVO {
 		"c_31:"+"\""+this.c_31+"\""+","+
 		"c_32:"+"\""+this.c_32+"\""+","+
 		"c_33:"+"\""+this.c_33+"\""+","+"}";
+	}
+	public String getNumber() {
+		return number;
+	}
+	public void setNumber(String number) {
+		this.number = number;
 	}
 	
 	

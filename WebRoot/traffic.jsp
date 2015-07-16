@@ -5,8 +5,8 @@
 String path = request.getContextPath(); String basePath =
 request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>无标题文档</title>
@@ -358,16 +358,16 @@ var btn=document.getElementById('show_btn');
          <li  onclick="executeCommand(30)">关 灯<br /></li>
          <li  onclick="executeCommand(31)">全 红<br /></li>
          <!--  
-           <li  onclick="">指定相位运行<br /></li>-->
+           <li  onclick="runByPharse()">指定相位运行<br /></li>-->
          </ul>
           <!--  
           <div style="width:100%; float:left; margin-bottom:10px;">
          <ul class="toolbar1" style="margin-left:80px; ">
 	         		<li  onclick="allRed(0)">指定相位全红<br /></li>
 	         		<li  onclick="clearAllLight(0)">指定相位清空<br /></li>
-	         		<li>绿灯时间&nbsp;&nbsp;<input style="border:1px dotted #CCC;;width:60%;height:100%" id="gltime" type="text" name="gltime" value="0"/>秒</li>
-	         		<li>黄灯时间&nbsp;&nbsp;<input style="border:1px dotted #CCC;;width:60%;height:100%" id="yltime" type="text" name="yltime" value="3"/>秒</li>	
-	         		<li>红灯时间&nbsp;&nbsp;<input style="border:1px dotted #CCC;;width:60%;height:100%" id="rltime" type="text" name="rltime" value="0"/>秒</li>
+	         		<li>绿灯时间&nbsp;&nbsp;<input style="border:1px dotted #CCC;;width:60%;height:100%" id="gltime" class="ptime" type="text" placeholder="范围:1-99" name="gltime" value="10"/>秒</li>
+	         		<li>黄灯时间&nbsp;&nbsp;<input style="border:1px dotted #CCC;;width:60%;height:100%" id="yltime"  class="ptime"  type="text" placeholder="范围:3-9" name="yltime" value="3"/>秒</li>	
+	         		<li>红灯时间&nbsp;&nbsp;<input style="border:1px dotted #CCC;;width:60%;height:100%" id="rltime"   class="ptime" type="text"  placeholder="范围:3-9" name="rltime" value="3"/>秒</li>
 	         </ul>
          <div class="picbox">
 										<div style="width: 100%; float: left; height: ">

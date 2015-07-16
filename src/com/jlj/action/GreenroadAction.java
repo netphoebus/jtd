@@ -42,6 +42,7 @@ import com.jlj.service.ISolutionService;
 import com.jlj.service.IStepService;
 import com.jlj.util.Commands;
 import com.jlj.vo.ConflictVO;
+import com.jlj.vo.PharseVO;
 import com.jlj.vo.SigGreenRoadVO;
 import com.jlj.vo.UsefulPhaseVO;
 import com.opensymphony.xwork2.ActionSupport;
@@ -105,7 +106,20 @@ public class GreenroadAction extends ActionSupport implements RequestAware,
 	private int orderid;
 	private int timetype;
 	private int maxCircleTime;
+	
+	/*
+	 * json messsage
+	 */
 	private String dates;
+	private String gtime;
+	private String rtime;
+	private String ytime;
+	
+
+	/*
+	 * 指定相位对象列表
+	 */
+	private List<PharseVO> pharseVOS;
 	
 	/**
 	 * 地图加载绿波带
@@ -284,6 +298,7 @@ public class GreenroadAction extends ActionSupport implements RequestAware,
 				System.out.println("信号机："+sigVOs.get(j).getNumber());
 				conflictVO = new ConflictVO();
 				conflictVO.setSid(sigVOs.get(j).getId());
+				conflictVO.setNumber(sigVOs.get(j).getNumber());
 				for(int i=0;i<greens.size();i++)
 				{
 					String conflictname="";
@@ -470,68 +485,341 @@ public class GreenroadAction extends ActionSupport implements RequestAware,
 	 * @throws Exception
 	 */
 	public String doControl() throws Exception {
-		System.out.println(dates+" "+begintime+" "+orderid+" "+timetype);
-		/**
-		 * map数组元素解释说明 5_0_10,7_0_10   sid_相位名称(步序的orderid为偶数)_相位执行时间  
-		 * 第一步：查找当前时间段
-		 * 第二步：查找当前时间段的相位方案的相位
-		 * 第三步：按指定相位运行
-		 */
-		String[] sigctimes = dates.split(",");
-		for (int i = 0; i < sigctimes.length; i++) {
-			String[] sig_time = sigctimes[i].split("_");
-			int sid = Integer.parseInt(sig_time[0]);//信号机编号
-			int pharseNumber = Integer.parseInt(sig_time[1]);//0代表t0 1代表t1
-			int runTime = Integer.parseInt(sig_time[2]);//相位运行时间具体时间
+		System.out.println(dates);
+		System.out.println(gtime);//绿灯持续时间
+		System.out.println(ytime);//黄灯持续时间
+		System.out.println(rtime);//红灯持续时间
+		
+		setSpecifiedPharseVO(dates,gtime,ytime,rtime);
+		
+		for (int j = 0;j < pharseVOS.size(); j++) {
 			
-			commontime = commontimeService.loadByOrderIdAndTimetype(timetype, orderid, sid);
-			if(commontime!=null)
-			{
-				solution = solutionService.getSolutionBySignidAndOrderid(sid, commontime.getWorkingprogram());
-				if(solution!=null)
-				{
-					step = stepService.queryStepByPharseNameAndSoluid(pharseNumber, solution.getId());
-					if(step!=null)
-					{
-						roads = roadService.loadByStepid(step.getId());
+			IoSession currrenSession=this.getCurrrenSession(pharseVOS.get(j).getNumber());
+			byte send_byte[] = new byte[27+8+4];
+			send_byte[0] = (byte) 0xff;
+			send_byte[1] = (byte) 0xff;
+			send_byte[2] = (byte) 0xff;
+			send_byte[3] = (byte) 0xff;
+			send_byte[4] = (byte) 0x01;
+			send_byte[5] = (byte) 0xF0;
+			send_byte[6] = (byte) 0xA2;
+			send_byte[7] = (byte) 0x06;
+			send_byte[8] = (byte) 0x00;
+			send_byte[9] = (byte) 0x23;
+			String[] solus = pharseVOS.get(j).getDates().split(",");
+			for (int i = 0; i < solus.length; i++) {
+				int roadtype = Integer.parseInt(solus[i].substring(solus[i].indexOf("_")+1, solus[i].lastIndexOf("_")));
+				int dengtype = Integer.parseInt(solus[i].substring(solus[i].lastIndexOf("_")+1, solus[i].indexOf(":")));
+				String dengtypestr="";
+				switch (dengtype) {
+				case 0:
+					dengtypestr = "leftcolor";
+					break;
+				case 1:
+					dengtypestr = "linecolor";
+					break;
+				case 2:
+					dengtypestr = "rightcolor";
+					break;
+				case 3:
+					dengtypestr = "rxcolor"; 
+				default:
+					break;
+				}
+				int deng = Integer.parseInt(solus[i].substring(solus[i].indexOf(":")+1));
+				
+				switch (roadtype) {
+				case 0:
+					if(dengtype == 0){
+						if(deng ==1){
+							send_byte[10] = (byte) (send_byte[10]&0x20);
+							send_byte[19] =  (byte) (send_byte[10]&0x40);
+							
+						}else if(deng == 2){
+							send_byte[10] = (byte) (send_byte[10]&0x40);
+						}else if(deng == 3){
+							send_byte[10] = (byte) (send_byte[10]&0x80);
+						}
+						send_byte[28] =  (byte) (send_byte[10]&0x80);
+					}else if(dengtype == 1){
+						if(deng ==1){
+							send_byte[10] = (byte) (send_byte[10]&0x04);
+							send_byte[19] =  (byte) (send_byte[10]&0x08);
+							
+						}else if(deng == 2){
+							send_byte[10] = (byte) (send_byte[10]&0x08);
+						}else if(deng == 3){
+							send_byte[10] = (byte) (send_byte[10]&0x10);
+						}
+						send_byte[28] =  (byte) (send_byte[10]&0x10);
+					}else if(dengtype == 2){
+						if(deng ==1){
+							send_byte[11] = (byte) (send_byte[10]&0x20);
+							send_byte[20] =  (byte) (send_byte[10]&0x40);
+							
+						}else if(deng == 2){
+							send_byte[11] = (byte) (send_byte[10]&0x40);
+						}else if(deng == 3){
+							send_byte[11] = (byte) (send_byte[10]&0x80);
+						}
+						send_byte[29] =  (byte) (send_byte[10]&0x80);
+					}else if(dengtype == 3){
+						if(deng ==1){
+							send_byte[11] = (byte) (send_byte[10]&0x0A);
+							send_byte[20] =  (byte) (send_byte[10]&0x14);
+							
+						}else if(deng == 2){
+						}else if(deng == 3){
+							send_byte[11] = (byte) (send_byte[10]&0x14);
+						}
+						send_byte[29] =  (byte) (send_byte[10]&0x14);
 					}
+					break;
+				case 1:
+					if(dengtype == 0){
+						if(deng ==1){
+							send_byte[12] = (byte) (send_byte[10]&0x20);
+							send_byte[21] =  (byte) (send_byte[10]&0x40);
+						}else if(deng == 2){
+							send_byte[12] = (byte) (send_byte[10]&0x40);
+						}else if(deng == 3){
+							send_byte[12] = (byte) (send_byte[10]&0x80);
+						}
+						send_byte[30] =  (byte) (send_byte[10]&0x80);
+					}else if(dengtype == 1){
+						if(deng ==1){
+							send_byte[12] = (byte) (send_byte[10]&0x04);
+							send_byte[21] =  (byte) (send_byte[10]&0x08);
+							
+						}else if(deng == 2){
+							send_byte[12] = (byte) (send_byte[10]&0x08);
+						}else if(deng == 3){
+							send_byte[12] = (byte) (send_byte[10]&0x10);
+						}
+						send_byte[30] =  (byte) (send_byte[10]&0x10);
+					}else if(dengtype == 2){
+						if(deng ==1){
+							send_byte[13] = (byte) (send_byte[10]&0x20);
+							send_byte[22] =  (byte) (send_byte[10]&0x40);
+							
+						}else if(deng == 2){
+							send_byte[13] = (byte) (send_byte[10]&0x40);
+						}else if(deng == 3){
+							send_byte[13] = (byte) (send_byte[10]&0x80);
+						}
+						send_byte[31] =  (byte) (send_byte[10]&0x80);
+					}else if(dengtype == 3){
+						if(deng ==1){
+							send_byte[13] = (byte) (send_byte[10]&0x0A);
+							send_byte[22] =  (byte) (send_byte[10]&0x14);
+							
+						}else if(deng == 2){
+						}else if(deng == 3){
+							send_byte[13] = (byte) (send_byte[10]&0x14);
+						}
+						send_byte[31] =  (byte) (send_byte[10]&0x14);
+					}
+					break;
+				case 2:
+					if(dengtype == 0){
+						if(deng ==1){
+							send_byte[14] = (byte) (send_byte[10]&0x20);
+							send_byte[23] =  (byte) (send_byte[10]&0x40);
+						}else if(deng == 2){
+							send_byte[14] = (byte) (send_byte[10]&0x40);
+						}else if(deng == 3){
+							send_byte[14] = (byte) (send_byte[10]&0x80);
+						}
+						send_byte[32] =  (byte) (send_byte[10]&0x80);
+					}else if(dengtype == 1){
+						if(deng ==1){
+							send_byte[14] = (byte) (send_byte[10]&0x04);
+							send_byte[23] =  (byte) (send_byte[10]&0x08);
+							
+						}else if(deng == 2){
+							send_byte[14] = (byte) (send_byte[10]&0x08);
+						}else if(deng == 3){
+							send_byte[14] = (byte) (send_byte[10]&0x10);
+						}
+						send_byte[32] =  (byte) (send_byte[10]&0x10);
+					}else if(dengtype == 2){
+						if(deng ==1){
+							send_byte[15] = (byte) (send_byte[10]&0x20);
+							send_byte[24] =  (byte) (send_byte[10]&0x40);
+							
+						}else if(deng == 2){
+							send_byte[15] = (byte) (send_byte[10]&0x40);
+						}else if(deng == 3){
+							send_byte[15] = (byte) (send_byte[10]&0x80);
+						}
+						send_byte[33] =  (byte) (send_byte[10]&0x80);
+					}else if(dengtype == 3){
+						if(deng ==1){
+							send_byte[15] = (byte) (send_byte[10]&0x0A);
+							send_byte[24] =  (byte) (send_byte[10]&0x14);
+							
+						}else if(deng == 2){
+						}else if(deng == 3){
+							send_byte[15] = (byte) (send_byte[10]&0x14);
+						}
+						send_byte[33] =  (byte) (send_byte[10]&0x14);
+					}
+					break;
+				case 3:
+					if(dengtype == 0){
+						if(deng ==1){
+							send_byte[16] = (byte) (send_byte[10]&0x20);
+							send_byte[25] =  (byte) (send_byte[10]&0x40);
+						}else if(deng == 2){
+							send_byte[16] = (byte) (send_byte[10]&0x40);
+						}else if(deng == 3){
+							send_byte[16] = (byte) (send_byte[10]&0x80);
+						}
+						send_byte[34] =  (byte) (send_byte[10]&0x80);
+					}else if(dengtype == 1){
+						if(deng ==1){
+							send_byte[16] = (byte) (send_byte[10]&0x04);
+							send_byte[25] =  (byte) (send_byte[10]&0x08);
+							
+						}else if(deng == 2){
+							send_byte[16] = (byte) (send_byte[10]&0x08);
+						}else if(deng == 3){
+							send_byte[16] = (byte) (send_byte[10]&0x10);
+						}
+						send_byte[34] =  (byte) (send_byte[10]&0x10);
+					}else if(dengtype == 2){
+						if(deng ==1){
+							send_byte[17] = (byte) (send_byte[10]&0x20);
+							send_byte[26] =  (byte) (send_byte[10]&0x40);
+							
+						}else if(deng == 2){
+							send_byte[17] = (byte) (send_byte[10]&0x40);
+						}else if(deng == 3){
+							send_byte[17] = (byte) (send_byte[10]&0x80);
+						}
+						send_byte[35] =  (byte) (send_byte[10]&0x80);
+					}else if(dengtype == 3){
+						if(deng ==1){
+							send_byte[17] = (byte) (send_byte[10]&0x0A);
+							send_byte[26] =  (byte) (send_byte[10]&0x14);
+							
+						}else if(deng == 2){
+						}else if(deng == 3){
+							send_byte[17] = (byte) (send_byte[10]&0x14);
+						}
+						send_byte[35] =  (byte) (send_byte[10]&0x14);
+					}
+					break;
+				default:
+					break;
 				}
-				
-			}
-			if(roads!=null)
-			{
-				for(int j=0;i<roads.size();j++)
-				{
-					System.out.println("Roadtpye"+roads.get(j).getRoadtype()+";"+"Leftcolor"+roads.get(j).getLeftcolor()+";"+"Rightcolor"+roads.get(j).getRightcolor()+";"+"Linecolor"+roads.get(j).getLinecolor()+";"+"Rxcolor"+roads.get(j).getRxcolor());
-				}
-				
-			}
 			
-			//from lq 2015/7/9 需修改
-			/*if(!begintime.equals("0")&&!begintime.equals("")&&begintime.length()>0&&begintime.indexOf(":")!=-1)
-			{
-				hour = Integer.parseInt(begintime.split(":")[0]);
-				minute =  Integer.parseInt(begintime.split(":")[1]);
-			}else
-			{
-				hour = commontime.getHour();
-				minute = commontime.getMinute();
+				
 			}
-			commontimeService.updateCommontime(hour,minute,seconds,workingway,orderid,timetype,sid);
-			// 下发信号机 时间段参数
-			Sig sig = sigService.loadById(sid);
-			if(sig!=null){
-				String sigNumber = sig.getNumber();
-				this.updateCommonTimeBytes(sig,this.getCurrrenSession(sigNumber));
-				System.out.println("setPharseTime-调阅新命令和新数据，更新数据库--------------------------------");
-				Commands.executeCommand(6,this.getCurrrenSession(sigNumber));//commontime 编号6
-				Thread.sleep(100);
-				Commands.executeCommand(7,this.getCurrrenSession(sigNumber));//commontime 编号7
-				Thread.sleep(100);
-			}*/
+			send_byte[18] = (byte) pharseVOS.get(j).getGltime();
+			send_byte[27] = (byte) pharseVOS.get(j).getYltime();
+			send_byte[36] = (byte) pharseVOS.get(j).getRltime();
+			
+			 int k = 0;
+			 for( int i1 = 4; i1 < send_byte.length-2; i1++){
+				 //System.out.println((msendDatas[i]&0xFF)+"对应"+msendDatas[i]);
+				//System.out.println();
+			  k += send_byte[i1]&0xFF;
+			 }
+			 
+		       for (int i1 = 0; i1 < 2; i1++) {  
+		    	   send_byte[send_byte.length-i1-1]  = (byte) (k >>> (i1 * 8));  
+		       }  
+			
+		   	System.out.println("=======================下发升级命令========================================");
+			
+			for (int i3 = 0; i3 < send_byte.length; i3++) {
+				System.out.print(send_byte[i3]);
+			}
+			System.out.println("");
+			System.out.println("========================下发升级命令=======================================");
+			
+			currrenSession.write(send_byte);
+			
 		}
 		return NONE;
 	}
+	
+	/*
+	 * 设置指定相位VO对象
+	 */
+	private void setSpecifiedPharseVO(String dates, String gtime,
+			String ytime, String rtime) {
+		// TODO Auto-generated method stub
+		String[] ytimes = ytime.split(",");
+		String[] rtimes = rtime.split(",");
+		String[] gtimes = gtime.split(",");
+		
+		String[] dateses = dates.split(",");
+		 
+		List<PharseVO> pharseVOS= new ArrayList<PharseVO>();
+		for (int j = 0; j < gtimes.length; j++) {
+			PharseVO pharseVO = new PharseVO();
+			String param = gtimes[j];
+			String number = param.substring(0, param.indexOf("_"));
+			int time = Integer.parseInt(param.substring(param.indexOf("_")+1, param.length()));
+			pharseVO.setNumber(number);
+			pharseVO.setGltime(time);
+			pharseVOS.add(pharseVO);
+		}
+		
+		for (int j = 0; j < ytimes.length; j++) {
+			String param = ytimes[j];
+			int time = Integer.parseInt(param.substring(param.indexOf("_")+1, param.length()));
+			pharseVOS.get(j).setYltime(time);
+		}
+		
+		for (int j = 0; j < rtimes.length; j++) {
+			String param = rtimes[j];
+			int time = Integer.parseInt(param.substring(param.indexOf("_")+1, param.length()));
+			pharseVOS.get(j).setRltime(time);
+		}
+		
+		
+		
+		  int splitSize = pharseVOS.size();//分割的块大小
+		    
+		  List<String> subAry = splitAry(dateses, splitSize);//分割后的子块数组
+		
+		  for (int j = 0; j < pharseVOS.size(); j++) {
+			  pharseVOS.get(j).setDates(subAry.get(j));
+			  System.out.println(pharseVOS.get(j).getNumber());
+			  System.out.println(pharseVOS.get(j).getGltime());
+			  System.out.println(pharseVOS.get(j).getYltime());
+			  System.out.println(pharseVOS.get(j).getRltime());
+			  System.out.println(pharseVOS.get(j).getDates());
+			}
+		
+		
+	}
+	
+	/*
+	 * 将大数组拆分为等量小数组
+	 */
+	 private static List<String> splitAry(String[] ary, int subSize) {  
+         int count = 16;  
+         List<String> subAryList = new ArrayList<String>();  
+ 
+         for (int i = 0; i < subSize; i++) {
+       	  
+       	  String dates = "";
+       	  
+       	  for (int j = 0; j < count; j++) {
+       		  	
+       		  dates = dates + ary[j+i*count]+",";
+       	  }
+       	  subAryList.add(dates);
+       	  
+         }
+           
+         return subAryList;  
+   }  
+	
 	
 	public IoSession getCurrrenSession(String sigNumber)
 	{
@@ -1588,6 +1876,46 @@ public class GreenroadAction extends ActionSupport implements RequestAware,
 
 	public void setConflictVOs(List<ConflictVO> conflictVOs) {
 		this.conflictVOs = conflictVOs;
+	}
+
+
+	public String getGtime() {
+		return gtime;
+	}
+
+
+	public void setGtime(String gtime) {
+		this.gtime = gtime;
+	}
+
+
+	public String getRtime() {
+		return rtime;
+	}
+
+
+	public void setRtime(String rtime) {
+		this.rtime = rtime;
+	}
+
+
+	public String getYtime() {
+		return ytime;
+	}
+
+
+	public void setYtime(String ytime) {
+		this.ytime = ytime;
+	}
+
+
+	public List<PharseVO> getPharseVOS() {
+		return pharseVOS;
+	}
+
+
+	public void setPharseVOS(List<PharseVO> pharseVOS) {
+		this.pharseVOS = pharseVOS;
 	}
 	
 	

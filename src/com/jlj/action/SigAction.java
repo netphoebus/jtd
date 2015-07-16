@@ -804,6 +804,14 @@ public class SigAction extends ActionSupport implements RequestAware,
 	public static void setCurruntSigNumber(String curruntSigNumber) {
 		SigAction.curruntSigNumber = curruntSigNumber;
 	}
+
+	public String getSigNumber() {
+		return sigNumber;
+	}
+
+	public void setSigNumber(String sigNumber) {
+		this.sigNumber = sigNumber;
+	}
 	
 	
 

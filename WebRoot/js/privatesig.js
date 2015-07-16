@@ -343,6 +343,41 @@ $(document).ready(function(){
 		});
 		
 		
+		
+		//设置相位执行时间
+		$(".ptime").on("blur",function(){
+				var	time = parseInt($(this).val());
+				var id  = $(this).attr("id");
+				if(id.indexOf('gltime')!=-1)
+				{
+					if(isNaN(time)||time>99||time<1)
+					{
+						alert("绿灯时间设置不正确,请重新设置.");
+						$(this).val(1);//恢复原值
+						return ;
+					}
+					
+				}if(id.indexOf('yltime')!=-1)
+				{
+					if(isNaN(time)||time>9||time<3)
+					{
+						alert("黄灯时间设置不正确,请重新设置.");
+						$(this).val(3);//恢复原值
+						return ;
+					}
+				}if(id.indexOf('rltime')!=-1)
+				{
+					if(isNaN(time)||time>9||time<3)
+					{
+						alert("红灯时间设置不正确,请重新设置.");
+						$(this).val(3);//恢复原值
+						return ;
+					}
+				}
+				$(this).val(time);
+		});
+		
+		
 });
 
 function runByPharse()
@@ -350,7 +385,6 @@ function runByPharse()
 	var gltime = $("#gltime").val();
 	var rltime = $("#rltime").val();
 	var yltime = $("#yltime").val();
-	
 	
 	var t=setTimeout(executeCommand(33),1000*(parseInt(gltime)+parseInt(rltime)+parseInt(yltime)+2000));//转换为自动控制
 	

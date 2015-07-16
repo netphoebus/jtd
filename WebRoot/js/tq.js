@@ -38,20 +38,31 @@ $(document).ready(function(){
 	
 	//设置相位执行时间
 		$(".dfinput_tqtime").on("blur",function(){
-				console.log($(this));
-				var time = $(this).val();
-				time = parseInt(time);
-				if(isNaN(time))
+				var	time = parseInt($(this).val());
+				var id  = $(this).attr("id");
+				if(id.indexOf('gtime')!=-1)
 				{
-					alert("执行时间设置不正确,请重新设置.");
-					$(this).val(10);//恢复原值
-					return ;
-				}else
-				{
-					if(time<10||time>90)
+					if(isNaN(time)||time>99||time<1)
 					{
-						alert("执行时间超出范围,相位执行时间10秒-90秒.");
-						$(this).val(10);//恢复原值
+						alert("绿灯时间设置不正确,请重新设置.");
+						$(this).val(1);//恢复原值
+						return ;
+					}
+					
+				}if(id.indexOf('ytime')!=-1)
+				{
+					if(isNaN(time)||time>9||time<3)
+					{
+						alert("黄灯时间设置不正确,请重新设置.");
+						$(this).val(3);//恢复原值
+						return ;
+					}
+				}if(id.indexOf('rtime')!=-1)
+				{
+					if(isNaN(time)||time>9||time<3)
+					{
+						alert("红灯时间设置不正确,请重新设置.");
+						$(this).val(3);//恢复原值
 						return ;
 					}
 				}
@@ -74,7 +85,7 @@ $(document).ready(function(){
 			var conflictStr = "";
 			for(var i=0;i<conflictVOs.length;i++)
 			{
-				allRed(conflictVOs[i].sid);
+				allRed(conflictVOs[i].number);
 			}
 			
 		$(".picbox img").click(function(event) {
@@ -324,7 +335,6 @@ $(document).ready(function(){
 							} 
 						}
 					}
-				
 				lastnumber = 1;
 				imgsrc_new = "images/rod/l"+headnumber+"1.png";
 				
@@ -357,15 +367,8 @@ $(document).ready(function(){
 		
 });
 
-function runByPharse()
+function doControl()
 {
-	var gltime = $("#gltime").val();
-	var rltime = $("#rltime").val();
-	var yltime = $("#yltime").val();
-	
-	
-	
-	console.log(updateFang,gltime,rltime,yltime);
 	var msg = "";
 	for(var prop in updateFang){
     if(updateFang.hasOwnProperty(prop)){
@@ -373,11 +376,44 @@ function runByPharse()
         msg = msg + prop+":"+ updateFang[prop]+",";
     	}
 	}
+	var sigSize = conflictVOs.length;
+	var time = $(".dfinput_tqtime");
+	var gtime = '';
+	var ytime = '';
+	var rtime = '';
+	
+	time.each(function(){
+		for(var i=0;i<conflictVOs.length;i++)
+		{
+			var number = conflictVOs[i].number;//获得当前信号机id
+			var thisid = $(this).attr("id");//获得当前time id
+			console.log(thisid);
+			var gid = number+"_gtime";//组装id
+			var yid = number+"_ytime";//组装id
+			var rid = number+"_rtime";//组装id
+			if(thisid==gid)
+			{
+				gtime = gtime + number+"_"+$(this).val()+",";
+			}
+			if(thisid==yid)
+			{
+				ytime = ytime + number+"_"+$(this).val()+",";
+			}
+			if(thisid==rid)
+			{
+				rtime = rtime + number+"_"+$(this).val()+",";
+			}
+		}
+	
+	});
 	console.log(msg);
+	console.log(gtime);
+	console.log(rtime);
+	console.log(ytime);
 		$.ajax({   
-            url:'runByPharse',//这里是你的action或者servlert的路径地址   
+            url:'doControl',//这里是你的action或者servlert的路径地址   
             type:'post', //数据发送方式  
-            data: { "dates":msg,"gltime":parseInt(gltime),"rltime":parseInt(rltime),"yltime":parseInt(yltime)},  
+            data: {"dates":msg,"gtime":gtime,"rtime":rtime,"ytime":ytime},  
             traditional: true,  
             error: function(msg)
             { //失败   

@@ -146,18 +146,18 @@ var conflictVOs = <s:property value="conflictVOs" escape="false"/>;
 										</div>
 										<div style="width: 100%; float: left; height: ">
 											<div class="xhu" style="margin-top: 0px;">
-												<img class="${id}_3_3" alt="北人行道" class="l23" src="images/rod/l330.png" width="15" />
+												<img class="${number}_3_3" alt="北人行道" class="l23" src="images/rod/l330.png" width="15" />
 											</div>
 											<div class="xhu" style="margin-left: 135px; margin-top: 0px;">
-												<img class="${id}_3_3" alt="北人行道" class="l03" src="images/rod/l330.png" width="15" />
+												<img class="${number}_3_3" alt="北人行道" class="l03" src="images/rod/l330.png" width="15" />
 											</div>
 										</div>
 										<div style="width: 100%; float: left; height: ">
 											<div class="xhup">
-												<img  class="${id}_2_3" alt="西人行道"  src="images/rod/l230.png" width="15" />
+												<img  class="${number}_2_3" alt="西人行道"  src="images/rod/l230.png" width="15" />
 											</div>
 											<div class="xhup" style="margin-left: 165px;">
-												<img class="${id}_0_3" alt="东人行道" src="images/rod/l030.png" width="15" />
+												<img class="${number}_0_3" alt="东人行道" src="images/rod/l030.png" width="15" />
 											</div>
 										</div>
 										
@@ -170,19 +170,19 @@ var conflictVOs = <s:property value="conflictVOs" escape="false"/>;
 													</tr>
 													<tr>
 														<td align="center">
-															<img id="${id}_0_2"  src="images/rod/l020.png" alt="东向西右拐"
+															<img id="${number}_0_2"  src="images/rod/l020.png" alt="东向西右拐"
 																width="15" height="15" />
 														</td>
 													</tr>
 													<tr>
 														<td align="center">
-															<img id="${id}_0_1"  src="images/rod/l010.png" alt="东向西直行"
+															<img id="${number}_0_1"  src="images/rod/l010.png" alt="东向西直行"
 																width="15" height="15" />
 														</td>
 													</tr>
 													<tr>
 														<td align="center">
-															<img id="${id}_0_0"   src="images/rod/l000.png" alt="东向西左拐"
+															<img id="${number}_0_0"   src="images/rod/l000.png" alt="东向西左拐"
 																width="15" height="15" />
 														</td>
 													</tr>
@@ -194,15 +194,15 @@ var conflictVOs = <s:property value="conflictVOs" escape="false"/>;
 													<tr>
 														<td width="2" height="18"></td>
 														<td>
-															<img id="${id}_3_2"  src="images/rod/l320.png" alt="北向南右拐" width="15"
+															<img id="${number}_3_2"  src="images/rod/l320.png" alt="北向南右拐" width="15"
 																height="15" />
 														</td>
 														<td>
-															<img id="${id}_3_1"  src="images/rod/l310.png" alt="北向南直行" width="15"
+															<img id="${number}_3_1"  src="images/rod/l310.png" alt="北向南直行" width="15"
 																height="15" />
 														</td>
 														<td>
-															<img  id="${id}_3_0"  src="images/rod/l300.png" alt="北向南左拐" width="15"
+															<img  id="${number}_3_0"  src="images/rod/l300.png" alt="北向南左拐" width="15"
 																height="15" />
 														</td>
 													</tr>
@@ -214,15 +214,15 @@ var conflictVOs = <s:property value="conflictVOs" escape="false"/>;
 													<tr>
 														<td width="2" height="18"></td>
 														<td>
-															<img id="${id}_1_0"  src="images/rod/l100.png" alt="南向北左拐" width="15"
+															<img id="${number}_1_0"  src="images/rod/l100.png" alt="南向北左拐" width="15"
 																height="15" />
 														</td>
 														<td>
-															<img id="${id}_1_1"  src="images/rod/l110.png" alt="南向北直行" width="15"
+															<img id="${number}_1_1"  src="images/rod/l110.png" alt="南向北直行" width="15"
 																height="15" />
 														</td>
 														<td>
-															<img id="${id}_1_2"  src="images/rod/l120.png" alt="南向北右拐" width="15"
+															<img id="${number}_1_2"  src="images/rod/l120.png" alt="南向北右拐" width="15"
 																height="15" />
 														</td>
 													</tr>
@@ -236,19 +236,19 @@ var conflictVOs = <s:property value="conflictVOs" escape="false"/>;
 													</tr>
 													<tr>
 														<td align="center">
-															<img  id="${id}_2_0"  src="images/rod/l200.png" alt="西向东左拐" width="15"
+															<img  id="${number}_2_0"  src="images/rod/l200.png" alt="西向东左拐" width="15"
 																height="15" />
 														</td>
 													</tr>
 													<tr>
 														<td align="center">
-															<img id="${id}_2_1"  src="images/rod/l210.png" alt="西向东直行"  width="15"
+															<img id="${number}_2_1"  src="images/rod/l210.png" alt="西向东直行"  width="15"
 																height="15" />
 														</td>
 													</tr>
 													<tr>
 														<td align="center">
-															<img id="${id}_2_2"  src="images/rod/l220.png" alt="西向东右拐" width="15"
+															<img id="${number}_2_2"  src="images/rod/l220.png" alt="西向东右拐" width="15"
 																height="15" />
 														</td>
 													</tr>
@@ -258,22 +258,22 @@ var conflictVOs = <s:property value="conflictVOs" escape="false"/>;
 										<div style="width: 100%; float: left; height: ">
 											<div class="xhup">
 											
-												<img class="${id}_2_3"  src="images/rod/l230.png" alt="西人行道" width="15" />
+												<img class="${number}_2_3"  src="images/rod/l230.png" alt="西人行道" width="15" />
 											</div>
 											<div class="xhup" style="margin-left: 165px;">
 											
-												<img class="${id}_0_3"  src="images/rod/l030.png" alt="东人行道" width="15" />
+												<img class="${number}_0_3"  src="images/rod/l030.png" alt="东人行道" width="15" />
 											</div>
 										</div>
 										<div style="width: 100%; float: left; height: ">
 											<div class="xhu" style="margin-top: 0px;">
 												
-												<img  class="${id}_1_3"  src="images/rod/l130.png" alt="南人行道" width="15" />
+												<img  class="${number}_1_3"  src="images/rod/l130.png" alt="南人行道" width="15" />
 											
 											</div>
 											<div class="xhu" style="margin-left: 135px; margin-top: 0px;">
 											
-												<img class="${id}_1_3"  src="images/rod/l130.png" alt="南人行道" width="15" />
+												<img class="${number}_1_3"  src="images/rod/l130.png" alt="南人行道" width="15" />
 											
 											</div>
 										</div>
@@ -288,18 +288,18 @@ var conflictVOs = <s:property value="conflictVOs" escape="false"/>;
 										</td>
 										<td>
 												<input type="text" alt="绿灯执行时间"
-													id="<s:property value="id"/>_time" class="dfinput_tqtime"  value="10"
-													style="width: 120px;" /> ×10秒
+													id="<s:property value="number"/>_gtime" class="dfinput_tqtime"  value="10"
+													style="width: 120px;" placeholder="范围:1-99"/> ×10秒
 										</td>
 										<td>
 												<input type="text" alt="黄灯执行时间"
-													id="<s:property value="id"/>_time" class="dfinput_tqtime"  value="10"
-													style="width: 120px;" /> 秒
+													id="<s:property value="number"/>_ytime" class="dfinput_tqtime"  value="3"
+													style="width: 120px;" placeholder="范围:3-9"/> 秒
 										</td>
 										<td>
 												<input type="text" alt="红灯执行时间"
-													id="<s:property value="id"/>_time" class="dfinput_tqtime"  value="10"
-													style="width: 120px;" /> 秒
+													id="<s:property value="number"/>_rtime" class="dfinput_tqtime"  value="5"
+													style="width: 120px;"  placeholder="范围:3-9"/> 秒
 										</td>
 									</tr>
 								</s:iterator>
@@ -310,7 +310,7 @@ var conflictVOs = <s:property value="conflictVOs" escape="false"/>;
 					</div>
 					<div
 						style="width: 90%; float: left; margin-top: 20px; color: #999; text-align: center;">
-						<input name="input" type="button" class="scbtn" onclick="runByPharse()"
+						<input name="input" type="button" class="scbtn" onclick="doControl()"
 							style="margin-top: 15px;"  value="执行特勤控制" />
 					</div>
 					
