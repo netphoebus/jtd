@@ -40,6 +40,7 @@ $(document).ready(function(e) {
   	<script src="js/highcharts.js"></script>
 	<script src="js/modules/exporting.js"></script>
   <script>
+  
     var categorielist = new Array(20);
   	var dleftlist=new Array(20);
   	var dlinelist=new Array(20);
@@ -158,23 +159,7 @@ $(document).ready(function(e) {
   		brightlist[<s:property value="#index.count"/>-1]=brightlist[<s:property value="#index.count"/>-1]+avtage*12;
   	</s:iterator>
   	
-  	/*
-  	var categorielist = new Array('2015-06-26 09:24:15', '2015-06-26 09:25:15', '2015-06-26 09:26:15', '2015-06-26 09:27:15', '2015-06-26 09:28:15', '2015-06-26 09:29:15','2015-06-26 09:30:15', '2015-06-26 09:31:15', '2015-06-26 09:32:15', '2015-06-26 09:33:15', '2015-06-26 09:34:15', '2015-06-26 09:35:15'
-  	, '2015-06-26 09:36:15', '2015-06-26 09:37:15', '2015-06-26 09:38:15', '2015-06-26 09:39:15', '2015-06-26 09:40:15', '2015-06-26 09:41:15', '2015-06-26 09:42:15', '2015-06-26 09:43:15'
-  	);
-  	var dleftlist=new Array(7, 6, 9, 10, 18, 21, 25, 26, 23, 18, 13, 9, 9, 14, 18, 21, 25, 26, 23, 18);
-  	var dlinelist=new Array(7, 6, 9, 14, 18, 21, 25, 26, 23, 18, 13, 9, 9, 14, 18, 21, 25, 26, 23, 18);
-  	var drightlist=new Array(7, 6, 9, 13, 18, 21, 25, 26, 23, 18, 13, 9, 9, 14, 18, 21, 25, 26, 23, 18);
-  	var nleftlist=new Array(7, 6, 9, 11, 18, 21, 25, 26, 23, 18, 13, 9, 9, 14, 18, 21, 25, 26, 23, 18);
-  	var nlinelist=new Array(7, 6, 9, 18, 18, 21, 25, 26, 23, 18, 13, 9, 9, 14, 18, 21, 25, 26, 23, 18);
-  	var nrightlist=new Array(7, 6, 9, 4, 18, 21, 25, 26, 23, 18, 13, 9, 9, 14, 18, 21, 25, 26, 23, 18);
-  	var xleftlist=new Array(7, 6, 9, 5, 18, 21, 25, 26, 23, 18, 13, 9, 9, 14, 18, 21, 25, 26, 23, 18);
-  	var xlinelist=new Array(7, 6, 9, 7, 18, 21, 25, 26, 23, 18, 13, 9, 9, 14, 18, 21, 25, 26, 23, 18);
-  	var xrightlist=new Array(7, 6, 9, 8, 18, 21, 25, 26, 23, 18, 13, 9, 9, 14, 18, 21, 25, 26, 23, 18);
-  	var bleftlist=new Array(7, 6, 9, 9, 18, 21, 25, 26, 23, 18, 13, 9, 9, 14, 18, 21, 25, 26, 23, 18);
-  	var blinelist=new Array(7, 6, 9, 20, 18, 21, 25, 26, 23, 18, 13, 9, 9, 14, 18, 21, 25, 26, 23, 18);
-  	var brightlist=new Array(7, 6, 9, 23, 18, 21, 25, 26, 23, 18, 13, 9, 9, 14, 18, 21, 25, 26, 23, 18);
-    */
+    
     $(function () {
     $('#container').highcharts({
         title: {
@@ -334,30 +319,17 @@ $(document).ready(function(e) {
 									&nbsp;
 								</td>
 								<td height="34" colspan="6" align="center" bgcolor="#FFFFFF">
-									记录数：<s:property value="totalCount" />&nbsp;&nbsp;&nbsp;
+									
 									<a
-										href="javascript:jumpFlowLinePage('flowAction!listline',<s:property value="1"/>,<s:property value="sigid"/>,'<s:property value="time1"/>','<s:property value="time2"/>',<s:property value="interval"/>);"
+										href="javascript:jumpFlowLinePage('flowAction!listline',<s:property value="1"/>,<s:property value="sigid"/>,'<s:property value="time1"/>','<s:property value="time2"/>',<s:property value="interval"/>,'');"
 										target="main">首页</a>&nbsp;&nbsp;
 									<a
-										href="javascript:jumpFlowLinePage('flowAction!listline',<s:property value="page-1"/>,<s:property value="sigid"/>,'<s:property value="time1"/>','<s:property value="time2"/>',<s:property value="interval"/>);"
+										href="javascript:jumpFlowLinePage('flowAction!listline',<s:property value="page-1"/>,<s:property value="sigid"/>,'<s:property value="time1"/>','<s:property value="time2"/>',<s:property value="interval"/>,'<s:property value="nextstarttime"/>');"
 										target="main">上一页</a>&nbsp;&nbsp;&nbsp;
 									<a
-										href="javascript:jumpFlowLinePage('flowAction!listline',<s:property value="page+1"/>,<s:property value="sigid"/>,'<s:property value="time1"/>','<s:property value="time2"/>',<s:property value="interval"/>);"
+										href="javascript:jumpFlowLinePage('flowAction!listline',<s:property value="page+1"/>,<s:property value="sigid"/>,'<s:property value="time1"/>','<s:property value="time2"/>',<s:property value="interval"/>,'<s:property value="nextstarttime"/>');"
 										target="main">下一页</a>&nbsp;&nbsp;&nbsp;
-									<a
-										href="javascript:jumpFlowLinePage('flowAction!listline',<s:property value="pageCount"/>,<s:property value="sigid"/>,'<s:property value="time1"/>','<s:property value="time2"/>',<s:property value="interval"/>);"
-										target="main">尾页</a>&nbsp;&nbsp;&nbsp;
-									<input type='button' class="exit"
-										onclick="jumpFlowPage('flowAction!listline',document.getElementById('page').value,<s:property value="sigid"/>,'<s:property value="time1"/>','<s:property value="time2"/>',<s:property value="interval"/>);"
-										value='转到' />
-									&nbsp; 当前页：
-									<input onpaste="return false" onkeypress="checkPage();"
-										id="page" type="text" name="page"
-										value="<s:property value="page"/>" size="2"
-										style="width: 25px; height: 20px; line-height: 18px; BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; FONT-SIZE: 13px; BORDER-LEFT: #cccccc 1px solid; COLOR: #000000; BORDER-BOTTOM: #cccccc 1px solid; FONT-FAMILY: 宋体; BACKGROUND-COLOR: #ffffff;" />
-									/共
-									<s:property value="pageCount" />
-									页
+									
 								</td>
 							</tr>
 						</table>

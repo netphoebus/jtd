@@ -44,14 +44,14 @@
         <property name="maxActive" value="${jdbc.maxActive}" />
         <property name="maxIdle" value="${jdbc.maxIdle}" />
 		<property name="minEvictableIdleTimeMillis" value="${jdbc.minEvictableIdleTimeMillis}"/> 
-		<!-- 
+		
 		<property name="validationQuery" value="${jdbc.validationQuery}" />
 		<property name="testWhileIdle" value="${jdbc.testWhileIdle}" />
 		<property name="timeBetweenEvictionRunsMillis" value="${jdbc.timeBetweenEvictionRunsMillis}" />
 		<property name="numTestsPerEvictionRun" value="${jdbc.numTestsPerEvictionRun}" />
 		<property name="removeAbandoned" value="${jdbc.removeAbandoned}" />
         <property name="removeAbandonedTimeout" value="${jdbc.removeAbandonedTimeout}" />
-		 -->
+		 
 	</bean>
 	
 	

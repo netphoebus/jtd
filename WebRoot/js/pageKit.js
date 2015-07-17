@@ -81,7 +81,7 @@ console.log("jumpFlowPage----------------");
 }
 
 //分页显示用户管理
-function jumpFlowLinePage(url,page,sigid,time1,time2,interval){
+function jumpFlowLinePage(url,page,sigid,time1,time2,interval,nextstarttime){
 console.log("jumpFlowPage----------------");
 	var page=page;
 	if(isNaN(page)){
@@ -89,7 +89,7 @@ console.log("jumpFlowPage----------------");
 		page=parseInt(page2);
 	}
 	
-	var url=url+'?page='+page+'&sigid='+sigid+'&time1='+time1+'&time2='+time2+'&interval='+interval;
+	var url=url+'?page='+page+'&sigid='+sigid+'&time1='+time1+'&time2='+time2+'&interval='+interval+'&nextstarttime='+nextstarttime;
 	url=encodeURI(url);
 	url=encodeURI(url);
 	window.location=url;
