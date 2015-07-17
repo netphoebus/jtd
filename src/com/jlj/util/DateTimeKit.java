@@ -19,6 +19,9 @@ public class DateTimeKit {
 		String dateString=sdf.format(date);
 		return dateString;
 	}
+	
+	
+	
 	/**
 	 * 根据日期获得随即字符串
 	 */
@@ -29,6 +32,13 @@ public class DateTimeKit {
 		Random random=new Random();
 		int rand=random.nextInt(1000);
 		dateString=dateString+rand;
+		return dateString;
+	}
+	
+	public static String getLocal_Time() {
+		Date date=new Date();
+		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm");
+		String dateString=sdf.format(date);
 		return dateString;
 	}
 	
