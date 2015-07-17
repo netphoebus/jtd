@@ -410,10 +410,14 @@ function doControl()
 	console.log(gtime);
 	console.log(rtime);
 	console.log(ytime);
+	var begintime = $("#begintime").val();
+	var begindate = $("#begindate").val();
+	console.log(begintime);
+	console.log(begindate);
 		$.ajax({   
             url:'doControl',//这里是你的action或者servlert的路径地址   
             type:'post', //数据发送方式  
-            data: {"dates":msg,"gtime":gtime,"rtime":rtime,"ytime":ytime},  
+            data: {"dates":msg,"gtime":gtime,"rtime":rtime,"ytime":ytime,"begintime":begintime,"begindate":begindate},  
             traditional: true,  
             error: function(msg)
             { //失败   

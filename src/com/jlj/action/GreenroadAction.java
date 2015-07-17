@@ -2,6 +2,7 @@ package com.jlj.action;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -41,6 +42,7 @@ import com.jlj.service.ISigService;
 import com.jlj.service.ISolutionService;
 import com.jlj.service.IStepService;
 import com.jlj.util.Commands;
+import com.jlj.util.DateTimeKit;
 import com.jlj.vo.ConflictVO;
 import com.jlj.vo.PharseVO;
 import com.jlj.vo.SigGreenRoadVO;
@@ -114,6 +116,7 @@ public class GreenroadAction extends ActionSupport implements RequestAware,
 	private String gtime;
 	private String rtime;
 	private String ytime;
+	private String begindate;
 	
 
 	/*
@@ -489,6 +492,16 @@ public class GreenroadAction extends ActionSupport implements RequestAware,
 		System.out.println(gtime);//绿灯持续时间
 		System.out.println(ytime);//黄灯持续时间
 		System.out.println(rtime);//红灯持续时间
+		System.out.println(begindate+" "+begintime);//开始执行特勤控制日期
+		System.out.println(DateTimeKit.getLocal_Time());
+		
+		String startdate = begindate+" "+begintime;
+		String nowdate = DateTimeKit.getLocal_Time();
+		
+		
+		
+		
+		System.out.println(startdate.equals(nowdate));
 		
 		setSpecifiedPharseVO(dates,gtime,ytime,rtime);
 		
@@ -1916,6 +1929,16 @@ public class GreenroadAction extends ActionSupport implements RequestAware,
 
 	public void setPharseVOS(List<PharseVO> pharseVOS) {
 		this.pharseVOS = pharseVOS;
+	}
+
+
+	public String getBegindate() {
+		return begindate;
+	}
+
+
+	public void setBegindate(String begindate) {
+		this.begindate = begindate;
 	}
 	
 	

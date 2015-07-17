@@ -85,7 +85,7 @@ var conflictVOs = <s:property value="conflictVOs" escape="false"/>;
 						</label>
 						<div class="vocation">
 							<span style="margin-right: 5px;"> 
-								<input type="time" name="begintime" class="dfinput" id="begintime" style="width: 165px;"  />
+								<input type="time" name="begintime" class="dfinput"  id="begintime" style="width: 165px;"  />
 									</span>
 						</div>
 					</div>
