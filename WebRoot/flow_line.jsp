@@ -334,30 +334,17 @@ $(document).ready(function(e) {
 									&nbsp;
 								</td>
 								<td height="34" colspan="6" align="center" bgcolor="#FFFFFF">
-									记录数：<s:property value="totalCount" />&nbsp;&nbsp;&nbsp;
+									
 									<a
-										href="javascript:jumpFlowLinePage('flowAction!listline',<s:property value="1"/>,<s:property value="sigid"/>,'<s:property value="time1"/>','<s:property value="time2"/>',<s:property value="interval"/>);"
+										href="javascript:jumpFlowLinePage('flowAction!listline',<s:property value="1"/>,<s:property value="sigid"/>,'<s:property value="time1"/>','<s:property value="time2"/>',<s:property value="interval"/>,'');"
 										target="main">首页</a>&nbsp;&nbsp;
 									<a
-										href="javascript:jumpFlowLinePage('flowAction!listline',<s:property value="page-1"/>,<s:property value="sigid"/>,'<s:property value="time1"/>','<s:property value="time2"/>',<s:property value="interval"/>);"
+										href="javascript:jumpFlowLinePage('flowAction!listline',<s:property value="page-1"/>,<s:property value="sigid"/>,'<s:property value="time1"/>','<s:property value="time2"/>',<s:property value="interval"/>,'<s:property value="nextstarttime"/>');"
 										target="main">上一页</a>&nbsp;&nbsp;&nbsp;
 									<a
-										href="javascript:jumpFlowLinePage('flowAction!listline',<s:property value="page+1"/>,<s:property value="sigid"/>,'<s:property value="time1"/>','<s:property value="time2"/>',<s:property value="interval"/>);"
+										href="javascript:jumpFlowLinePage('flowAction!listline',<s:property value="page+1"/>,<s:property value="sigid"/>,'<s:property value="time1"/>','<s:property value="time2"/>',<s:property value="interval"/>,'<s:property value="nextstarttime"/>');"
 										target="main">下一页</a>&nbsp;&nbsp;&nbsp;
-									<a
-										href="javascript:jumpFlowLinePage('flowAction!listline',<s:property value="pageCount"/>,<s:property value="sigid"/>,'<s:property value="time1"/>','<s:property value="time2"/>',<s:property value="interval"/>);"
-										target="main">尾页</a>&nbsp;&nbsp;&nbsp;
-									<input type='button' class="exit"
-										onclick="jumpFlowPage('flowAction!listline',document.getElementById('page').value,<s:property value="sigid"/>,'<s:property value="time1"/>','<s:property value="time2"/>',<s:property value="interval"/>);"
-										value='转到' />
-									&nbsp; 当前页：
-									<input onpaste="return false" onkeypress="checkPage();"
-										id="page" type="text" name="page"
-										value="<s:property value="page"/>" size="2"
-										style="width: 25px; height: 20px; line-height: 18px; BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; FONT-SIZE: 13px; BORDER-LEFT: #cccccc 1px solid; COLOR: #000000; BORDER-BOTTOM: #cccccc 1px solid; FONT-FAMILY: 宋体; BACKGROUND-COLOR: #ffffff;" />
-									/共
-									<s:property value="pageCount" />
-									页
+									
 								</td>
 							</tr>
 						</table>
