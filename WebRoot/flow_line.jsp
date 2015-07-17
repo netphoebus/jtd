@@ -40,6 +40,7 @@ $(document).ready(function(e) {
   	<script src="js/highcharts.js"></script>
 	<script src="js/modules/exporting.js"></script>
   <script>
+  
     var categorielist = new Array(20);
   	var dleftlist=new Array(20);
   	var dlinelist=new Array(20);
@@ -158,23 +159,7 @@ $(document).ready(function(e) {
   		brightlist[<s:property value="#index.count"/>-1]=brightlist[<s:property value="#index.count"/>-1]+avtage*12;
   	</s:iterator>
   	
-  	/*
-  	var categorielist = new Array('2015-06-26 09:24:15', '2015-06-26 09:25:15', '2015-06-26 09:26:15', '2015-06-26 09:27:15', '2015-06-26 09:28:15', '2015-06-26 09:29:15','2015-06-26 09:30:15', '2015-06-26 09:31:15', '2015-06-26 09:32:15', '2015-06-26 09:33:15', '2015-06-26 09:34:15', '2015-06-26 09:35:15'
-  	, '2015-06-26 09:36:15', '2015-06-26 09:37:15', '2015-06-26 09:38:15', '2015-06-26 09:39:15', '2015-06-26 09:40:15', '2015-06-26 09:41:15', '2015-06-26 09:42:15', '2015-06-26 09:43:15'
-  	);
-  	var dleftlist=new Array(7, 6, 9, 10, 18, 21, 25, 26, 23, 18, 13, 9, 9, 14, 18, 21, 25, 26, 23, 18);
-  	var dlinelist=new Array(7, 6, 9, 14, 18, 21, 25, 26, 23, 18, 13, 9, 9, 14, 18, 21, 25, 26, 23, 18);
-  	var drightlist=new Array(7, 6, 9, 13, 18, 21, 25, 26, 23, 18, 13, 9, 9, 14, 18, 21, 25, 26, 23, 18);
-  	var nleftlist=new Array(7, 6, 9, 11, 18, 21, 25, 26, 23, 18, 13, 9, 9, 14, 18, 21, 25, 26, 23, 18);
-  	var nlinelist=new Array(7, 6, 9, 18, 18, 21, 25, 26, 23, 18, 13, 9, 9, 14, 18, 21, 25, 26, 23, 18);
-  	var nrightlist=new Array(7, 6, 9, 4, 18, 21, 25, 26, 23, 18, 13, 9, 9, 14, 18, 21, 25, 26, 23, 18);
-  	var xleftlist=new Array(7, 6, 9, 5, 18, 21, 25, 26, 23, 18, 13, 9, 9, 14, 18, 21, 25, 26, 23, 18);
-  	var xlinelist=new Array(7, 6, 9, 7, 18, 21, 25, 26, 23, 18, 13, 9, 9, 14, 18, 21, 25, 26, 23, 18);
-  	var xrightlist=new Array(7, 6, 9, 8, 18, 21, 25, 26, 23, 18, 13, 9, 9, 14, 18, 21, 25, 26, 23, 18);
-  	var bleftlist=new Array(7, 6, 9, 9, 18, 21, 25, 26, 23, 18, 13, 9, 9, 14, 18, 21, 25, 26, 23, 18);
-  	var blinelist=new Array(7, 6, 9, 20, 18, 21, 25, 26, 23, 18, 13, 9, 9, 14, 18, 21, 25, 26, 23, 18);
-  	var brightlist=new Array(7, 6, 9, 23, 18, 21, 25, 26, 23, 18, 13, 9, 9, 14, 18, 21, 25, 26, 23, 18);
-    */
+    
     $(function () {
     $('#container').highcharts({
         title: {
