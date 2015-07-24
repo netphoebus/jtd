@@ -70,6 +70,13 @@ public class FlowServiceImp implements IFlowService  {
 	public Flow loadById(int id) {
 		return flowDao.loadById(id);
 	}
+	//加载一个id的对象
+	/* (non-Javadoc)
+	 * @see com.jlj.service.imp.IFlowService#loadById(int)
+	 */
+	public Flow getById(int id) {
+		return flowDao.getById(id);
+	}
 	//后台管理-页数获取
 	/* (non-Javadoc)
 	 * @see com.jlj.service.imp.IFlowService#getPageCount(int, java.lang.String, int)

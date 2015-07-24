@@ -153,7 +153,7 @@
 
 
 		<div class="loginbm png">
-			技术支持：477937204@qq.com
+			软件技术支持：477937204@qq.com
 		</div>
 
 

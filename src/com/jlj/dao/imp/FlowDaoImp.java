@@ -190,6 +190,14 @@ public class FlowDaoImp implements IFlowDao {
 		return (Flow) this.hibernateTemplate.load(Flow.class, id);
 	}
 	
+	//根据id查询一条记录
+	/* (non-Javadoc)
+	 * @see com.jlj.dao.imp.IFlowDao#loadById(int)
+	 */
+	public Flow getById(int id) {
+		return (Flow) this.hibernateTemplate.get(Flow.class, id);
+	}
+	
 	//根据hql语句、条件、值来查询一条记录
 	/* (non-Javadoc)
 	 * @see com.jlj.dao.imp.IFlowDao#queryByNamedParam(java.lang.String, java.lang.String[], java.lang.Object[])

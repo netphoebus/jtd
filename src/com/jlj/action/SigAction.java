@@ -149,9 +149,9 @@ public class SigAction extends ActionSupport implements RequestAware,
 	}
 	
 	public String toTraffic() {
-		System.out.println(mkid);
+		//System.out.println(mkid);
 		sig = sigService.loadByMkid(mkid);
-		System.out.println("sig================="+sig);
+		//System.out.println("sig================="+sig);
 		if (sig != null) {
 			
 			System.out.println(sig.getId());
@@ -182,9 +182,9 @@ public class SigAction extends ActionSupport implements RequestAware,
 	
 	//获得绿冲突对象
 	private void setGreenConflict(int sigid) {
-		System.out.println("sigid:"+sigid);
+		//System.out.println("sigid:"+sigid);
 		greens = greenService.loadBySid(sigid);
-		System.out.println("greens:"+greens);
+		//System.out.println("greens:"+greens);
 		if(greens!=null&&greens.size()==16)
 		{
 			conflictVO = new ConflictVO();
@@ -419,197 +419,202 @@ public class SigAction extends ActionSupport implements RequestAware,
 			int deng = Integer.parseInt(solus[i].substring(solus[i].indexOf(":")+1));
 			System.out.println("stepid="+stepid+",fangxiang="+roadtype+",dengtype="+dengtype+",deng="+deng);
 			
-			switch (roadtype) {
-			case 0:
-				if(dengtype == 0){
-					if(deng ==1){
-						send_byte[10] = (byte) (send_byte[10]&0x20);
-						send_byte[19] =  (byte) (send_byte[10]&0x40);
-						
-					}else if(deng == 2){
-						send_byte[10] = (byte) (send_byte[10]&0x40);
-					}else if(deng == 3){
-						send_byte[10] = (byte) (send_byte[10]&0x80);
+				
+				switch (roadtype) {
+				case 0:
+					if(dengtype == 0){
+						if(deng ==1){
+							send_byte[10] = (byte) (send_byte[10]|0x20);
+							send_byte[19] =  (byte) (send_byte[19]|0x40);
+							
+						}else if(deng == 2){
+							send_byte[10] = (byte) (send_byte[10]|0x40);
+						}else if(deng == 3){
+							send_byte[10] = (byte) (send_byte[10]|0x80);
+						}
+						send_byte[28] =  (byte) (send_byte[28]|0x80);
+					}else if(dengtype == 1){
+						if(deng ==1){
+							send_byte[10] = (byte) (send_byte[10]|0x04);
+							send_byte[19] =  (byte) (send_byte[19]|0x08);
+							
+						}else if(deng == 2){
+							send_byte[10] = (byte) (send_byte[10]|0x08);
+						}else if(deng == 3){
+							send_byte[10] = (byte) (send_byte[10]|0x10);
+						}
+						send_byte[28] =  (byte) (send_byte[28]|0x10);
+					}else if(dengtype == 2){
+						if(deng ==1){
+							send_byte[11] = (byte) (send_byte[11]|0x20);
+							send_byte[20] =  (byte) (send_byte[20]|0x40);
+							
+						}else if(deng == 2){
+							send_byte[11] = (byte) (send_byte[11]|0x40);
+						}else if(deng == 3){
+							send_byte[11] = (byte) (send_byte[11]|0x80);
+						}
+						send_byte[29] =  (byte) (send_byte[29]|0x80);
+					}else if(dengtype == 3){
+						if(deng ==1){
+							send_byte[11] = (byte) (send_byte[11]|0x0A);
+							send_byte[20] =  (byte) (send_byte[20]|0x14);
+							
+						}else if(deng == 2){
+						}else if(deng == 3){
+							send_byte[11] = (byte) (send_byte[11]|0x14);
+						}
+						send_byte[29] =  (byte) (send_byte[29]|0x14);
 					}
-					send_byte[28] =  (byte) (send_byte[10]&0x80);
-				}else if(dengtype == 1){
-					if(deng ==1){
-						send_byte[10] = (byte) (send_byte[10]&0x04);
-						send_byte[19] =  (byte) (send_byte[10]&0x08);
-						
-					}else if(deng == 2){
-						send_byte[10] = (byte) (send_byte[10]&0x08);
-					}else if(deng == 3){
-						send_byte[10] = (byte) (send_byte[10]&0x10);
+					break;
+				case 1:
+					if(dengtype == 0){
+						if(deng ==1){
+							send_byte[12] = (byte) (send_byte[12]|0x20);
+							send_byte[21] =  (byte) (send_byte[21]|0x40);
+						}else if(deng == 2){
+							send_byte[12] = (byte) (send_byte[12]|0x40);
+						}else if(deng == 3){
+							send_byte[12] = (byte) (send_byte[12]|0x80);
+						}
+						send_byte[30] =  (byte) (send_byte[30]|0x80);
+					}else if(dengtype == 1){
+						if(deng ==1){
+							send_byte[12] = (byte) (send_byte[12]|0x04);
+							send_byte[21] =  (byte) (send_byte[21]|0x08);
+							
+						}else if(deng == 2){
+							send_byte[12] = (byte) (send_byte[12]|0x08);
+						}else if(deng == 3){
+							send_byte[12] = (byte) (send_byte[12]|0x10);
+						}
+						send_byte[30] =  (byte) (send_byte[30]|0x10);
+					}else if(dengtype == 2){
+						if(deng ==1){
+							send_byte[13] = (byte) (send_byte[13]|0x20);
+							send_byte[22] =  (byte) (send_byte[22]|0x40);
+							
+						}else if(deng == 2){
+							send_byte[13] = (byte) (send_byte[13]|0x40);
+						}else if(deng == 3){
+							send_byte[13] = (byte) (send_byte[13]|0x80);
+						}
+						send_byte[31] =  (byte) (send_byte[31]|0x80);
+					}else if(dengtype == 3){
+						if(deng ==1){
+							send_byte[13] = (byte) (send_byte[13]|0x0A);
+							send_byte[22] =  (byte) (send_byte[22]|0x14);
+							
+						}else if(deng == 2){
+						}else if(deng == 3){
+							send_byte[13] = (byte) (send_byte[13]|0x14);
+						}
+						send_byte[31] =  (byte) (send_byte[31]|0x14);
 					}
-					send_byte[28] =  (byte) (send_byte[10]&0x10);
-				}else if(dengtype == 2){
-					if(deng ==1){
-						send_byte[11] = (byte) (send_byte[10]&0x20);
-						send_byte[20] =  (byte) (send_byte[10]&0x40);
-						
-					}else if(deng == 2){
-						send_byte[11] = (byte) (send_byte[10]&0x40);
-					}else if(deng == 3){
-						send_byte[11] = (byte) (send_byte[10]&0x80);
+					break;
+				case 2:
+					if(dengtype == 0){
+						if(deng ==1){
+							send_byte[14] = (byte) (send_byte[14]|0x20);
+							send_byte[23] =  (byte) (send_byte[23]|0x40);
+						}else if(deng == 2){
+							send_byte[14] = (byte) (send_byte[14]|0x40);
+						}else if(deng == 3){
+							send_byte[14] = (byte) (send_byte[14]|0x80);
+						}
+						send_byte[32] =  (byte) (send_byte[32]|0x80);
+					}else if(dengtype == 1){
+						if(deng ==1){
+							send_byte[14] = (byte) (send_byte[14]|0x04);
+							send_byte[23] =  (byte) (send_byte[23]|0x08);
+							
+						}else if(deng == 2){
+							send_byte[14] = (byte) (send_byte[14]|0x08);
+						}else if(deng == 3){
+							send_byte[14] = (byte) (send_byte[14]|0x10);
+						}
+						send_byte[32] =  (byte) (send_byte[32]|0x10);
+					}else if(dengtype == 2){
+						if(deng ==1){
+							send_byte[15] = (byte) (send_byte[15]|0x20);
+							send_byte[24] =  (byte) (send_byte[24]|0x40);
+							
+						}else if(deng == 2){
+							send_byte[15] = (byte) (send_byte[15]|0x40);
+						}else if(deng == 3){
+							send_byte[15] = (byte) (send_byte[15]|0x80);
+						}
+						send_byte[33] =  (byte) (send_byte[33]|0x80);
+					}else if(dengtype == 3){
+						if(deng ==1){
+							send_byte[15] = (byte) (send_byte[15]|0x0A);
+							send_byte[24] =  (byte) (send_byte[24]|0x14);
+							
+						}else if(deng == 2){
+						}else if(deng == 3){
+							send_byte[15] = (byte) (send_byte[15]|0x14);
+						}
+						send_byte[33] =  (byte) (send_byte[33]|0x14);
 					}
-					send_byte[29] =  (byte) (send_byte[10]&0x80);
-				}else if(dengtype == 3){
-					if(deng ==1){
-						send_byte[11] = (byte) (send_byte[10]&0x0A);
-						send_byte[20] =  (byte) (send_byte[10]&0x14);
-						
-					}else if(deng == 2){
-					}else if(deng == 3){
-						send_byte[11] = (byte) (send_byte[10]&0x14);
+					break;
+				case 3:
+					if(dengtype == 0){
+						if(deng ==1){
+							send_byte[16] = (byte) (send_byte[16]|0x20);
+							send_byte[25] =  (byte) (send_byte[25]|0x40);
+						}else if(deng == 2){
+							send_byte[16] = (byte) (send_byte[16]|0x40);
+						}else if(deng == 3){
+							send_byte[16] = (byte) (send_byte[16]|0x80);
+						}
+						send_byte[34] =  (byte) (send_byte[34]|0x80);
+					}else if(dengtype == 1){
+						if(deng ==1){
+							send_byte[16] = (byte) (send_byte[16]|0x04);
+							send_byte[25] =  (byte) (send_byte[25]|0x08);
+							
+						}else if(deng == 2){
+							send_byte[16] = (byte) (send_byte[16]|0x08);
+						}else if(deng == 3){
+							send_byte[16] = (byte) (send_byte[16]|0x10);
+						}
+						send_byte[34] =  (byte) (send_byte[34]|0x10);
+					}else if(dengtype == 2){
+						if(deng ==1){
+							send_byte[17] = (byte) (send_byte[17]|0x20);
+							send_byte[26] =  (byte) (send_byte[26]|0x40);
+							
+						}else if(deng == 2){
+							send_byte[17] = (byte) (send_byte[17]|0x40);
+						}else if(deng == 3){
+							send_byte[17] = (byte) (send_byte[17]|0x80);
+						}
+						send_byte[35] =  (byte) (send_byte[35]|0x80);
+					}else if(dengtype == 3){
+						if(deng ==1){
+							send_byte[17] = (byte) (send_byte[17]|0x0A);
+							send_byte[26] =  (byte) (send_byte[26]|0x14);
+							
+						}else if(deng == 2){
+						}else if(deng == 3){
+							send_byte[17] = (byte) (send_byte[17]|0x14);
+						}
+						send_byte[35] =  (byte) (send_byte[35]|0x14);
 					}
-					send_byte[29] =  (byte) (send_byte[10]&0x14);
+					break;
+				default:
+					break;
 				}
-				break;
-			case 1:
-				if(dengtype == 0){
-					if(deng ==1){
-						send_byte[12] = (byte) (send_byte[10]&0x20);
-						send_byte[21] =  (byte) (send_byte[10]&0x40);
-					}else if(deng == 2){
-						send_byte[12] = (byte) (send_byte[10]&0x40);
-					}else if(deng == 3){
-						send_byte[12] = (byte) (send_byte[10]&0x80);
-					}
-					send_byte[30] =  (byte) (send_byte[10]&0x80);
-				}else if(dengtype == 1){
-					if(deng ==1){
-						send_byte[12] = (byte) (send_byte[10]&0x04);
-						send_byte[21] =  (byte) (send_byte[10]&0x08);
-						
-					}else if(deng == 2){
-						send_byte[12] = (byte) (send_byte[10]&0x08);
-					}else if(deng == 3){
-						send_byte[12] = (byte) (send_byte[10]&0x10);
-					}
-					send_byte[30] =  (byte) (send_byte[10]&0x10);
-				}else if(dengtype == 2){
-					if(deng ==1){
-						send_byte[13] = (byte) (send_byte[10]&0x20);
-						send_byte[22] =  (byte) (send_byte[10]&0x40);
-						
-					}else if(deng == 2){
-						send_byte[13] = (byte) (send_byte[10]&0x40);
-					}else if(deng == 3){
-						send_byte[13] = (byte) (send_byte[10]&0x80);
-					}
-					send_byte[31] =  (byte) (send_byte[10]&0x80);
-				}else if(dengtype == 3){
-					if(deng ==1){
-						send_byte[13] = (byte) (send_byte[10]&0x0A);
-						send_byte[22] =  (byte) (send_byte[10]&0x14);
-						
-					}else if(deng == 2){
-					}else if(deng == 3){
-						send_byte[13] = (byte) (send_byte[10]&0x14);
-					}
-					send_byte[31] =  (byte) (send_byte[10]&0x14);
-				}
-				break;
-			case 2:
-				if(dengtype == 0){
-					if(deng ==1){
-						send_byte[14] = (byte) (send_byte[10]&0x20);
-						send_byte[23] =  (byte) (send_byte[10]&0x40);
-					}else if(deng == 2){
-						send_byte[14] = (byte) (send_byte[10]&0x40);
-					}else if(deng == 3){
-						send_byte[14] = (byte) (send_byte[10]&0x80);
-					}
-					send_byte[32] =  (byte) (send_byte[10]&0x80);
-				}else if(dengtype == 1){
-					if(deng ==1){
-						send_byte[14] = (byte) (send_byte[10]&0x04);
-						send_byte[23] =  (byte) (send_byte[10]&0x08);
-						
-					}else if(deng == 2){
-						send_byte[14] = (byte) (send_byte[10]&0x08);
-					}else if(deng == 3){
-						send_byte[14] = (byte) (send_byte[10]&0x10);
-					}
-					send_byte[32] =  (byte) (send_byte[10]&0x10);
-				}else if(dengtype == 2){
-					if(deng ==1){
-						send_byte[15] = (byte) (send_byte[10]&0x20);
-						send_byte[24] =  (byte) (send_byte[10]&0x40);
-						
-					}else if(deng == 2){
-						send_byte[15] = (byte) (send_byte[10]&0x40);
-					}else if(deng == 3){
-						send_byte[15] = (byte) (send_byte[10]&0x80);
-					}
-					send_byte[33] =  (byte) (send_byte[10]&0x80);
-				}else if(dengtype == 3){
-					if(deng ==1){
-						send_byte[15] = (byte) (send_byte[10]&0x0A);
-						send_byte[24] =  (byte) (send_byte[10]&0x14);
-						
-					}else if(deng == 2){
-					}else if(deng == 3){
-						send_byte[15] = (byte) (send_byte[10]&0x14);
-					}
-					send_byte[33] =  (byte) (send_byte[10]&0x14);
-				}
-				break;
-			case 3:
-				if(dengtype == 0){
-					if(deng ==1){
-						send_byte[16] = (byte) (send_byte[10]&0x20);
-						send_byte[25] =  (byte) (send_byte[10]&0x40);
-					}else if(deng == 2){
-						send_byte[16] = (byte) (send_byte[10]&0x40);
-					}else if(deng == 3){
-						send_byte[16] = (byte) (send_byte[10]&0x80);
-					}
-					send_byte[34] =  (byte) (send_byte[10]&0x80);
-				}else if(dengtype == 1){
-					if(deng ==1){
-						send_byte[16] = (byte) (send_byte[10]&0x04);
-						send_byte[25] =  (byte) (send_byte[10]&0x08);
-						
-					}else if(deng == 2){
-						send_byte[16] = (byte) (send_byte[10]&0x08);
-					}else if(deng == 3){
-						send_byte[16] = (byte) (send_byte[10]&0x10);
-					}
-					send_byte[34] =  (byte) (send_byte[10]&0x10);
-				}else if(dengtype == 2){
-					if(deng ==1){
-						send_byte[17] = (byte) (send_byte[10]&0x20);
-						send_byte[26] =  (byte) (send_byte[10]&0x40);
-						
-					}else if(deng == 2){
-						send_byte[17] = (byte) (send_byte[10]&0x40);
-					}else if(deng == 3){
-						send_byte[17] = (byte) (send_byte[10]&0x80);
-					}
-					send_byte[35] =  (byte) (send_byte[10]&0x80);
-				}else if(dengtype == 3){
-					if(deng ==1){
-						send_byte[17] = (byte) (send_byte[10]&0x0A);
-						send_byte[26] =  (byte) (send_byte[10]&0x14);
-						
-					}else if(deng == 2){
-					}else if(deng == 3){
-						send_byte[17] = (byte) (send_byte[10]&0x14);
-					}
-					send_byte[35] =  (byte) (send_byte[10]&0x14);
-				}
-				break;
-			default:
-				break;
-			}
-		
 			
 		}
-		send_byte[18] = (byte) gltime;
-		send_byte[27] = (byte) yltime;
-		send_byte[36] = (byte) rltime;
+		
+		
+		
+	
+		
+		send_byte[18] = (byte) (gltime&0xff);
+		send_byte[27] = (byte) (yltime&0xff);
+		send_byte[36] = (byte) (rltime&0xff);
 		
 		 int k = 0;
 		 for( int i1 = 4; i1 < send_byte.length-2; i1++){
@@ -622,16 +627,15 @@ public class SigAction extends ActionSupport implements RequestAware,
 	    	   send_byte[send_byte.length-i1-1]  = (byte) (k >>> (i1 * 8));  
 	       }  
 		
-	   	System.out.println("=======================下发升级命令========================================");
+	   	System.out.println("=======================下发按指定相位运行命令========================================");
 		
 		for (int i3 = 0; i3 < send_byte.length; i3++) {
-			System.out.print(send_byte[i3]);
+			System.out.print(send_byte[i3]+" ");
 		}
 		System.out.println("");
-		System.out.println("========================下发升级命令=======================================");
+		System.out.println("========================下发按指定相位运行命令=======================================");
 		
 		currrenSession.write(send_byte);
-		
 		
 		return NONE;
 	}

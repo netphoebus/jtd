@@ -59,6 +59,8 @@ public interface IFlowService {
 	public abstract List<Flow> queryConditionList2(int sigid, String time1,
 			String time2);
 
+	public abstract Flow getById(int flow_returnid);
+
 
 
 }

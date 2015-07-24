@@ -67,4 +67,6 @@ public interface IFlowDao {
 
 	public abstract Flow loadByMkid(String queryString);
 
+	public abstract Flow getById(int id);
+
 }

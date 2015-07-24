@@ -501,7 +501,7 @@ function checkMarker()
 	}
 	if(nameError)
 	{
-		alert("信号机名称已存在，请重新舒服");
+		alert("信号机名称已存在，请重新输入");
 		return false;
 	}
 }

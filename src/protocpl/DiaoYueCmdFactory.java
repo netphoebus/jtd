@@ -377,7 +377,7 @@ public class DiaoYueCmdFactory extends CmdFactoryBase implements ICmdParser{
 	  			//更新记录
 	  			String flowziduan="";
 	  			//获取数据库中该条记录中已存在的值
-	  			Flow dbflowobj = flowService.loadById(flow_returnid);
+	  			Flow dbflowobj = flowService.getById(flow_returnid);
 	  			int dbflow = 0;
 	  			if(dbflowobj!=null){
 		  			switch (whichroad) {

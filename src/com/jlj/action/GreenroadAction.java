@@ -2,12 +2,15 @@ package com.jlj.action;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.text.DateFormat;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -52,7 +55,7 @@ import com.opensymphony.xwork2.ActionSupport;
 @Component("greenroadAction")
 @Scope("prototype")
 public class GreenroadAction extends ActionSupport implements RequestAware,
-		SessionAware, ServletResponseAware, ServletRequestAware {
+		SessionAware, ServletResponseAware, ServletRequestAware,Runnable {
 
 	private static final long serialVersionUID = 1L;
 	Map<String, Object> request;
@@ -494,267 +497,311 @@ public class GreenroadAction extends ActionSupport implements RequestAware,
 		System.out.println(rtime);//红灯持续时间
 		System.out.println(begindate+" "+begintime);//开始执行特勤控制日期
 		System.out.println(DateTimeKit.getLocal_Time());
-		
-		String startdate = begindate+" "+begintime;
-		String nowdate = DateTimeKit.getLocal_Time();
-		
-		
-		
-		
-		System.out.println(startdate.equals(nowdate));
-		
-		setSpecifiedPharseVO(dates,gtime,ytime,rtime);
-		
-		for (int j = 0;j < pharseVOS.size(); j++) {
-			
-			IoSession currrenSession=this.getCurrrenSession(pharseVOS.get(j).getNumber());
-			byte send_byte[] = new byte[27+8+4];
-			send_byte[0] = (byte) 0xff;
-			send_byte[1] = (byte) 0xff;
-			send_byte[2] = (byte) 0xff;
-			send_byte[3] = (byte) 0xff;
-			send_byte[4] = (byte) 0x01;
-			send_byte[5] = (byte) 0xF0;
-			send_byte[6] = (byte) 0xA2;
-			send_byte[7] = (byte) 0x06;
-			send_byte[8] = (byte) 0x00;
-			send_byte[9] = (byte) 0x23;
-			String[] solus = pharseVOS.get(j).getDates().split(",");
-			for (int i = 0; i < solus.length; i++) {
-				int roadtype = Integer.parseInt(solus[i].substring(solus[i].indexOf("_")+1, solus[i].lastIndexOf("_")));
-				int dengtype = Integer.parseInt(solus[i].substring(solus[i].lastIndexOf("_")+1, solus[i].indexOf(":")));
-				String dengtypestr="";
-				switch (dengtype) {
-				case 0:
-					dengtypestr = "leftcolor";
-					break;
-				case 1:
-					dengtypestr = "linecolor";
-					break;
-				case 2:
-					dengtypestr = "rightcolor";
-					break;
-				case 3:
-					dengtypestr = "rxcolor"; 
-				default:
-					break;
-				}
-				int deng = Integer.parseInt(solus[i].substring(solus[i].indexOf(":")+1));
-				
-				switch (roadtype) {
-				case 0:
-					if(dengtype == 0){
-						if(deng ==1){
-							send_byte[10] = (byte) (send_byte[10]&0x20);
-							send_byte[19] =  (byte) (send_byte[10]&0x40);
-							
-						}else if(deng == 2){
-							send_byte[10] = (byte) (send_byte[10]&0x40);
-						}else if(deng == 3){
-							send_byte[10] = (byte) (send_byte[10]&0x80);
-						}
-						send_byte[28] =  (byte) (send_byte[10]&0x80);
-					}else if(dengtype == 1){
-						if(deng ==1){
-							send_byte[10] = (byte) (send_byte[10]&0x04);
-							send_byte[19] =  (byte) (send_byte[10]&0x08);
-							
-						}else if(deng == 2){
-							send_byte[10] = (byte) (send_byte[10]&0x08);
-						}else if(deng == 3){
-							send_byte[10] = (byte) (send_byte[10]&0x10);
-						}
-						send_byte[28] =  (byte) (send_byte[10]&0x10);
-					}else if(dengtype == 2){
-						if(deng ==1){
-							send_byte[11] = (byte) (send_byte[10]&0x20);
-							send_byte[20] =  (byte) (send_byte[10]&0x40);
-							
-						}else if(deng == 2){
-							send_byte[11] = (byte) (send_byte[10]&0x40);
-						}else if(deng == 3){
-							send_byte[11] = (byte) (send_byte[10]&0x80);
-						}
-						send_byte[29] =  (byte) (send_byte[10]&0x80);
-					}else if(dengtype == 3){
-						if(deng ==1){
-							send_byte[11] = (byte) (send_byte[10]&0x0A);
-							send_byte[20] =  (byte) (send_byte[10]&0x14);
-							
-						}else if(deng == 2){
-						}else if(deng == 3){
-							send_byte[11] = (byte) (send_byte[10]&0x14);
-						}
-						send_byte[29] =  (byte) (send_byte[10]&0x14);
-					}
-					break;
-				case 1:
-					if(dengtype == 0){
-						if(deng ==1){
-							send_byte[12] = (byte) (send_byte[10]&0x20);
-							send_byte[21] =  (byte) (send_byte[10]&0x40);
-						}else if(deng == 2){
-							send_byte[12] = (byte) (send_byte[10]&0x40);
-						}else if(deng == 3){
-							send_byte[12] = (byte) (send_byte[10]&0x80);
-						}
-						send_byte[30] =  (byte) (send_byte[10]&0x80);
-					}else if(dengtype == 1){
-						if(deng ==1){
-							send_byte[12] = (byte) (send_byte[10]&0x04);
-							send_byte[21] =  (byte) (send_byte[10]&0x08);
-							
-						}else if(deng == 2){
-							send_byte[12] = (byte) (send_byte[10]&0x08);
-						}else if(deng == 3){
-							send_byte[12] = (byte) (send_byte[10]&0x10);
-						}
-						send_byte[30] =  (byte) (send_byte[10]&0x10);
-					}else if(dengtype == 2){
-						if(deng ==1){
-							send_byte[13] = (byte) (send_byte[10]&0x20);
-							send_byte[22] =  (byte) (send_byte[10]&0x40);
-							
-						}else if(deng == 2){
-							send_byte[13] = (byte) (send_byte[10]&0x40);
-						}else if(deng == 3){
-							send_byte[13] = (byte) (send_byte[10]&0x80);
-						}
-						send_byte[31] =  (byte) (send_byte[10]&0x80);
-					}else if(dengtype == 3){
-						if(deng ==1){
-							send_byte[13] = (byte) (send_byte[10]&0x0A);
-							send_byte[22] =  (byte) (send_byte[10]&0x14);
-							
-						}else if(deng == 2){
-						}else if(deng == 3){
-							send_byte[13] = (byte) (send_byte[10]&0x14);
-						}
-						send_byte[31] =  (byte) (send_byte[10]&0x14);
-					}
-					break;
-				case 2:
-					if(dengtype == 0){
-						if(deng ==1){
-							send_byte[14] = (byte) (send_byte[10]&0x20);
-							send_byte[23] =  (byte) (send_byte[10]&0x40);
-						}else if(deng == 2){
-							send_byte[14] = (byte) (send_byte[10]&0x40);
-						}else if(deng == 3){
-							send_byte[14] = (byte) (send_byte[10]&0x80);
-						}
-						send_byte[32] =  (byte) (send_byte[10]&0x80);
-					}else if(dengtype == 1){
-						if(deng ==1){
-							send_byte[14] = (byte) (send_byte[10]&0x04);
-							send_byte[23] =  (byte) (send_byte[10]&0x08);
-							
-						}else if(deng == 2){
-							send_byte[14] = (byte) (send_byte[10]&0x08);
-						}else if(deng == 3){
-							send_byte[14] = (byte) (send_byte[10]&0x10);
-						}
-						send_byte[32] =  (byte) (send_byte[10]&0x10);
-					}else if(dengtype == 2){
-						if(deng ==1){
-							send_byte[15] = (byte) (send_byte[10]&0x20);
-							send_byte[24] =  (byte) (send_byte[10]&0x40);
-							
-						}else if(deng == 2){
-							send_byte[15] = (byte) (send_byte[10]&0x40);
-						}else if(deng == 3){
-							send_byte[15] = (byte) (send_byte[10]&0x80);
-						}
-						send_byte[33] =  (byte) (send_byte[10]&0x80);
-					}else if(dengtype == 3){
-						if(deng ==1){
-							send_byte[15] = (byte) (send_byte[10]&0x0A);
-							send_byte[24] =  (byte) (send_byte[10]&0x14);
-							
-						}else if(deng == 2){
-						}else if(deng == 3){
-							send_byte[15] = (byte) (send_byte[10]&0x14);
-						}
-						send_byte[33] =  (byte) (send_byte[10]&0x14);
-					}
-					break;
-				case 3:
-					if(dengtype == 0){
-						if(deng ==1){
-							send_byte[16] = (byte) (send_byte[10]&0x20);
-							send_byte[25] =  (byte) (send_byte[10]&0x40);
-						}else if(deng == 2){
-							send_byte[16] = (byte) (send_byte[10]&0x40);
-						}else if(deng == 3){
-							send_byte[16] = (byte) (send_byte[10]&0x80);
-						}
-						send_byte[34] =  (byte) (send_byte[10]&0x80);
-					}else if(dengtype == 1){
-						if(deng ==1){
-							send_byte[16] = (byte) (send_byte[10]&0x04);
-							send_byte[25] =  (byte) (send_byte[10]&0x08);
-							
-						}else if(deng == 2){
-							send_byte[16] = (byte) (send_byte[10]&0x08);
-						}else if(deng == 3){
-							send_byte[16] = (byte) (send_byte[10]&0x10);
-						}
-						send_byte[34] =  (byte) (send_byte[10]&0x10);
-					}else if(dengtype == 2){
-						if(deng ==1){
-							send_byte[17] = (byte) (send_byte[10]&0x20);
-							send_byte[26] =  (byte) (send_byte[10]&0x40);
-							
-						}else if(deng == 2){
-							send_byte[17] = (byte) (send_byte[10]&0x40);
-						}else if(deng == 3){
-							send_byte[17] = (byte) (send_byte[10]&0x80);
-						}
-						send_byte[35] =  (byte) (send_byte[10]&0x80);
-					}else if(dengtype == 3){
-						if(deng ==1){
-							send_byte[17] = (byte) (send_byte[10]&0x0A);
-							send_byte[26] =  (byte) (send_byte[10]&0x14);
-							
-						}else if(deng == 2){
-						}else if(deng == 3){
-							send_byte[17] = (byte) (send_byte[10]&0x14);
-						}
-						send_byte[35] =  (byte) (send_byte[10]&0x14);
-					}
-					break;
-				default:
-					break;
-				}
-			
-				
-			}
-			send_byte[18] = (byte) pharseVOS.get(j).getGltime();
-			send_byte[27] = (byte) pharseVOS.get(j).getYltime();
-			send_byte[36] = (byte) pharseVOS.get(j).getRltime();
-			
-			 int k = 0;
-			 for( int i1 = 4; i1 < send_byte.length-2; i1++){
-				 //System.out.println((msendDatas[i]&0xFF)+"对应"+msendDatas[i]);
-				//System.out.println();
-			  k += send_byte[i1]&0xFF;
-			 }
-			 
-		       for (int i1 = 0; i1 < 2; i1++) {  
-		    	   send_byte[send_byte.length-i1-1]  = (byte) (k >>> (i1 * 8));  
-		       }  
-			
-		   	System.out.println("=======================下发升级命令========================================");
-			
-			for (int i3 = 0; i3 < send_byte.length; i3++) {
-				System.out.print(send_byte[i3]);
-			}
-			System.out.println("");
-			System.out.println("========================下发升级命令=======================================");
-			
-			currrenSession.write(send_byte);
-			
+		String startdate = "";
+		if(begindate.equals("")||begintime.equals(""))
+		{
+			 startdate = DateTimeKit.getLocal_Time();
+		}else
+		{
+			 startdate = begindate+" "+begintime;
 		}
+		
+		
+		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm");  
+	    Date start=sdf.parse(startdate); 
+	    setSpecifiedPharseVO(dates,gtime,ytime,rtime);
+		Timer timer = new Timer("tq",true);  
+        timer.schedule(new TimerTask() {  
+  
+            @Override  
+            public void run() {  
+            	
+            	for (int j = 0;j < pharseVOS.size(); j++) {
+        			
+        			IoSession currrenSession=this.getCurrrenSession(pharseVOS.get(j).getNumber());
+        			byte send_byte[] = new byte[27+8+4];
+        			send_byte[0] = (byte) 0xff;
+        			send_byte[1] = (byte) 0xff;
+        			send_byte[2] = (byte) 0xff;
+        			send_byte[3] = (byte) 0xff;
+        			send_byte[4] = (byte) 0x01;
+        			send_byte[5] = (byte) 0xF0;
+        			send_byte[6] = (byte) 0xA2;
+        			send_byte[7] = (byte) 0x06;
+        			send_byte[8] = (byte) 0x00;
+        			send_byte[9] = (byte) 0x23;
+        			String[] solus = pharseVOS.get(j).getDates().split(",");
+        			
+        			
+        			for (int i = 0; i < solus.length; i++) {
+        				int stepid= Integer.parseInt(solus[i].substring(0, solus[i].indexOf("_")));
+        				int roadtype = Integer.parseInt(solus[i].substring(solus[i].indexOf("_")+1, solus[i].lastIndexOf("_")));
+        				int dengtype = Integer.parseInt(solus[i].substring(solus[i].lastIndexOf("_")+1, solus[i].indexOf(":")));
+        				String dengtypestr="";
+        				switch (dengtype) {
+        				case 0:
+        					dengtypestr = "leftcolor";
+        					break;
+        				case 1:
+        					dengtypestr = "linecolor";
+        					break;
+        				case 2:
+        					dengtypestr = "rightcolor";
+        					break;
+        				case 3:
+        					dengtypestr = "rxcolor";
+        					break;
+        				default:
+        					break;
+        				}
+        				int deng = Integer.parseInt(solus[i].substring(solus[i].indexOf(":")+1));
+        				System.out.println("stepid="+stepid+",fangxiang="+roadtype+",dengtype="+dengtype+",deng="+deng);
+        				
+        					
+        					switch (roadtype) {
+        					case 0:
+        						if(dengtype == 0){
+        							if(deng ==1){
+        								send_byte[10] = (byte) (send_byte[10]|0x20);
+        								send_byte[19] =  (byte) (send_byte[19]|0x40);
+        								
+        							}else if(deng == 2){
+        								send_byte[10] = (byte) (send_byte[10]|0x40);
+        							}else if(deng == 3){
+        								send_byte[10] = (byte) (send_byte[10]|0x80);
+        							}
+        							send_byte[28] =  (byte) (send_byte[28]|0x80);
+        						}else if(dengtype == 1){
+        							if(deng ==1){
+        								send_byte[10] = (byte) (send_byte[10]|0x04);
+        								send_byte[19] =  (byte) (send_byte[19]|0x08);
+        								
+        							}else if(deng == 2){
+        								send_byte[10] = (byte) (send_byte[10]|0x08);
+        							}else if(deng == 3){
+        								send_byte[10] = (byte) (send_byte[10]|0x10);
+        							}
+        							send_byte[28] =  (byte) (send_byte[28]|0x10);
+        						}else if(dengtype == 2){
+        							if(deng ==1){
+        								send_byte[11] = (byte) (send_byte[11]|0x20);
+        								send_byte[20] =  (byte) (send_byte[20]|0x40);
+        								
+        							}else if(deng == 2){
+        								send_byte[11] = (byte) (send_byte[11]|0x40);
+        							}else if(deng == 3){
+        								send_byte[11] = (byte) (send_byte[11]|0x80);
+        							}
+        							send_byte[29] =  (byte) (send_byte[29]|0x80);
+        						}else if(dengtype == 3){
+        							if(deng ==1){
+        								send_byte[11] = (byte) (send_byte[11]|0x0A);
+        								send_byte[20] =  (byte) (send_byte[20]|0x14);
+        								
+        							}else if(deng == 2){
+        							}else if(deng == 3){
+        								send_byte[11] = (byte) (send_byte[11]|0x14);
+        							}
+        							send_byte[29] =  (byte) (send_byte[29]|0x14);
+        						}
+        						break;
+        					case 1:
+        						if(dengtype == 0){
+        							if(deng ==1){
+        								send_byte[12] = (byte) (send_byte[12]|0x20);
+        								send_byte[21] =  (byte) (send_byte[21]|0x40);
+        							}else if(deng == 2){
+        								send_byte[12] = (byte) (send_byte[12]|0x40);
+        							}else if(deng == 3){
+        								send_byte[12] = (byte) (send_byte[12]|0x80);
+        							}
+        							send_byte[30] =  (byte) (send_byte[30]|0x80);
+        						}else if(dengtype == 1){
+        							if(deng ==1){
+        								send_byte[12] = (byte) (send_byte[12]|0x04);
+        								send_byte[21] =  (byte) (send_byte[21]|0x08);
+        								
+        							}else if(deng == 2){
+        								send_byte[12] = (byte) (send_byte[12]|0x08);
+        							}else if(deng == 3){
+        								send_byte[12] = (byte) (send_byte[12]|0x10);
+        							}
+        							send_byte[30] =  (byte) (send_byte[30]|0x10);
+        						}else if(dengtype == 2){
+        							if(deng ==1){
+        								send_byte[13] = (byte) (send_byte[13]|0x20);
+        								send_byte[22] =  (byte) (send_byte[22]|0x40);
+        								
+        							}else if(deng == 2){
+        								send_byte[13] = (byte) (send_byte[13]|0x40);
+        							}else if(deng == 3){
+        								send_byte[13] = (byte) (send_byte[13]|0x80);
+        							}
+        							send_byte[31] =  (byte) (send_byte[31]|0x80);
+        						}else if(dengtype == 3){
+        							if(deng ==1){
+        								send_byte[13] = (byte) (send_byte[13]|0x0A);
+        								send_byte[22] =  (byte) (send_byte[22]|0x14);
+        								
+        							}else if(deng == 2){
+        							}else if(deng == 3){
+        								send_byte[13] = (byte) (send_byte[13]|0x14);
+        							}
+        							send_byte[31] =  (byte) (send_byte[31]|0x14);
+        						}
+        						break;
+        					case 2:
+        						if(dengtype == 0){
+        							if(deng ==1){
+        								send_byte[14] = (byte) (send_byte[14]|0x20);
+        								send_byte[23] =  (byte) (send_byte[23]|0x40);
+        							}else if(deng == 2){
+        								send_byte[14] = (byte) (send_byte[14]|0x40);
+        							}else if(deng == 3){
+        								send_byte[14] = (byte) (send_byte[14]|0x80);
+        							}
+        							send_byte[32] =  (byte) (send_byte[32]|0x80);
+        						}else if(dengtype == 1){
+        							if(deng ==1){
+        								send_byte[14] = (byte) (send_byte[14]|0x04);
+        								send_byte[23] =  (byte) (send_byte[23]|0x08);
+        								
+        							}else if(deng == 2){
+        								send_byte[14] = (byte) (send_byte[14]|0x08);
+        							}else if(deng == 3){
+        								send_byte[14] = (byte) (send_byte[14]|0x10);
+        							}
+        							send_byte[32] =  (byte) (send_byte[32]|0x10);
+        						}else if(dengtype == 2){
+        							if(deng ==1){
+        								send_byte[15] = (byte) (send_byte[15]|0x20);
+        								send_byte[24] =  (byte) (send_byte[24]|0x40);
+        								
+        							}else if(deng == 2){
+        								send_byte[15] = (byte) (send_byte[15]|0x40);
+        							}else if(deng == 3){
+        								send_byte[15] = (byte) (send_byte[15]|0x80);
+        							}
+        							send_byte[33] =  (byte) (send_byte[33]|0x80);
+        						}else if(dengtype == 3){
+        							if(deng ==1){
+        								send_byte[15] = (byte) (send_byte[15]|0x0A);
+        								send_byte[24] =  (byte) (send_byte[24]|0x14);
+        								
+        							}else if(deng == 2){
+        							}else if(deng == 3){
+        								send_byte[15] = (byte) (send_byte[15]|0x14);
+        							}
+        							send_byte[33] =  (byte) (send_byte[33]|0x14);
+        						}
+        						break;
+        					case 3:
+        						if(dengtype == 0){
+        							if(deng ==1){
+        								send_byte[16] = (byte) (send_byte[16]|0x20);
+        								send_byte[25] =  (byte) (send_byte[25]|0x40);
+        							}else if(deng == 2){
+        								send_byte[16] = (byte) (send_byte[16]|0x40);
+        							}else if(deng == 3){
+        								send_byte[16] = (byte) (send_byte[16]|0x80);
+        							}
+        							send_byte[34] =  (byte) (send_byte[34]|0x80);
+        						}else if(dengtype == 1){
+        							if(deng ==1){
+        								send_byte[16] = (byte) (send_byte[16]|0x04);
+        								send_byte[25] =  (byte) (send_byte[25]|0x08);
+        								
+        							}else if(deng == 2){
+        								send_byte[16] = (byte) (send_byte[16]|0x08);
+        							}else if(deng == 3){
+        								send_byte[16] = (byte) (send_byte[16]|0x10);
+        							}
+        							send_byte[34] =  (byte) (send_byte[34]|0x10);
+        						}else if(dengtype == 2){
+        							if(deng ==1){
+        								send_byte[17] = (byte) (send_byte[17]|0x20);
+        								send_byte[26] =  (byte) (send_byte[26]|0x40);
+        								
+        							}else if(deng == 2){
+        								send_byte[17] = (byte) (send_byte[17]|0x40);
+        							}else if(deng == 3){
+        								send_byte[17] = (byte) (send_byte[17]|0x80);
+        							}
+        							send_byte[35] =  (byte) (send_byte[35]|0x80);
+        						}else if(dengtype == 3){
+        							if(deng ==1){
+        								send_byte[17] = (byte) (send_byte[17]|0x0A);
+        								send_byte[26] =  (byte) (send_byte[26]|0x14);
+        								
+        							}else if(deng == 2){
+        							}else if(deng == 3){
+        								send_byte[17] = (byte) (send_byte[17]|0x14);
+        							}
+        							send_byte[35] =  (byte) (send_byte[35]|0x14);
+        						}
+        						break;
+        					default:
+        						break;
+        					}
+        				
+        			}
+        			
+        			
+        			send_byte[18] = (byte) (pharseVOS.get(j).getGltime()&0xff);
+        			send_byte[27] = (byte) (pharseVOS.get(j).getYltime()&0xff);
+        			send_byte[36] = (byte) (pharseVOS.get(j).getRltime()&0xff);
+        			
+        			 int k = 0;
+        			 for( int i1 = 4; i1 < send_byte.length-2; i1++){
+        				 //System.out.println((msendDatas[i]&0xFF)+"对应"+msendDatas[i]);
+        				//System.out.println();
+        			  k += send_byte[i1]&0xFF;
+        			 }
+        			 
+        		       for (int i1 = 0; i1 < 2; i1++) {  
+        		    	   send_byte[send_byte.length-i1-1]  = (byte) (k >>> (i1 * 8));  
+        		       }  
+        			
+        		   	System.out.println("=======================下发特勤控制命令（按指定相位）========================================");
+        			
+        			for (int i3 = 0; i3 < send_byte.length; i3++) {
+        				System.out.print(send_byte[i3]);
+        			}
+        			System.out.println("");
+        			System.out.println("========================下发特勤控制命令（按指定相位）=======================================");
+        			currrenSession.write(send_byte);
+        			
+        		}
+            	
+            	
+            }  
+            
+            public IoSession getCurrrenSession(String sigNumber)
+        	{
+        		for(IoSession session : TimeServerHandler.iosessions)
+        		{
+        			if(session.getAttribute("number")!=null)
+        			{
+        				if(session.getAttribute("number").equals(sigNumber))
+        				{
+        					return session;
+        				}
+        			}
+        		}
+        		return null;
+        	}
+              
+        }, start); 
+        
+        
+//		String nowdate = DateTimeKit.getLocal_Time();
+//		int interval = DateTimeKit.minutesBetweenStr(nowdate,startdate);
+//		System.out.println(interval+",1111");
+//		
+//		System.out.println(startdate.equals(nowdate));
+		
+		
+		
 		return NONE;
 	}
 	
@@ -770,7 +817,7 @@ public class GreenroadAction extends ActionSupport implements RequestAware,
 		
 		String[] dateses = dates.split(",");
 		 
-		List<PharseVO> pharseVOS= new ArrayList<PharseVO>();
+	    pharseVOS= new ArrayList<PharseVO>();
 		for (int j = 0; j < gtimes.length; j++) {
 			PharseVO pharseVO = new PharseVO();
 			String param = gtimes[j];
@@ -1939,6 +1986,12 @@ public class GreenroadAction extends ActionSupport implements RequestAware,
 
 	public void setBegindate(String begindate) {
 		this.begindate = begindate;
+	}
+
+
+	public void run() {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	
