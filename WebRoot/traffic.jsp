@@ -315,7 +315,7 @@ var btn=document.getElementById('show_btn');
            <li style="cursor: auto;"><span><img src="images/car.png" alt="" width="24" height="24" /></span>查 看 :</li>
          </ul>
          <ul class="toolbar1">
-       <li class="click2"><a href="flowAction!list">汽车流量</a></li>
+       <li class="click2"><a href="flowAction!list?sigid=<s:property value="sig.id"/>">汽车流量</a></li>
        <li class="click3"><a href="devlogAction!plist">故障信息</a></li>
        <li class="click4"><a href="oplogAction!plist">操作日志</a></li>
          </ul>

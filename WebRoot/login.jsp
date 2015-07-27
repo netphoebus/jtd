@@ -27,53 +27,70 @@
 		<script type="text/javascript" src="js/pageKit.js"></script>
 		<script type="text/javascript">
  
- function getCookie(c_name)      //根据分隔符每个变量的值
- {
-     if (document.cookie.length > 0) {
-         c_start = document.cookie.indexOf(c_name + "=")
-         if (c_start != -1) { 
-             c_start = c_start + c_name.length + 1;
-             c_end = document.cookie.indexOf("^",c_start);
-             if (c_end==-1)
-                 c_end=document.cookie.length;
-             return unescape(document.cookie.substring(c_start,c_end));
-     } 
-   }
-     return "";
- }
- 
- function setCookie(c_name, n_value, p_name, p_value, expiredays)        //设置cookie
- {
-     var exdate = new Date();
-     exdate.setDate(exdate.getDate() + expiredays);
-     document.cookie = c_name + "=" + escape(n_value) + "^" + p_name + "=" + escape(p_value) + ((expiredays == null) ? "" : "^;expires=" + exdate.toGMTString());
-     console.log(document.cookie)
- }
- 
- function checkCookie()      //检测cookie是否存在，如果存在则直接读取，否则创建新的cookie
- {
-     
-     var username = getCookie('username');
-     var password = getCookie('password');
-     if (username != null && username != "" && password != null && password != "") {
-         
-         document.getElementById("username").value = username;
-         document.getElementById("password").value = password;
-     }
-     else {
-     	 //document.getElementById("username").value = "";
-         document.getElementById("password").value = "";
-         
-     }
-     
- }
- 
- function cleanCookie (c_name, p_name) {     //使cookie过期
-     document.cookie = c_name + "=" + ";" + p_name + "=" + ";expires=Thu, 01-Jan-70 00:00:01 GMT";
- }
- function checkIsUp(){
+ //设置cookie
+function setCookie(cname, cvalue, exdays) {
+    var d = new Date();
+    d.setTime(d.getTime() + (exdays*24*60*60*1000));
+    var expires = "expires="+d.toUTCString();
+    document.cookie = cname + "=" + cvalue + "; " + expires;
+}
+//获取cookie
+function getCookie(cname) {
+    var name = cname + "=";
+    var ca = document.cookie.split(';');
+    for(var i=0; i<ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0)==' ') c = c.substring(1);
+        if (c.indexOf(name) != -1) return c.substring(name.length, c.length);
+    }
+    return "";
+}
+//清除cookie  
+function clearCookie(name) {  
+    setCookie(name, "", -1);  
+    
+}  
+function checkCookie() {
+    var user = getCookie("username");
+    if (user != "") {
+        alert("Welcome again " + user);
+    } else {
+        user = prompt("Please enter your name:", "");
+        if (user != "" && user != null) {
+            setCookie("username", user, 365);
+        }
+    }
+}
+//checkCookie(); 
+
+
+function loadthis(){
+	var checkup = getCookie("checkup");
+	console.log(checkup);
+	if(checkup=='on'){
+		console.log("i m in 1");
+		document.getElementById("username").value=getCookie("username");
+		document.getElementById("password").value=getCookie("password");
+		document.getElementById("checkup").checked=true;
+	}else{
+		console.log("i m in what");
+		document.getElementById("username").value="";
+		document.getElementById("password").value="";
+		document.getElementById("checkup").checked=false;
+	}
+}
+
+function checkIsUp(){
 	 if(document.getElementById("checkup").checked==true){
-		setCookie('username', document.getElementById("username").value, 'password', document.getElementById("password").value, 365);	 
+	 	console.log("checked");
+		setCookie('username', document.getElementById("username").value, 365);	 
+		setCookie('password', document.getElementById("password").value, 365);	 
+		setCookie('checkup', document.getElementById("checkup").value, 365);	 
+	 }else{
+	 	console.log("unchecked");
+	 	clearCookie("username");
+		clearCookie("password");
+		clearCookie("checkup");
 	 }
 	 return true;
  }
@@ -86,7 +103,7 @@
 <![endif]-->
 	</head>
 
-	<body class=" loginbg png">
+	<body class=" loginbg png"  onload="loadthis()">
 
 		<div class="logintop png">
 			<span>欢迎登录信号机管理系统</span>

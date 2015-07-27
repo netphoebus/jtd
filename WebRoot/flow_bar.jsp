@@ -256,10 +256,10 @@ $(document).ready(function(e) {
 					<ul>
 
 						<li>
-							<a href="flowAction!list">流量信息列表</a>
+							<a href="flowAction!list?sigid=<s:property value="sigid"/>">流量信息列表</a>
 						</li>
 						<li>
-							<a href="flowAction!listline">流量报表折线图</a>
+							<a href="flowAction!listline?sigid=<s:property value="sigid"/>&interval=1">流量报表折线图</a>
 						</li>
 						
 						<li>

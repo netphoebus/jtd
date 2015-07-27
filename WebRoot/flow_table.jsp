@@ -55,11 +55,11 @@ $(document).ready(function(e) {
 							<a href="#tab3" class="selected">流量信息列表</a>
 						</li>
 						<li>
-							<a href="flowAction!listline">流量报表折线图</a>
+							<a href="flowAction!listline?sigid=<s:property value="sigid"/>&interval=1">流量报表折线图</a>
 						</li>
 						
 						<li>
-							<a href="flowAction!listbar">流量报表柱状图</a>
+							<a href="flowAction!listbar?sigid=<s:property value="sigid"/>">流量报表柱状图</a>
 						</li>
 						
 					</ul>

@@ -255,14 +255,14 @@ $(document).ready(function(e) {
 					<ul>
 
 						<li>
-							<a href="flowAction!list">流量信息列表</a>
+							<a href="flowAction!list?sigid=<s:property value="sigid"/>">流量信息列表</a>
 						</li>
 						<li>
 							<a href="#tab3" class="selected">流量报表折线图</a>
 						</li>
 						
 						<li>
-							<a href="flowAction!listbar">流量报表柱状图</a>
+							<a href="flowAction!listbar?sigid=<s:property value="sigid"/>">流量报表柱状图</a>
 						</li>
 						 
 					</ul>

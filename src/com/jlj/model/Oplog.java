@@ -28,7 +28,7 @@ public class Oplog implements java.io.Serializable {
 	private Usero usero;
 	private String opevent;
 	private String loginip;
-	private Integer iptype;
+	private String optype;
 	private Date optime;
 	private String signumber;
 
@@ -39,12 +39,12 @@ public class Oplog implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public Oplog(Usero usero, String opevent, String loginip, Integer iptype,String signumber,
+	public Oplog(Usero usero, String opevent, String loginip, String optype,String signumber,
 			Date optime) {
 		this.usero = usero;
 		this.opevent = opevent;
 		this.loginip = loginip;
-		this.iptype = iptype;
+		this.optype = optype;
 		this.signumber = signumber;
 		this.optime = optime;
 	}
@@ -89,13 +89,13 @@ public class Oplog implements java.io.Serializable {
 		this.loginip = loginip;
 	}
 
-	@Column(name = "iptype")
-	public Integer getIptype() {
-		return this.iptype;
+	@Column(name = "optype", length = 20)
+	public String getOptype() {
+		return this.optype;
 	}
 
-	public void setIptype(Integer iptype) {
-		this.iptype = iptype;
+	public void setOptype(String optype) {
+		this.optype = optype;
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)
