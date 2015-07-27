@@ -491,12 +491,12 @@ public class GreenroadAction extends ActionSupport implements RequestAware,
 	 * @throws Exception
 	 */
 	public String doControl() throws Exception {
-		System.out.println(dates);
-		System.out.println(gtime);//绿灯持续时间
-		System.out.println(ytime);//黄灯持续时间
-		System.out.println(rtime);//红灯持续时间
-		System.out.println(begindate+" "+begintime);//开始执行特勤控制日期
-		System.out.println(DateTimeKit.getLocal_Time());
+		//System.out.println(dates);
+		//System.out.println(gtime);//绿灯持续时间
+		//System.out.println(ytime);//黄灯持续时间
+		//System.out.println(rtime);//红灯持续时间
+		//System.out.println(begindate+" "+begintime);//开始执行特勤控制日期
+		//System.out.println(DateTimeKit.getLocal_Time());
 		String startdate = "";
 		if(begindate.equals("")||begintime.equals(""))
 		{
@@ -505,7 +505,6 @@ public class GreenroadAction extends ActionSupport implements RequestAware,
 		{
 			 startdate = begindate+" "+begintime;
 		}
-		
 		
 		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm");  
 	    Date start=sdf.parse(startdate); 
@@ -767,7 +766,6 @@ public class GreenroadAction extends ActionSupport implements RequestAware,
         			for (int i3 = 0; i3 < send_byte.length; i3++) {
         				System.out.print(send_byte[i3]);
         			}
-        			System.out.println("");
         			System.out.println("========================下发特勤控制命令（按指定相位）=======================================");
         			currrenSession.write(send_byte);
         			
