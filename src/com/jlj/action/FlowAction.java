@@ -455,6 +455,108 @@ SessionAware,ServletResponseAware,ServletRequestAware {
 					}
 				}
 				
+			}else if(interval==5){//1月
+				
+				//默认当前页为第一页（即page=1）
+				//总记录数临时为totalCountTemp按条件（信号机id、两个时间段）；数据库总记录数=totalCountTemp
+				int totalCountTemp = flowService.getConditionTotalCount(sigid,time1,time2);
+				//有记录
+				if(totalCountTemp>0){
+					flows = new ArrayList<Flow>();//N组数据,N最多为10组，用于展示
+					//循环获取N组数据
+					for (int j = 0; j < 10; j++) {
+						//一组数据-------------------start
+						//获取开始时间和该小时的结束时间
+						String hourstarttime="";
+						String hourendtime="";
+						if(j==0){
+							//查出第一条数据的时间
+							List<Flow> oneflows = flowService.queryConditionList(sigid, time1, time2, 1, 1);
+							Flow oneflow=null;
+							if(oneflows.size()==1){
+								oneflow = oneflows.get(0);
+							}
+							
+							if(nextstarttime!=null&&!nextstarttime.equals("")&&page!=1){
+								hourstarttime = nextstarttime;
+							}else if(page==1&&oneflow!=null){
+								hourstarttime = DateTimeKit.getDateTimeString(oneflow.getTime());
+							}
+							if(hourstarttime.equals("")){
+								break;
+							}
+//							System.out.println("第"+(j+1)+"条数据的hourstarttime="+hourstarttime);
+							hourendtime=DateTimeKit.monthBeforethis(hourstarttime, -1);//1月之后的时间
+							hourendtime=hourendtime.replace(hourendtime.substring(11), "00:00:00");
+//							System.out.println("第"+(j+1)+"条数据的hourendtime="+hourendtime);
+//							System.out.println("----------------------------------------");
+							nextstarttime = hourendtime;
+						}else{
+							hourstarttime = nextstarttime;
+							if(hourstarttime.equals("")){
+								break;
+							}
+							System.out.println("第"+(j+1)+"条数据的hourstarttime="+hourstarttime);
+							hourendtime=DateTimeKit.weekBeforethis(hourstarttime, -1);//1天之后的时间
+							hourendtime=hourendtime.replace(hourendtime.substring(11), "00:00:00");
+//							System.out.println("第"+(j+1)+"条数据的hourendtime="+hourendtime);
+//							System.out.println("----------------------------------------");
+							nextstarttime = hourendtime;
+						}
+						List<Flow> flowtemps=flowService.queryConditionList2(sigid,hourstarttime,hourendtime);//第一组
+						if(flowtemps!=null&&flowtemps.size()>0){
+							Flow flowVO = new Flow();
+							int dlefts = 0;
+							int dlines = 0;
+							int drights = 0;
+							int nlefts = 0;
+							int nlines = 0;
+							int nrights = 0; 
+							int xlefts = 0;
+							int xlines = 0;
+							int xrights = 0;
+							int blefts = 0;
+							int blines = 0;
+							int brights = 0;
+							Date times = null;
+							for (int i = 0; i < flowtemps.size(); i++) {
+								Flow flowtemp = flowtemps.get(i);
+								if(i==0){
+									times =flowtemp.getTime();
+								}
+								dlefts+=flowtemp.getDleft();
+								dlines+=flowtemp.getDline();
+								drights+=flowtemp.getDright();
+								nlefts+=flowtemp.getNleft();
+								nlines+=flowtemp.getNline();
+								nrights+=flowtemp.getNright();
+								xlefts+=flowtemp.getXleft();
+								xlines+=flowtemp.getXline();
+								xrights+=flowtemp.getXright();
+								blefts+=flowtemp.getBleft();
+								blines+=flowtemp.getBline();
+								brights+=flowtemp.getBright();
+							}
+							flowVO.setDleft(dlefts);
+							flowVO.setDline(dlines);
+							flowVO.setDright(drights);
+							flowVO.setNleft(nlefts);
+							flowVO.setNline(nlines);
+							flowVO.setNright(nrights);
+							flowVO.setXleft(xlefts);
+							flowVO.setXline(xlines);
+							flowVO.setXright(xrights);
+							flowVO.setBleft(blefts);
+							flowVO.setBline(blines);
+							flowVO.setBright(brights);
+							flowVO.setTime(times);
+							//一组数据-------------------end
+							flows.add(flowVO);
+						}
+						
+					}
+				}
+				
 			}
 			
 		}else{

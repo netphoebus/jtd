@@ -237,12 +237,28 @@ public class DateTimeKit {
             
        return Integer.parseInt(String.valueOf(between_days));           
     }   
-    public static void main(String[] args) throws java.text.ParseException {
+    public static void main(String[] args) throws Exception {
 //    	DateTimeKit.daysBetween("2012-09-08","2012-09-09"); 
 //    	dateBeforethis("2015-07-05",5);
 //    	hourBeforethis("2015-07-05 09:00:01",1);
-    	weekBeforethis("2015-07-05 09:00:01",1);
-    	
+//    	weekBeforethis("2015-07-05 09:00:01",1);
+    	monthBeforethis("2015-07-05 09:00:01",1);
+	}
+
+
+
+	public static String monthBeforethis(String hourstarttime, int month) throws Exception {
+		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); //设置时间格式
+    	Date thisdate = sdf.parse(hourstarttime);   //当前时间
+    	Date beforedate = new Date();
+    	Calendar calendar = Calendar.getInstance(); //得到日历
+    	calendar.setTime(thisdate);//把当前时间赋给日历
+    	calendar.add(Calendar.MONTH, -month);  //设置为前一天
+    	beforedate = calendar.getTime();   //得到前一天的时间
+    	String beforedateStr = sdf.format(beforedate);    //格式化前一天
+    	System.out.println("原时间是：" + hourstarttime);
+    	System.out.println("前时间是：" + beforedateStr); 
+    	return beforedateStr;
 	}
 	
 }
